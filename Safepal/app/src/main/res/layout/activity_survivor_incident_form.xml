@@ -1,7 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.design.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<android.support.design.widget.CoordinatorLayout
+
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/wsgh_cl"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:fitsSystemWindows="true"
@@ -39,11 +42,12 @@
         android:src="@drawable/ic_chevron_left_white_48dp"
         app:backgroundTint="@color/colorOrange"/>
     <android.support.design.widget.FloatingActionButton
-        android:id="@+id/sif_next_fab"
+        android:id="@+id/sif_submit_fab"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="bottom|end"
         android:layout_margin="@dimen/fab_margin"
-        android:src="@drawable/ic_chevron_right_white_48dp"
+        android:src="@drawable/ic_send_white_48dp"
+        android:onClick="onClickAddIncident"
         app:backgroundTint="@color/colorPrimary"/>
 </android.support.design.widget.CoordinatorLayout>

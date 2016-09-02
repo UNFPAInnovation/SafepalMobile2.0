@@ -1,7 +1,13 @@
 <resources>
     <string name="app_name">Safepal</string>
     <string name="action_settings">Settings</string>
-    <!-- Home Activity string-->
+
+    <!-- menu strings-->
+    <string name="action_home_help">Home</string>
+    <string name="action_home_getting_started">Getting Started</string>
+    <string name="action_home_about">About</string>
+
+    <!-- Home Activity strings-->
     <string name="home_activity_title">SafePal</string>
 
 
@@ -33,7 +39,7 @@
         <item>What happened to you? </item>
         <item>I was raped.</item>
         <item>I was defiled.</item>
-        <item>I forced in to sodomy.</item>
+        <item>I forced into gay practices.</item>
         <item>They forced an object in to my private parts.</item>
     </string-array>
 
@@ -47,12 +53,13 @@
     <string name="apif_male">Boy </string>
     <string name="apif_female">Girl </string>
     <string-array name="apif_incident_type">
-        <item>What happened to her/him</item>
+        <item>What happened to her/him.</item>
         <item>She/he was raped.</item>
         <item>She/he was defiled.</item>
-        <item>She/he  forced in to sodomy.</item>
+        <item>She/he was forced into gay practices.</item>
         <item>They forced an object in to my private parts.</item>
     </string-array>
+    <string name="title_activity_main_activitysdas">MainActivitysdas</string>
 
 
 </resources>

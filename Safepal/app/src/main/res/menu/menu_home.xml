@@ -1,0 +1,21 @@
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:context="com.unfpa.safepal.WhoSGettingHelpActivity">
+    <item
+        android:id="@+id/menu_home_help"
+        android:orderInCategory="100"
+        android:title="@string/action_home_help"
+        app:showAsAction="never" />
+    <item
+        android:id="@+id/menu_home_getting_started"
+        android:orderInCategory="100"
+        android:title="@string/action_home_getting_started"
+        app:showAsAction="never" />
+
+    <item
+        android:id="@+id/menu_home_about"
+        android:orderInCategory="100"
+        android:title="@string/action_home_about"
+        app:showAsAction="never" />
+</menu>

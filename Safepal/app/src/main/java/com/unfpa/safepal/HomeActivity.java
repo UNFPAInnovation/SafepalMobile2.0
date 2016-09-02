@@ -6,12 +6,14 @@ import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 
 public class HomeActivity extends AppCompatActivity {
 
         //Global Variables
-        FloatingActionButton homeReportFab;
+        FloatingActionButton homeAbortAppFab, homeReportFab;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -21,8 +23,18 @@ public class HomeActivity extends AppCompatActivity {
         setSupportActionBar(toolbar);
 
         // Assignments of variables
+        homeAbortAppFab = (FloatingActionButton) findViewById(R.id.home_abort_app_fab);
         homeReportFab = (FloatingActionButton) findViewById(R.id.home_report_fab);
 
+
+        homeAbortAppFab.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                moveTaskToBack(true);
+                android.os.Process.killProcess(android.os.Process.myPid());
+                System.exit(1);
+            }
+        });
 
         homeReportFab.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -31,6 +43,28 @@ public class HomeActivity extends AppCompatActivity {
 
             }
         });
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        // Inflate the menu; this adds items to the action bar if it is present.
+        getMenuInflater().inflate(R.menu.menu_home, menu);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        // Handle action bar item clicks here. The action bar will
+        // automatically handle clicks on the Home/Up button, so long
+        // as you specify a parent activity in AndroidManifest.xml.
+        int id = item.getItemId();
+
+        //noinspection SimplifiableIfStatement
+        if (id == R.id.menu_home_about) {
+            return true;
+        }
+
+        return super.onOptionsItemSelected(item);
     }
 
 }

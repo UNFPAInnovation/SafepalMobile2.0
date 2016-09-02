@@ -12,6 +12,7 @@ import android.view.MenuItem;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.RadioButton;
+import android.widget.RadioGroup;
 import android.widget.Spinner;
 
 public class WhoSGettingHelpActivity extends AppCompatActivity {
@@ -20,6 +21,7 @@ public class WhoSGettingHelpActivity extends AppCompatActivity {
     FloatingActionButton wsghAbortAppFab, wsghBackFab, wsghNextFab;
     Spinner wsghRelationshipSpinner;
     RadioButton wsghYesRB, wsghSomeelseRb;
+    RadioGroup wsghWhoRG;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -40,11 +42,13 @@ public class WhoSGettingHelpActivity extends AppCompatActivity {
         // choose someone else relationship spinner
         wsghRelationshipSpinner = (Spinner) findViewById(R.id.wsgh_relationship_spinner);
 
+        wsghWhoRG = (RadioGroup)findViewById(R.id.wsgh_who_rg);
         wsghYesRB = (RadioButton)findViewById(R.id.wsgh_yes_rb);
         wsghSomeelseRb = (RadioButton)findViewById(R.id.wsgh_someoneelse_rb);
 
 
         setSupportActionBar(wsghToolbar);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
         /**  wsghRelationshipSpinner  **/
 
@@ -61,6 +65,9 @@ public class WhoSGettingHelpActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
 
+                moveTaskToBack(true);
+                android.os.Process.killProcess(android.os.Process.myPid());
+                System.exit(1);
             }
         });
 
@@ -77,11 +84,15 @@ public class WhoSGettingHelpActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
 
-                if(wsghYesRB.isChecked()){
-                startActivity(new Intent(getApplicationContext(), SurvivorIncidentFormActivity.class));}
+                    if(wsghYesRB.isChecked())
+                        startActivity(new Intent(getApplicationContext(), SurvivorIncidentFormActivity.class));
 
-                else if (wsghSomeelseRb.isChecked()){
-                startActivity(new Intent(getApplicationContext(), AnotherPersonIncidentFormActivity.class));}
+                    else if (wsghSomeelseRb.isChecked())
+                        startActivity(new Intent(getApplicationContext(), AnotherPersonIncidentFormActivity.class));
+
+
+
+
 
             }
         });

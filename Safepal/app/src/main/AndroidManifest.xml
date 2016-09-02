@@ -8,6 +8,7 @@
         android:label="@string/app_name"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
+
         <activity
             android:name=".HomeActivity"
             android:label="@string/home_activity_title"
@@ -17,36 +18,51 @@
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
-
         </activity>
 
         <activity
             android:name=".WhoSGettingHelpActivity"
             android:label="@string/wsgh_activity_title"
-            android:theme="@style/AppTheme.NoActionBar">
+            android:theme="@style/AppTheme.NoActionBar"
+            android:parentActivityName=".HomeActivity">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value=".HomeActivity" />
+
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
-
                 <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
         </activity>
+
         <activity
             android:name=".SurvivorIncidentFormActivity"
             android:label="@string/sif_activity_title"
-            android:theme="@style/AppTheme.NoActionBar">
-
+            android:theme="@style/AppTheme.NoActionBar"
+            android:parentActivityName=".WhoSGettingHelpActivity">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value=".WhoSGettingHelpActivity" />
         </activity>
+
         <activity
             android:name=".AnotherPersonIncidentFormActivity"
             android:label="@string/apif_activity_title"
-            android:theme="@style/AppTheme.NoActionBar">
+            android:theme="@style/AppTheme.NoActionBar"
+            android:parentActivityName=".WhoSGettingHelpActivity">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value=".WhoSGettingHelpActivity" />
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
-
                 <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
         </activity>
 
+        <provider
+            android:name=".store.ReportIncidentContentProvider"
+            android:authorities="com.unfpa.safepal.store.contentprovider" >
+        </provider>
     </application>
 
 </manifest>
