@@ -6,6 +6,7 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 
+import android.support.design.widget.Snackbar;
 import android.support.v4.app.DialogFragment;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
@@ -42,6 +43,7 @@ public class SurvivorIncidentFormActivity extends AppCompatActivity {
     private EditText sifIncidentLocationEt, sifIncidentDetailsEt;
     //content provider
     private Uri reportIncidentUri;
+    private Snackbar feedbackSnackbar;
 
 
 
@@ -124,8 +126,8 @@ public class SurvivorIncidentFormActivity extends AppCompatActivity {
         //checks if gender radio group isn't selected;
         if(genderRBId==-1){
             //feedback to developer
-            Toast.makeText(getBaseContext(),
-                    "Whats your gender!!", Toast.LENGTH_LONG).show();
+            feedbackSnackbar = Snackbar.make(view,"Tell us your gender please!!!",Snackbar.LENGTH_LONG);
+            feedbackSnackbar.show();
             return;
         }
         View genderRBView = sifGenderRG.findViewById(genderRBId);
@@ -145,7 +147,11 @@ public class SurvivorIncidentFormActivity extends AppCompatActivity {
 
 
 
-
+        if(sifDateOfBirthButton.getText().toString()== getResources().getText(R.string.sif_survivor_pick_age)){
+            feedbackSnackbar = Snackbar.make(view,"Pick the date of birth",Snackbar.LENGTH_LONG);
+            feedbackSnackbar.show();
+            return;
+        }
 
         // only save if either location or story
         // is available
@@ -156,9 +162,7 @@ public class SurvivorIncidentFormActivity extends AppCompatActivity {
                     "Story or location is/are not filled" + "\n Report not stored!!!", Toast.LENGTH_LONG).show();
             return;
         }
-        if(sifDateOfBirthButton.getText().toString()== getResources().getText(R.string.sif_survivor_pick_age)){
-            
-        }
+
 
 
         ContentValues values = new ContentValues();

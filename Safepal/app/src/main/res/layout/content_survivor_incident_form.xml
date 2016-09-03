@@ -47,7 +47,7 @@
          android:layout_height="wrap_content"
          android:layout_weight="1"
          android:padding="@dimen/sif_et_padding_top"
-         android:text="date of birth"
+         android:text="@string/sif_survivor_pick_age"
          android:onClick="showDatePickerDialog"
 
          />
