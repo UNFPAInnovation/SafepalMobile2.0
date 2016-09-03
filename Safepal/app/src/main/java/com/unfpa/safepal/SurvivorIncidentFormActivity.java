@@ -148,7 +148,7 @@ public class SurvivorIncidentFormActivity extends AppCompatActivity {
 
 
         if(sifDateOfBirthButton.getText().toString()== getResources().getText(R.string.sif_survivor_pick_age)){
-            feedbackSnackbar = Snackbar.make(view,"Pick the date of birth",Snackbar.LENGTH_LONG);
+            feedbackSnackbar = Snackbar.make(view,"Pick a date of birth",Snackbar.LENGTH_LONG);
             feedbackSnackbar.show();
             return;
         }
@@ -158,8 +158,8 @@ public class SurvivorIncidentFormActivity extends AppCompatActivity {
 
         if (sifIncidentLocationEt.length() == 0 && sifIncidentDetailsEt.length() == 0) {
             //feedback to developer
-            Toast.makeText(getBaseContext(),
-                    "Story or location is/are not filled" + "\n Report not stored!!!", Toast.LENGTH_LONG).show();
+            feedbackSnackbar = Snackbar.make(view, "Story or location is not filled", Snackbar.LENGTH_LONG);
+            feedbackSnackbar.show();
             return;
         }
 
