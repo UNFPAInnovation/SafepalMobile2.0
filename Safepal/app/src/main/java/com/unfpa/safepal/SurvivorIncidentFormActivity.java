@@ -60,6 +60,7 @@ public class SurvivorIncidentFormActivity extends AppCompatActivity {
 
         sifDateOfBirthButton = (Button)findViewById(R.id.sif_date_of_birth_button);
 
+        sifGenderRG=(RadioGroup)findViewById(R.id.sif_gender_rg);
         sifIncidentTypeSpinner = (Spinner) findViewById(R.id.sif_incident_type_spinner);
         sifIncidentLocationEt = (EditText)findViewById(R.id.sif_incident_location_et);
         sifIncidentDetailsEt = (EditText)findViewById(R.id.sif_incident_details_rt);
@@ -117,20 +118,48 @@ public class SurvivorIncidentFormActivity extends AppCompatActivity {
     }
 
     public void onClickAddIncident(View view) {
-        String reportedBy = "test_reportedBy";
-        String survivorDateOfBirth = "test_survivorDateOfBirth";;
-        String survivorGender = "test_survivorGender";;
-        String incidentType = "test_incidentType";
-        String incidentLocation = "test_incidentLocation";;
-        String incidentStory = "test_incidentStory";;
-        String uniqueIdentifier = "test_uniqueIdentifier";;
 
-        // only save if either summary or description
+        int genderRBId = sifGenderRG.getCheckedRadioButtonId();
+
+        //checks if gender radio group isn't selected;
+        if(genderRBId==-1){
+            //feedback to developer
+            Toast.makeText(getBaseContext(),
+                    "Whats your gender!!", Toast.LENGTH_LONG).show();
+            return;
+        }
+        View genderRBView = sifGenderRG.findViewById(genderRBId);
+        int idx = sifGenderRG.indexOfChild(genderRBView);
+        sifGenderRB = (RadioButton) sifGenderRG.getChildAt(idx);
+        //end check of radio group
+
+
+
+        String reportedBy = "Survivor";
+        String survivorDateOfBirth = sifDateOfBirthButton.getText().toString();;
+        String survivorGender = (String)sifGenderRB.getText();
+        String incidentType =(String)sifIncidentTypeSpinner.getSelectedItem();
+        String incidentLocation = sifIncidentLocationEt.getText().toString();
+        String incidentStory = sifIncidentDetailsEt.getText().toString();;
+        String uniqueIdentifier = "test_uid";;
+
+
+
+
+
+        // only save if either location or story
         // is available
 
-        /*if (description.length() == 0 && summary.length() == 0) {
+        if (sifIncidentLocationEt.length() == 0 && sifIncidentDetailsEt.length() == 0) {
+            //feedback to developer
+            Toast.makeText(getBaseContext(),
+                    "Story or location is/are not filled" + "\n Report not stored!!!", Toast.LENGTH_LONG).show();
             return;
-        }*/
+        }
+        if(sifDateOfBirthButton.getText().toString()== getResources().getText(R.string.sif_survivor_pick_age)){
+            
+        }
+
 
         ContentValues values = new ContentValues();
         values.put(ReportIncidentTable.COLUMN_REPORTED_BY, reportedBy);
@@ -147,10 +176,11 @@ public class SurvivorIncidentFormActivity extends AppCompatActivity {
             // New reported incident
             reportIncidentUri = getContentResolver().insert(
                     ReportIncidentContentProvider.CONTENT_URI, values);
-
+            startActivity(new Intent(getApplicationContext(),HomeActivity.class));
             //feedback to developer
             Toast.makeText(getBaseContext(),
-                    reportIncidentUri.toString() + "success", Toast.LENGTH_LONG).show();
+                    reportIncidentUri.toString() + " success\n"+survivorGender, Toast.LENGTH_LONG).show();
+
 
         } else {
             // Update reported incident

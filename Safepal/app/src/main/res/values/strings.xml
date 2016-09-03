@@ -29,6 +29,7 @@
     <!-- survivor incident form strings -->
     <string name="sif_activity_title">Getting Help </string>
     <string name="sif_survivor_age">How old are you? </string>
+    <string name="sif_survivor_pick_age">Date of Birth </string>
     <string name="sif_survivor_gender">Are you a Boy or Girl?</string>
     <string name="sif_survivor_gender_above_18">Are you a Man or Woman? </string>
     <string name="sif_incident_location">Where did it happen? </string>
