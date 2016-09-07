@@ -1,4 +1,4 @@
-package com.unfpa.safepal;
+package com.unfpa.safepal.report;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -9,11 +9,13 @@ import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.Spinner;
+
+import com.unfpa.safepal.R;
+import com.unfpa.safepal.home.HomeActivity;
 
 public class WhoSGettingHelpActivity extends AppCompatActivity {
 
@@ -22,6 +24,7 @@ public class WhoSGettingHelpActivity extends AppCompatActivity {
     Spinner wsghRelationshipSpinner;
     RadioButton wsghYesRB, wsghSomeelseRb;
     RadioGroup wsghWhoRG;
+    Snackbar wsghFeedbackSnackbar;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -87,8 +90,20 @@ public class WhoSGettingHelpActivity extends AppCompatActivity {
                     if(wsghYesRB.isChecked())
                         startActivity(new Intent(getApplicationContext(), SurvivorIncidentFormActivity.class));
 
-                    else if (wsghSomeelseRb.isChecked())
-                        startActivity(new Intent(getApplicationContext(), AnotherPersonIncidentFormActivity.class));
+                    else if (wsghSomeelseRb.isChecked()){
+                        //checks if the relationship to the survivor has been selected
+                        if (wsghRelationshipSpinner.getSelectedItemPosition() <= 0) {
+                            wsghFeedbackSnackbar = Snackbar.make(view, "what is your relationship to survivor?", Snackbar.LENGTH_LONG);
+                            wsghFeedbackSnackbar.show();
+                            return;
+                        }
+
+                        Intent apifIntent = new Intent(view.getContext(),AnotherPersonIncidentFormActivity.class);
+                        apifIntent.putExtra("relationshipToSurvivor", wsghRelationshipSpinner.getSelectedItem().toString()
+                        );
+                        startActivity(apifIntent);
+
+                    }
 
 
 

@@ -1,4 +1,4 @@
-package com.unfpa.safepal;
+package com.unfpa.safepal.report;
 
 import android.content.ContentValues;
 import android.content.Intent;
@@ -20,7 +20,9 @@ import android.widget.Spinner;
 import android.widget.Toast;
 
 
+import com.unfpa.safepal.R;
 import com.unfpa.safepal.datepicker.DatePickerFragment;
+import com.unfpa.safepal.home.HomeActivity;
 import com.unfpa.safepal.store.ReportIncidentContentProvider;
 import com.unfpa.safepal.store.ReportIncidentTable;
 
@@ -43,7 +45,7 @@ public class SurvivorIncidentFormActivity extends AppCompatActivity {
     private EditText sifIncidentLocationEt, sifIncidentDetailsEt;
     //content provider
     private Uri reportIncidentUri;
-    private Snackbar feedbackSnackbar;
+    private Snackbar sifFeedbackSnackbar;
 
 
 
@@ -74,7 +76,7 @@ public class SurvivorIncidentFormActivity extends AppCompatActivity {
 
         //content provider
 
-        Bundle extras = getIntent().getExtras();
+       // Bundle extras = getIntent().getExtras();
         // check from the saved Instance
         reportIncidentUri = (bundle == null) ? null : (Uri) bundle
                 .getParcelable(ReportIncidentContentProvider.CONTENT_ITEM_TYPE);
@@ -119,15 +121,15 @@ public class SurvivorIncidentFormActivity extends AppCompatActivity {
         newFragment.show(getSupportFragmentManager(), "datePicker");
     }
 
-    public void onClickAddIncident(View view) {
+    public void onClickAddIncidentSurvivor(View view) {
 
         int genderRBId = sifGenderRG.getCheckedRadioButtonId();
 
         //checks if gender radio group isn't selected;
         if(genderRBId==-1){
             //feedback to developer
-            feedbackSnackbar = Snackbar.make(view,"Tell us your gender please!!!",Snackbar.LENGTH_LONG);
-            feedbackSnackbar.show();
+            sifFeedbackSnackbar = Snackbar.make(view,"Tell us your gender please!!!",Snackbar.LENGTH_LONG);
+            sifFeedbackSnackbar.show();
             return;
         }
         View genderRBView = sifGenderRG.findViewById(genderRBId);
@@ -148,18 +150,26 @@ public class SurvivorIncidentFormActivity extends AppCompatActivity {
 
 
         if(sifDateOfBirthButton.getText().toString()== getResources().getText(R.string.sif_survivor_pick_age)){
-            feedbackSnackbar = Snackbar.make(view,"Pick a date of birth",Snackbar.LENGTH_LONG);
-            feedbackSnackbar.show();
+            sifFeedbackSnackbar = Snackbar.make(view,"Pick a date of birth",Snackbar.LENGTH_LONG);
+            sifFeedbackSnackbar.show();
             return;
         }
+
+
+        if (sifIncidentTypeSpinner.getSelectedItemPosition() <= 0) {
+            sifFeedbackSnackbar = Snackbar.make(view,"Choose what happened to you.",Snackbar.LENGTH_LONG);
+            sifFeedbackSnackbar.show();
+            return;
+        }
+
 
         // only save if either location or story
         // is available
 
         if (sifIncidentLocationEt.length() == 0 && sifIncidentDetailsEt.length() == 0) {
             //feedback to developer
-            feedbackSnackbar = Snackbar.make(view, "Story or location is not filled", Snackbar.LENGTH_LONG);
-            feedbackSnackbar.show();
+            sifFeedbackSnackbar = Snackbar.make(view, "Story or location is not filled", Snackbar.LENGTH_LONG);
+            sifFeedbackSnackbar.show();
             return;
         }
 
