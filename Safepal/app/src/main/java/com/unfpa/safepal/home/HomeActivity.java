@@ -14,7 +14,7 @@ import com.unfpa.safepal.report.WhoSGettingHelpActivity;
 
 public class HomeActivity extends AppCompatActivity {
 
-        //Global Variables
+        //Global Variables 1234
         FloatingActionButton homeAbortAppFab, homeReportFab;
 
     @Override

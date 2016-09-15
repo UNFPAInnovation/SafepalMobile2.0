@@ -53,6 +53,18 @@
 
         </activity>
 
+        <activity
+            android:name=".Referral.ReferralActivity"
+            android:label="@string/title_activity_referral"
+            android:theme="@style/AppTheme.NoActionBar">
+        </activity>
+        <activity
+            android:name=".Referral.eferralActivity2"
+            android:label="@string/title_activity_eferral2"
+            android:parentActivityName=".Referral.ReferralActivity"
+            android:theme="@style/AppTheme.NoActionBar">
+        </activity>
+
         <provider
             android:name=".store.ReportIncidentContentProvider"
             android:authorities="com.unfpa.safepal.store.contentprovider" >

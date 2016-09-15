@@ -17,6 +17,7 @@ import android.widget.Spinner;
 import android.widget.Toast;
 
 import com.unfpa.safepal.R;
+import com.unfpa.safepal.Referral.ReferralActivity;
 import com.unfpa.safepal.home.HomeActivity;
 import com.unfpa.safepal.store.ReportIncidentContentProvider;
 import com.unfpa.safepal.store.ReportIncidentTable;
@@ -89,6 +90,10 @@ public class AnotherPersonIncidentFormActivity extends AppCompatActivity {
         apifIncidentTypeSpinner.setAdapter(apifIncidentTypeAdapter);
     }
 
+    /**
+     * Code for referral was added here
+     * @param view
+     */
     public void onClickAddIncidentApif(View view){
         int apifGenderRBId = apifGenderRG.getCheckedRadioButtonId();
 
@@ -150,6 +155,8 @@ public class AnotherPersonIncidentFormActivity extends AppCompatActivity {
         }
 
 
+        //referral of the user to the CSOs
+        startActivity( new Intent(getBaseContext(), ReferralActivity.class));
 
     }
 

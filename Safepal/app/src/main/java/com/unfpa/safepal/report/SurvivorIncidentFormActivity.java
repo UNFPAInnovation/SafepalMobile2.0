@@ -21,6 +21,7 @@ import android.widget.Toast;
 
 
 import com.unfpa.safepal.R;
+import com.unfpa.safepal.Referral.ReferralActivity;
 import com.unfpa.safepal.datepicker.DatePickerFragment;
 import com.unfpa.safepal.home.HomeActivity;
 import com.unfpa.safepal.store.ReportIncidentContentProvider;
@@ -121,7 +122,13 @@ public class SurvivorIncidentFormActivity extends AppCompatActivity {
         newFragment.show(getSupportFragmentManager(), "datePicker");
     }
 
+
+    /**
+     * Code for referral was added here
+     * @param view
+     */
     public void onClickAddIncidentSurvivor(View view) {
+
 
         int genderRBId = sifGenderRG.getCheckedRadioButtonId();
 
@@ -200,5 +207,9 @@ public class SurvivorIncidentFormActivity extends AppCompatActivity {
             // Update reported incident
             getContentResolver().update(reportIncidentUri, values, null, null);
         }
+
+        //referral of the user to the CSOs
+        //startActivity( new Intent(getBaseContext(), ReferralActivity.class));
+
     }
 }

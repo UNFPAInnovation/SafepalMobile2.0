@@ -61,6 +61,9 @@
         <item>They forced an object in to my private parts.</item>
     </string-array>
     <string name="title_activity_main_activitysdas">MainActivitysdas</string>
+    <string name="title_activity_referral">ReferralActivity</string>
+    <string name="after_submit_msg">The incident was successfully submitted to SafePal. Thank you for submitting the Incident. SafePal will in a short while provide you with a person to assist you.</string>
+    <string name="title_activity_eferral2">eferralActivity2</string>
 
 
 </resources>
