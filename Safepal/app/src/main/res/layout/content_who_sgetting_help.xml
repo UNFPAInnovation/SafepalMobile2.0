@@ -8,6 +8,7 @@
     android:paddingLeft="@dimen/activity_horizontal_margin"
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
+    android:background="@color/colorGrey"
     app:layout_behavior="@string/appbar_scrolling_view_behavior"
     tools:context=".report.WhoSGettingHelpActivity"
     tools:showIn="@layout/activity_who_s_getting_help">
@@ -23,8 +24,8 @@
         android:layout_below="@+id/wsgh_ecouraging_messages_tv"
         android:layout_width="match_parent"
         android:layout_height= "2dp"
-        android:layout_marginBottom="@dimen/sif_et_margin_bottom"
-        android:layout_marginTop="@dimen/sif_et_margin_top"
+        android:layout_marginBottom="@dimen/overall_et_margin_bottom"
+        android:layout_marginTop="@dimen/overall_et_margin_top"
         android:background="@color/colorPrimary" />
 
     <RadioGroup
@@ -45,8 +46,8 @@
             android:layout_below="@+id/wsgh_ecouraging_messages_tv"
             android:layout_width="match_parent"
             android:layout_height= "2dp"
-            android:layout_marginBottom="@dimen/sif_et_margin_bottom"
-            android:layout_marginTop="@dimen/sif_et_margin_top"
+            android:layout_marginBottom="@dimen/overall_et_margin_bottom"
+            android:layout_marginTop="@dimen/overall_et_margin_top"
             android:background="@color/colorPrimary" />
 
         <RadioButton android:id="@+id/wsgh_yes_rb"

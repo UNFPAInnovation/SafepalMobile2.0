@@ -2,15 +2,22 @@
     <string name="app_name">Safepal</string>
     <string name="action_settings">Settings</string>
 
+    <!--Overall strings for FABs-->
+    <string name="overall_exit">Exit App</string>
+    <string name="overall_fab_back">Back</string>
+    <string name="overall_fab_next">Next</string>
+    <string name="overall_fab_submit">Submit</string>
+
     <!-- menu strings-->
     <string name="action_home_help">Home</string>
     <string name="action_home_getting_started">Getting Started</string>
     <string name="action_home_about">About</string>
 
     <!-- Home Activity strings-->
+
+    <!-- Floationg Action Button-->
+    <string name="home_fab_report">Report Sexual Violence</string>
     <string name="home_activity_title">SafePal</string>
-
-
     <!-- Who is getting help strings -->
     <string name="wsgh_activity_title"> Getting Help</string>
     <string name="wsgh_msgs_to_ecourage_survivor"> Messages to encourage the survivor or friend to report an incident - Programme team</string>
@@ -28,8 +35,8 @@
 
     <!-- survivor incident form strings -->
     <string name="sif_activity_title">Getting Help </string>
-    <string name="sif_survivor_age">How old are you? </string>
-    <string name="sif_survivor_pick_age">Date of Birth </string>
+    <string name="sif_survivor_age">When is your birthday? </string>
+    <string name="sif_survivor_pick_age">choose a date </string>
     <string name="sif_survivor_gender">Are you a Boy or Girl?</string>
     <string name="sif_survivor_gender_above_18">Are you a Man or Woman? </string>
     <string name="sif_incident_location">Where did it happen? </string>

@@ -1,7 +1,9 @@
 package com.unfpa.safepal.report;
 
+import android.content.ContentResolver;
 import android.content.ContentValues;
 import android.content.Intent;
+import android.database.Cursor;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
@@ -18,6 +20,7 @@ import android.widget.EditText;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.Spinner;
+import android.widget.TextView;
 import android.widget.Toast;
 
 
@@ -38,6 +41,8 @@ import com.unfpa.safepal.store.ReportIncidentTable;
 
 import org.json.JSONObject;
 
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -58,13 +63,17 @@ public class SurvivorIncidentFormActivity extends AppCompatActivity {
     private RadioButton sifGenderRB;
     private Spinner sifIncidentTypeSpinner;
     private EditText sifIncidentLocationEt, sifIncidentDetailsEt;
+    private String currentDateTime;
+
     //content provider
     private Uri reportIncidentUri;
+    Bundle extras;
     private Snackbar sifFeedbackSnackbar;
 
+    private TextView sifEcouragingMessagesTv;
+
     // Tag used to cancel the request
-    final String tag_json_obj = "json_obj_req";
-    final String URL_SAFEPAL_API = "http://www.thinkitlimited.com/safepal/api/pilot/addselfreport.php";
+    final String URL_SAFEPAL_API = "http://52.43.152.73/api/addselfreport.php";
 
 
 
@@ -88,26 +97,20 @@ public class SurvivorIncidentFormActivity extends AppCompatActivity {
         sifIncidentLocationEt = (EditText)findViewById(R.id.sif_incident_location_actv);
         sifIncidentDetailsEt = (EditText)findViewById(R.id.sif_incident_details_rt);
 
+        sifEcouragingMessagesTv= (TextView) findViewById(R.id.sif_ecouraging_messages_tv);
         //Toolbar
         setSupportActionBar(sifToolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
 
         //content provider
-
-       // Bundle extras = getIntent().getExtras();
+        extras = getIntent().getExtras();
         // check from the saved Instance
         reportIncidentUri = (bundle == null) ? null : (Uri) bundle
                 .getParcelable(ReportIncidentContentProvider.CONTENT_ITEM_TYPE);
 
-        /*// Or passed from the other activity
-        if (extras != null) {
-            reportIncidentUri = extras
-                    .getParcelable(ReportIncidentContentProvider.CONTENT_ITEM_TYPE);
-
-            fillData(reportIncidentUri);
-        }*/
-        //end content provider
+        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("HH : mm : ss_dd/MM/yyyy");
+        currentDateTime = simpleDateFormat.format(new Date());
 
         sifAbortAppFab.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -214,20 +217,29 @@ public class SurvivorIncidentFormActivity extends AppCompatActivity {
             // New reported incident
             reportIncidentUri = getContentResolver().insert(
                     ReportIncidentContentProvider.CONTENT_URI, values);
-            startActivity(new Intent(getApplicationContext(),ReferralActivity.class));
-            //feedback to developer
-            Toast.makeText(getBaseContext(),
-                    " The report has been successfully submitted. ", Toast.LENGTH_LONG).show();
+//            startActivity(new Intent(getApplicationContext(),ReferralActivity.class));
+//            //feedback to developer
+        Toast.makeText(getBaseContext(),currentDateTime, Toast.LENGTH_LONG).show();
+         // Or passed from the other activity
+            if (extras != null) {
+                reportIncidentUri = extras
+                        .getParcelable(ReportIncidentContentProvider.CONTENT_ITEM_TYPE);
+
+                fillData(reportIncidentUri);
+            }
+
 
         } else {
             // Update reported incident
             getContentResolver().update(reportIncidentUri, values, null, null);
         }
-        populateOnline(survivorGender, survivorDateOfBirth, incidentType, incidentLocation, "WTBC", incidentStory, reportedBy);
+        ///populateOnline(survivorGender, survivorDateOfBirth, incidentType, incidentLocation, "WTBC", incidentStory, reportedBy);
         //referral of the user to the CSOs
         //startActivity( new Intent(getBaseContext(), ReferralActivity.class));
 
     }
+
+
 
 
     // Method pushes the data to json server suing volley
@@ -265,5 +277,66 @@ public class SurvivorIncidentFormActivity extends AppCompatActivity {
         RequestQueue requestQueue = Volley.newRequestQueue(this);
         requestQueue.add(stringRequest);
 
+    }
+
+    private void fillData(Uri uri) {
+
+
+        String[] projection = {
+                ReportIncidentTable.COLUMN_SURVIVOR_GENDER,
+                ReportIncidentTable.COLUMN_SURVIVOR_DATE_OF_BIRTH,
+                ReportIncidentTable.COLUMN_INCIDENT_TYPE,
+                ReportIncidentTable.COLUMN_INCIDENT_LOCATION,
+                ReportIncidentTable.COLUMN_INCIDENT_STORY,
+                ReportIncidentTable.COLUMN_REPORTED_BY,
+        };
+
+        Cursor cursor = getContentResolver().query(uri, projection, null, null,
+                null);
+        if (cursor != null) {
+            cursor.moveToFirst();
+            String category = cursor.getString(cursor
+                    .getColumnIndexOrThrow(ReportIncidentTable.COLUMN_SURVIVOR_GENDER));
+
+
+            sifEcouragingMessagesTv.setText(cursor.getString(cursor
+                    .getColumnIndexOrThrow(ReportIncidentTable.COLUMN_SURVIVOR_GENDER)));
+            Toast.makeText(SurvivorIncidentFormActivity.this,cursor.getString(cursor
+                    .getColumnIndexOrThrow(ReportIncidentTable.COLUMN_SURVIVOR_GENDER)),Toast.LENGTH_LONG).show();
+
+            // always close the cursor
+            cursor.close();
+        }
+    }
+
+    // pulls the items from the content provider
+    private void CPLastItem() {
+        // Run query
+        ContentResolver cr = getContentResolver();
+        String[] projection = {
+                ReportIncidentTable.COLUMN_SURVIVOR_GENDER,
+                ReportIncidentTable.COLUMN_SURVIVOR_DATE_OF_BIRTH,
+                ReportIncidentTable.COLUMN_INCIDENT_TYPE,
+                ReportIncidentTable.COLUMN_INCIDENT_LOCATION,
+                ReportIncidentTable.COLUMN_INCIDENT_STORY,
+                ReportIncidentTable.COLUMN_REPORTED_BY,
+        };
+        Uri uri = Uri.parse(ReportIncidentContentProvider.CONTENT_ITEM_TYPE);
+
+        // Submit the query and get a Cursor object back.
+        Cursor cursor = cr.query(reportIncidentUri, projection, null, null, null);
+
+        cursor.moveToFirst();
+
+            String sgFromDp = cursor.getString(0);
+            String sdobFromDp = cursor.getString(1);
+            String itFromCP = cursor.getString(2);
+            String sgFromCP = cursor.getString(3);
+            String inFromCP = cursor.getString(4);
+            String rbFromCP = cursor.getString(5);
+            sifEcouragingMessagesTv.setText("1." + sgFromDp + "2." + sdobFromDp + "3." + itFromCP + "4." + sgFromCP + "5." + inFromCP + "6." + rbFromCP);
+
+
+        cursor.close();
     }
 }

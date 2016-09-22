@@ -21,8 +21,8 @@ public class ReportIncidentContentProvider extends ContentProvider {
     private ReportIncidentDatabaseHelper database;
 
     // used for the UriMacher
-    private static final int TODOS = 10;
-    private static final int TODO_ID = 20;
+    private static final int INCIDENTREPORTS = 10;
+    private static final int INCIDENTREPORTS_ID = 20;
 
     private static final String AUTHORITY = "com.unfpa.safepal.store.contentprovider";
 
@@ -32,8 +32,8 @@ public class ReportIncidentContentProvider extends ContentProvider {
     public static final String CONTENT_ITEM_TYPE = ContentResolver.CURSOR_ITEM_BASE_TYPE  + "/reportincident";
     private static final UriMatcher sURIMatcher = new UriMatcher(UriMatcher.NO_MATCH);
     static {
-        sURIMatcher.addURI(AUTHORITY, BASE_PATH, TODOS);
-        sURIMatcher.addURI(AUTHORITY, BASE_PATH + "/#", TODO_ID);
+        sURIMatcher.addURI(AUTHORITY, BASE_PATH, INCIDENTREPORTS);
+        sURIMatcher.addURI(AUTHORITY, BASE_PATH + "/#", INCIDENTREPORTS_ID);
     }
 
 
@@ -60,9 +60,9 @@ public class ReportIncidentContentProvider extends ContentProvider {
 
         int uriType = sURIMatcher.match(uri);
         switch (uriType) {
-            case TODOS:
+            case INCIDENTREPORTS:
                 break;
-            case TODO_ID:
+            case INCIDENTREPORTS_ID:
                 // adding the ID to the original query
                 queryBuilder.appendWhere(ReportIncidentTable.COLUMN_ID + "="
                         + uri.getLastPathSegment());
@@ -93,7 +93,7 @@ public class ReportIncidentContentProvider extends ContentProvider {
         SQLiteDatabase sqlDB = database.getWritableDatabase();
         long id = 0;
         switch (uriType) {
-            case TODOS:
+            case INCIDENTREPORTS:
                 id = sqlDB.insert(ReportIncidentTable.TABLE_REPORT_INCIDENT, null, values);
                 break;
             default:
@@ -109,10 +109,10 @@ public class ReportIncidentContentProvider extends ContentProvider {
         SQLiteDatabase sqlDB = database.getWritableDatabase();
         int rowsDeleted = 0;
         switch (uriType) {
-            case TODOS:
+            case INCIDENTREPORTS:
                 rowsDeleted = sqlDB.delete(ReportIncidentTable.TABLE_REPORT_INCIDENT, selection, selectionArgs);
                 break;
-            case TODO_ID:
+            case INCIDENTREPORTS_ID:
                 String id = uri.getLastPathSegment();
                 if (TextUtils.isEmpty(selection)) {
                     rowsDeleted = sqlDB.delete(
@@ -139,10 +139,10 @@ public class ReportIncidentContentProvider extends ContentProvider {
         SQLiteDatabase sqlDB = database.getWritableDatabase();
         int rowsUpdated = 0;
         switch (uriType) {
-            case TODOS:
+            case INCIDENTREPORTS:
                 rowsUpdated = sqlDB.update(ReportIncidentTable.TABLE_REPORT_INCIDENT,values,selection,selectionArgs);
                 break;
-            case TODO_ID:
+            case INCIDENTREPORTS_ID:
                 String id = uri.getLastPathSegment();
                 if (TextUtils.isEmpty(selection)) {
                     rowsUpdated = sqlDB.update(ReportIncidentTable.TABLE_REPORT_INCIDENT,

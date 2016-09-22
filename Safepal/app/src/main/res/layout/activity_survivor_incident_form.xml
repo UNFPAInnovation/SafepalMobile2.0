@@ -26,20 +26,57 @@
 
     <include layout="@layout/content_survivor_incident_form" />
 
-    <android.support.design.widget.FloatingActionButton
-        android:id="@+id/sif_abort_app_fab"
+    <!--sif abort button and its label-->
+    <LinearLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="bottom|start"
-        android:layout_margin="@dimen/fab_margin" />
-    <android.support.design.widget.FloatingActionButton
-        android:id="@+id/sif_back_fab"
+        android:layout_margin="@dimen/fab_margin"
+        android:orientation="horizontal">
+        <android.support.design.widget.FloatingActionButton
+            android:id="@+id/sif_abort_app_fab"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/ic_exit_to_app_white_24dp"
+            app:rippleColor="@color/colorOrange"
+            app:fabSize="auto"
+            />
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginLeft="2dp"
+            android:padding="2dp"
+            android:background="@color/colorWhite"
+            android:text="@string/overall_exit"
+            android:textColor="@color/colorAccent"
+            />
+    </LinearLayout>
+
+    <!-- FAB and Text for *Back -->
+    <LinearLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_gravity="bottom"
+        android:layout_gravity="bottom|center"
         android:layout_marginBottom="@dimen/fab_margin"
-        android:layout_marginRight="@dimen/fab_middle_margin"
-        android:src="@drawable/ic_chevron_left_white_48dp"
-        app:backgroundTint="@color/colorOrange"/>
+        android:orientation="horizontal">
+        <android.support.design.widget.FloatingActionButton
+            android:id="@+id/sif_back_fab"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/ic_chevron_left_white_48dp"
+            app:backgroundTint="@color/colorOrange"
+            app:fabSize="auto"/>
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_margin="2dp"
+            android:padding="2dp"
+            android:background="@color/colorWhite"
+            android:text="@string/overall_fab_back"
+            android:textColor="@color/colorOrange"
+            />
+    </LinearLayout>
 
 </android.support.design.widget.CoordinatorLayout>
