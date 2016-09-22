@@ -21,9 +21,9 @@
     <!-- Who is getting help strings -->
     <string name="wsgh_activity_title"> Getting Help</string>
     <string name="wsgh_msgs_to_ecourage_survivor"> Messages to encourage the survivor or friend to report an incident - Programme team</string>
-    <string name="wsgh_happened_to_who">Did sexual violence incident happen to you?</string>
-    <string name="wsgh_yes">Yes</string>
-    <string name="wsgh_someone_else">Someone Else</string>
+    <string name="wsgh_happened_to_who">Was it you the incident happened to?</string>
+    <string name="wsgh_yes">Yes, it was me</string>
+    <string name="wsgh_someone_else">No, to someone else</string>
     <string-array name="wsgh_someone_else_array">
         <item>How are you related to her/him?</item>
         <item>Relative</item>
