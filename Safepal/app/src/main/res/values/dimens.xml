@@ -12,7 +12,8 @@
     <dimen name="sif_et_padding_bottom">10dp</dimen>
     <dimen name="sif_et_margin_top">17dp</dimen>
     <dimen name="sif_et_margin_bottom">17dp</dimen>
-
+    <dimen name="cardview_corner_radius">5dp</dimen>
+    <dimen name="cardview_margin">5dp</dimen>
 
 
 </resources>

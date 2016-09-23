@@ -2,6 +2,10 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.unfpa.safepal">
 
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION"/>
+    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION"/>
+    <uses-permission android:name="android.permission.INTERNET"/>
+
     <application
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
@@ -59,7 +63,7 @@
             android:theme="@style/AppTheme.NoActionBar">
         </activity>
         <activity
-            android:name=".Referral.eferralActivity2"
+            android:name=".Referral.ReferralActivity2"
             android:label="@string/title_activity_eferral2"
             android:parentActivityName=".Referral.ReferralActivity"
             android:theme="@style/AppTheme.NoActionBar">
