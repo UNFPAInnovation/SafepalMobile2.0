@@ -8,6 +8,7 @@
     android:paddingLeft="@dimen/activity_horizontal_margin"
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
+    android:background="@color/colorGrey"
     app:layout_behavior="@string/appbar_scrolling_view_behavior"
     tools:context=".report.WhoSGettingHelpActivity"
     tools:showIn="@layout/activity_who_s_getting_help">
@@ -23,17 +24,35 @@
         android:layout_below="@+id/wsgh_ecouraging_messages_tv"
         android:layout_width="match_parent"
         android:layout_height= "2dp"
-        android:layout_marginBottom="@dimen/sif_et_margin_bottom"
-        android:layout_marginTop="@dimen/sif_et_margin_top"
+        android:layout_marginBottom="@dimen/overall_et_margin_bottom"
+        android:layout_marginTop="@dimen/overall_et_margin_top"
         android:background="@color/colorPrimary" />
 
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/wsgh_happened_to_who"
+        android:textSize="@dimen/wsgh_middle_text"
+        android:textStyle="bold"
+        android:layout_above="@+id/wsgh_second_horizotal_line"
+        />
+    <View
+        android:id="@+id/wsgh_second_horizotal_line"
+        android:layout_width="match_parent"
+        android:layout_height= "2dp"
+        android:layout_marginBottom="@dimen/overall_et_margin_bottom"
+        android:layout_marginTop="@dimen/overall_et_margin_top"
+        android:background="@color/colorPrimary"
+        android:layout_above="@+id/wsgh_who_rg"/>
     <RadioGroup
         android:id="@+id/wsgh_who_rg"
         android:layout_centerInParent="true"
-        android:layout_width="fill_parent"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="vertical">
-        <TextView
+        android:layout_marginTop="10dp"
+        android:gravity="center"
+        android:orientation="horizontal">
+      <!--  <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
 
@@ -45,20 +64,32 @@
             android:layout_below="@+id/wsgh_ecouraging_messages_tv"
             android:layout_width="match_parent"
             android:layout_height= "2dp"
-            android:layout_marginBottom="@dimen/sif_et_margin_bottom"
-            android:layout_marginTop="@dimen/sif_et_margin_top"
-            android:background="@color/colorPrimary" />
+            android:layout_marginBottom="@dimen/overall_et_margin_bottom"
+            android:layout_marginTop="@dimen/overall_et_margin_top"
+            android:background="@color/colorPrimary" />-->
 
         <RadioButton android:id="@+id/wsgh_yes_rb"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:background="@drawable/rbtn_selector"
+            android:button="@null"
+            android:gravity="center"
+            android:padding="5dp"
             android:text="@string/wsgh_yes"
+            android:textColor="@drawable/rbtn_textcolor_selector"
             android:onClick="onWSGHRadioButtonClicked"
            />
         <RadioButton android:id="@+id/wsgh_someoneelse_rb"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:background="@drawable/rbtn_selector"
+            android:button="@null"
+            android:gravity="center"
+            android:padding="5dp"
             android:text="@string/wsgh_someone_else"
+            android:textColor="@drawable/rbtn_textcolor_selector"
             android:onClick="onWSGHRadioButtonClicked"
            />
     </RadioGroup>

@@ -7,6 +7,7 @@
     android:fitsSystemWindows="true"
     tools:context=".home.HomeActivity">
 
+    <!-- AppBar of the Home -->
     <android.support.design.widget.AppBarLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -21,22 +22,61 @@
 
     </android.support.design.widget.AppBarLayout>
 
+    <!-- Contents of the Home Activity-->
     <include layout="@layout/content_home" />
 
-    <android.support.design.widget.FloatingActionButton
-        android:id="@+id/home_abort_app_fab"
+    <!-- FAB and Text for abort app-->
+    <LinearLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="bottom|start"
-        android:layout_margin="@dimen/fab_margin" />
+        android:padding="@dimen/fab_margin"
+        android:orientation="horizontal">
+        <android.support.design.widget.FloatingActionButton
+            android:id="@+id/home_abort_app_fab"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/ic_exit_to_app_white_24dp"
 
-    <android.support.design.widget.FloatingActionButton
-        android:id="@+id/home_report_fab"
+
+            />
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginLeft="2dp"
+            android:padding="2dp"
+            android:background="@color/colorWhite"
+            android:text="@string/overall_exit"
+            android:textColor="@color/colorAccent"
+
+            />
+    </LinearLayout>
+
+
+    <!-- Text and FAB for report a sexual violence incident-->
+    <LinearLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="bottom|end"
-        android:layout_margin="@dimen/fab_margin"
-        android:src="@drawable/ic_border_color_white_24dp"
-        app:backgroundTint="@color/colorPrimary"/>
-
+        android:padding="@dimen/fab_margin"
+        android:orientation="horizontal">
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginRight="2dp"
+            android:padding="2dp"
+            android:background="@color/colorWhite"
+            android:text="@string/home_fab_report"
+            android:textColor="@color/colorPrimary"
+            />
+        <android.support.design.widget.FloatingActionButton
+            android:id="@+id/home_report_fab"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/ic_border_color_white_24dp"
+            app:backgroundTint="@color/colorPrimary"
+             />
+    </LinearLayout>
 </android.support.design.widget.CoordinatorLayout>
