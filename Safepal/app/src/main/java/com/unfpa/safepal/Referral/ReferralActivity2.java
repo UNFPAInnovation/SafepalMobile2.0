@@ -9,7 +9,7 @@ import android.view.View;
 
 import com.unfpa.safepal.R;
 
-public class eferralActivity2 extends AppCompatActivity {
+public class ReferralActivity2 extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
