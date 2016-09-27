@@ -1,7 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.unfpa.safepal">
-    <uses-permission android:name="android.permission.INTERNET" />
+
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION"/>
+    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION"/>
+    <uses-permission android:name="android.permission.INTERNET"/>
+
     <application
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
@@ -13,10 +17,6 @@
             android:name=".home.HomeActivity"
             android:label="@string/home_activity_title"
             android:theme="@style/AppTheme.NoActionBar">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
 
         </activity>
 
@@ -39,7 +39,10 @@
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value=".report.WhoSGettingHelpActivity" />
-
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
         </activity>
 
         <activity
@@ -58,12 +61,9 @@
             android:name=".Referral.ReferralActivity"
             android:label="@string/title_activity_referral"
             android:theme="@style/AppTheme.NoActionBar">
-            <meta-data
-                android:name="android.support.PARENT_ACTIVITY"
-                android:value=".home.HomeActivity" />
         </activity>
         <activity
-            android:name=".Referral.eferralActivity2"
+            android:name=".Referral.ReferralActivity2"
             android:label="@string/title_activity_eferral2"
             android:parentActivityName=".Referral.ReferralActivity"
             android:theme="@style/AppTheme.NoActionBar">

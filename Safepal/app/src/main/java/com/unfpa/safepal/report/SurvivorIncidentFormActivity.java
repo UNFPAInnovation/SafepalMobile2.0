@@ -131,7 +131,8 @@ public class SurvivorIncidentFormActivity extends AppCompatActivity {
         // Apply the sifIncidentTypeAdapter to the spinner
         sifIncidentTypeSpinner.setAdapter(sifIncidentTypeAdapter);
 
-
+        //// TODO: 21-Sep-16 @Jingo don't woory about this. Its my short cut when coding
+        //startActivity(new Intent( getBaseContext(), ReferralActivity.class));
     }
 
     public void showDatePickerDialog(View v) {
