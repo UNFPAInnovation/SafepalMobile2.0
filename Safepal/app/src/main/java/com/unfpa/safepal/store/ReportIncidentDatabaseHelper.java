@@ -10,7 +10,7 @@ import android.database.sqlite.SQLiteOpenHelper;
 public class ReportIncidentDatabaseHelper extends SQLiteOpenHelper {
 
     private static final String DATABASE_NAME = "reportincidenttable.db";
-    private static final int DATABASE_VERSION = 1;
+    private static final int DATABASE_VERSION = 2;
 
     public ReportIncidentDatabaseHelper(Context context) {
         super(context, DATABASE_NAME, null, DATABASE_VERSION);

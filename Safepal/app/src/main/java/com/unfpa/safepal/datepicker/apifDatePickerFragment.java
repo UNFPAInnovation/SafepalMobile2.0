@@ -2,21 +2,19 @@ package com.unfpa.safepal.datepicker;
 
 import android.app.DatePickerDialog;
 import android.app.Dialog;
-import android.content.Context;
 import android.os.Bundle;
 import android.support.v4.app.DialogFragment;
 import android.widget.Button;
 import android.widget.DatePicker;
-
 
 import com.unfpa.safepal.R;
 
 import java.util.Calendar;
 
 /**
- * Created by root on 2/16/16.
+ * Created by Kisa on 9/23/2016.
  */
-public class DatePickerFragment extends DialogFragment
+public class apifDatePickerFragment extends DialogFragment
         implements DatePickerDialog.OnDateSetListener {
 
 
@@ -34,7 +32,7 @@ public class DatePickerFragment extends DialogFragment
 
     public void onDateSet(DatePicker view, int year, int month, int day) {
         //assign the date to the button
-       Button rfyButtonDate = (Button)getActivity().findViewById(R.id.sif_date_of_birth_button);
+        Button rfyButtonDate = (Button)getActivity().findViewById(R.id.apif_date_of_birth_button);
         rfyButtonDate.setText( String.valueOf(month)+" / "+ String.valueOf(day)+" / "+ String.valueOf(year));
     }
 }

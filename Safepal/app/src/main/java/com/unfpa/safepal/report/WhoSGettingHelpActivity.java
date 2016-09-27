@@ -104,15 +104,27 @@ public class WhoSGettingHelpActivity extends AppCompatActivity {
                         startActivity(apifIntent);
 
                     }
-
-
-
-
-
-            }
+       }
         });
     }
 
+    public void onWSGHRadioButtonClicked(View view) {
+        // Is the button now checked?
+        boolean checked = ((RadioButton) view).isChecked();
+
+        // Check which radio button was clicked
+        switch(view.getId()) {
+            case R.id.wsgh_yes_rb:
+                if (checked)
+                    // Pirates are the best
+                wsghRelationshipSpinner.setVisibility(View.GONE);
+                    break;
+            case R.id.wsgh_someoneelse_rb:
+                if (checked)
+                  wsghRelationshipSpinner.setVisibility(View.VISIBLE);
+                    break;
+        }
+    }
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
@@ -133,24 +145,6 @@ public class WhoSGettingHelpActivity extends AppCompatActivity {
         }
 
         return super.onOptionsItemSelected(item);
-    }
-
-    public void onWSGHRadioButtonClicked(View view) {
-        // Is the button now checked?
-        boolean checked = ((RadioButton) view).isChecked();
-
-        // Check which radio button was clicked
-        switch(view.getId()) {
-            case R.id.wsgh_yes_rb:
-                if (checked)
-                    // Pirates are the best
-                wsghRelationshipSpinner.setVisibility(View.GONE);
-                    break;
-            case R.id.wsgh_someoneelse_rb:
-                if (checked)
-                  wsghRelationshipSpinner.setVisibility(View.VISIBLE);
-                    break;
-        }
     }
 
 }

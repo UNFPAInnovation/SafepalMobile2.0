@@ -28,6 +28,7 @@
         android:layout_marginBottom="@dimen/overall_et_margin_bottom"
         android:layout_marginTop="@dimen/overall_et_margin_top"
         android:background="@color/colorPrimary" />
+    <!-- Age Textbox and Button-->
     <LinearLayout
         android:id="@+id/sif_age_linear_layout"
         android:layout_below="@+id/sif_horizotal_line"
@@ -36,19 +37,22 @@
         android:orientation="horizontal">
         <TextView
             android:id="@+id/sif_age_tv"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="2"
-            android:text="@string/sif_survivor_age"
-            android:textSize="16dp"/>
-        <Button
-            android:id="@+id/sif_date_of_birth_button"
-            android:layout_width="0dp"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:padding="@dimen/overall_et_padding_top"
-            android:text="@string/sif_survivor_pick_age"
+            android:text="@string/sif_survivor_age"
+
+            />
+        <Button
+            android:id="@+id/sif_date_of_birth_button"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:layout_marginRight="16dp"
+            android:background="@drawable/rbtn_rb_selector"
             android:onClick="showDatePickerDialog"
+            android:text="@string/sif_survivor_pick_age"
+            android:textColor="@drawable/rbtn_rb_textcolor_selector"
 
             />
     </LinearLayout>
@@ -60,17 +64,18 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="@dimen/overall_et_margin_top"
         android:layout_marginBottom="@dimen/overall_et_margin_bottom"
+        android:layout_marginRight="16dp"
         android:orientation="horizontal">
         <TextView
             android:id="@+id/sif_gender_tv"
-            android:layout_width="0dp"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_weight="2"
             android:text="@string/sif_survivor_gender"
             android:textSize="16dp"/>
         <RadioGroup
             android:id="@+id/sif_gender_rg"
-            android:layout_width="0dp"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:orientation="horizontal">
@@ -78,12 +83,24 @@
                 android:id="@+id/sif_gender_girl_rb"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="@string/sif_female"/>
+                android:layout_weight="1"
+                android:background="@drawable/rbtn_rb_selector"
+                android:button="@null"
+                android:gravity="center"
+                android:padding="5dp"
+                android:text="@string/sif_female"
+                android:textColor="@drawable/rbtn_rb_textcolor_selector"/>
             <RadioButton
                 android:id="@+id/sif_gender_boy_rb"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="@string/sif_male"/>
+                android:layout_weight="1"
+                android:background="@drawable/rbtn_rb_selector"
+                android:button="@null"
+                android:gravity="center"
+                android:padding="5dp"
+                android:text="@string/sif_male"
+                android:textColor="@drawable/rbtn_rb_textcolor_selector"/>
         </RadioGroup>
 
     </LinearLayout>
@@ -132,6 +149,7 @@
             android:inputType="text|textMultiLine"
             android:maxLines="3"
             android:background="@color/colorWhite"
+            android:textColor="@drawable/rbtn_rb_textcolor_selector"
             />
         <!-- FAB and Text for submit -->
         <LinearLayout

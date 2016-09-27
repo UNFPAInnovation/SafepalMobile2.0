@@ -65,7 +65,7 @@
             android:layout_height="wrap_content"
             android:src="@drawable/ic_chevron_left_white_48dp"
             app:backgroundTint="@color/colorOrange"
-            app:fabSize="auto"/>
+            app:fabSize="mini"/>
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -102,7 +102,7 @@
             android:layout_height="wrap_content"
             android:src="@drawable/ic_chevron_right_white_48dp"
             app:backgroundTint="@color/colorPrimary"
-            app:fabSize="auto"/>
+            app:fabSize="mini"/>
 
     </LinearLayout>
 </android.support.design.widget.CoordinatorLayout>

@@ -37,7 +37,7 @@
     <string name="sif_activity_title">Getting Help </string>
     <string name="sif_survivor_age">When is your birthday? </string>
     <string name="sif_survivor_pick_age">choose a date </string>
-    <string name="sif_survivor_gender">Are you a Boy or Girl?</string>
+    <string name="sif_survivor_gender">Are you ?</string>
     <string name="sif_survivor_gender_above_18">Are you a Man or Woman? </string>
     <string name="sif_incident_location">Where did it happen? </string>
     <string name="sif_incident_details">Tell the story of the incident.</string>
@@ -45,27 +45,29 @@
     <string name="sif_female">Girl </string>
     <string-array name="sif_incident_type">
         <item>What happened to you? </item>
+        <item>Bad touches </item>
+        <item>Someone tried to rape me</item>
         <item>I was raped.</item>
         <item>I was defiled.</item>
-        <item>I forced into gay practices.</item>
-        <item>They forced an object in to my private parts.</item>
+        <item>other</item>
     </string-array>
 
     <!-- another person incident form strings -->
     <string name="apif_activity_title">Getting Help </string>
     <string name="apif_survivor_age">How old is she/he? </string>
-    <string name="apif_survivor_gender">Is she/he a Boy or Girl?</string>
+    <string name="apif_survivor_gender">Is He or She ? </string>
     <string name="apif_survivor_gender_above_18">Is she/he a Man or Woman? </string>
     <string name="apif_incident_location">Where did it happen? </string>
     <string name="apif_incident_details">Tell the story of the incident.</string>
     <string name="apif_male">Boy </string>
     <string name="apif_female">Girl </string>
     <string-array name="apif_incident_type">
-        <item>What happened to her/him.</item>
-        <item>She/he was raped.</item>
-        <item>She/he was defiled.</item>
-        <item>She/he was forced into gay practices.</item>
-        <item>They forced an object in to my private parts.</item>
+        <item>What happened to you? </item>
+        <item>Bad touches </item>
+        <item>Someone tried to rape me</item>
+        <item>He/She was raped.</item>
+        <item>He/She was defiled.</item>
+        <item>other</item>
     </string-array>
     <string name="title_activity_main_activitysdas">MainActivitysdas</string>
     <string name="title_activity_referral">ReferralActivity</string>

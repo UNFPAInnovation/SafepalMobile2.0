@@ -49,30 +49,30 @@ import java.util.Map;
 
 public class SurvivorIncidentFormActivity extends AppCompatActivity {
 
-    /**
+    /*
      * sif - Stands for "Survivor Incident Form"
      * */
-    //Global Variables
+
+    /*** Global Variables **/
+
+    //User Interface
     Toolbar sifToolbar;
-
     FloatingActionButton sifAbortAppFab, sifBackFab, sifSubmitFab;
-
+    //Form
     private Button sifDateOfBirthButton;
-
     private RadioGroup sifGenderRG;
     private RadioButton sifGenderRB;
     private Spinner sifIncidentTypeSpinner;
     private EditText sifIncidentLocationEt, sifIncidentDetailsEt;
+    private TextView sifEcouragingMessagesTv;
+    private Snackbar sifFeedbackSnackbar;
+
+    //system
     private String currentDateTime;
 
     //content provider
-    private Uri reportIncidentUri;
     Bundle extras;
-    private Snackbar sifFeedbackSnackbar;
-
-    private TextView sifEcouragingMessagesTv;
-
-    // Tag used to cancel the request
+    private Uri reportIncidentUri;
     final String URL_SAFEPAL_API = "http://52.43.152.73/api/addselfreport.php";
 
 
@@ -83,7 +83,6 @@ public class SurvivorIncidentFormActivity extends AppCompatActivity {
         setContentView(R.layout.activity_survivor_incident_form);
 
         sifToolbar = (Toolbar) findViewById(R.id.sif_toolbar);
-
         //Abort fab of  sif activity
         sifAbortAppFab = (FloatingActionButton) findViewById(R.id.sif_abort_app_fab);
         //Back fab of  sif activity
@@ -108,9 +107,6 @@ public class SurvivorIncidentFormActivity extends AppCompatActivity {
         // check from the saved Instance
         reportIncidentUri = (bundle == null) ? null : (Uri) bundle
                 .getParcelable(ReportIncidentContentProvider.CONTENT_ITEM_TYPE);
-
-        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("HH : mm : ss_dd/MM/yyyy");
-        currentDateTime = simpleDateFormat.format(new Date());
 
         sifAbortAppFab.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -150,7 +146,6 @@ public class SurvivorIncidentFormActivity extends AppCompatActivity {
      */
     public void onClickAddIncidentSurvivor(View view) {
 
-
         int genderRBId = sifGenderRG.getCheckedRadioButtonId();
 
         //checks if gender radio group isn't selected;
@@ -173,8 +168,9 @@ public class SurvivorIncidentFormActivity extends AppCompatActivity {
         String incidentType =(String)sifIncidentTypeSpinner.getSelectedItem();
         String incidentLocation = sifIncidentLocationEt.getText().toString();
         String incidentStory = sifIncidentDetailsEt.getText().toString();;
-        String uniqueIdentifier = "test_uid";;
+        String uniqueIdentifier = "testuid";;
 
+        Intent referralIntet = new Intent(getApplicationContext(),ReferralActivity.class);
 
 
         if(sifDateOfBirthButton.getText().toString()== getResources().getText(R.string.sif_survivor_pick_age)){
@@ -215,25 +211,24 @@ public class SurvivorIncidentFormActivity extends AppCompatActivity {
 
         if (reportIncidentUri == null) {
             // New reported incident
-            reportIncidentUri = getContentResolver().insert(
-                    ReportIncidentContentProvider.CONTENT_URI, values);
-//            startActivity(new Intent(getApplicationContext(),ReferralActivity.class));
-//            //feedback to developer
+            reportIncidentUri = getContentResolver().insert(ReportIncidentContentProvider.CONTENT_URI, values);
+            startActivity(referralIntet);
+                        //
+                        // feedback to developer
         Toast.makeText(getBaseContext(),currentDateTime, Toast.LENGTH_LONG).show();
          // Or passed from the other activity
-            if (extras != null) {
-                reportIncidentUri = extras
-                        .getParcelable(ReportIncidentContentProvider.CONTENT_ITEM_TYPE);
+                Toast.makeText(getBaseContext(),
+                        " The report has been successfully submitted. ", Toast.LENGTH_LONG).show();
 
-                fillData(reportIncidentUri);
-            }
 
 
         } else {
             // Update reported incident
             getContentResolver().update(reportIncidentUri, values, null, null);
         }
-        ///populateOnline(survivorGender, survivorDateOfBirth, incidentType, incidentLocation, "WTBC", incidentStory, reportedBy);
+        populateOnline(survivorGender, survivorDateOfBirth, incidentType, incidentLocation, "WTBC", incidentStory, reportedBy);
+
+        ///;
         //referral of the user to the CSOs
         //startActivity( new Intent(getBaseContext(), ReferralActivity.class));
 
@@ -246,11 +241,13 @@ public class SurvivorIncidentFormActivity extends AppCompatActivity {
     private void populateOnline(final String toServerSGender, final String toServerSDOB, final String toServerIType,
                                 final String toServerILocation, final String toServerStatus, final String toServerIDescription,
                                 final String toServerReportedBy){
+
         StringRequest stringRequest = new StringRequest(Request.Method.POST, URL_SAFEPAL_API,
                 new Response.Listener<String>() {
                     @Override
                     public void onResponse(String response) {
                         Toast.makeText(SurvivorIncidentFormActivity.this,response.toString(),Toast.LENGTH_LONG).show();
+                        //sendUniqueIdIntent.putExtra("fromOnlineUniqueId", response.toString());
                     }
                 },
                 new Response.ErrorListener() {
@@ -271,6 +268,11 @@ public class SurvivorIncidentFormActivity extends AppCompatActivity {
                 params.put("reported_by", toServerReportedBy);
                 return params;
             }
+
+            @Override
+            protected void deliverResponse(String response) {
+
+            }
         };
 
 // Adding request to request queue
@@ -279,7 +281,7 @@ public class SurvivorIncidentFormActivity extends AppCompatActivity {
 
     }
 
-    private void fillData(Uri uri) {
+    private void fffillData(Uri uri) {
 
 
         String[] projection = {

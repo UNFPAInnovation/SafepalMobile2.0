@@ -15,6 +15,9 @@ public class ReportIncidentTable {
     public static final String COLUMN_SURVIVOR_GENDER = "survivor_gender";
     public static final String COLUMN_INCIDENT_TYPE = "incident_type";
     public static final String COLUMN_INCIDENT_LOCATION = "incident_location";
+    public static final String COLUMN_REPORTERS_LOCATION_NAME = "incident_location";
+    public static final String COLUMN_REPORTERS_LOCATION_LAT = "incident_location_lat";
+    public static final String COLUMN_REPORTERS_LOCATION_LAG = "incident_location_lag";
     public static final String COLUMN_INCIDENT_STORY = "incident_story";
     public static final String COLUMN_UNIQUE_IDENTIFIER = "unique_identifier";
 
