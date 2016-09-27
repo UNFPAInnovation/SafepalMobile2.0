@@ -9,6 +9,7 @@ import android.widget.DatePicker;
 
 import com.unfpa.safepal.R;
 
+import java.text.DateFormatSymbols;
 import java.util.Calendar;
 
 /**
@@ -33,6 +34,11 @@ public class apifDatePickerFragment extends DialogFragment
     public void onDateSet(DatePicker view, int year, int month, int day) {
         //assign the date to the button
         Button rfyButtonDate = (Button)getActivity().findViewById(R.id.apif_date_of_birth_button);
-        rfyButtonDate.setText( String.valueOf(month)+" / "+ String.valueOf(day)+" / "+ String.valueOf(year));
+        rfyButtonDate.setText( String.valueOf(day)+" - "+ getMonth(month)+" - "+ String.valueOf(year));
     }
+    //Coverstion of month from interger to text
+    public String getMonth(int month) {
+        return new DateFormatSymbols().getMonths()[month-1];
+    }
+
 }

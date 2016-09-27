@@ -73,6 +73,8 @@ public class SurvivorIncidentFormActivity extends AppCompatActivity {
     //content provider
     Bundle extras;
     private Uri reportIncidentUri;
+
+    //Volley requests
     final String URL_SAFEPAL_API = "http://52.43.152.73/api/addselfreport.php";
 
 
@@ -81,6 +83,11 @@ public class SurvivorIncidentFormActivity extends AppCompatActivity {
     protected void onCreate(Bundle bundle) {
         super.onCreate(bundle);
         setContentView(R.layout.activity_survivor_incident_form);
+        // Volley Request
+        // check from the saved Instance
+        reportIncidentUri = (bundle == null) ? null : (Uri) bundle
+                .getParcelable(ReportIncidentContentProvider.CONTENT_ITEM_TYPE);
+
 
         sifToolbar = (Toolbar) findViewById(R.id.sif_toolbar);
         //Abort fab of  sif activity
@@ -104,9 +111,6 @@ public class SurvivorIncidentFormActivity extends AppCompatActivity {
 
         //content provider
         extras = getIntent().getExtras();
-        // check from the saved Instance
-        reportIncidentUri = (bundle == null) ? null : (Uri) bundle
-                .getParcelable(ReportIncidentContentProvider.CONTENT_ITEM_TYPE);
 
         sifAbortAppFab.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -136,8 +140,9 @@ public class SurvivorIncidentFormActivity extends AppCompatActivity {
     }
 
     public void showDatePickerDialog(View v) {
-        DialogFragment newFragment = new DatePickerFragment();
-        newFragment.show(getSupportFragmentManager(), "datePicker");
+        DialogFragment dateFragment = new DatePickerFragment();
+
+        dateFragment.show(getSupportFragmentManager(), "datePicker");
     }
 
 
@@ -214,20 +219,14 @@ public class SurvivorIncidentFormActivity extends AppCompatActivity {
             // New reported incident
             reportIncidentUri = getContentResolver().insert(ReportIncidentContentProvider.CONTENT_URI, values);
             startActivity(referralIntet);
-                        //
-                        // feedback to developer
-        Toast.makeText(getBaseContext(),currentDateTime, Toast.LENGTH_LONG).show();
-         // Or passed from the other activity
-                Toast.makeText(getBaseContext(),
-                        " The report has been successfully submitted. ", Toast.LENGTH_LONG).show();
-
-
-
+               // Or passed from the other activity
+                Toast.makeText(getBaseContext(), " The report is temporarily stored. Awaiting Network Connection.", Toast.LENGTH_LONG).show();
         } else {
             // Update reported incident
             getContentResolver().update(reportIncidentUri, values, null, null);
         }
-        populateOnline(survivorGender, survivorDateOfBirth, incidentType, incidentLocation, "WTBC", incidentStory, reportedBy);
+       retrieveReport();
+        //populateOnline(survivorGender, survivorDateOfBirth, incidentType, incidentLocation, "WTBC", incidentStory, reportedBy);
 
         ///;
         //referral of the user to the CSOs
@@ -239,8 +238,12 @@ public class SurvivorIncidentFormActivity extends AppCompatActivity {
 
 
     // Method pushes the data to json server suing volley
-    private void populateOnline(final String toServerSGender, final String toServerSDOB, final String toServerIType,
-                                final String toServerILocation, final String toServerStatus, final String toServerIDescription,
+    private void populateOnline(final String toServerSGender,
+                                final String toServerSDOB,
+                                final String toServerIType,
+                                final String toServerILocation,
+                                final String toServerStatus,
+                                final String toServerIDescription,
                                 final String toServerReportedBy){
 
         StringRequest stringRequest = new StringRequest(Request.Method.POST, URL_SAFEPAL_API,
@@ -282,64 +285,39 @@ public class SurvivorIncidentFormActivity extends AppCompatActivity {
 
     }
 
-    private void fffillData(Uri uri) {
 
+    public void retrieveReport() {
 
-        String[] projection = {
-                ReportIncidentTable.COLUMN_SURVIVOR_GENDER,
-                ReportIncidentTable.COLUMN_SURVIVOR_DATE_OF_BIRTH,
-                ReportIncidentTable.COLUMN_INCIDENT_TYPE,
-                ReportIncidentTable.COLUMN_INCIDENT_LOCATION,
-                ReportIncidentTable.COLUMN_INCIDENT_STORY,
-                ReportIncidentTable.COLUMN_REPORTED_BY,
-        };
+        // Retrieve report records
+        //send them into a volley request
 
-        Cursor cursor = getContentResolver().query(uri, projection, null, null,
-                null);
-        if (cursor != null) {
-            cursor.moveToFirst();
-            String category = cursor.getString(cursor
-                    .getColumnIndexOrThrow(ReportIncidentTable.COLUMN_SURVIVOR_GENDER));
+        Uri uriReturnReports = Uri.parse(ReportIncidentContentProvider.CONTENT_URI + "/");
+        Cursor c = managedQuery(uriReturnReports, null, null, null, null);
 
+        if (c != null) {
+            c.moveToLast();
+            Toast.makeText(this,
+                    c.getString(c.getColumnIndex(ReportIncidentTable.COLUMN_ID)) +
+                            ", " +  c.getString(c.getColumnIndex(  ReportIncidentTable.COLUMN_REPORTED_BY)) +
+                            ", " +  c.getString(c.getColumnIndex(  ReportIncidentTable.COLUMN_SURVIVOR_DATE_OF_BIRTH)) +
+                            ", " +  c.getString(c.getColumnIndex(  ReportIncidentTable.COLUMN_SURVIVOR_GENDER)) +
+                            ", " +  c.getString(c.getColumnIndex(  ReportIncidentTable.COLUMN_INCIDENT_TYPE)) +
+                            ", " + c.getString(c.getColumnIndex( ReportIncidentTable.COLUMN_INCIDENT_STORY)),
+                    Toast.LENGTH_LONG).show();
 
-            sifEcouragingMessagesTv.setText(cursor.getString(cursor
-                    .getColumnIndexOrThrow(ReportIncidentTable.COLUMN_SURVIVOR_GENDER)));
-            Toast.makeText(SurvivorIncidentFormActivity.this,cursor.getString(cursor
-                    .getColumnIndexOrThrow(ReportIncidentTable.COLUMN_SURVIVOR_GENDER)),Toast.LENGTH_LONG).show();
-
+            populateOnline(
+                    c.getString(c.getColumnIndex(  ReportIncidentTable.COLUMN_SURVIVOR_GENDER)),
+                    c.getString(c.getColumnIndex(  ReportIncidentTable.COLUMN_SURVIVOR_DATE_OF_BIRTH)),
+                    c.getString(c.getColumnIndex(  ReportIncidentTable.COLUMN_INCIDENT_TYPE)),
+                    c.getString(c.getColumnIndex(  ReportIncidentTable.COLUMN_INCIDENT_LOCATION)),
+                    "WTBD",
+                    c.getString(c.getColumnIndex(  ReportIncidentTable.COLUMN_INCIDENT_STORY)),
+                    c.getString(c.getColumnIndex(  ReportIncidentTable.COLUMN_REPORTED_BY))
+                    );
             // always close the cursor
-            cursor.close();
+            c.close();
         }
     }
 
-    // pulls the items from the content provider
-    private void CPLastItem() {
-        // Run query
-        ContentResolver cr = getContentResolver();
-        String[] projection = {
-                ReportIncidentTable.COLUMN_SURVIVOR_GENDER,
-                ReportIncidentTable.COLUMN_SURVIVOR_DATE_OF_BIRTH,
-                ReportIncidentTable.COLUMN_INCIDENT_TYPE,
-                ReportIncidentTable.COLUMN_INCIDENT_LOCATION,
-                ReportIncidentTable.COLUMN_INCIDENT_STORY,
-                ReportIncidentTable.COLUMN_REPORTED_BY,
-        };
-        Uri uri = Uri.parse(ReportIncidentContentProvider.CONTENT_ITEM_TYPE);
 
-        // Submit the query and get a Cursor object back.
-        Cursor cursor = cr.query(reportIncidentUri, projection, null, null, null);
-
-        cursor.moveToFirst();
-
-            String sgFromDp = cursor.getString(0);
-            String sdobFromDp = cursor.getString(1);
-            String itFromCP = cursor.getString(2);
-            String sgFromCP = cursor.getString(3);
-            String inFromCP = cursor.getString(4);
-            String rbFromCP = cursor.getString(5);
-            sifEcouragingMessagesTv.setText("1." + sgFromDp + "2." + sdobFromDp + "3." + itFromCP + "4." + sgFromCP + "5." + inFromCP + "6." + rbFromCP);
-
-
-        cursor.close();
-    }
 }
