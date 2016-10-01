@@ -25,10 +25,10 @@
     android:layout_height="match_parent">
 
     <com.unfpa.safepal.Views.TextViews.CustomTextViewNormal
+        android:id="@+id/referral_one_msg_ctv"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/after_submit_msg"
-        android:id="@+id/textViewFillRequest"
         android:layout_alignParentTop="true"
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true"
@@ -46,7 +46,7 @@
         <!--app:cardCornerRadius="@dimen/cardview_corner_radius">-->
 
         <RelativeLayout
-            android:layout_below="@+id/textViewFillRequest"
+            android:layout_below="@+id/referral_one_msg_ctv"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:background="@drawable/rect_shadow">

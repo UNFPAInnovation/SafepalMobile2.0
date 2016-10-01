@@ -8,6 +8,39 @@
     <string name="overall_fab_next">Next</string>
     <string name="overall_fab_submit">Submit</string>
 
+    <!-- messages-->
+    <string-array name="not_your_fault_messages">
+        <item>Whatever happened, was not your fault. No one has the right to sexually violet you.  The blame for a rape lies solely with the rapist. The truth is that what a person wears, what a person says, or how a person acts is never a justification for sexual violence.</item>
+        <item>Most people are raped by people they know. You do not have to protect the perpetrator. Make protecting yourself your priority. Do not worry about protecting the person who raped you.</item>
+        <item>If you want to report the crime to the police, do so. Reporting sexual violence may help protect others from that person — and may help you feel a little less like you were a victim.</item>
+
+    </string-array>
+    <string-array name="seek_medical_care_messages">
+        <item>40% of rape survivors develop sexually transmitted diseases as a result of sexual assault.</item>
+        <item>You should get medical attention right away without changing your clothes, showering, douching, or washing. It can be hard not to clean up, of course — it is a natural human instinct to wash away all traces of a sexual assault. But being examined right away is the best way to ensure you get proper medical treatment.</item>
+        <item>Immediate medical attention helps when people decide to report the crime, providing evidence needed to prosecute the rapist if a criminal case is pursued. If you have been raped and think you do not want to report it, you could change your mind later and having the results of a medical exam can help you do this.</item>
+        <item>Even if you do not get examined right away, it does not mean you cannot get a checkup later. It is always best to see a doctor immediately after a rape, of course. But a person can still go to a doctor or local clinic to get checked out for STDs, pregnancy, or injuries any time after being raped. In some cases, doctors can even gather evidence several days after a rape has occurred.</item>
+       <item>All doctors and nurses will deal with your medical needs confidentially, and they will not inform anyone without your consent</item>
+    </string-array>
+    <string-array name="physical_signs_messages">
+        <item>Beware of torn, stained, or bloody underclothing as one of a physical sign of sexual violence   </item>
+        <item>Beware of pain or itching in genital area as one of a physical sign of sexual violence</item>
+        <item>Beware of difficulty walking or sitting as one of a physical sign of sexual violence</item>
+        <item>Beware of bruises or bleeding in genital areas as one of a physical sign of sexual violence</item>
+        <item>Beware of frequent urinary or yeast infections as one of a physical sign of sexual violence</item>
+        <item>Beware of sexually transmitted diseases as one of a physical sign of sexual violence</item>
+    </string-array>
+
+    <string-array name="behavirol_signs_messages">
+        <item>Chronic depression as a behavioral symptom is far more common than physical ones</item>
+       <item>Pain or itching in genital area is a sign of sexual violence</item>
+        <item>The survivor might have difficulty walking or sitting</item>
+       <item>The Bruises or bleeding in genital areas is a sign of sexual violence</item>
+        <item>Beware of frequent urinary or yeast infections</item>
+        <item> Beware of Sexually transmitted diseases after sexual violence</item>
+
+    </string-array>
+
     <!-- menu strings-->
     <string name="action_home_help">Home</string>
     <string name="action_home_getting_started">Getting Started</string>

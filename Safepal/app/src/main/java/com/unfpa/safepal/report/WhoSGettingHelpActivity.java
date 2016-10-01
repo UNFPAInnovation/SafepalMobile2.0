@@ -12,10 +12,14 @@ import android.view.MenuItem;
 import android.widget.ArrayAdapter;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
+import android.widget.RelativeLayout;
 import android.widget.Spinner;
+import android.widget.TextView;
 
 import com.unfpa.safepal.R;
 import com.unfpa.safepal.home.HomeActivity;
+
+import java.util.Random;
 
 public class WhoSGettingHelpActivity extends AppCompatActivity {
 
@@ -25,6 +29,8 @@ public class WhoSGettingHelpActivity extends AppCompatActivity {
     RadioButton wsghYesRB, wsghSomeelseRb;
     RadioGroup wsghWhoRG;
     Snackbar wsghFeedbackSnackbar;
+    RelativeLayout wsghSpinnerRl;
+    TextView wsghEncouragingMessagesTv;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -45,13 +51,16 @@ public class WhoSGettingHelpActivity extends AppCompatActivity {
         // choose someone else relationship spinner
         wsghRelationshipSpinner = (Spinner) findViewById(R.id.wsgh_relationship_spinner);
 
+        wsghSpinnerRl = (RelativeLayout)findViewById(R.id.wsgh_spinner_rl);
         wsghWhoRG = (RadioGroup)findViewById(R.id.wsgh_who_rg);
         wsghYesRB = (RadioButton)findViewById(R.id.wsgh_yes_rb);
         wsghSomeelseRb = (RadioButton)findViewById(R.id.wsgh_someoneelse_rb);
-
+        wsghEncouragingMessagesTv = (TextView)findViewById(R.id.wsgh_ecouraging_messages_tv);
 
         setSupportActionBar(wsghToolbar);
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        getSupportActionBar().setDisplayShowHomeEnabled(true);
+        getSupportActionBar().setLogo(R.mipmap.ic_launcher);
+        getSupportActionBar().setDisplayUseLogoEnabled(true);
 
         /**  wsghRelationshipSpinner  **/
 
@@ -63,6 +72,8 @@ public class WhoSGettingHelpActivity extends AppCompatActivity {
         // Apply the (wsghRSadapter to the spinner
         wsghRelationshipSpinner.setAdapter(wsghRSadapter);
         /** ends wsghRelationshipSpinner **/
+
+        loadFeedbackMessages();
 
         wsghAbortAppFab.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -117,11 +128,11 @@ public class WhoSGettingHelpActivity extends AppCompatActivity {
             case R.id.wsgh_yes_rb:
                 if (checked)
                     // Pirates are the best
-                wsghRelationshipSpinner.setVisibility(View.GONE);
+                wsghSpinnerRl.setVisibility(View.GONE);
                     break;
             case R.id.wsgh_someoneelse_rb:
                 if (checked)
-                  wsghRelationshipSpinner.setVisibility(View.VISIBLE);
+                    wsghSpinnerRl.setVisibility(View.VISIBLE);
                     break;
         }
     }
@@ -145,6 +156,18 @@ public class WhoSGettingHelpActivity extends AppCompatActivity {
         }
 
         return super.onOptionsItemSelected(item);
+    }
+
+    public void  loadFeedbackMessages(){
+        String[] wsghMessagesArray = getResources().getStringArray(R.array.not_your_fault_messages);
+        wsghEncouragingMessagesTv.setText(wsghMessagesArray[randMessageIndex(0, wsghMessagesArray.length)].toString());
+    }
+
+    //random interger to randomly pick messages from arrays
+    public static int randMessageIndex(int min, int max) {
+        Random randomNum = new Random();
+        int index = randomNum.nextInt(max - min);
+        return index;
     }
 
 }

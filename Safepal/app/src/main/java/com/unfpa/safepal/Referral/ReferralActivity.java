@@ -10,20 +10,38 @@ import android.view.View;
 import android.widget.EditText;
 
 import com.unfpa.safepal.R;
+import com.unfpa.safepal.Views.TextViews.CustomTextViewNormal;
 
 public class ReferralActivity extends AppCompatActivity {
 
+    Toolbar firstReferralToolbar;
     EditText editTextEmail;
     EditText editTextPhone;
+    CustomTextViewNormal referral_one_messages;
+
+    String recieveUniqueId ;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_referral);
-        editTextEmail = (EditText) findViewById(R.id.editText_email);
+        //I have sent here the server unique id from server
+        String recieveUniqueId = getIntent().getStringExtra("SendserverUniqueId");
+
+        referral_one_messages = (CustomTextViewNormal) findViewById(R.id.referral_one_msg_ctv);
+
+        //toolbar
+        firstReferralToolbar = (Toolbar) findViewById(R.id.referral_one_toolbar);
+        setSupportActionBar(firstReferralToolbar);
+        getSupportActionBar().setLogo(R.mipmap.ic_launcher);
+        getSupportActionBar().setDisplayUseLogoEnabled(true);
+
+
+        //Toolbar for Referral One
         editTextPhone = (EditText) findViewById(R.id.editTextPhone);
-        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
-        setSupportActionBar(toolbar);
+        editTextEmail = (EditText) findViewById(R.id.editText_email);
+
+        //update the tv
 
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab_referral);
         fab.setOnClickListener(new View.OnClickListener() {
@@ -51,7 +69,33 @@ public class ReferralActivity extends AppCompatActivity {
 
             }
         });
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+    }
+
+
+    private void updateUniqueCodeTv() {
+        Thread t = new Thread() {
+
+            @Override
+            public void run() {
+                try {
+                    while (!isInterrupted()) {
+                        Thread.sleep(1000);
+                        runOnUiThread(new Runnable() {
+                            @Override
+                            public void run() {
+                                //assignments
+
+                            }
+                        });
+                    }
+                } catch (InterruptedException e) {
+                }
+            }
+        };
+
+        t.start();
     }
 
 }
+
+

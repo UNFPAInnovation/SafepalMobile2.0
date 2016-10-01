@@ -17,7 +17,9 @@
         android:id="@+id/wsgh_ecouraging_messages_tv"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="@string/wsgh_msgs_to_ecourage_survivor" />
+        android:gravity="center"
+        android:text="@string/wsgh_msgs_to_ecourage_survivor"
+        />
 
     <View
         android:id="@+id/wsgh_horizotal_line"
@@ -26,7 +28,7 @@
         android:layout_height= "2dp"
         android:layout_marginBottom="@dimen/overall_et_margin_bottom"
         android:layout_marginTop="@dimen/overall_et_margin_top"
-        android:background="@color/colorPrimary" />
+        android:background="@color/colorGreyDarker" />
 
     <TextView
         android:layout_width="match_parent"
@@ -34,6 +36,8 @@
         android:text="@string/wsgh_happened_to_who"
         android:textSize="@dimen/wsgh_middle_text"
         android:textStyle="bold"
+        android:gravity="center"
+        android:textColor="@color/colorPrimary"
         android:layout_above="@+id/wsgh_second_horizotal_line"
         />
     <View
@@ -42,31 +46,20 @@
         android:layout_height= "2dp"
         android:layout_marginBottom="@dimen/overall_et_margin_bottom"
         android:layout_marginTop="@dimen/overall_et_margin_top"
-        android:background="@color/colorPrimary"
+        android:background="@color/colorGreyDarker"
         android:layout_above="@+id/wsgh_who_rg"/>
     <RadioGroup
         android:id="@+id/wsgh_who_rg"
         android:layout_centerInParent="true"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_margin="20dp"
+        android:layout_marginRight="5dp"
+        android:layout_marginLeft="5dp"
+        android:paddingTop="10dp"
+        android:paddingBottom="10dp"
         android:gravity="center"
         android:orientation="horizontal">
-      <!--  <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
 
-            android:text="@string/wsgh_happened_to_who"
-            android:textSize="@dimen/wsgh_middle_text"
-            android:textStyle="bold"
-            />
-        <View
-            android:layout_below="@+id/wsgh_ecouraging_messages_tv"
-            android:layout_width="match_parent"
-            android:layout_height= "2dp"
-            android:layout_marginBottom="@dimen/overall_et_margin_bottom"
-            android:layout_marginTop="@dimen/overall_et_margin_top"
-            android:background="@color/colorPrimary" />-->
 
         <RadioButton android:id="@+id/wsgh_yes_rb"
             android:layout_width="wrap_content"
@@ -75,8 +68,8 @@
             android:background="@drawable/rbtn_rb_selector"
             android:button="@null"
             android:gravity="center"
-            android:paddingTop="10dp"
-            android:paddingBottom="10dp"
+            android:paddingTop="15dp"
+            android:paddingBottom="15dp"
             android:text="@string/wsgh_yes"
             android:textColor="@drawable/rbtn_rb_textcolor_selector"
             android:onClick="onWSGHRadioButtonClicked"
@@ -88,18 +81,40 @@
             android:background="@drawable/rbtn_rb_selector"
             android:button="@null"
             android:gravity="center"
-            android:paddingTop="10dp"
-            android:paddingBottom="10dp"
+            android:paddingTop="15dp"
+            android:paddingBottom="15dp"
             android:text="@string/wsgh_someone_else"
             android:textColor="@drawable/rbtn_rb_textcolor_selector"
             android:onClick="onWSGHRadioButtonClicked"
            />
     </RadioGroup>
-    <Spinner
-        android:id="@+id/wsgh_relationship_spinner"
-        android:layout_below="@+id/wsgh_who_rg"
-        android:layout_width="match_parent"
+    <RelativeLayout
+        android:id="@+id/wsgh_spinner_rl"
         android:layout_height="wrap_content"
-        android:visibility="gone"
-        />
+        android:layout_width="match_parent"
+        android:layout_below="@+id/wsgh_who_rg"
+        android:layout_marginRight="3dp"
+        android:paddingRight="5dp"
+        android:background="@drawable/rbtn_rb_selector"
+        android:orientation="horizontal"
+        android:visibility="gone">
+
+        <Spinner
+            android:id="@+id/wsgh_relationship_spinner"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:paddingTop="10dp"
+            android:paddingBottom="10dp"
+            android:layout_marginLeft="5dp"
+            android:layout_centerVertical="true"
+            android:gravity="center"
+            />
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:src="@mipmap/drop"/>
+    </RelativeLayout>
+
 </RelativeLayout>

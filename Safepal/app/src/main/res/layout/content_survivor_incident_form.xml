@@ -19,6 +19,7 @@
         android:layout_alignParentLeft="true"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:gravity="center"
         android:text="@string/wsgh_msgs_to_ecourage_survivor"/>
     <View
         android:id="@+id/sif_horizotal_line"
@@ -27,7 +28,8 @@
         android:layout_height= "2dp"
         android:layout_marginBottom="@dimen/overall_et_margin_bottom"
         android:layout_marginTop="@dimen/overall_et_margin_top"
-        android:background="@color/colorPrimary" />
+
+        android:background="@color/colorGreyDarker" />
     <!-- Age Textbox and Button-->
     <LinearLayout
         android:id="@+id/sif_age_linear_layout"
@@ -41,8 +43,7 @@
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:text="@string/sif_survivor_age"
-
-            />
+            android:textSize="16dp" />
         <Button
             android:id="@+id/sif_date_of_birth_button"
             android:layout_width="match_parent"
@@ -71,6 +72,8 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_weight="2"
+            android:gravity="center"
+            android:layout_gravity="center"
             android:text="@string/sif_survivor_gender"
             android:textSize="16dp"/>
         <RadioGroup
@@ -87,7 +90,8 @@
                 android:background="@drawable/rbtn_rb_selector"
                 android:button="@null"
                 android:gravity="center"
-                android:padding="5dp"
+                android:paddingTop="10dp"
+                android:paddingBottom="10dp"
                 android:text="@string/sif_female"
                 android:textColor="@drawable/rbtn_rb_textcolor_selector"/>
             <RadioButton
@@ -98,7 +102,8 @@
                 android:background="@drawable/rbtn_rb_selector"
                 android:button="@null"
                 android:gravity="center"
-                android:padding="5dp"
+                android:paddingTop="10dp"
+                android:paddingBottom="10dp"
                 android:text="@string/sif_male"
                 android:textColor="@drawable/rbtn_rb_textcolor_selector"/>
         </RadioGroup>
@@ -113,25 +118,43 @@
         android:layout_marginBottom="@dimen/overall_et_margin_bottom"
         android:layout_marginRight="@dimen/activity_horizontal_margin"
         android:padding="@dimen/overall_et_padding_top"
-
-        android:background="@color/colorWhite"
+        android:background="@drawable/rbtn_rb_selector"
         android:hint="@string/sif_incident_location"/>
-    <Spinner
-        android:id="@+id/sif_incident_type_spinner"
-        android:layout_below="@+id/sif_incident_location_actv"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginRight="@dimen/activity_horizontal_margin"
-        android:layout_marginTop="@dimen/overall_et_margin_top"
-        android:layout_marginBottom="@dimen/overall_et_margin_bottom">
 
-    </Spinner>
+    <RelativeLayout
+        android:id="@+id/sif_incident_type_spinner_rl"
+        android:layout_height="wrap_content"
+        android:layout_width="match_parent"
+        android:layout_below="@+id/sif_incident_location_actv"
+        android:layout_marginRight="3dp"
+        android:paddingRight="5dp"
+        android:background="@drawable/rbtn_rb_selector"
+        android:orientation="horizontal"
+       >
+
+        <Spinner
+            android:id="@+id/sif_incident_type_spinner"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:paddingTop="10dp"
+            android:paddingBottom="10dp"
+            android:layout_marginLeft="5dp"
+            android:layout_centerVertical="true"
+            android:gravity="center"
+            />
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:src="@mipmap/drop"/>
+    </RelativeLayout>
 
     <!-- EditText and Submit FAB for the story -->
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/sif_incident_type_spinner"
+        android:layout_below="@+id/sif_incident_type_spinner_rl"
         android:layout_marginBottom="6dp"
         android:orientation="horizontal"
 
@@ -148,7 +171,7 @@
             android:hint="@string/sif_incident_details"
             android:inputType="text|textMultiLine"
             android:maxLines="3"
-            android:background="@color/colorWhite"
+            android:background="@drawable/rbtn_rb_selector"
             android:textColor="@drawable/rbtn_rb_textcolor_selector"
             />
         <!-- FAB and Text for submit -->

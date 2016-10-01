@@ -25,26 +25,26 @@ import android.widget.Toast;
 
 
 import com.android.volley.Request;
-import com.android.volley.RequestQueue;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
-import com.android.volley.VolleyLog;
-import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.StringRequest;
-import com.android.volley.toolbox.Volley;
 import com.unfpa.safepal.R;
 import com.unfpa.safepal.Referral.ReferralActivity;
+import com.unfpa.safepal.Views.TextViews.CustomTextViewNormal;
 import com.unfpa.safepal.datepicker.DatePickerFragment;
-import com.unfpa.safepal.network.AppController;
+import com.unfpa.safepal.home.HomeActivity;
+import com.unfpa.safepal.network.MySingleton;
+import com.unfpa.safepal.network.VolleyCallback;
 import com.unfpa.safepal.store.ReportIncidentContentProvider;
 import com.unfpa.safepal.store.ReportIncidentTable;
 
+import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.text.SimpleDateFormat;
-import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
+
+import static com.unfpa.safepal.report.WhoSGettingHelpActivity.randMessageIndex;
 
 
 public class SurvivorIncidentFormActivity extends AppCompatActivity {
@@ -58,17 +58,20 @@ public class SurvivorIncidentFormActivity extends AppCompatActivity {
     //User Interface
     Toolbar sifToolbar;
     FloatingActionButton sifAbortAppFab, sifBackFab, sifSubmitFab;
+    //messages
+    TextView sifEncouragingMessagesTv;
+
     //Form
     private Button sifDateOfBirthButton;
     private RadioGroup sifGenderRG;
     private RadioButton sifGenderRB;
     private Spinner sifIncidentTypeSpinner;
     private EditText sifIncidentLocationEt, sifIncidentDetailsEt;
-    private TextView sifEcouragingMessagesTv;
+
     private Snackbar sifFeedbackSnackbar;
 
-    //system
-    private String currentDateTime;
+    //Intents
+    Intent referralIntent;
 
     //content provider
     Bundle extras;
@@ -96,6 +99,7 @@ public class SurvivorIncidentFormActivity extends AppCompatActivity {
         sifBackFab = (FloatingActionButton) findViewById(R.id.sif_back_fab);
         sifSubmitFab = (FloatingActionButton)findViewById(R.id.sif_submit_fab);
 
+
         sifDateOfBirthButton = (Button)findViewById(R.id.sif_date_of_birth_button);
 
         sifGenderRG=(RadioGroup)findViewById(R.id.sif_gender_rg);
@@ -103,14 +107,19 @@ public class SurvivorIncidentFormActivity extends AppCompatActivity {
         sifIncidentLocationEt = (EditText)findViewById(R.id.sif_incident_location_actv);
         sifIncidentDetailsEt = (EditText)findViewById(R.id.sif_incident_details_rt);
 
-        sifEcouragingMessagesTv= (TextView) findViewById(R.id.sif_ecouraging_messages_tv);
+        sifEncouragingMessagesTv= (TextView) findViewById(R.id.sif_ecouraging_messages_tv);
         //Toolbar
         setSupportActionBar(sifToolbar);
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-
+        getSupportActionBar().setDisplayShowHomeEnabled(true);
+        getSupportActionBar().setLogo(R.mipmap.ic_launcher);
+        getSupportActionBar().setDisplayUseLogoEnabled(true);
 
         //content provider
         extras = getIntent().getExtras();
+
+
+        //messages to user
+        loadSifMessages();
 
         sifAbortAppFab.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -135,8 +144,7 @@ public class SurvivorIncidentFormActivity extends AppCompatActivity {
         // Apply the sifIncidentTypeAdapter to the spinner
         sifIncidentTypeSpinner.setAdapter(sifIncidentTypeAdapter);
 
-        //// TODO: 21-Sep-16 @Jingo don't woory about this. Its my short cut when coding
-        //startActivity(new Intent( getBaseContext(), ReferralActivity.class));
+
     }
 
     public void showDatePickerDialog(View v) {
@@ -176,7 +184,7 @@ public class SurvivorIncidentFormActivity extends AppCompatActivity {
         String incidentStory = sifIncidentDetailsEt.getText().toString();;
         String uniqueIdentifier = "testuid";;
 
-        Intent referralIntet = new Intent(getApplicationContext(),ReferralActivity.class);
+        referralIntent = new Intent(SurvivorIncidentFormActivity.this, ReferralActivity.class);
 
 
         if(sifDateOfBirthButton.getText().toString()== getResources().getText(R.string.sif_survivor_pick_age)){
@@ -218,23 +226,66 @@ public class SurvivorIncidentFormActivity extends AppCompatActivity {
         if (reportIncidentUri == null) {
             // New reported incident
             reportIncidentUri = getContentResolver().insert(ReportIncidentContentProvider.CONTENT_URI, values);
-            startActivity(referralIntet);
+
                // Or passed from the other activity
                 Toast.makeText(getBaseContext(), " The report is temporarily stored. Awaiting Network Connection.", Toast.LENGTH_LONG).show();
+                retrieveUniqueId();
+                startActivity(referralIntent);
+
+
         } else {
             // Update reported incident
             getContentResolver().update(reportIncidentUri, values, null, null);
         }
-       retrieveReport();
-        //populateOnline(survivorGender, survivorDateOfBirth, incidentType, incidentLocation, "WTBC", incidentStory, reportedBy);
 
-        ///;
-        //referral of the user to the CSOs
-        //startActivity( new Intent(getBaseContext(), ReferralActivity.class));
 
     }
 
 
+
+
+    //Returns the unique_id from the server
+    public void retrieveUniqueId() {
+
+        // Retrieve report records
+        //send them into a volley request
+
+        Uri uriReturnReports = Uri.parse(ReportIncidentContentProvider.CONTENT_URI + "/");
+        Cursor c = managedQuery(uriReturnReports, null, null, null, null);
+
+        if (c != null) {
+            c.moveToLast();
+
+            populateOnline(
+                    c.getString(c.getColumnIndex(ReportIncidentTable.COLUMN_SURVIVOR_GENDER)),
+                    c.getString(c.getColumnIndex(ReportIncidentTable.COLUMN_SURVIVOR_DATE_OF_BIRTH)),
+                    c.getString(c.getColumnIndex(ReportIncidentTable.COLUMN_INCIDENT_TYPE)),
+                    c.getString(c.getColumnIndex(ReportIncidentTable.COLUMN_INCIDENT_LOCATION)),
+                    "WTBD",
+                    c.getString(c.getColumnIndex(ReportIncidentTable.COLUMN_INCIDENT_STORY)),
+                    c.getString(c.getColumnIndex(ReportIncidentTable.COLUMN_REPORTED_BY)),
+                    new VolleyCallback() {
+                        @Override
+                        public void onSuccessResponse(String result) {
+                            try {
+                                JSONObject response = new JSONObject(result);
+                                Toast.makeText(SurvivorIncidentFormActivity.this, response.getString("unique_code"),Toast.LENGTH_LONG).show();
+                               //sends the server unique_code to next activity
+                                CustomTextViewNormal referral_one_messages = (CustomTextViewNormal) findViewById(R.id.referral_one_msg_ctv);
+                                referral_one_messages.append("This unique id of the case is "+ response.getString("unique_code"));
+                                referralIntent.putExtra("SendserverUniqueId", response.getString("unique_code"));
+                                // do your work with response object
+                            } catch (JSONException e) {
+                                e.printStackTrace();
+                            }
+                        }
+                    }
+
+            );
+            // always close the cursor
+            c.close();
+        }
+    }
 
 
     // Method pushes the data to json server suing volley
@@ -244,13 +295,17 @@ public class SurvivorIncidentFormActivity extends AppCompatActivity {
                                 final String toServerILocation,
                                 final String toServerStatus,
                                 final String toServerIDescription,
-                                final String toServerReportedBy){
+                                final String toServerReportedBy, final VolleyCallback callback){
+
+       // queue = MySingleton.getInstance(this).getRequestQueue();
 
         StringRequest stringRequest = new StringRequest(Request.Method.POST, URL_SAFEPAL_API,
                 new Response.Listener<String>() {
                     @Override
                     public void onResponse(String response) {
-                        Toast.makeText(SurvivorIncidentFormActivity.this,response.toString(),Toast.LENGTH_LONG).show();
+                        Log.d("reponse", response);
+                        callback.onSuccessResponse(response);
+                      // Toast.makeText(SurvivorIncidentFormActivity.this, response.toString(),Toast.LENGTH_LONG).show();
                         //sendUniqueIdIntent.putExtra("fromOnlineUniqueId", response.toString());
                     }
                 },
@@ -273,51 +328,19 @@ public class SurvivorIncidentFormActivity extends AppCompatActivity {
                 return params;
             }
 
-            @Override
-            protected void deliverResponse(String response) {
-
-            }
         };
+       // Adding request to request queue
+//        RequestQueue requestQueue = Volley.newRequestQueue(this);
+//        requestQueue.add(stringRequest);
 
-// Adding request to request queue
-        RequestQueue requestQueue = Volley.newRequestQueue(this);
-        requestQueue.add(stringRequest);
+        MySingleton.getInstance(this).addToRequestQueue(stringRequest);
 
     }
 
 
-    public void retrieveReport() {
-
-        // Retrieve report records
-        //send them into a volley request
-
-        Uri uriReturnReports = Uri.parse(ReportIncidentContentProvider.CONTENT_URI + "/");
-        Cursor c = managedQuery(uriReturnReports, null, null, null, null);
-
-        if (c != null) {
-            c.moveToLast();
-            Toast.makeText(this,
-                    c.getString(c.getColumnIndex(ReportIncidentTable.COLUMN_ID)) +
-                            ", " +  c.getString(c.getColumnIndex(  ReportIncidentTable.COLUMN_REPORTED_BY)) +
-                            ", " +  c.getString(c.getColumnIndex(  ReportIncidentTable.COLUMN_SURVIVOR_DATE_OF_BIRTH)) +
-                            ", " +  c.getString(c.getColumnIndex(  ReportIncidentTable.COLUMN_SURVIVOR_GENDER)) +
-                            ", " +  c.getString(c.getColumnIndex(  ReportIncidentTable.COLUMN_INCIDENT_TYPE)) +
-                            ", " + c.getString(c.getColumnIndex( ReportIncidentTable.COLUMN_INCIDENT_STORY)),
-                    Toast.LENGTH_LONG).show();
-
-            populateOnline(
-                    c.getString(c.getColumnIndex(  ReportIncidentTable.COLUMN_SURVIVOR_GENDER)),
-                    c.getString(c.getColumnIndex(  ReportIncidentTable.COLUMN_SURVIVOR_DATE_OF_BIRTH)),
-                    c.getString(c.getColumnIndex(  ReportIncidentTable.COLUMN_INCIDENT_TYPE)),
-                    c.getString(c.getColumnIndex(  ReportIncidentTable.COLUMN_INCIDENT_LOCATION)),
-                    "WTBD",
-                    c.getString(c.getColumnIndex(  ReportIncidentTable.COLUMN_INCIDENT_STORY)),
-                    c.getString(c.getColumnIndex(  ReportIncidentTable.COLUMN_REPORTED_BY))
-                    );
-            // always close the cursor
-            c.close();
-        }
+    //load messages to tv
+    public void  loadSifMessages(){
+        String[] sifMessagesArray = getResources().getStringArray(R.array.seek_medical_care_messages);
+        sifEncouragingMessagesTv.setText(sifMessagesArray[randMessageIndex(0, sifMessagesArray.length)].toString());
     }
-
-
 }

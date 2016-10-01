@@ -16,6 +16,7 @@ import android.widget.EditText;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.Spinner;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.unfpa.safepal.R;
@@ -26,6 +27,8 @@ import com.unfpa.safepal.home.HomeActivity;
 import com.unfpa.safepal.store.ReportIncidentContentProvider;
 import com.unfpa.safepal.store.ReportIncidentTable;
 
+import static com.unfpa.safepal.report.WhoSGettingHelpActivity.randMessageIndex;
+
 public class AnotherPersonIncidentFormActivity extends AppCompatActivity {
 
     /**
@@ -34,6 +37,8 @@ public class AnotherPersonIncidentFormActivity extends AppCompatActivity {
 
     //Global Variables
     FloatingActionButton apifAbortAppFab, apifBackFab, apifNextFab;
+
+    TextView apifEncouragingMessagesTv;
 
     //Form variables
     private Button apifDateOfBirthButton;
@@ -59,6 +64,8 @@ public class AnotherPersonIncidentFormActivity extends AppCompatActivity {
         //Back fab of  who's getting help activity
         apifBackFab = (FloatingActionButton) findViewById(R.id.apif_back_fab);
 
+        apifEncouragingMessagesTv = (TextView)findViewById(R.id.apif_ecouraging_messages_tv);
+
        /*** Form initialization **/
         apifGenderRG=(RadioGroup)findViewById(R.id.apif_gender_rg);
         apifIncidentTypeSpinner = (Spinner) findViewById(R.id.apif_incident_type_spinner);
@@ -68,8 +75,11 @@ public class AnotherPersonIncidentFormActivity extends AppCompatActivity {
         apifDateOfBirthButton = (Button)findViewById(R.id.sif_date_of_birth_button);
 
         setSupportActionBar(apifToolbar);
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        getSupportActionBar().setDisplayShowHomeEnabled(true);
+        getSupportActionBar().setLogo(R.mipmap.ic_launcher);
+        getSupportActionBar().setDisplayUseLogoEnabled(true);
 
+        apifLoadMessages();
         apifAbortAppFab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -103,5 +113,10 @@ public class AnotherPersonIncidentFormActivity extends AppCompatActivity {
     public void showApifDatePickerDialog(View v) {
         DialogFragment newFragment = new apifDatePickerFragment();
         newFragment.show(getSupportFragmentManager(), "datePicker");
+    }
+
+    public void apifLoadMessages(){
+        String[] apifMessagesArray = getResources().getStringArray(R.array.seek_medical_care_messages);
+        apifEncouragingMessagesTv.setText(apifMessagesArray[randMessageIndex(0, apifMessagesArray.length)].toString());
     }
 }

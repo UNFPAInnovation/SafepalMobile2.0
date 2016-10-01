@@ -28,6 +28,8 @@ public class ReportIncidentContentProvider extends ContentProvider {
 
     private static final String BASE_PATH = "reportincident";
     public static final Uri CONTENT_URI = Uri.parse("content://" + AUTHORITY + "/" + BASE_PATH);
+
+
     public static final String CONTENT_TYPE = ContentResolver.CURSOR_DIR_BASE_TYPE  + "/store";
     public static final String CONTENT_ITEM_TYPE = ContentResolver.CURSOR_ITEM_BASE_TYPE  + "/reportincident";
     private static final UriMatcher sURIMatcher = new UriMatcher(UriMatcher.NO_MATCH);
