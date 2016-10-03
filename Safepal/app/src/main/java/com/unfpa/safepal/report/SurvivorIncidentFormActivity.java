@@ -33,6 +33,7 @@ import com.unfpa.safepal.Referral.ReferralActivity;
 import com.unfpa.safepal.Views.TextViews.CustomTextViewNormal;
 import com.unfpa.safepal.datepicker.DatePickerFragment;
 import com.unfpa.safepal.home.HomeActivity;
+import com.unfpa.safepal.messages.messageDialog;
 import com.unfpa.safepal.network.MySingleton;
 import com.unfpa.safepal.network.VolleyCallback;
 import com.unfpa.safepal.store.ReportIncidentContentProvider;
@@ -343,4 +344,11 @@ public class SurvivorIncidentFormActivity extends AppCompatActivity {
         String[] sifMessagesArray = getResources().getStringArray(R.array.seek_medical_care_messages);
         sifEncouragingMessagesTv.setText(sifMessagesArray[randMessageIndex(0, sifMessagesArray.length)].toString());
     }
+
+    public void onClickSifEncouragingMessages(View view){
+        messageDialog sifMessageDialog = new messageDialog(sifEncouragingMessagesTv);
+        sifMessageDialog.show(getSupportFragmentManager(), "messages");
+    }
+
+
 }

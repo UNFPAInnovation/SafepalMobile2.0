@@ -20,7 +20,10 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:gravity="center"
-        android:text="@string/wsgh_msgs_to_ecourage_survivor"/>
+        android:text="@string/wsgh_msgs_to_ecourage_survivor"
+        android:ellipsize="end"
+        android:maxLines="3"
+        android:onClick="onClickSifEncouragingMessages"/>
     <View
         android:id="@+id/sif_horizotal_line"
         android:layout_below="@+id/sif_ecouraging_messages_tv"

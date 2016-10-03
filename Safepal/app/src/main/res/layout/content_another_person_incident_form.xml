@@ -27,7 +27,8 @@
         android:layout_height= "2dp"
         android:layout_marginBottom="@dimen/overall_et_margin_bottom"
         android:layout_marginTop="@dimen/overall_et_margin_top"
-        android:background="@color/colorPrimary" />
+        android:background="@color/colorPrimary"
+        android:onClick="onClickApifEncouragingMessages"/>
     <!-- Age Textbox and Button-->
     <LinearLayout
         android:id="@+id/apif_age_linear_layout"

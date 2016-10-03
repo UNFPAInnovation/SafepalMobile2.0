@@ -107,6 +107,8 @@
     <string name="after_submit_msg">Thank you for submitting the Incident. The incident was successfully delivered to SafePal. \nSafePal will in a short while provide you with a person to assist you.</string>
     <string name="title_activity_eferral2">Nearest CSO</string>
     <string name="refferal_two_intro">We have located the nearest ... (CSO) to you.\nThe people at this CSO have already gotten information about this incident and they will be contacting you soon.\nBelow are the details of this CSO.</string>
+    <string name="em_ok">Close</string>
+    <string name="em_not_fault">It\'s not your fault</string>
 
 
 </resources>

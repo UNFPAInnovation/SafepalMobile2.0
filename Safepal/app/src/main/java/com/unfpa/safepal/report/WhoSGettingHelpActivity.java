@@ -18,6 +18,7 @@ import android.widget.TextView;
 
 import com.unfpa.safepal.R;
 import com.unfpa.safepal.home.HomeActivity;
+import com.unfpa.safepal.messages.messageDialog;
 
 import java.util.Random;
 
@@ -170,4 +171,8 @@ public class WhoSGettingHelpActivity extends AppCompatActivity {
         return index;
     }
 
+    public void onClickWsghEncouragingMessages(View view){
+        messageDialog wsghMessageDialog = new messageDialog(wsghEncouragingMessagesTv);
+        wsghMessageDialog.show(getSupportFragmentManager(), "messages");
+    }
 }

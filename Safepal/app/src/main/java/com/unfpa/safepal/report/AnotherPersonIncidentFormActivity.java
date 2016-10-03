@@ -24,6 +24,7 @@ import com.unfpa.safepal.Referral.ReferralActivity;
 import com.unfpa.safepal.datepicker.DatePickerFragment;
 import com.unfpa.safepal.datepicker.apifDatePickerFragment;
 import com.unfpa.safepal.home.HomeActivity;
+import com.unfpa.safepal.messages.messageDialog;
 import com.unfpa.safepal.store.ReportIncidentContentProvider;
 import com.unfpa.safepal.store.ReportIncidentTable;
 
@@ -118,5 +119,10 @@ public class AnotherPersonIncidentFormActivity extends AppCompatActivity {
     public void apifLoadMessages(){
         String[] apifMessagesArray = getResources().getStringArray(R.array.seek_medical_care_messages);
         apifEncouragingMessagesTv.setText(apifMessagesArray[randMessageIndex(0, apifMessagesArray.length)].toString());
+    }
+
+    public void onClickApifEncouragingMessages(View view){
+        messageDialog apifMessageDialog = new messageDialog(apifEncouragingMessagesTv);
+        apifMessageDialog.show(getSupportFragmentManager(), "messages");
     }
 }

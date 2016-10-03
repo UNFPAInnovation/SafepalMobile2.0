@@ -19,7 +19,8 @@
         android:layout_height="wrap_content"
         android:gravity="center"
         android:text="@string/wsgh_msgs_to_ecourage_survivor"
-        />
+
+        android:onClick="onClickWsghEncouragingMessages"/>
 
     <View
         android:id="@+id/wsgh_horizotal_line"
