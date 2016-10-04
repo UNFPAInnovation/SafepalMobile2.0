@@ -19,7 +19,8 @@
         android:layout_alignParentLeft="true"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="@string/wsgh_msgs_to_ecourage_survivor"/>
+        android:text="@string/wsgh_msgs_to_ecourage_survivor"
+        android:onClick="onClickApifEncouragingMessages"/>
     <View
         android:id="@+id/apif_horizotal_line"
         android:layout_below="@+id/apif_ecouraging_messages_tv"

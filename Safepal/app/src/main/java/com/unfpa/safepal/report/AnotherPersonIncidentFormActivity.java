@@ -51,7 +51,6 @@ public class AnotherPersonIncidentFormActivity extends AppCompatActivity {
 
     private Uri reportIncidentUri;
     final String URL_SAFEPAL_API = "http://52.43.152.73/api/addselfreport.php";
-
     private Snackbar apifFeedbackSnackbar;
 
     @Override
@@ -105,9 +104,10 @@ public class AnotherPersonIncidentFormActivity extends AppCompatActivity {
         apifIncidentTypeAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         // Apply the apifIncidentTypeAdapter to the spinner
         apifIncidentTypeSpinner.setAdapter(apifIncidentTypeAdapter);
+
+
+
     }
-
-
 
 
 
