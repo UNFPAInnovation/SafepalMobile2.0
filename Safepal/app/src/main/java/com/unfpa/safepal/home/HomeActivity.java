@@ -16,7 +16,7 @@ public class HomeActivity extends AppCompatActivity {
 
         //Global Variables 1234
         FloatingActionButton homeAbortAppFab, homeReportFab;
-
+        RotateLayout homeInfoTGL;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -48,6 +48,9 @@ public class HomeActivity extends AppCompatActivity {
 
             }
         });
+
+        homeInfoTGL = new RotateLayout(this);
+
     }
 
     @Override

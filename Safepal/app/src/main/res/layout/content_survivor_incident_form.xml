@@ -124,7 +124,7 @@
         android:background="@drawable/rbtn_rb_selector"
         android:hint="@string/sif_incident_location"/>
 
-    <RelativeLayout
+    <LinearLayout
         android:id="@+id/sif_incident_type_spinner_rl"
         android:layout_height="wrap_content"
         android:layout_width="match_parent"
@@ -139,19 +139,24 @@
             android:id="@+id/sif_incident_type_spinner"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_weight="4"
             android:paddingTop="10dp"
             android:paddingBottom="10dp"
             android:layout_marginLeft="5dp"
             android:layout_centerVertical="true"
+            android:spinnerMode="dropdown"
+            android:background="@null"
             android:gravity="center"
             />
         <ImageView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_weight="1"
             android:layout_alignParentRight="true"
             android:layout_centerVertical="true"
-            android:src="@mipmap/drop"/>
-    </RelativeLayout>
+            android:src="@mipmap/drop"
+            android:onClick="onClickSifIVSpinner"/>
+    </LinearLayout>
 
     <!-- EditText and Submit FAB for the story -->
     <LinearLayout

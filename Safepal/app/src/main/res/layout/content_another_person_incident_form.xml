@@ -20,6 +20,8 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="@string/wsgh_msgs_to_ecourage_survivor"
+        android:ellipsize="end"
+        android:maxLines="3"
         android:onClick="onClickApifEncouragingMessages"/>
     <View
         android:id="@+id/apif_horizotal_line"

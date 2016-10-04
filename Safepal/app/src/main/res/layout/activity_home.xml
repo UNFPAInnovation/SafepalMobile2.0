@@ -5,7 +5,8 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:fitsSystemWindows="true"
-    tools:context=".home.HomeActivity">
+    tools:context=".home.HomeActivity"
+ >
 
     <!-- AppBar of the Home -->
     <android.support.design.widget.AppBarLayout
@@ -39,7 +40,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:src="@drawable/ic_exit_to_app_white_24dp"
-
+            android:elevation="0dp"
 
             />
         <TextView
@@ -79,6 +80,7 @@
             android:layout_height="wrap_content"
             android:src="@drawable/ic_border_color_white_24dp"
             app:backgroundTint="@color/colorPrimary"
+            android:elevation="0dp"
              />
     </LinearLayout>
 </android.support.design.widget.CoordinatorLayout>

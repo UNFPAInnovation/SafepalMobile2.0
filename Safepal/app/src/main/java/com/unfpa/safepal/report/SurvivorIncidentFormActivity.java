@@ -350,5 +350,9 @@ public class SurvivorIncidentFormActivity extends AppCompatActivity {
         sifMessageDialog.show(getSupportFragmentManager(), "messages");
     }
 
+    public void onClickSifIVSpinner(View view){
+
+        sifIncidentTypeSpinner.performClick();
+    }
 
 }
