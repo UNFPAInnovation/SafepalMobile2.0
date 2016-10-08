@@ -2,7 +2,7 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.unfpa.safepal">
 
-    <uses-permission android:name="android.permission.INTERNET"/>
+    <uses-permission android:name="android.permission.INTERNET" />
 
     <application
         android:allowBackup="true"
@@ -10,68 +10,72 @@
         android:label="@string/app_name"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-
         <activity
             android:name=".home.HomeActivity"
             android:label="@string/home_activity_title"
-            android:theme="@style/AppTheme.NoActionBar">
+            android:theme="@style/AppTheme.NoActionBar" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-
         <activity
             android:name=".report.WhoSGettingHelpActivity"
             android:label="@string/wsgh_activity_title"
-            android:theme="@style/AppTheme.NoActionBar"
-            android:parentActivityName=".home.HomeActivity">
+            android:parentActivityName=".home.HomeActivity"
+            android:theme="@style/AppTheme.NoActionBar">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value=".home.HomeActivity" />
-
         </activity>
-
         <activity
             android:name=".report.SurvivorIncidentFormActivity"
             android:label="@string/sif_activity_title"
-            android:theme="@style/AppTheme.NoActionBar"
-            android:parentActivityName=".report.WhoSGettingHelpActivity">
+            android:parentActivityName=".report.WhoSGettingHelpActivity"
+            android:theme="@style/AppTheme.NoActionBar">
+
+
+
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value=".report.WhoSGettingHelpActivity" />
-
         </activity>
-
         <activity
             android:name=".report.AnotherPersonIncidentFormActivity"
             android:label="@string/apif_activity_title"
-            android:theme="@style/AppTheme.NoActionBar"
-
-            >
+            android:theme="@style/AppTheme.NoActionBar">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value=".report.WhoSGettingHelpActivity" />
-
         </activity>
-
         <activity
             android:name=".Referral.ReferralActivity"
             android:label="@string/title_activity_referral"
-            android:theme="@style/AppTheme.NoActionBar">
-
-        </activity>
+            android:theme="@style/AppTheme.NoActionBar" />
         <activity
             android:name=".Referral.ReferralActivity2"
             android:label="@string/title_activity_eferral2"
             android:parentActivityName=".Referral.ReferralActivity"
-            android:theme="@style/AppTheme.NoActionBar">
-        </activity>
+            android:theme="@style/AppTheme.NoActionBar" />
 
         <provider
             android:name=".store.ReportIncidentContentProvider"
-            android:authorities="com.unfpa.safepal.store.contentprovider" >
-        </provider>
+            android:authorities="com.unfpa.safepal.store.contentprovider" />
+
+        <activity
+            android:name=".ProvideHelp.CsoActivity"
+            android:label="@string/title_activity_cso"
+            android:theme="@style/AppTheme.NoActionBar" >
+
+        </activity>
+        <activity
+            android:name=".ProvideHelp.ContactActivity"
+            android:label="@string/title_activity_contact"
+            android:theme="@style/AppTheme.NoActionBar">
+
+
+        </activity>
+        <!-- waits network and inserts a unique id to user -->
     </application>
 
 </manifest>

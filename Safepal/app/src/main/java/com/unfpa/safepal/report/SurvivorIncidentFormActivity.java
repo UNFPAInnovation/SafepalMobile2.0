@@ -1,6 +1,5 @@
 package com.unfpa.safepal.report;
 
-import android.content.ContentResolver;
 import android.content.ContentValues;
 import android.content.Intent;
 import android.database.Cursor;
@@ -12,7 +11,6 @@ import android.support.design.widget.Snackbar;
 import android.support.v4.app.DialogFragment;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
-import android.util.Log;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
@@ -28,11 +26,9 @@ import com.android.volley.Request;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
+import com.unfpa.safepal.ProvideHelp.ContactActivity;
 import com.unfpa.safepal.R;
-import com.unfpa.safepal.Referral.ReferralActivity;
-import com.unfpa.safepal.Views.TextViews.CustomTextViewNormal;
 import com.unfpa.safepal.datepicker.DatePickerFragment;
-import com.unfpa.safepal.home.HomeActivity;
 import com.unfpa.safepal.messages.messageDialog;
 import com.unfpa.safepal.network.MySingleton;
 import com.unfpa.safepal.network.VolleyCallback;
@@ -72,7 +68,7 @@ public class SurvivorIncidentFormActivity extends AppCompatActivity {
     private Snackbar sifFeedbackSnackbar;
 
     //Intents
-    Intent referralIntent;
+   public static Intent referralIntent;
 
     //content provider
     Bundle extras;
@@ -80,6 +76,7 @@ public class SurvivorIncidentFormActivity extends AppCompatActivity {
 
     //Volley requests
     final String URL_SAFEPAL_API = "http://52.43.152.73/api/addselfreport.php";
+    String UniqueIdFromServer="";
 
 
 
@@ -185,7 +182,7 @@ public class SurvivorIncidentFormActivity extends AppCompatActivity {
         String incidentStory = sifIncidentDetailsEt.getText().toString();;
         String uniqueIdentifier = "testuid";;
 
-        referralIntent = new Intent(SurvivorIncidentFormActivity.this, ReferralActivity.class);
+        referralIntent = new Intent(SurvivorIncidentFormActivity.this, ContactActivity.class);
 
 
         if(sifDateOfBirthButton.getText().toString()== getResources().getText(R.string.sif_survivor_pick_age)){
@@ -230,8 +227,9 @@ public class SurvivorIncidentFormActivity extends AppCompatActivity {
 
                // Or passed from the other activity
                 Toast.makeText(getBaseContext(), " The report is temporarily stored. Awaiting Network Connection.", Toast.LENGTH_LONG).show();
-                retrieveUniqueId();
+                referralIntent.putExtra("uniqueFromServerSent", UniqueIdFromServer);
                 startActivity(referralIntent);
+                retrieveUniqueId();
 
 
         } else {
@@ -246,10 +244,9 @@ public class SurvivorIncidentFormActivity extends AppCompatActivity {
 
 
     //Returns the unique_id from the server
-    public void retrieveUniqueId() {
+    public  void retrieveUniqueId() {
 
         // Retrieve report records
-        //send them into a volley request
 
         Uri uriReturnReports = Uri.parse(ReportIncidentContentProvider.CONTENT_URI + "/");
         Cursor c = managedQuery(uriReturnReports, null, null, null, null);
@@ -266,24 +263,27 @@ public class SurvivorIncidentFormActivity extends AppCompatActivity {
                     c.getString(c.getColumnIndex(ReportIncidentTable.COLUMN_INCIDENT_STORY)),
                     c.getString(c.getColumnIndex(ReportIncidentTable.COLUMN_REPORTED_BY)),
                     new VolleyCallback() {
+
+
+
                         @Override
                         public void onSuccessResponse(String result) {
                             try {
                                 JSONObject response = new JSONObject(result);
-                                Toast.makeText(SurvivorIncidentFormActivity.this, response.getString("unique_code"),Toast.LENGTH_LONG).show();
-                               //sends the server unique_code to next activity
-                                CustomTextViewNormal referral_one_messages = (CustomTextViewNormal) findViewById(R.id.referral_one_msg_ctv);
-                                referral_one_messages.append("This unique id of the case is "+ response.getString("unique_code"));
-                                referralIntent.putExtra("SendserverUniqueId", response.getString("unique_code"));
-                                // do your work with response object
+
+
+
+                                Toast.makeText(SurvivorIncidentFormActivity.this,"Your safepal number is "+response.getString("unique_code"),Toast.LENGTH_LONG).show();
+
                             } catch (JSONException e) {
                                 e.printStackTrace();
                             }
+
                         }
+
                     }
 
             );
-            // always close the cursor
             c.close();
         }
     }
@@ -298,16 +298,12 @@ public class SurvivorIncidentFormActivity extends AppCompatActivity {
                                 final String toServerIDescription,
                                 final String toServerReportedBy, final VolleyCallback callback){
 
-       // queue = MySingleton.getInstance(this).getRequestQueue();
 
         StringRequest stringRequest = new StringRequest(Request.Method.POST, URL_SAFEPAL_API,
                 new Response.Listener<String>() {
                     @Override
                     public void onResponse(String response) {
-                        Log.d("reponse", response);
-                        callback.onSuccessResponse(response);
-                      // Toast.makeText(SurvivorIncidentFormActivity.this, response.toString(),Toast.LENGTH_LONG).show();
-                        //sendUniqueIdIntent.putExtra("fromOnlineUniqueId", response.toString());
+                       callback.onSuccessResponse(response);
                     }
                 },
                 new Response.ErrorListener() {
@@ -330,9 +326,6 @@ public class SurvivorIncidentFormActivity extends AppCompatActivity {
             }
 
         };
-       // Adding request to request queue
-//        RequestQueue requestQueue = Volley.newRequestQueue(this);
-//        requestQueue.add(stringRequest);
 
         MySingleton.getInstance(this).addToRequestQueue(stringRequest);
 
@@ -354,5 +347,6 @@ public class SurvivorIncidentFormActivity extends AppCompatActivity {
 
         sifIncidentTypeSpinner.performClick();
     }
+
 
 }

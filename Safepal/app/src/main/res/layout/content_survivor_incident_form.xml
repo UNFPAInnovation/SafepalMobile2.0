@@ -154,7 +154,7 @@
             android:layout_weight="1"
             android:layout_alignParentRight="true"
             android:layout_centerVertical="true"
-            android:src="@mipmap/drop"
+            android:src="@drawable/ic_chevron_down"
             android:onClick="onClickSifIVSpinner"/>
     </LinearLayout>
 

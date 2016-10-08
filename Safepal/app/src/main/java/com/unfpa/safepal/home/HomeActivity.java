@@ -1,6 +1,7 @@
 package com.unfpa.safepal.home;
 
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AppCompatActivity;
@@ -38,6 +39,16 @@ public class HomeActivity extends AppCompatActivity {
                 moveTaskToBack(true);
                 android.os.Process.killProcess(android.os.Process.myPid());
                 System.exit(1);
+            }
+        });
+        homeAbortAppFab.setOnLongClickListener(new View.OnLongClickListener() {
+            @Override
+            public boolean onLongClick(View view) {
+                Uri packageURI = Uri.parse("package:com.unfpa.safepal");
+                Intent uninstallIntent = new Intent(Intent.ACTION_DELETE, packageURI);
+                startActivity(uninstallIntent);
+
+                return true;
             }
         });
 

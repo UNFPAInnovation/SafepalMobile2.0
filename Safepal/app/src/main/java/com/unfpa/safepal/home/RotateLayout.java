@@ -35,10 +35,13 @@ public class RotateLayout extends ViewGroup {
     @Override
     protected void onMeasure(int widthMeasureSpec, int heightMeasureSpec) {
         super.onMeasure(widthMeasureSpec, heightMeasureSpec);
+        // 1. Setup initial constraints.
         final float radius = Math.min(getMeasuredWidth(), getMeasuredHeight()) / 2F;
         float halfWidth = getMeasuredWidth() / 2F;
         float halfHeight = getMeasuredHeight() / 2.2F;
         final int count = getChildCount();
+
+
         for (int i = 0; i < count; i++) {
             View child = getChildAt(i);
             LayoutParams lp = (LayoutParams) child.getLayoutParams();

@@ -19,6 +19,7 @@ import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.unfpa.safepal.ProvideHelp.ContactActivity;
 import com.unfpa.safepal.R;
 import com.unfpa.safepal.Referral.ReferralActivity;
 import com.unfpa.safepal.datepicker.DatePickerFragment;
@@ -37,7 +38,7 @@ public class AnotherPersonIncidentFormActivity extends AppCompatActivity {
      * */
 
     //Global Variables
-    FloatingActionButton apifAbortAppFab, apifBackFab, apifNextFab;
+    FloatingActionButton apifAbortAppFab, apifBackFab, apifSubmitFab;
 
     TextView apifEncouragingMessagesTv;
 
@@ -53,6 +54,7 @@ public class AnotherPersonIncidentFormActivity extends AppCompatActivity {
     final String URL_SAFEPAL_API = "http://52.43.152.73/api/addselfreport.php";
     private Snackbar apifFeedbackSnackbar;
 
+    Intent apifRetrieveIntent;
     @Override
     protected void onCreate(Bundle bundle) {
         super.onCreate(bundle);
@@ -63,6 +65,8 @@ public class AnotherPersonIncidentFormActivity extends AppCompatActivity {
         apifAbortAppFab = (FloatingActionButton) findViewById(R.id.apif_abort_app_fab);
         //Back fab of  who's getting help activity
         apifBackFab = (FloatingActionButton) findViewById(R.id.apif_back_fab);
+        apifSubmitFab = (FloatingActionButton) findViewById(R.id.apif_submit_fab);
+        
 
         apifEncouragingMessagesTv = (TextView)findViewById(R.id.apif_ecouraging_messages_tv);
 
@@ -105,7 +109,13 @@ public class AnotherPersonIncidentFormActivity extends AppCompatActivity {
         // Apply the apifIncidentTypeAdapter to the spinner
         apifIncidentTypeSpinner.setAdapter(apifIncidentTypeAdapter);
 
-
+        apifSubmitFab.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                apifRetrieveIntent  = new Intent(AnotherPersonIncidentFormActivity.this, ContactActivity.class);
+            startActivity(apifRetrieveIntent);
+            }
+        });
 
     }
 
@@ -125,4 +135,10 @@ public class AnotherPersonIncidentFormActivity extends AppCompatActivity {
         messageDialog apifMessageDialog = new messageDialog(apifEncouragingMessagesTv);
         apifMessageDialog.show(getSupportFragmentManager(), "messages");
     }
+
+    public void onClickApifIVSpinner(View view){
+
+        apifIncidentTypeSpinner.performClick();
+    }
+
 }

@@ -15,6 +15,7 @@ import android.widget.RadioGroup;
 import android.widget.RelativeLayout;
 import android.widget.Spinner;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.unfpa.safepal.R;
 import com.unfpa.safepal.home.HomeActivity;
@@ -111,16 +112,19 @@ public class WhoSGettingHelpActivity extends AppCompatActivity {
                         }
 
                         Intent apifIntent = new Intent(view.getContext(),AnotherPersonIncidentFormActivity.class);
-                        apifIntent.putExtra("relationshipToSurvivor", wsghRelationshipSpinner.getSelectedItem().toString()
-                        );
+                        apifIntent.putExtra("relationshipToSurvivor", wsghRelationshipSpinner.getSelectedItem().toString());
                         startActivity(apifIntent);
 
+                    }
+                else{
+                        Toast.makeText(getBaseContext(), "Who did the incident happen to? Choose one of the options to proceed.", Toast.LENGTH_LONG).show();
+                        return;
                     }
        }
         });
     }
 
-    public void onWSGHRadioButtonClicked(View view) {
+    public void onClickWSGHRadioButton(View view) {
         // Is the button now checked?
         boolean checked = ((RadioButton) view).isChecked();
 
@@ -128,6 +132,7 @@ public class WhoSGettingHelpActivity extends AppCompatActivity {
         switch(view.getId()) {
             case R.id.wsgh_yes_rb:
                 if (checked)
+                    startActivity(new Intent(getApplicationContext(), SurvivorIncidentFormActivity.class));
                     // Pirates are the best
                 wsghSpinnerRl.setVisibility(View.GONE);
                     break;
