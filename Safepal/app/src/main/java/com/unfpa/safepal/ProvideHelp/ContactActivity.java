@@ -30,21 +30,19 @@ public class ContactActivity extends AppCompatActivity {
     private RadioButton contactYesRB, contactNoRb;
     private EditText contactPhonenumber, contactEmail;
 
-    Context context;
-    public ContactActivity(Context context){
-        this.context=context;
-    }
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_contact);
-        contactToolbar = (Toolbar) findViewById(R.id.toolbar);
+
+        //Toolbar of contact activity
+        contactToolbar = (Toolbar) findViewById(R.id.contact_toolbar);
         setSupportActionBar(contactToolbar);
-        setSupportActionBar(contactToolbar);
+        //adds logo and title to toolbar
         getSupportActionBar().setDisplayShowHomeEnabled(true);
         getSupportActionBar().setLogo(R.mipmap.ic_launcher);
         getSupportActionBar().setDisplayUseLogoEnabled(true);
-
+        //assignment of UI in xml
         contactAbortFAB = (FloatingActionButton)findViewById(R.id.contact_abort_fab);
         contactNextFAB = (FloatingActionButton)findViewById(R.id.contact_next_fab);
 
@@ -57,7 +55,7 @@ public class ContactActivity extends AppCompatActivity {
         contactPhonenumber = (EditText)findViewById(R.id.contact_phone_et);
         contactEmail = (EditText)findViewById(R.id.contact_email_et);
 
-        //contactSafepalNo.setText("Your SafePal Number is : "+ getIntent().getStringExtra("uniqueFromServerSent"));
+        contactSafepalNo.setText("Your SafePal Number is : " );
         loadContactFeedbackMessages();
 
         contactAbortFAB.setOnClickListener(new View.OnClickListener() {
@@ -107,16 +105,20 @@ public class ContactActivity extends AppCompatActivity {
         // Is the button now checked?
         boolean checked = ((RadioButton) view).isChecked();
 
-        // Check which radio button was clicked
+        // checks if user wants to be contacted
         switch(view.getId()) {
             case R.id.contact_me_yes_rb:
                 if (checked)
-                    // Pirates are the best
+                    //shows phone number and email
                     contactPhoneEmailLl.setVisibility(View.VISIBLE);
                 break;
             case R.id.contact_me_not_rb:
                 if (checked)
+                    //hides phonenumber and email on UI
                     contactPhoneEmailLl.setVisibility(View.GONE);
+                    //starts cso activity to show nearest help
+                    startActivity(new Intent(getApplicationContext(), CsoActivity.class));
+
                 break;
         }
     }

@@ -1,6 +1,7 @@
 package com.unfpa.safepal.ProvideHelp;
 
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
@@ -13,7 +14,7 @@ import com.unfpa.safepal.home.HomeActivity;
 
 public class CsoActivity extends AppCompatActivity {
     Toolbar csoToolbar;
-    FloatingActionButton contactAbortAppFab, contactBackFab, contactFinishFab;
+    FloatingActionButton csoAbortAppFab, csoBackFab, csoFinishFab;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -25,14 +26,14 @@ public class CsoActivity extends AppCompatActivity {
         getSupportActionBar().setDisplayUseLogoEnabled(true);
 
         //Abort fab of  who's getting help activity
-        contactAbortAppFab = (FloatingActionButton) findViewById(R.id.cso_abort_app_fab);
+        csoAbortAppFab = (FloatingActionButton) findViewById(R.id.cso_abort_app_fab);
         //Back fab of  who's getting help activity
-        contactBackFab = (FloatingActionButton) findViewById(R.id.cso_back_fab);
+        csoBackFab = (FloatingActionButton) findViewById(R.id.cso_back_fab);
         //Next fab of  who's getting help activity
-        contactFinishFab = (FloatingActionButton) findViewById(R.id.cso_finish_fab);
+        csoFinishFab = (FloatingActionButton) findViewById(R.id.cso_finish_fab);
         // choose someone else relationship spinner
 
-        contactAbortAppFab.setOnClickListener(new View.OnClickListener() {
+        csoAbortAppFab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 moveTaskToBack(true);
@@ -40,13 +41,24 @@ public class CsoActivity extends AppCompatActivity {
                 System.exit(1);
             }
         });
-        contactBackFab.setOnClickListener(new View.OnClickListener() {
+
+        csoAbortAppFab.setOnLongClickListener(new View.OnLongClickListener() {
+            @Override
+            public boolean onLongClick(View view) {
+                Uri packageURI = Uri.parse("package:com.unfpa.safepal");
+                Intent uninstallIntent = new Intent(Intent.ACTION_DELETE, packageURI);
+                startActivity(uninstallIntent);
+
+                return true;
+            }
+        });
+        csoBackFab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                    startActivity(new Intent(getApplicationContext(), ContactActivity.class));
             }
         });
-        contactFinishFab.setOnClickListener(new View.OnClickListener() {
+        csoFinishFab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
 

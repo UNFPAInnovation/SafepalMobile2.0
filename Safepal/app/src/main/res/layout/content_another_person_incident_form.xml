@@ -118,7 +118,8 @@
         android:layout_marginRight="@dimen/activity_horizontal_margin"
         android:padding="@dimen/overall_et_padding_top"
         android:background="@drawable/rbtn_rb_selector"
-        android:hint="@string/apif_incident_location"/>
+        android:hint="@string/apif_incident_location"
+        android:maxLines="1"/>
     <LinearLayout
         android:id="@+id/apif_incident_type_spinner_rl"
         android:layout_height="wrap_content"

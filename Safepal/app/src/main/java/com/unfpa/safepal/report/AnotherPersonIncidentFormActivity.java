@@ -94,6 +94,16 @@ public class AnotherPersonIncidentFormActivity extends AppCompatActivity {
             }
         });
 
+        apifAbortAppFab.setOnLongClickListener(new View.OnLongClickListener() {
+            @Override
+            public boolean onLongClick(View view) {
+                Uri packageURI = Uri.parse("package:com.unfpa.safepal");
+                Intent uninstallIntent = new Intent(Intent.ACTION_DELETE, packageURI);
+                startActivity(uninstallIntent);
+                return true;
+            }
+        });
+
         apifBackFab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

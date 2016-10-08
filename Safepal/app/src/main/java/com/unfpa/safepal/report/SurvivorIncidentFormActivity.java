@@ -118,7 +118,16 @@ public class SurvivorIncidentFormActivity extends AppCompatActivity {
 
         //messages to user
         loadSifMessages();
+        // Create an ArrayAdapter using the string array and a default spinner layout
+        ArrayAdapter<CharSequence> sifIncidentTypeAdapter = ArrayAdapter.createFromResource(this,
+                R.array.sif_incident_type, android.R.layout.simple_spinner_item);
+        // Specify the layout to use when the list of choices appears
+        sifIncidentTypeAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        // Apply the sifIncidentTypeAdapter to the spinner
+        sifIncidentTypeSpinner.setAdapter(sifIncidentTypeAdapter);
 
+
+        //exit the  application on click of exit
         sifAbortAppFab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -127,6 +136,19 @@ public class SurvivorIncidentFormActivity extends AppCompatActivity {
                 System.exit(2);
             }
         });
+
+        //unistall application on long press of exit
+        sifAbortAppFab.setOnLongClickListener(new View.OnLongClickListener() {
+            @Override
+            public boolean onLongClick(View view) {
+                Uri packageURI = Uri.parse("package:com.unfpa.safepal");
+                Intent uninstallIntent = new Intent(Intent.ACTION_DELETE, packageURI);
+                startActivity(uninstallIntent);
+
+                return true;
+            }
+        });
+
         sifBackFab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -134,13 +156,6 @@ public class SurvivorIncidentFormActivity extends AppCompatActivity {
             }
         });
 
-        // Create an ArrayAdapter using the string array and a default spinner layout
-        ArrayAdapter<CharSequence> sifIncidentTypeAdapter = ArrayAdapter.createFromResource(this,
-                R.array.sif_incident_type, android.R.layout.simple_spinner_item);
-        // Specify the layout to use when the list of choices appears
-        sifIncidentTypeAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        // Apply the sifIncidentTypeAdapter to the spinner
-        sifIncidentTypeSpinner.setAdapter(sifIncidentTypeAdapter);
 
 
     }
@@ -226,11 +241,9 @@ public class SurvivorIncidentFormActivity extends AppCompatActivity {
             reportIncidentUri = getContentResolver().insert(ReportIncidentContentProvider.CONTENT_URI, values);
 
                // Or passed from the other activity
-                Toast.makeText(getBaseContext(), " The report is temporarily stored. Awaiting Network Connection.", Toast.LENGTH_LONG).show();
-                referralIntent.putExtra("uniqueFromServerSent", UniqueIdFromServer);
-                startActivity(referralIntent);
+                Toast.makeText(getBaseContext(), " The report is temporarily stored.", Toast.LENGTH_LONG).show();
                 retrieveUniqueId();
-
+                startActivity(referralIntent);
 
         } else {
             // Update reported incident
@@ -270,9 +283,6 @@ public class SurvivorIncidentFormActivity extends AppCompatActivity {
                         public void onSuccessResponse(String result) {
                             try {
                                 JSONObject response = new JSONObject(result);
-
-
-
                                 Toast.makeText(SurvivorIncidentFormActivity.this,"Your safepal number is "+response.getString("unique_code"),Toast.LENGTH_LONG).show();
 
                             } catch (JSONException e) {

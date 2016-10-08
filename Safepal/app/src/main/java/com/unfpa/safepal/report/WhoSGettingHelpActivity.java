@@ -1,6 +1,7 @@
 package com.unfpa.safepal.report;
 
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
@@ -76,7 +77,7 @@ public class WhoSGettingHelpActivity extends AppCompatActivity {
         /** ends wsghRelationshipSpinner **/
 
         loadFeedbackMessages();
-
+        //exit application
         wsghAbortAppFab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -86,7 +87,16 @@ public class WhoSGettingHelpActivity extends AppCompatActivity {
                 System.exit(1);
             }
         });
-
+        //uninstall application
+        wsghAbortAppFab.setOnLongClickListener(new View.OnLongClickListener() {
+            @Override
+            public boolean onLongClick(View view) {
+                Uri packageURI = Uri.parse("package:com.unfpa.safepal");
+                Intent uninstallIntent = new Intent(Intent.ACTION_DELETE, packageURI);
+                startActivity(uninstallIntent);
+                return true;
+            }
+        });
 
         wsghBackFab.setOnClickListener(new View.OnClickListener() {
             @Override
