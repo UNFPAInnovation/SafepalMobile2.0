@@ -2,6 +2,7 @@ package com.unfpa.safepal.report;
 
 import android.content.Intent;
 import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
@@ -77,14 +78,22 @@ public class WhoSGettingHelpActivity extends AppCompatActivity {
         /** ends wsghRelationshipSpinner **/
 
         loadFeedbackMessages();
+
+        wsghEncouragingMessagesTv.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                WsghEncouragingMessagesDialog();
+            }
+        });
+
         //exit application
         wsghAbortAppFab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                if(Build.VERSION.SDK_INT>=21)  finishAndRemoveTask();
+                else finish();
 
-                moveTaskToBack(true);
-                android.os.Process.killProcess(android.os.Process.myPid());
-                System.exit(1);
+
             }
         });
         //uninstall application
@@ -97,7 +106,7 @@ public class WhoSGettingHelpActivity extends AppCompatActivity {
                 return true;
             }
         });
-
+        //exit application
         wsghBackFab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -105,7 +114,7 @@ public class WhoSGettingHelpActivity extends AppCompatActivity {
                 startActivity(new Intent(getApplicationContext(), HomeActivity.class));
             }
         });
-
+        //go to report form
         wsghNextFab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -175,8 +184,11 @@ public class WhoSGettingHelpActivity extends AppCompatActivity {
     }
 
     public void  loadFeedbackMessages(){
+        //randomly picks a message
         String[] wsghMessagesArray = getResources().getStringArray(R.array.not_your_fault_messages);
         wsghEncouragingMessagesTv.setText(wsghMessagesArray[randMessageIndex(0, wsghMessagesArray.length)].toString());
+        //shows the load message in a dialog
+        WsghEncouragingMessagesDialog();
     }
 
     //random interger to randomly pick messages from arrays
@@ -186,7 +198,7 @@ public class WhoSGettingHelpActivity extends AppCompatActivity {
         return index;
     }
 
-    public void onClickWsghEncouragingMessages(View view){
+    public void WsghEncouragingMessagesDialog(){
         messageDialog wsghMessageDialog = new messageDialog(wsghEncouragingMessagesTv);
         wsghMessageDialog.show(getSupportFragmentManager(), "messages");
     }

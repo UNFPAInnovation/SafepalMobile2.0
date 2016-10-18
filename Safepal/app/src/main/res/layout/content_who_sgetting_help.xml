@@ -20,8 +20,7 @@
         android:gravity="center"
         android:text="@string/wsgh_msgs_to_ecourage_survivor"
         android:ellipsize="end"
-        android:maxLines="3"
-        android:onClick="onClickWsghEncouragingMessages"/>
+        android:maxLines="3"/>
 
     <View
         android:id="@+id/wsgh_horizotal_line"
@@ -109,6 +108,7 @@
             android:paddingBottom="10dp"
             android:layout_marginLeft="5dp"
             android:layout_centerVertical="true"
+            android:background="@null"
             android:gravity="center"
             />
         <ImageView

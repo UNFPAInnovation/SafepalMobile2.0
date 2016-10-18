@@ -8,8 +8,8 @@ android {
         applicationId "com.unfpa.safepal"
         minSdkVersion 13
         targetSdkVersion 24
-        versionCode 1
-        versionName "1.0"
+        versionCode 3
+        versionName "1.03"
     }
     buildTypes {
         release {

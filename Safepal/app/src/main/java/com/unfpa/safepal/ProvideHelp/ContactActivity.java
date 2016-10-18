@@ -2,7 +2,9 @@ package com.unfpa.safepal.ProvideHelp;
 
 import android.content.Context;
 import android.content.Intent;
+import android.database.Cursor;
 import android.os.Bundle;
+import android.os.Handler;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
@@ -14,9 +16,12 @@ import android.widget.RadioButton;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.unfpa.safepal.Location.GPSTracker;
 import com.unfpa.safepal.R;
 import com.unfpa.safepal.messages.MedicalCareMessageDialog;
 import com.unfpa.safepal.messages.messageDialog;
+import com.unfpa.safepal.store.ReportIncidentContentProvider;
+import com.unfpa.safepal.store.ReportIncidentTable;
 
 import static com.unfpa.safepal.report.WhoSGettingHelpActivity.randMessageIndex;
 
@@ -29,6 +34,9 @@ public class ContactActivity extends AppCompatActivity {
     private LinearLayout contactPhoneEmailLl;
     private RadioButton contactYesRB, contactNoRb;
     private EditText contactPhonenumber, contactEmail;
+
+    //location
+    GPSTracker gps;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -55,8 +63,13 @@ public class ContactActivity extends AppCompatActivity {
         contactPhonenumber = (EditText)findViewById(R.id.contact_phone_et);
         contactEmail = (EditText)findViewById(R.id.contact_email_et);
 
-        contactSafepalNo.setText("Your SafePal Number is : " );
         loadContactFeedbackMessages();
+        //updates user with the safepal number
+        updateUIDTextView();
+
+        //picks and shows the mobile reporters location
+         userLocationTracker();
+
 
         contactAbortFAB.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -120,6 +133,65 @@ public class ContactActivity extends AppCompatActivity {
                     startActivity(new Intent(getApplicationContext(), CsoActivity.class));
 
                 break;
+        }
+    }
+
+    public void updateUIDTextView(){
+
+        final Handler handler = new Handler();
+        Runnable runnable = new Runnable() {
+            @Override
+            public void run() {
+                int k =0;
+               while (k<100)  {
+                   try{Thread.sleep(1000);
+                   }catch (InterruptedException e ){
+                       e.printStackTrace();
+                   }
+                   handler.post(new Runnable() {
+                       @Override
+                       public void run() {
+                           Cursor cursor =  getContentResolver().query(
+                                   ReportIncidentContentProvider.CONTENT_URI,
+                                   null,
+                                   null,
+                                   null,
+                                   null);
+
+                           cursor.moveToLast();
+
+                           ///action happens every sec
+                           contactSafepalNo.setText("Your SafePal Number is : " +  cursor.getString(cursor.getColumnIndex(ReportIncidentTable.COLUMN_UNIQUE_IDENTIFIER)));
+
+
+                       }
+                   });
+                   k++;
+               }
+            }
+        };
+
+      new Thread(runnable).start();
+
+    }
+
+    public void userLocationTracker(){
+        // create class object
+        gps = new GPSTracker(ContactActivity.this);
+
+        // check if GPS enabled
+        if(gps.canGetLocation()){
+
+            double latitude = gps.getLatitude();
+            double longitude = gps.getLongitude();
+
+            // \n is for new line
+            Toast.makeText(getApplicationContext(), "Your Location is - \nLat: " + latitude + "\nLong: " + longitude, Toast.LENGTH_LONG).show();
+        }else{
+            // can't get location
+            // GPS or Network is not enabled
+            // Ask user to enable GPS/network in settings
+            gps.showSettingsAlert();
         }
     }
 }

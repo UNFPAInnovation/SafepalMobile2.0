@@ -2,6 +2,7 @@ package com.unfpa.safepal.home;
 
 import android.content.Intent;
 import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AppCompatActivity;
@@ -36,9 +37,9 @@ public class HomeActivity extends AppCompatActivity {
         homeAbortAppFab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                moveTaskToBack(true);
-                android.os.Process.killProcess(android.os.Process.myPid());
-                System.exit(1);
+
+                if(Build.VERSION.SDK_INT>=21)  finishAndRemoveTask();
+                else finish();
             }
         });
         homeAbortAppFab.setOnLongClickListener(new View.OnLongClickListener() {

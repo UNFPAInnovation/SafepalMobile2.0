@@ -125,6 +125,7 @@
         android:hint="@string/sif_incident_location"
         android:maxLines="1"/>
 
+    <!-- Incident type spinner and Image View-->
     <LinearLayout
         android:id="@+id/sif_incident_type_spinner_rl"
         android:layout_height="wrap_content"
