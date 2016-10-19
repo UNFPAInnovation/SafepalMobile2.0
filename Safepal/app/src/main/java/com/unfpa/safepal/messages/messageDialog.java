@@ -17,6 +17,9 @@ public class messageDialog extends DialogFragment {
 
     private TextView encourageMessage;
 
+    public messageDialog() {
+    }
+
     public messageDialog(TextView encourageMessage){
         this.encourageMessage = encourageMessage;
     }

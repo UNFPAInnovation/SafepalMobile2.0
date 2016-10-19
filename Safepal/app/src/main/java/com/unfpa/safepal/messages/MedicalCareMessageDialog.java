@@ -17,6 +17,9 @@ public class MedicalCareMessageDialog extends DialogFragment {
 
     private TextView encourageMessage;
 
+    public MedicalCareMessageDialog() {
+    }
+
     public MedicalCareMessageDialog(TextView encourageMessage){
         this.encourageMessage = encourageMessage;
     }
