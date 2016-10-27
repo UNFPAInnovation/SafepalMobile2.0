@@ -13,11 +13,26 @@
     tools:context="com.unfpa.safepal.ProvideHelp.CsoActivity"
     tools:showIn="@layout/activity_cso">
     <TextView
-        android:id="@+id/contact_ecouraging_messages_tv"
+        android:id="@+id/cso_ecouraging_messages_tv"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:gravity="center"
         android:ellipsize="end"
         android:maxLines="3"
         android:text="@string/wsgh_msgs_to_ecourage_survivor"/>
+    <View
+        android:id="@+id/cso_horizotal_line"
+        android:layout_below="@+id/cso_ecouraging_messages_tv"
+        android:layout_width="match_parent"
+        android:layout_height= "2dp"
+        android:layout_marginBottom="@dimen/overall_et_margin_bottom"
+        android:layout_marginTop="@dimen/overall_et_margin_top"
+        android:background="@color/colorGreyDarker" />
+    <TextView
+        android:id="@+id/cso_safepal_no"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/cso_horizotal_line"
+        android:textStyle="bold|italic"
+        android:textColor="@color/colorAccent"/>
 </RelativeLayout>

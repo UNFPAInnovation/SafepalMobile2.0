@@ -21,7 +21,7 @@ import android.widget.Toast;
 
 import com.unfpa.safepal.R;
 import com.unfpa.safepal.home.HomeActivity;
-import com.unfpa.safepal.messages.messageDialog;
+import com.unfpa.safepal.messages.EMessageDialogFragment;
 
 import java.util.Random;
 
@@ -143,6 +143,27 @@ public class WhoSGettingHelpActivity extends AppCompatActivity {
         });
     }
 
+    public void  loadFeedbackMessages(){
+        //randomly picks a message
+        String[] wsghMessagesArray = getResources().getStringArray(R.array.not_your_fault_messages);
+        wsghEncouragingMessagesTv.setText(wsghMessagesArray[randMessageIndex(0, wsghMessagesArray.length)].toString());
+        //shows the load message in a dialog
+        WsghEncouragingMessagesDialog();
+    }
+    //random interger to randomly pick messages from arrays
+    public static int randMessageIndex(int min, int max) {
+        Random randomNum = new Random();
+        int index = randomNum.nextInt(max - min);
+        return index;
+    }
+    public void WsghEncouragingMessagesDialog(){
+
+        EMessageDialogFragment emDialog = EMessageDialogFragment.newInstance(
+                getString(R.string.seek_medical_alert_head),
+                wsghEncouragingMessagesTv.getText().toString(),
+                getString(R.string.close_dialog));
+        emDialog.show(getSupportFragmentManager(), "encouraging message");
+    }
     public void onClickWSGHRadioButton(View view) {
         // Is the button now checked?
         boolean checked = ((RadioButton) view).isChecked();
@@ -152,54 +173,16 @@ public class WhoSGettingHelpActivity extends AppCompatActivity {
             case R.id.wsgh_yes_rb:
                 if (checked)
                     startActivity(new Intent(getApplicationContext(), SurvivorIncidentFormActivity.class));
-                    // Pirates are the best
+                // Pirates are the best
                 wsghSpinnerRl.setVisibility(View.GONE);
-                    break;
+                break;
             case R.id.wsgh_someoneelse_rb:
                 if (checked)
                     wsghSpinnerRl.setVisibility(View.VISIBLE);
-                    break;
+                break;
         }
     }
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.menu_who_sgetting_help, menu);
-        return true;
-    }
-
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        // Handle action bar item clicks here. The action bar will
-        // automatically handle clicks on the Home/Up button, so long
-        // as you specify a parent activity in AndroidManifest.xml.
-        int id = item.getItemId();
-
-        //noinspection SimplifiableIfStatement
-        if (id == R.id.action_settings) {
-            return true;
-        }
-
-        return super.onOptionsItemSelected(item);
-    }
-
-    public void  loadFeedbackMessages(){
-        //randomly picks a message
-        String[] wsghMessagesArray = getResources().getStringArray(R.array.not_your_fault_messages);
-        wsghEncouragingMessagesTv.setText(wsghMessagesArray[randMessageIndex(0, wsghMessagesArray.length)].toString());
-        //shows the load message in a dialog
-        WsghEncouragingMessagesDialog();
-    }
-
-    //random interger to randomly pick messages from arrays
-    public static int randMessageIndex(int min, int max) {
-        Random randomNum = new Random();
-        int index = randomNum.nextInt(max - min);
-        return index;
-    }
-
-    public void WsghEncouragingMessagesDialog(){
-        messageDialog wsghMessageDialog = new messageDialog(wsghEncouragingMessagesTv);
-        wsghMessageDialog.show(getSupportFragmentManager(), "messages");
+    public void onClickWsghIvSpinner(View view){
+        wsghRelationshipSpinner.performClick();
     }
 }

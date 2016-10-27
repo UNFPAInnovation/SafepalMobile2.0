@@ -1,6 +1,11 @@
 package com.unfpa.safepal.home;
 
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collections;
+import java.util.LinkedHashSet;
 import java.util.Random;
+import java.util.Set;
 
 import android.content.Context;
 import android.os.Handler;
@@ -20,17 +25,17 @@ public class RotateLayout extends ViewGroup {
     private Handler mHandler = new Handler();
     private float rotateAngleDegree;
 
+    /** Constructors for the class**/
     public RotateLayout(Context context) {
         super(context);
     }
-
     public RotateLayout(Context context, AttributeSet attrs) {
         super(context, attrs);
     }
-
     public RotateLayout(Context context, AttributeSet attrs, int defStyle) {
         super(context, attrs, defStyle);
     }
+
 
     @Override
     protected void onMeasure(int widthMeasureSpec, int heightMeasureSpec) {
@@ -45,13 +50,15 @@ public class RotateLayout extends ViewGroup {
         for (int i = 0; i < count; i++) {
             View child = getChildAt(i);
             LayoutParams lp = (LayoutParams) child.getLayoutParams();
+
             float sinTheta = (float) Math.sin(lp.theta);
+
             float x = (int) (radius * Math.cos(lp.fi + mRotateAngle)
                     * sinTheta);
 
             if (child instanceof TextView) {
                 ((TextView) child)
-                        .setTextSize(5 * ((radius - x) / radius) + 10);
+                        .setTextSize(7 * ((radius + x) / radius) + 6);
             }
             measureChild(child, widthMeasureSpec, heightMeasureSpec);
             //  http://en.wikipedia.org/wiki/Spherical_coordinates
@@ -70,12 +77,12 @@ public class RotateLayout extends ViewGroup {
 
             @Override
             public void run() {
-                rotateAngleDegree += 4;
+                rotateAngleDegree += 0.1;
                 mRotateAngle = (float) Math.toRadians(rotateAngleDegree);
                 requestLayout();
-                mHandler.postDelayed(this, 1000);
+                mHandler.postDelayed(this, 0);
             }
-        }, 1000);
+        }, 0);
     }
 
     @Override
@@ -93,9 +100,11 @@ public class RotateLayout extends ViewGroup {
         super.addView(child, index, params);
 
         LayoutParams lp = (LayoutParams) child.getLayoutParams();
+
         lp.fi = (float) Math.toRadians(mRandom.nextInt(360));
         lp.theta = (float) Math.toRadians(mRandom.nextInt(360));
     }
+
 
     @Override
     protected void onLayout(boolean changed, int l, int t, int r, int b) {
@@ -143,13 +152,7 @@ public class RotateLayout extends ViewGroup {
         }
     }
 
-    @Override
-    public boolean onInterceptHoverEvent(MotionEvent event) {
-        return super.onInterceptHoverEvent(event);
-    }
 
-    @Override
-    public boolean onTouchEvent(MotionEvent event) {
-        return super.onTouchEvent(event);
-    }
+
+
 }

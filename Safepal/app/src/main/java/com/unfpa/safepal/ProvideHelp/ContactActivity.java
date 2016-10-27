@@ -1,12 +1,10 @@
 package com.unfpa.safepal.ProvideHelp;
 
-import android.content.Context;
 import android.content.Intent;
 import android.database.Cursor;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
@@ -16,13 +14,23 @@ import android.widget.RadioButton;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.android.volley.Request;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.StringRequest;
 import com.unfpa.safepal.Location.GPSTracker;
 import com.unfpa.safepal.R;
-import com.unfpa.safepal.messages.MedicalCareMessageDialog;
-import com.unfpa.safepal.messages.messageDialog;
+import com.unfpa.safepal.messages.EMessageDialogFragment;
+import com.unfpa.safepal.network.MySingleton;
+import com.unfpa.safepal.network.VolleyCallback;
 import com.unfpa.safepal.store.ReportIncidentContentProvider;
 import com.unfpa.safepal.store.ReportIncidentTable;
 
+import java.util.HashMap;
+import java.util.Map;
+
+import static android.content.Intent.EXTRA_TITLE;
+import static com.unfpa.safepal.R.attr.title;
 import static com.unfpa.safepal.report.WhoSGettingHelpActivity.randMessageIndex;
 
 public class ContactActivity extends AppCompatActivity {
@@ -34,9 +42,13 @@ public class ContactActivity extends AppCompatActivity {
     private LinearLayout contactPhoneEmailLl;
     private RadioButton contactYesRB, contactNoRb;
     private EditText contactPhonenumber, contactEmail;
+    //Volley requests
+    final String URL_CSO_API = "http://52.43.152.73/api/location.php";
 
     //location
     GPSTracker gps;
+    double userLatitude ;
+    double userLongitude;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -90,9 +102,14 @@ public class ContactActivity extends AppCompatActivity {
                        return;
                    }
 
+
                     startActivity(new Intent(getApplicationContext(), CsoActivity.class));
+
+
                 }
                 else if(contactNoRb.isChecked()){
+                    getNearestCSOs(Double.toString(userLatitude), Double.toString(userLongitude));
+
                     startActivity(new Intent(getApplicationContext(), CsoActivity.class));
                 }
                 else {
@@ -103,17 +120,81 @@ public class ContactActivity extends AppCompatActivity {
         });
     }
 
+    /** All the  Methods **/
+    //updates safepal number
+    public void updateUIDTextView(){
 
-    //expand encouraging messages
-    public void onClickContactEncouragingMessages(View view){
-        MedicalCareMessageDialog contactMessageDialog = new MedicalCareMessageDialog(contactEncouragingMessagesTv);
-        contactMessageDialog.show(getSupportFragmentManager(), "messages");
+        final Handler handler = new Handler();
+        Runnable runnable = new Runnable() {
+            @Override
+            public void run() {
+                int k =0;
+                while (k<100)  {
+                    try{Thread.sleep(1000);
+                    }catch (InterruptedException e ){
+                        e.printStackTrace();
+                    }
+                    handler.post(new Runnable() {
+                        @Override
+                        public void run() {
+                            Cursor cursor =  getContentResolver().query(
+                                    ReportIncidentContentProvider.CONTENT_URI,
+                                    null,
+                                    null,
+                                    null,
+                                    null);
+
+                            cursor.moveToLast();
+
+                            ///action happens every sec
+                            contactSafepalNo.setText("Your SafePal Number is : " +  cursor.getString(cursor.getColumnIndex(ReportIncidentTable.COLUMN_UNIQUE_IDENTIFIER)));
+
+
+                        }
+                    });
+                    k++;
+                }
+            }
+        };
+
+        new Thread(runnable).start();
+
+    }
+    //tracks the user's location
+    public void userLocationTracker(){
+        // create class object
+        gps = new GPSTracker(ContactActivity.this);
+
+        // check if GPS enabled
+        if(gps.canGetLocation()){
+
+            userLatitude = gps.getLatitude();
+            userLongitude = gps.getLongitude();
+
+            // \n is for new line
+            //Toast.makeText(getApplicationContext(), "Your Location is - \nLat: " + latitude + "\nLong: " + longitude, Toast.LENGTH_LONG).show();
+        }else{
+            // can't get location
+            // GPS or Network is not enabled
+            // Ask user to enable GPS/network in settings
+            gps.showSettingsAlert();
+        }
     }
 
     private void  loadContactFeedbackMessages(){
         String[] wsghMessagesArray = getResources().getStringArray(R.array.seek_medical_care_messages);
         contactEncouragingMessagesTv.setText(wsghMessagesArray[randMessageIndex(0, wsghMessagesArray.length)].toString());
     }
+
+    //expand encouraging messages
+    public void onClickContactEncouragingMessages(View view){
+       EMessageDialogFragment emDialog = EMessageDialogFragment.newInstance(
+                getString(R.string.seek_medical_alert_head),
+                contactEncouragingMessagesTv.getText().toString(),
+                getString(R.string.close_dialog));
+        emDialog.show(getSupportFragmentManager(), "encouraging message");
+           }
+
     public void onContactRadioButtonClicked(View view) {
         // Is the button now checked?
         boolean checked = ((RadioButton) view).isChecked();
@@ -136,62 +217,37 @@ public class ContactActivity extends AppCompatActivity {
         }
     }
 
-    public void updateUIDTextView(){
+    // Method pushes the data to json server suing volley
+    private void getNearestCSOs(final String toServerReporterLat,
+                                final String toServerReporterLng  ){
 
-        final Handler handler = new Handler();
-        Runnable runnable = new Runnable() {
+
+        StringRequest stringRequest = new StringRequest(Request.Method.POST, URL_CSO_API,
+                new Response.Listener<String>() {
+                    @Override
+                    public void onResponse(String response) {
+                        Toast.makeText(getBaseContext(), response,Toast.LENGTH_LONG).show();
+
+                    }
+                },
+                new Response.ErrorListener() {
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+
+                    }
+                }){
             @Override
-            public void run() {
-                int k =0;
-               while (k<100)  {
-                   try{Thread.sleep(1000);
-                   }catch (InterruptedException e ){
-                       e.printStackTrace();
-                   }
-                   handler.post(new Runnable() {
-                       @Override
-                       public void run() {
-                           Cursor cursor =  getContentResolver().query(
-                                   ReportIncidentContentProvider.CONTENT_URI,
-                                   null,
-                                   null,
-                                   null,
-                                   null);
-
-                           cursor.moveToLast();
-
-                           ///action happens every sec
-                           contactSafepalNo.setText("Your SafePal Number is : " +  cursor.getString(cursor.getColumnIndex(ReportIncidentTable.COLUMN_UNIQUE_IDENTIFIER)));
-
-
-                       }
-                   });
-                   k++;
-               }
+            protected Map<String,String> getParams(){
+                Map<String,String> params = new HashMap<String, String>();
+                params.put("reporter_lat",toServerReporterLat);
+                params.put("reporter_long",toServerReporterLng);
+                return params;
             }
+
         };
 
-      new Thread(runnable).start();
+        MySingleton.getInstance(this).addToRequestQueue(stringRequest);
 
     }
 
-    public void userLocationTracker(){
-        // create class object
-        gps = new GPSTracker(ContactActivity.this);
-
-        // check if GPS enabled
-        if(gps.canGetLocation()){
-
-            double latitude = gps.getLatitude();
-            double longitude = gps.getLongitude();
-
-            // \n is for new line
-            Toast.makeText(getApplicationContext(), "Your Location is - \nLat: " + latitude + "\nLong: " + longitude, Toast.LENGTH_LONG).show();
-        }else{
-            // can't get location
-            // GPS or Network is not enabled
-            // Ask user to enable GPS/network in settings
-            gps.showSettingsAlert();
-        }
-    }
 }

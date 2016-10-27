@@ -24,7 +24,7 @@ import android.widget.Toast;
 import com.unfpa.safepal.ProvideHelp.ContactActivity;
 import com.unfpa.safepal.R;
 import com.unfpa.safepal.datepicker.DatePickerFragment;
-import com.unfpa.safepal.messages.messageDialog;
+import com.unfpa.safepal.messages.EMessageDialogFragment;
 import com.unfpa.safepal.network.NetworkChangeReceiver;
 import com.unfpa.safepal.store.ReportIncidentContentProvider;
 import com.unfpa.safepal.store.ReportIncidentTable;
@@ -37,19 +37,21 @@ import static com.unfpa.safepal.report.WhoSGettingHelpActivity.randMessageIndex;
 
 public class SurvivorIncidentFormActivity extends AppCompatActivity {
 
-    /*
+    /**
      * sif - Stands for "Survivor Incident Form"
      * */
 
-    /*** Global Variables **/
+    /**
+     * Global Variables **/
 
-    //User Interface
+    /*User Interface*/
     Toolbar sifToolbar;
+    //Floating action buttons
     FloatingActionButton sifAbortAppFab, sifBackFab, sifSubmitFab;
-    //messages
+    //Encouraging messages
     TextView sifEncouragingMessagesTv;
 
-    //Form
+    //Form variables
     private Button sifDateOfBirthButton;
     private RadioGroup sifGenderRG;
     private RadioButton sifGenderRB;
@@ -63,10 +65,10 @@ public class SurvivorIncidentFormActivity extends AppCompatActivity {
 
     //content provider
     Bundle extras;
-    private Uri reportIncidentUri;
+    public static Uri reportIncidentUri;
 
     //network changes broadcast receiver
-    private NetworkChangeReceiver netReceiver;
+    public static NetworkChangeReceiver  netReceiver = new NetworkChangeReceiver();
 
 
     @Override
@@ -144,18 +146,13 @@ public class SurvivorIncidentFormActivity extends AppCompatActivity {
                 startActivity(new Intent(getApplicationContext(), WhoSGettingHelpActivity.class));
             }
         });
-
-
-
-    }
+ }
 
     public void showDatePickerDialog(View v) {
         DialogFragment dateFragment = new DatePickerFragment();
 
         dateFragment.show(getSupportFragmentManager(), "datePicker");
     }
-
-
     /**
      * Code for referral was added here
      * @param view
@@ -234,7 +231,7 @@ public class SurvivorIncidentFormActivity extends AppCompatActivity {
 
             //Broadcast receiver that checks for the network status
             IntentFilter netMainFilter =  new IntentFilter(ConnectivityManager.CONNECTIVITY_ACTION);
-            netReceiver = new NetworkChangeReceiver();
+
             registerReceiver(netReceiver, netMainFilter);
 
             //starts a the  help activity
@@ -254,16 +251,20 @@ public class SurvivorIncidentFormActivity extends AppCompatActivity {
 
     //shows encouraging messages in dialog on click of the Text View
     public void onClickSifEncouragingMessages(View view){
-        messageDialog sifMessageDialog = new messageDialog(sifEncouragingMessagesTv);
-        sifMessageDialog.show(getSupportFragmentManager(), "messages");
+
+        EMessageDialogFragment emDialog = EMessageDialogFragment.newInstance(
+                getString(R.string.seek_medical_alert_head),
+                sifEncouragingMessagesTv.getText().toString(),
+                getString(R.string.close_dialog));
+        emDialog.show(getSupportFragmentManager(), "encouraging message");
     }
 
-    //shows spinner drop down for incident types
+    //shows spinner drop down for sif incident types
     public void onClickSifIVSpinner(View view){
         sifIncidentTypeSpinner.performClick();
     }
     //Generates a temperory safepal number
-    public String generateTempSafePalNumber(int minimum, int maximum){
+    public static String generateTempSafePalNumber(int minimum, int maximum){
         Random rn = new Random();
         int n = maximum - minimum + 1;
         int i = rn.nextInt() % n;

@@ -9,12 +9,14 @@
     <string name="overall_fab_submit">Submit</string>
 
     <!-- messages-->
+    <string name="not_your_fault_alert_header">It is not your fault</string>
     <string-array name="not_your_fault_messages">
         <item>Whatever happened, was not your fault. No one has the right to sexually violet you.  The blame for a rape lies solely with the rapist. The truth is that what a person wears, what a person says, or how a person acts is never a justification for sexual violence.</item>
         <item>Most people are raped by people they know. You do not have to protect the perpetrator. Make protecting yourself your priority. Do not worry about protecting the person who raped you.</item>
         <item>If you want to report the crime to the police, do so. Reporting sexual violence may help protect others from that person — and may help you feel a little less like you were a victim.</item>
 
     </string-array>
+    <string name="seek_medical_alert_head">Seek medical Care</string>
     <string-array name="seek_medical_care_messages">
         <item>40% of rape survivors develop sexually transmitted diseases as a result of sexual assault.</item>
         <item>You should get medical attention right away without changing your clothes, showering, douching, or washing. It can be hard not to clean up, of course — it is a natural human instinct to wash away all traces of a sexual assault. But being examined right away is the best way to ensure you get proper medical treatment.</item>
@@ -47,6 +49,7 @@
     <string name="action_home_about">About</string>
 
     <!-- Home Activity strings-->
+
 
     <!-- Floationg Action Button-->
     <string name="home_fab_report">Report Sexual Violence</string>
@@ -109,7 +112,7 @@
     <string name="refferal_two_intro">We have located the nearest ... (CSO) to you.\nThe people at this CSO have already gotten information about this incident and they will be contacting you soon.\nBelow are the details of this CSO.</string>
 
     <!-- Encouraging Dialog-->
-    <string name="em_ok">Close</string>
+    <string name="close_dialog">Close</string>
     <string name="em_not_fault">It\'s not your fault</string>
     <string name="title_activity_contact">Getting Help</string>
      <string name="contact_u_or_not">Would you like to contact you? *</string>
@@ -117,6 +120,8 @@
     <string name="contact_no">No</string>
 
     <string name="title_activity_cso"> Getting Help</string>
+
+    <!--cso and child help line -->
 
 
 </resources>

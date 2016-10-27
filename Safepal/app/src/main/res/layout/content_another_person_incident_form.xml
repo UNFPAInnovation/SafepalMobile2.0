@@ -81,30 +81,32 @@
             android:id="@+id/apif_gender_rg"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_weight="1"
+            android:layout_weight="2"
             android:orientation="horizontal">
             <RadioButton
                 android:id="@+id/apif_gender_girl_rb"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_weight="1"
+                android:layout_weight="0.04"
                 android:background="@drawable/rbtn_rb_selector"
-                android:button="@null"
+                android:button="@drawable/ic_female_icon"
                 android:gravity="center"
-                android:padding="5dp"
-                android:text="@string/apif_female"
-                android:textColor="@drawable/rbtn_rb_textcolor_selector"/>
+                android:paddingTop="10dp"
+                android:paddingBottom="10dp"
+                android:text="Female"
+                />
             <RadioButton
                 android:id="@+id/apif_gender_boy_rb"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_weight="1"
+                android:layout_weight="0.04"
                 android:background="@drawable/rbtn_rb_selector"
-                android:button="@null"
+                android:button="@drawable/ic_male_icon"
                 android:gravity="center"
-                android:padding="5dp"
-                android:text="@string/apif_male"
-                android:textColor="@drawable/rbtn_rb_textcolor_selector"/>
+                android:paddingTop="10dp"
+                android:paddingBottom="10dp"
+                android:text="Male"
+                />
         </RadioGroup>
 
     </LinearLayout>
@@ -193,10 +195,11 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:src="@drawable/ic_send_white_48dp"
-               
                 android:layout_marginBottom="2dp"
+               android:onClick="onClickSubmitApifIncident"
                 app:fabSize="mini"
-                app:backgroundTint="@color/colorPrimary"/>
+                app:backgroundTint="@color/colorPrimary"
+               />
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -206,7 +209,6 @@
                 android:text="@string/overall_fab_submit"
                 android:textColor="@color/colorPrimary"
                 />
-
         </LinearLayout>
 
     </LinearLayout>

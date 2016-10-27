@@ -7,14 +7,17 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 
+import android.animation.ValueAnimator;
 import android.content.Context;
 import android.graphics.Camera;
 import android.graphics.Canvas;
 import android.graphics.Paint;
+import android.os.Build;
 import android.os.Handler;
 import android.text.TextPaint;
 import android.util.AttributeSet;
 import android.view.View;
+import android.widget.Scroller;
 
 import com.unfpa.safepal.R;
 
@@ -28,30 +31,42 @@ public class RotateAnotherWay extends View {
     private float mRotateAngle;
     private float rotateAngleDegree;
 
+
+
+    private Scroller mScroller;
+    private ValueAnimator mScrollAnimator;
+
     public static class Angles {
         float fi, theta;
     }
-
     public RotateAnotherWay(Context context) {
         super(context);
         init();
     }
-
     public RotateAnotherWay(Context context, AttributeSet attrs) {
         super(context, attrs);
         init();
     }
-
     public RotateAnotherWay(Context context, AttributeSet attrs, int defStyleAttr) {
         super(context, attrs, defStyleAttr);
         init();
     }
 
+
+
     private void init() {
         List<String> items = new ArrayList<String>();
-        for (int i = 0; i < 10; i++) {
-            items.add("item:" + i);
-        }
+            //items.add("item:" + i);
+        items.add("Medical Care");
+        items.add("Personal Rights");
+        items.add("Sexual Violence");
+        items.add("Prevention");
+        items.add("Nearest Help");
+        items.add("Child Help Line");
+        items.add("Survivors");
+        items.add("Dangerous Places");
+        items.add("Perpetrators");
+        items.add("Signs of Sexual Violence");
         setItems(items);
     }
 
@@ -59,8 +74,8 @@ public class RotateAnotherWay extends View {
     protected void onDraw(Canvas canvas) {
         super.onDraw(canvas);
         canvas.translate(canvas.getWidth() / 2F, canvas.getHeight() / 2F);
-        mTextPaint.setColor(getResources().getColor(R.color.colorOrange));
-        final float radius = 100;
+        mTextPaint.setColor(getResources().getColor(R.color.colorPrimaryDark));
+        final float radius = Math.min(getMeasuredWidth(), getMeasuredHeight()) / 2F;
 
         mCamera.setLocation(0, 0, -100);
         for (int i = 0; i < mItems.size(); i++) {
@@ -93,10 +108,10 @@ public class RotateAnotherWay extends View {
 
             @Override
             public void run() {
-                rotateAngleDegree += 5;
+                rotateAngleDegree += 1;
                 mRotateAngle = (float) Math.toRadians(rotateAngleDegree);
                 invalidate();
-                mHandler.postDelayed(this, 40);
+                mHandler.postDelayed(this, 0);
             }
         }, 40);
     }
@@ -127,4 +142,5 @@ public class RotateAnotherWay extends View {
             xyzList.add(xyz);
         }
     }
+
 }

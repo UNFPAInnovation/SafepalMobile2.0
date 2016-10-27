@@ -98,7 +98,8 @@
         android:paddingRight="5dp"
         android:background="@drawable/rbtn_rb_selector"
         android:orientation="horizontal"
-        android:visibility="gone">
+        android:visibility="gone"
+        android:onClick="onClickWsghIvSpinner">
 
         <Spinner
             android:id="@+id/wsgh_relationship_spinner"
@@ -116,7 +117,8 @@
             android:layout_height="wrap_content"
             android:layout_alignParentRight="true"
             android:layout_centerVertical="true"
-            android:src="@drawable/ic_chevron_down"/>
+            android:src="@drawable/ic_chevron_down"
+            />
     </RelativeLayout>
 
 </RelativeLayout>
