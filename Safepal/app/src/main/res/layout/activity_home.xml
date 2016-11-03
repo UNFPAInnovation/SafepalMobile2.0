@@ -26,8 +26,8 @@
 
     </android.support.design.widget.AppBarLayout>
 
-    <!-- Contents of the Home Activity-->
-    <include layout="@layout/content_home" />
+        <!-- Contents of the Home Activity-->
+        <include layout="@layout/content_home" />
 
     <!-- FAB and Text for abort app-->
     <LinearLayout
@@ -42,7 +42,7 @@
             android:layout_height="wrap_content"
             android:src="@drawable/ic_exit_to_app_white_24dp"
             android:elevation="0dp"
-
+            app:fabSize="mini"
             />
         <TextView
             android:layout_width="wrap_content"
@@ -82,6 +82,7 @@
             android:src="@drawable/ic_border_color_white_24dp"
             app:backgroundTint="@color/colorPrimary"
             android:elevation="0dp"
+            app:fabSize="mini"
              />
     </LinearLayout>
 </android.support.design.widget.CoordinatorLayout>

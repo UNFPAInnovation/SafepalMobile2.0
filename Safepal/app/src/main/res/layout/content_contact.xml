@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/content_contact"
@@ -9,130 +9,140 @@
     android:paddingLeft="@dimen/activity_horizontal_margin"
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
+    android:fillViewport="true"
     app:layout_behavior="@string/appbar_scrolling_view_behavior"
     tools:context="com.unfpa.safepal.ProvideHelp.ContactActivity"
     tools:showIn="@layout/activity_contact">
-    <TextView
-        android:id="@+id/contact_ecouraging_messages_tv"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:gravity="center"
-        android:ellipsize="end"
-        android:maxLines="3"
-        android:text="@string/wsgh_msgs_to_ecourage_survivor"
-        android:onClick="onClickContactEncouragingMessages"/>
-    <View
-        android:id="@+id/contact_horizotal_line"
-        android:layout_below="@+id/contact_ecouraging_messages_tv"
+    <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height= "2dp"
-        android:layout_marginBottom="@dimen/overall_et_margin_bottom"
-        android:layout_marginTop="@dimen/overall_et_margin_top"
-        android:background="@color/colorGreyDarker" />
-    <TextView
-        android:id="@+id/contact_safepal_no"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/contact_horizotal_line"
-        android:layout_above="@+id/contact_question_tv"
-
-        android:text="Your SafePal Number is : "
-        android:textStyle="bold|italic"
-        android:textColor="@color/colorAccent"/>
-
-    <TextView
-        android:id="@+id/contact_question_tv"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="@string/contact_u_or_not"
-        android:textSize="@dimen/wsgh_middle_text"
-        android:textStyle="bold"
-        android:gravity="center"
-        android:textColor="@color/colorPrimary"
-        android:layout_above="@+id/contact_second_horizotal_line"
-        />
-    <View
-        android:id="@+id/contact_second_horizotal_line"
-        android:layout_width="match_parent"
-        android:layout_height= "2dp"
-        android:layout_marginBottom="@dimen/overall_et_margin_bottom"
-        android:layout_marginTop="@dimen/overall_et_margin_top"
-        android:background="@color/colorGreyDarker"
-        android:layout_above="@+id/contact_me_rg"/>
-
-    <RadioGroup
-        android:id="@+id/contact_me_rg"
-        android:layout_centerInParent="true"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginRight="5dp"
-        android:layout_marginLeft="5dp"
-        android:paddingTop="10dp"
-        android:paddingBottom="10dp"
-        android:gravity="center"
-        android:orientation="horizontal">
-
-
-        <RadioButton android:id="@+id/contact_me_yes_rb"
+        android:layout_height="match_parent">
+        <TextView
+            android:id="@+id/contact_ecouraging_messages_tv"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:background="@drawable/rbtn_rb_selector"
-            android:button="@null"
             android:gravity="center"
-            android:paddingTop="15dp"
-            android:paddingBottom="15dp"
-            android:text="@string/contact_yes"
-            android:textColor="@drawable/rbtn_rb_textcolor_selector"
-            android:onClick="onContactRadioButtonClicked"
-            />
-        <RadioButton android:id="@+id/contact_me_not_rb"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:background="@drawable/rbtn_rb_selector"
-            android:button="@null"
-            android:gravity="center"
-            android:paddingTop="15dp"
-            android:paddingBottom="15dp"
-            android:text="@string/contact_no"
-            android:textColor="@drawable/rbtn_rb_textcolor_selector"
-            android:onClick="onContactRadioButtonClicked"
-            />
-    </RadioGroup>
-
-    <LinearLayout
-        android:id="@+id/contact_phone_email_ll"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/contact_me_rg"
-        android:visibility="gone"
-        android:orientation="vertical">
-        <EditText
-            android:id="@+id/contact_phone_et"
+            android:ellipsize="end"
+            android:maxLines="3"
+            android:text="@string/wsgh_msgs_to_ecourage_survivor"
+            android:onClick="onClickContactEncouragingMessages"/>
+        <View
+            android:id="@+id/contact_horizotal_line"
+            android:layout_below="@+id/contact_ecouraging_messages_tv"
+            android:layout_width="match_parent"
+            android:layout_height= "2dp"
+            android:layout_marginBottom="@dimen/overall_et_margin_bottom"
+            android:layout_marginTop="@dimen/overall_et_margin_top"
+            android:background="@color/colorPrimaryDark" />
+        <TextView
+            android:id="@+id/contact_safepal_no"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:layout_marginTop="@dimen/overall_et_margin_top"
-            android:layout_marginBottom="@dimen/overall_et_margin_bottom"
-            android:layout_marginRight="@dimen/activity_horizontal_margin"
-            android:padding="@dimen/overall_et_padding_top"
-            android:background="@drawable/rbtn_rb_selector"
-            android:hint="Enter Phone Number *"
-            android:inputType="phone"
-            />
-        <EditText
-            android:id="@+id/contact_email_et"
+            android:layout_below="@+id/contact_horizotal_line"
+            android:layout_above="@+id/contact_question_tv"
+
+            android:text="Your SafePal Number is : "
+            android:textStyle="bold|italic"
+            android:textColor="@color/colorPrimaryDark"/>
+
+        <TextView
+            android:id="@+id/contact_question_tv"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:layout_marginTop="@dimen/overall_et_margin_top"
+            android:text="@string/contact_u_or_not"
+            android:textSize="@dimen/wsgh_middle_text"
+            android:textStyle="bold"
+            android:gravity="center"
+            android:textColor="@color/colorOrange"
+            android:layout_above="@+id/contact_second_horizotal_line"
+            />
+        <View
+            android:id="@+id/contact_second_horizotal_line"
+            android:layout_width="match_parent"
+            android:layout_height= "2dp"
             android:layout_marginBottom="@dimen/overall_et_margin_bottom"
-            android:layout_marginRight="@dimen/activity_horizontal_margin"
-            android:padding="@dimen/overall_et_padding_top"
-            android:background="@drawable/rbtn_rb_selector"
-            android:hint="Enter your email (Optional)"
-            android:inputType="textEmailAddress"/>
-    </LinearLayout>
+            android:layout_marginTop="@dimen/overall_et_margin_top"
+            android:background="@color/colorPrimaryDark"
+            android:layout_above="@+id/contact_me_rg"/>
 
-</RelativeLayout>
+        <RadioGroup
+            android:id="@+id/contact_me_rg"
+            android:layout_centerInParent="true"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginRight="5dp"
+            android:layout_marginLeft="5dp"
+            android:paddingTop="10dp"
+            android:paddingBottom="10dp"
+            android:gravity="center"
+            android:orientation="horizontal">
+
+
+            <RadioButton android:id="@+id/contact_me_yes_rb"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:background="@drawable/rbtn_provider_helper_selector"
+                android:button="@null"
+                android:gravity="center"
+                android:paddingTop="15dp"
+                android:paddingBottom="15dp"
+                android:text="@string/contact_yes"
+                android:textColor="@drawable/rbtn_provider_help_textcolor_selector"
+                android:textStyle="bold"
+                android:onClick="onContactRadioButtonClicked"
+                />
+            <RadioButton android:id="@+id/contact_me_not_rb"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:background="@drawable/rbtn_provider_helper_selector"
+                android:button="@null"
+                android:gravity="center"
+                android:paddingTop="15dp"
+                android:paddingBottom="15dp"
+                android:text="@string/contact_no"
+                android:textColor="@drawable/rbtn_provider_help_textcolor_selector"
+                android:textStyle="bold"
+                android:onClick="onContactRadioButtonClicked"
+                />
+        </RadioGroup>
+
+        <LinearLayout
+            android:id="@+id/contact_phone_email_ll"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/contact_me_rg"
+            android:visibility="gone"
+            android:orientation="vertical">
+            <EditText
+                android:id="@+id/contact_phone_et"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:layout_marginTop="@dimen/overall_et_margin_top"
+                android:layout_marginBottom="@dimen/overall_et_margin_bottom"
+                android:layout_marginRight="@dimen/activity_horizontal_margin"
+                android:padding="@dimen/overall_et_padding_top"
+                android:background="@drawable/rbtn_provider_helper_selector"
+                android:hint="Enter Phone Number *"
+                android:inputType="phone"
+                android:textStyle="bold"
+                android:textColor="@drawable/rbtn_provider_help_textcolor_selector"
+                />
+            <EditText
+                android:id="@+id/contact_email_et"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:layout_marginTop="@dimen/overall_et_margin_top"
+                android:layout_marginBottom="@dimen/overall_et_margin_bottom"
+                android:layout_marginRight="@dimen/activity_horizontal_margin"
+                android:padding="@dimen/overall_et_padding_top"
+                android:background="@drawable/rbtn_provider_helper_selector"
+                android:textColor="@drawable/rbtn_provider_help_textcolor_selector"
+                android:hint="Enter your email (Optional)"
+                android:inputType="textEmailAddress"/>
+        </LinearLayout>
+
+    </RelativeLayout>
+</ScrollView>

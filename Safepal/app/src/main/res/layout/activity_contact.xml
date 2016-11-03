@@ -21,8 +21,8 @@
 
     </android.support.design.widget.AppBarLayout>
 
-    <include layout="@layout/content_contact" />
 
+        <include layout="@layout/content_contact" />
 
     <!-- FAB and Text of Contact abort -->
     <LinearLayout
@@ -37,7 +37,7 @@
             android:layout_height="wrap_content"
             android:src="@drawable/ic_exit_to_app_white_24dp"
             app:rippleColor="@color/colorOrange"
-            app:fabSize="auto"
+            app:fabSize="mini"
             android:elevation="0dp"
             />
         <TextView
@@ -77,7 +77,7 @@
             android:src="@drawable/ic_chevron_right_white_48dp"
             app:backgroundTint="@color/colorPrimary"
             android:elevation="0dp"
-            app:fabSize="auto"/>
+            app:fabSize="mini"/>
 
     </LinearLayout>
 
