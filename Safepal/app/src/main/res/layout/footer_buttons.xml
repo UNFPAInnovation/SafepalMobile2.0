@@ -1,0 +1,139 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.v4.widget.NestedScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/content_cso"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:paddingBottom="@dimen/activity_vertical_margin"
+    android:paddingLeft="@dimen/activity_horizontal_margin"
+    android:paddingRight="@dimen/activity_horizontal_margin"
+    android:paddingTop="@dimen/activity_vertical_margin"
+    app:layout_behavior="@string/appbar_scrolling_view_behavior"
+    tools:context="com.unfpa.safepal.ProvideHelp.CsoActivity"
+    tools:showIn="@layout/activity_cso">
+    <LinearLayout
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+
+    <!--<RelativeLayout-->
+        <!--android:layout_width="match_parent"-->
+        <!--android:layout_height="match_parent">-->
+
+        <TextView
+            android:id="@+id/cso_ecouraging_messages_tv"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:ellipsize="end"
+            android:maxLines="3"
+            android:text="@string/wsgh_msgs_to_ecourage_survivor"
+            android:onClick="onClickCsoEncouragingMessages"/>
+        <View
+            android:id="@+id/cso_horizotal_line"
+            android:layout_below="@+id/cso_ecouraging_messages_tv"
+            android:layout_width="match_parent"
+            android:layout_height= "2dp"
+            android:layout_marginBottom="@dimen/overall_et_margin_bottom"
+            android:layout_marginTop="@dimen/overall_et_margin_top"
+            android:background="@color/colorPrimaryDark" />
+        <TextView
+            android:id="@+id/cso_safepal_number"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/cso_horizotal_line"
+            android:textStyle="bold|italic"
+            android:textColor="@color/colorPrimaryDark"
+            android:text="Your Safepal Number: "
+            />
+        <TextView
+            android:id="@+id/cso_contact_info"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/cso_safepal_number"
+            android:textStyle="bold"
+            android:textColor="@color/colorGreyDarker"
+            />
+        <TextView
+            android:layout_marginBottom="14dp"
+            android:layout_marginTop="14dp"
+            android:id="@+id/cso_assurance_help"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/cso_contact_info"
+            android:text="The available help will contact you using above info."/>
+        <View
+            android:id="@+id/cso_horizotal_line_two"
+            android:layout_below="@+id/cso_assurance_help"
+            android:layout_width="match_parent"
+            android:layout_height= "2dp"
+            android:layout_marginBottom="14dp"
+            android:layout_marginTop="14dp"
+            android:background="@color/colorPrimaryDark" />
+
+
+        <!-- i removed this
+        style="@style/NiceButton"-->
+        <Button
+            style="@style/Widget.AppCompat.Button.Colored"
+            android:id="@+id/cso_near_help"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/cso_horizotal_line_two"
+            android:text="Call Toll Free"
+            android:layout_marginBottom="14dp"
+            android:layout_marginTop="14dp"
+            android:textStyle="bold"
+            android:maxLines="1"
+            android:onClick="onClickCsoCall"/>
+        <View
+            android:id="@+id/cso_horizotal_line_three"
+            android:layout_width="match_parent"
+            android:layout_height= "2dp"
+            android:layout_below="@+id/cso_near_help"
+            android:layout_marginBottom="10dp"
+            android:layout_marginTop="10dp"
+            android:background="@color/colorPrimaryDark" />
+
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/cso_recycler_view"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginBottom="14dp"
+            android:layout_marginTop="14dp"
+            android:scrollbars="vertical"/>
+
+        <ProgressBar
+            android:id="@+id/cso_progress_bar"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="14dp"
+            android:layout_marginTop="14dp"/>
+
+
+    <!--</RelativeLayout>-->
+        <LinearLayout
+            android:orientation="horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <Button
+                style="@style/Widget.AppCompat.Button.Colored"
+                android:text="@string/exitApp"
+                android:layout_weight="1"
+                android:id="@+id/exit_app"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content" />
+            <Button
+                style="@style/Widget.AppCompat.Button.Colored"
+                android:text="@string/next"
+                android:layout_weight="1"
+                android:id="@+id/next"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content" />
+
+        </LinearLayout>
+    </LinearLayout>
+</android.support.v4.widget.NestedScrollView>
