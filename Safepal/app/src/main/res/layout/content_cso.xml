@@ -77,7 +77,7 @@
         <!-- i removed this
         style="@style/NiceButton"-->
         <Button
-            style="@style/Widget.AppCompat.Button.Colored"
+            style="@style/NiceButton"
             android:id="@+id/cso_near_help"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -88,7 +88,6 @@
             android:textStyle="bold"
             android:maxLines="1"
             android:onClick="onClickCsoCall"
-            style="@style/NiceButton"
             />
         <View
             android:id="@+id/cso_horizotal_line_three"
