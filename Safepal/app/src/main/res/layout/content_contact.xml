@@ -45,7 +45,7 @@
 
         android:text="Your SafePal Number is : "
         android:textStyle="bold|italic"
-        android:textColor="@color/colorAccent"
+        android:textColor="@color/colorPrimaryDark"
         android:layout_marginTop="10dp"/>
 
     <TextView
@@ -55,7 +55,8 @@
         android:text="@string/contact_u_or_not"
         android:textSize="@dimen/wsgh_middle_text"
         android:textStyle="bold"
-        android:textColor="@color/colorPrimary"
+        android:layout_gravity="center_horizontal"
+        android:gravity="center"
         android:layout_above="@+id/contact_second_horizotal_line"
         android:layout_marginTop="10dp"
         />

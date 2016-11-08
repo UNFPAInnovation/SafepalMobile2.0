@@ -8,6 +8,7 @@ import android.location.Location;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Process;
+import android.provider.Settings;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.ActivityCompat;
 import android.support.v7.app.AppCompatActivity;
@@ -63,13 +64,17 @@ public class CsoActivity extends AppCompatActivity implements
      */
     Button buttonNext;
     Button buttonExit;
-    TextView csoSafepalNo, csoEncouragingMessagesTV;
+
+    TextView csoSafepalNoTV, csoUserContactInfoTV, csoEncouragingMessagesTV;
 
     //variables for the nearest cso list
     private List<TheCSO> csosList = new ArrayList<>();
     private RecyclerView csosRecyclerView;
     private CsoRvAdapter csosAdapter;
     private ProgressBar csoProgressBar;
+
+
+    Bundle csoExtras;
 
     // TheCSOs json url
     private static final String URL_CSO_API = "http://52.43.152.73/api/location.php";
@@ -91,28 +96,39 @@ public class CsoActivity extends AppCompatActivity implements
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_cso);
 
+        csoExtras = getIntent().getExtras();
+        String receivedEmail, receivedPhonenumber;
         //buttonNext and buttonExit buttons
         buttonNext = (Button) findViewById(R.id.next);
         buttonExit = (Button) findViewById(R.id.exit_app);
 
-        // choose someone else relationship spinner
 
         csoEncouragingMessagesTV = (TextView) findViewById(R.id.cso_ecouraging_messages_tv);
-
-
-//        csoSafepalNo = (TextView) findViewById(R.id.cso_safepal_no);
-//        String safepalNumber =getIntent().getExtras().getString("safepalUniqueNumber").toString();
-//        csoSafepalNo.setText(safepalNumber);
-        //Encouraging messages
+        csoUserContactInfoTV =(TextView)findViewById(R.id.cso_contact_info);
+        csoSafepalNoTV = (TextView)findViewById(R.id.cso_safepal_number);
 
         csoToolbar = (Toolbar) findViewById(R.id.cso_toolbar);
         setSupportActionBar(csoToolbar);
         getSupportActionBar().setLogo(R.mipmap.ic_launcher);
         getSupportActionBar().setDisplayUseLogoEnabled(true);
-
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
         loadCsoMessages();
         buildGoogleApiClient();
+
+
+        receivedPhonenumber = getIntent().getStringExtra("sendUserPhonenumber");
+
+        receivedEmail = getIntent().getStringExtra("sendUserEmail");
+
+        if (receivedPhonenumber.length() > 9 || receivedEmail.length() < 3) {
+            csoUserContactInfoTV.setText(" Your phone number: " + receivedPhonenumber);
+
+        } else if (receivedPhonenumber.length() > 9 && receivedEmail.length() > 10) {
+            csoUserContactInfoTV.setText(" Your phone number: " + receivedPhonenumber + "\n Your Email: " + receivedEmail);
+        } else {
+            csoUserContactInfoTV.setText("We will not contact.");
+        }
 
         csoProgressBar = (ProgressBar) findViewById(R.id.cso_progress_bar);
         csosRecyclerView = (RecyclerView) findViewById(R.id.cso_recycler_view);
@@ -192,7 +208,7 @@ public class CsoActivity extends AppCompatActivity implements
             }
             startActivity(new Intent(Intent.ACTION_CALL, Uri.parse("tel:116")));
         } catch (ActivityNotFoundException ex) {
-            Toast.makeText(getApplicationContext(), "SafePal can't make call now", Toast.LENGTH_SHORT).show();
+
         }
     }
 
@@ -218,7 +234,6 @@ public class CsoActivity extends AppCompatActivity implements
                         csosList.add(newCsos);
 
                     }
-                    Toast.makeText(getBaseContext(), Integer.toString(arr.length()), Toast.LENGTH_LONG).show();
 
                 } catch (JSONException e) {
                     e.printStackTrace();
@@ -269,6 +284,7 @@ public class CsoActivity extends AppCompatActivity implements
     //hides the progress bar
     private void hidePDialog() {
         csoProgressBar.setVisibility(View.GONE);
+
     }
 
     private String roundsOffCsoNearestDistance(String survivorToCso){
@@ -315,7 +331,7 @@ public class CsoActivity extends AppCompatActivity implements
             finalCsoPreview(mLastLocation.getLatitude(),mLastLocation.getLongitude());
 
         } else {
-            Toast.makeText(this, "SafePal failed to get your location.", Toast.LENGTH_LONG).show();
+            Toast.makeText(this, "SafePal failed to get your location. Turn on GPS ", Toast.LENGTH_LONG).show();
         }
 
     }
@@ -330,5 +346,37 @@ public class CsoActivity extends AppCompatActivity implements
         Log.i("Location Status: ", "Connection suspended");
         mGoogleApiClient.connect();
     }
+
+    //Methoud automatically turns on the gps
+    public void turnGPSOn()
+    {
+        Intent intent = new Intent("android.location.GPS_ENABLED_CHANGE");
+        intent.putExtra("enabled", true);
+        this.getApplicationContext().sendBroadcast(intent);
+
+        String provider = Settings.Secure.getString(getApplicationContext().getContentResolver(), Settings.Secure.LOCATION_PROVIDERS_ALLOWED);
+        if(!provider.contains("gps")){ //if gps is disabled
+            final Intent poke = new Intent();
+            poke.setClassName("com.android.settings", "com.android.settings.widget.SettingsAppWidgetProvider");
+            poke.addCategory(Intent.CATEGORY_ALTERNATIVE);
+            poke.setData(Uri.parse("3"));
+            this.getApplicationContext().sendBroadcast(poke);
+
+
+        }
+    }
+    // automaticalys turns off the gps
+    public void turnGPSOff()
+    {
+        String provider = Settings.Secure.getString(getApplicationContext().getContentResolver(), Settings.Secure.LOCATION_PROVIDERS_ALLOWED);
+        if(provider.contains("gps")){ //if gps is enabled
+            final Intent poke = new Intent();
+            poke.setClassName("com.android.settings", "com.android.settings.widget.SettingsAppWidgetProvider");
+            poke.addCategory(Intent.CATEGORY_ALTERNATIVE);
+            poke.setData(Uri.parse("3"));
+            this.getApplicationContext().sendBroadcast(poke);
+        }
+    }
+
 }
 

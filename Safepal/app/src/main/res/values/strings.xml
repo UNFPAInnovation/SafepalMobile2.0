@@ -113,7 +113,7 @@
     <!-- contact activity-->
     <string name="close_dialog">Close</string>
     <string name="em_not_fault">It\'s not your fault</string>
-    <string name="title_activity_contact">Getting Help</string>
+    <string name="title_activity_contact">Nearest Help</string>
      <string name="contact_u_or_not">Would you like to contact you? *</string>
     <string name="contact_yes">Yes</string>
     <string name="contact_no">No</string>

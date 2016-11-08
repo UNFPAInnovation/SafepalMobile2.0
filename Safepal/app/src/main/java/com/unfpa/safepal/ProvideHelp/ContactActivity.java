@@ -44,8 +44,12 @@ public class ContactActivity extends AppCompatActivity {
     private Toolbar contactToolbar;
     private LinearLayout contactPhoneEmailLl;
     private RadioButton contactYesRB, contactNoRb;
-    private EditText contactPhonenumber, contactEmail;
+    private EditText contactPhonenumberET, contactUserEmailET;
 
+
+    Intent csoIntent;
+    String sendUserPhoneNumber = "null";
+    String sendUserEmail = "null";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -69,45 +73,38 @@ public class ContactActivity extends AppCompatActivity {
         contactEncouragingMessagesTv = (TextView)findViewById(R.id.contact_ecouraging_messages_tv);
         contactSafepalNo = (TextView)findViewById(R.id.contact_safepal_no);
 
-        contactPhonenumber = (EditText)findViewById(R.id.contact_phone_et);
-        contactEmail = (EditText)findViewById(R.id.contact_email_et);
+        contactPhonenumberET = (EditText)findViewById(R.id.contact_phone_et);
+        contactUserEmailET = (EditText)findViewById(R.id.contact_email_et);
+
+        csoIntent = new Intent(getApplicationContext(), CsoActivity.class);
 
         loadContactFeedbackMessages();
-        //updates user with the safepal number
-        //updateUIDTextView();
-
-        //picks and shows the mobile reporters location
-         //userLocationTracker();
 
 
-        contactAbortFAB.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-
-
-
-               /* moveTaskToBack(true);
-                android.os.Process.killProcess(android.os.Process.myPid());
-                System.buttonExit(1);*/
-            }
-        });
         contactNextFAB.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent csoIntent = new Intent(getApplicationContext(), CsoActivity.class);
-                csoIntent.putExtra("safepalUniqueNumber",contactSafepalNo.getText().toString());
-
                 if(contactYesRB.isChecked()) {
 
-                   if(contactPhonenumber.getText().length()<5 ){
-                      Toast.makeText(getBaseContext(), "Provide us with a correct phone number", Toast.LENGTH_LONG).show();
+                   if(contactPhonenumberET.getText().length()==10 ||contactPhonenumberET.getText().length()==13  ){
+
+                       sendUserPhoneNumber = contactPhonenumberET.getText().toString();
+                       sendUserEmail = contactUserEmailET.getText().toString();
+
+                       csoIntent.putExtra("sendUserPhonenumber", sendUserPhoneNumber);
+                       csoIntent.putExtra("sendUserEmail", sendUserEmail);
+                   }else{
+                       Toast.makeText(getBaseContext(), "Your phone number is incorrect", Toast.LENGTH_LONG).show();
                        return;
                    }
+
                     startActivity(csoIntent);
                 }
 
                 else if(contactNoRb.isChecked()){
+
                     startActivity(csoIntent);
+
                 }
 
                 else {
@@ -178,15 +175,20 @@ public class ContactActivity extends AppCompatActivity {
         switch(view.getId()) {
             case R.id.contact_me_yes_rb:
                 if (checked)
-                    //shows phone number and email
+
+                //shows phone number and email
                     contactPhoneEmailLl.setVisibility(View.VISIBLE);
                 break;
             case R.id.contact_me_not_rb:
                 if (checked)
                     //hides phonenumber and email on UI
+
                     contactPhoneEmailLl.setVisibility(View.GONE);
-                    //starts cso activity to show nearest help
-                    startActivity(new Intent(getApplicationContext(), CsoActivity.class));
+                csoIntent.putExtra("sendUserPhonenumber", sendUserPhoneNumber);
+                csoIntent.putExtra("sendUserEmail", sendUserEmail);
+
+                //starts cso activity to show nearest help
+                    startActivity(csoIntent);
 
                 break;
         }

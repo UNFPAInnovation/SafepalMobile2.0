@@ -18,10 +18,6 @@
         android:layout_height="match_parent">
 
 
-    <!--<RelativeLayout-->
-        <!--android:layout_width="match_parent"-->
-        <!--android:layout_height="match_parent">-->
-
         <TextView
             android:id="@+id/cso_ecouraging_messages_tv"
             android:layout_width="wrap_content"
@@ -36,8 +32,8 @@
             android:layout_below="@+id/cso_ecouraging_messages_tv"
             android:layout_width="match_parent"
             android:layout_height= "2dp"
-            android:layout_marginBottom="@dimen/overall_et_margin_bottom"
-            android:layout_marginTop="@dimen/overall_et_margin_top"
+            android:layout_marginBottom="2dp"
+            android:layout_marginTop="2dp"
             android:background="@color/colorPrimaryDark" />
         <TextView
             android:id="@+id/cso_safepal_number"
@@ -45,8 +41,9 @@
             android:layout_height="wrap_content"
             android:layout_below="@+id/cso_horizotal_line"
             android:textStyle="bold|italic"
-            android:textColor="@color/colorPrimaryDark"
             android:text="Your Safepal Number: "
+            android:textColor="@color/colorPrimaryDark"
+            android:layout_marginTop="10dp"
             />
         <TextView
             android:id="@+id/cso_contact_info"
@@ -55,11 +52,12 @@
             android:layout_below="@+id/cso_safepal_number"
             android:textStyle="bold"
             android:textColor="@color/colorGreyDarker"
+            android:text="You have no contacts "
             />
         <TextView
+            android:id="@+id/cso_assurance_help"
             android:layout_marginBottom="14dp"
             android:layout_marginTop="14dp"
-            android:id="@+id/cso_assurance_help"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_below="@+id/cso_contact_info"
@@ -69,8 +67,8 @@
             android:layout_below="@+id/cso_assurance_help"
             android:layout_width="match_parent"
             android:layout_height= "2dp"
-            android:layout_marginBottom="14dp"
-            android:layout_marginTop="14dp"
+            android:layout_marginBottom="2dp"
+            android:layout_marginTop="2dp"
             android:background="@color/colorPrimaryDark" />
 
 
@@ -88,14 +86,26 @@
             android:textStyle="bold"
             android:maxLines="1"
             android:onClick="onClickCsoCall"
+
             />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Below is the Closest Help to You"
+            android:gravity="center"
+            android:textColor="#000000"
+            android:textStyle="bold"
+            android:maxLines="1"
+            android:textSize="18dp"/>
         <View
             android:id="@+id/cso_horizotal_line_three"
             android:layout_width="match_parent"
             android:layout_height= "2dp"
             android:layout_below="@+id/cso_near_help"
-            android:layout_marginBottom="10dp"
-            android:layout_marginTop="10dp"
+            android:layout_marginBottom="2dp"
+            android:layout_marginTop="1dp"
+
             android:background="@color/colorPrimaryDark" />
 
         <android.support.v7.widget.RecyclerView
