@@ -22,8 +22,8 @@
 
     </android.support.design.widget.AppBarLayout>
 
-    <!-- Contents of the WSGH activity-->
-    <include layout="@layout/content_cso" />
+        <!-- Contents of the WSGH activity-->
+        <include layout="@layout/content_cso" />
 
     <!-- FAB and Text of WSGH abort -->
     <LinearLayout
@@ -31,15 +31,14 @@
         android:layout_height="wrap_content"
         android:layout_gravity="bottom|start"
         android:layout_margin="@dimen/fab_margin"
-        android:orientation="horizontal"
-        android:visibility="gone">
+        android:orientation="horizontal">
         <android.support.design.widget.FloatingActionButton
             android:id="@+id/cso_abort_app_fab"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:src="@drawable/ic_exit_to_app_white_24dp"
             app:rippleColor="@color/colorOrange"
-            app:fabSize="auto"
+            app:fabSize="mini"
             android:elevation="0dp"
             />
         <TextView
@@ -60,15 +59,14 @@
         android:layout_height="wrap_content"
         android:layout_gravity="bottom|center"
         android:layout_marginBottom="@dimen/fab_margin"
-        android:orientation="horizontal"
-        android:visibility="gone">
+        android:orientation="horizontal">
         <android.support.design.widget.FloatingActionButton
             android:id="@+id/cso_back_fab"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:src="@drawable/ic_chevron_left_white_48dp"
             app:backgroundTint="@color/colorOrange"
-            app:fabSize="auto"
+            app:fabSize="mini"
             android:elevation="0dp"/>
         <TextView
             android:layout_width="wrap_content"
@@ -107,7 +105,7 @@
             android:src="@drawable/ic_home_white_24dp"
             app:backgroundTint="@color/colorPrimary"
             android:elevation="0dp"
-            app:fabSize="auto"/>
+            app:fabSize="mini"/>
 
     </LinearLayout>
 </android.support.design.widget.CoordinatorLayout>

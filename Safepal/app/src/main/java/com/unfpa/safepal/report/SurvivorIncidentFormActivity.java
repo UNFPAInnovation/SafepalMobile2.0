@@ -242,18 +242,16 @@ public class SurvivorIncidentFormActivity extends AppCompatActivity {
             getContentResolver().update(reportIncidentUri, values, null, null);
         }
     }
-
     //Randomly load encouraging messages to the Text View
     public void  loadSifMessages(){
         String[] sifMessagesArray = getResources().getStringArray(R.array.seek_medical_care_messages);
         sifEncouragingMessagesTv.setText(sifMessagesArray[randMessageIndex(0, sifMessagesArray.length)].toString());
     }
-
     //shows encouraging messages in dialog on click of the Text View
     public void onClickSifEncouragingMessages(View view){
 
         EMessageDialogFragment emDialog = EMessageDialogFragment.newInstance(
-                getString(R.string.seek_medical_alert_head),
+                getString(R.string.not_your_fault_alert_header),
                 sifEncouragingMessagesTv.getText().toString(),
                 getString(R.string.close_dialog));
         emDialog.show(getSupportFragmentManager(), "encouraging message");

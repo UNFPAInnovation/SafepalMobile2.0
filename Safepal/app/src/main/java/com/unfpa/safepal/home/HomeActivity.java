@@ -1,6 +1,7 @@
 package com.unfpa.safepal.home;
 
 import android.content.Intent;
+import android.content.res.Resources;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
@@ -12,6 +13,7 @@ import android.view.MenuItem;
 import android.view.View;
 
 import com.unfpa.safepal.R;
+
 import com.unfpa.safepal.report.WhoSGettingHelpActivity;
 
 public class HomeActivity extends AppCompatActivity {
@@ -60,10 +62,11 @@ public class HomeActivity extends AppCompatActivity {
 
             }
         });
-
         homeInfoTGL = new RotateLayout(this);
-
     }
+        //homeInfoTGL = new RotateLayout(this);
+
+
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {

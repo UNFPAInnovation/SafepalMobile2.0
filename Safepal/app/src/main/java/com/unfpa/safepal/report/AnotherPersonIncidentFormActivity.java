@@ -222,7 +222,7 @@ public class AnotherPersonIncidentFormActivity extends AppCompatActivity {
     public void onClickApifEncouragingMessages(View view){
 
         EMessageDialogFragment emDialog = EMessageDialogFragment.newInstance(
-                getString(R.string.seek_medical_alert_head),
+                getString(R.string.not_your_fault_alert_header),
                 apifEncouragingMessagesTv.getText().toString(),
                 getString(R.string.close_dialog));
         emDialog.show(getSupportFragmentManager(), "encouraging message");

@@ -148,7 +148,7 @@ public class WhoSGettingHelpActivity extends AppCompatActivity {
         String[] wsghMessagesArray = getResources().getStringArray(R.array.not_your_fault_messages);
         wsghEncouragingMessagesTv.setText(wsghMessagesArray[randMessageIndex(0, wsghMessagesArray.length)].toString());
         //shows the load message in a dialog
-        WsghEncouragingMessagesDialog();
+        //WsghEncouragingMessagesDialog();
     }
     //random interger to randomly pick messages from arrays
     public static int randMessageIndex(int min, int max) {
@@ -159,7 +159,7 @@ public class WhoSGettingHelpActivity extends AppCompatActivity {
     public void WsghEncouragingMessagesDialog(){
 
         EMessageDialogFragment emDialog = EMessageDialogFragment.newInstance(
-                getString(R.string.seek_medical_alert_head),
+                getString(R.string.not_your_fault_alert_header),
                 wsghEncouragingMessagesTv.getText().toString(),
                 getString(R.string.close_dialog));
         emDialog.show(getSupportFragmentManager(), "encouraging message");

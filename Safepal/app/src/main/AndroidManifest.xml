@@ -3,9 +3,15 @@
     package="com.unfpa.safepal">
 
     <uses-permission android:name="android.permission.INTERNET" />
-
+    <!--acquire the user location -->
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+
+
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
+
+    <!--Calling through the application -->
+    <uses-permission android:name="android.permission.CALL_PHONE" />
+    <uses-permission android:name="android.permission.READ_PHONE_STATE" />
 
 
     <application
@@ -19,12 +25,8 @@
             android:name=".home.HomeActivity"
             android:label="@string/home_activity_title"
             android:theme="@style/AppTheme.NoActionBar"
-            android:autoRemoveFromRecents="true"
-            >
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
+            android:autoRemoveFromRecents="true">
+
         </activity>
         <activity
             android:name=".report.WhoSGettingHelpActivity"
@@ -58,17 +60,6 @@
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value=".report.WhoSGettingHelpActivity" />
         </activity>
-        <activity
-            android:name=".Referral.ReferralActivity"
-            android:label="@string/title_activity_referral"
-            android:theme="@style/AppTheme.NoActionBar"
-            android:autoRemoveFromRecents="true"/>
-        <activity
-            android:name=".Referral.ReferralActivity2"
-            android:label="@string/title_activity_eferral2"
-            android:parentActivityName=".Referral.ReferralActivity"
-            android:theme="@style/AppTheme.NoActionBar"
-            android:autoRemoveFromRecents="true"/>
 
         <provider
             android:name=".store.ReportIncidentContentProvider"
@@ -79,6 +70,10 @@
             android:label="@string/title_activity_cso"
             android:theme="@style/AppTheme.NoActionBar"
             android:autoRemoveFromRecents="true" >
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
 
         </activity>
         <activity
@@ -97,7 +92,11 @@
         -->
         <service
             android:name=".network.UIDPullService"
-            android:exported="false"/>
+            android:exported="false"/><!-- ATTENTION: This was auto-generated to add Google Play services to your project for
+     App Indexing.  See https://g.co/AppIndexing/AndroidStudio for more information. -->
+        <meta-data
+            android:name="com.google.android.gms.version"
+            android:value="@integer/google_play_services_version" />
 
     </application>
 

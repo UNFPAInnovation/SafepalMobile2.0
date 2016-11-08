@@ -26,6 +26,9 @@ import com.unfpa.safepal.network.VolleyCallback;
 import com.unfpa.safepal.store.ReportIncidentContentProvider;
 import com.unfpa.safepal.store.ReportIncidentTable;
 
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import java.util.HashMap;
 import java.util.Map;
 
@@ -42,8 +45,6 @@ public class ContactActivity extends AppCompatActivity {
     private LinearLayout contactPhoneEmailLl;
     private RadioButton contactYesRB, contactNoRb;
     private EditText contactPhonenumber, contactEmail;
-    //Volley requests
-    final String URL_CSO_API = "http://52.43.152.73/api/location.php";
 
     //location
     GPSTracker gps;
@@ -77,41 +78,42 @@ public class ContactActivity extends AppCompatActivity {
 
         loadContactFeedbackMessages();
         //updates user with the safepal number
-        updateUIDTextView();
+        //updateUIDTextView();
 
         //picks and shows the mobile reporters location
-         userLocationTracker();
+         //userLocationTracker();
 
 
         contactAbortFAB.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
 
-                moveTaskToBack(true);
+
+
+               /* moveTaskToBack(true);
                 android.os.Process.killProcess(android.os.Process.myPid());
-                System.exit(1);
+                System.exit(1);*/
             }
         });
         contactNextFAB.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                Intent csoIntent = new Intent(getApplicationContext(), CsoActivity.class);
+                csoIntent.putExtra("safepalUniqueNumber",contactSafepalNo.getText().toString());
+
                 if(contactYesRB.isChecked()) {
 
                    if(contactPhonenumber.getText().length()<5 ){
                       Toast.makeText(getBaseContext(), "Provide us with a correct phone number", Toast.LENGTH_LONG).show();
                        return;
                    }
-
-
-                    startActivity(new Intent(getApplicationContext(), CsoActivity.class));
-
-
+                    startActivity(csoIntent);
                 }
+
                 else if(contactNoRb.isChecked()){
-                    getNearestCSOs(Double.toString(userLatitude), Double.toString(userLongitude));
-
-                    startActivity(new Intent(getApplicationContext(), CsoActivity.class));
+                    startActivity(csoIntent);
                 }
+
                 else {
                     Toast.makeText(getBaseContext(), "Do you want to be contacted back? Choose???!!!", Toast.LENGTH_LONG).show();
                     return;
@@ -180,12 +182,10 @@ public class ContactActivity extends AppCompatActivity {
             gps.showSettingsAlert();
         }
     }
-
     private void  loadContactFeedbackMessages(){
         String[] wsghMessagesArray = getResources().getStringArray(R.array.seek_medical_care_messages);
         contactEncouragingMessagesTv.setText(wsghMessagesArray[randMessageIndex(0, wsghMessagesArray.length)].toString());
     }
-
     //expand encouraging messages
     public void onClickContactEncouragingMessages(View view){
        EMessageDialogFragment emDialog = EMessageDialogFragment.newInstance(
@@ -194,7 +194,6 @@ public class ContactActivity extends AppCompatActivity {
                 getString(R.string.close_dialog));
         emDialog.show(getSupportFragmentManager(), "encouraging message");
            }
-
     public void onContactRadioButtonClicked(View view) {
         // Is the button now checked?
         boolean checked = ((RadioButton) view).isChecked();
@@ -215,39 +214,6 @@ public class ContactActivity extends AppCompatActivity {
 
                 break;
         }
-    }
-
-    // Method pushes the data to json server suing volley
-    private void getNearestCSOs(final String toServerReporterLat,
-                                final String toServerReporterLng  ){
-
-
-        StringRequest stringRequest = new StringRequest(Request.Method.POST, URL_CSO_API,
-                new Response.Listener<String>() {
-                    @Override
-                    public void onResponse(String response) {
-                        Toast.makeText(getBaseContext(), response,Toast.LENGTH_LONG).show();
-
-                    }
-                },
-                new Response.ErrorListener() {
-                    @Override
-                    public void onErrorResponse(VolleyError error) {
-
-                    }
-                }){
-            @Override
-            protected Map<String,String> getParams(){
-                Map<String,String> params = new HashMap<String, String>();
-                params.put("reporter_lat",toServerReporterLat);
-                params.put("reporter_long",toServerReporterLng);
-                return params;
-            }
-
-        };
-
-        MySingleton.getInstance(this).addToRequestQueue(stringRequest);
-
     }
 
 }
