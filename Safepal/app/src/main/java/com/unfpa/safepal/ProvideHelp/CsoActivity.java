@@ -63,6 +63,7 @@ public class CsoActivity extends AppCompatActivity implements
      */
     Button buttonNext;
     Button buttonExit;
+
     TextView csoSafepalNo, csoEncouragingMessagesTV;
 
     //variables for the nearest cso list

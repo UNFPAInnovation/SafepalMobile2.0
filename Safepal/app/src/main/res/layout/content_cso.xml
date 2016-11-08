@@ -114,26 +114,6 @@
 
 
     <!--</RelativeLayout>-->
-        <LinearLayout
-            android:orientation="horizontal"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content">
-
-            <Button
-                style="@style/Widget.AppCompat.Button.Colored"
-                android:text="@string/exitApp"
-                android:layout_weight="1"
-                android:id="@+id/exit_app"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content" />
-            <Button
-                style="@style/Widget.AppCompat.Button.Colored"
-                android:text="@string/next"
-                android:layout_weight="1"
-                android:id="@+id/next"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content" />
-
-        </LinearLayout>
+        <include layout="@layout/footer_buttons" />
     </LinearLayout>
 </android.support.v4.widget.NestedScrollView>
