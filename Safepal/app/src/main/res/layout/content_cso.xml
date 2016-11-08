@@ -77,6 +77,7 @@
         <!-- i removed this
         style="@style/NiceButton"-->
         <Button
+            style="@style/Widget.AppCompat.Button.Colored"
             android:id="@+id/cso_near_help"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -119,12 +120,14 @@
             android:layout_height="wrap_content">
 
             <Button
+                style="@style/Widget.AppCompat.Button.Colored"
                 android:text="@string/exitApp"
                 android:layout_weight="1"
                 android:id="@+id/exit_app"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content" />
             <Button
+                style="@style/Widget.AppCompat.Button.Colored"
                 android:text="@string/next"
                 android:layout_weight="1"
                 android:id="@+id/next"
