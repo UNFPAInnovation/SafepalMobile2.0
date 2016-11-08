@@ -61,29 +61,34 @@
                 android:value=".report.WhoSGettingHelpActivity" />
         </activity>
 
-        <provider
-            android:name=".store.ReportIncidentContentProvider"
-            android:authorities="com.unfpa.safepal.store.contentprovider" />
 
-        <activity
-            android:name=".ProvideHelp.CsoActivity"
-            android:label="@string/title_activity_cso"
-            android:theme="@style/AppTheme.NoActionBar"
-            android:autoRemoveFromRecents="true" >
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
-
-        </activity>
         <activity
             android:name=".ProvideHelp.ContactActivity"
             android:label="@string/title_activity_contact"
             android:theme="@style/AppTheme.NoActionBar"
             android:autoRemoveFromRecents="true">
-
-
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
         </activity>
+
+        <activity
+            android:name=".ProvideHelp.CsoActivity"
+            android:label="@string/title_activity_cso"
+            android:parentActivityName=".ProvideHelp.ContactActivity"
+            android:theme="@style/AppTheme.NoActionBar"
+            android:autoRemoveFromRecents="true" >
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value=".ProvideHelp.ContactActivity" />
+        </activity>
+
+
+        <provider
+            android:name=".store.ReportIncidentContentProvider"
+            android:authorities="com.unfpa.safepal.store.contentprovider" />
+
 
         <!-- waits network and inserts a unique id to content provider and user -->
         <!--
