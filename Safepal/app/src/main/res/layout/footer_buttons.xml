@@ -2,7 +2,8 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
 android:orientation="horizontal"
 android:layout_width="match_parent"
-android:layout_height="wrap_content">
+android:layout_height="wrap_content"
+    android:layout_marginTop="20dp">
 
 <Button
     style="@style/Widget.AppCompat.Button.Colored"
@@ -15,7 +16,7 @@ android:layout_height="wrap_content">
     style="@style/Widget.AppCompat.Button.Colored"
     android:text="@string/next"
     android:layout_weight="1"
-    android:id="@+id/next"
+    android:id="@+id/finish"
     android:layout_width="0dp"
     android:layout_height="wrap_content" />
 

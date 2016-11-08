@@ -37,7 +37,7 @@ public class HomeActivity extends AppCompatActivity {
         getSupportActionBar().setDisplayUseLogoEnabled(true);
         // Assignments of variables
         buttonExit = (Button) findViewById(R.id.exit_app);
-        fabReportCase = (Button) findViewById(R.id.next);
+        fabReportCase = (Button) findViewById(R.id.finish);
 
 
         buttonExit.setOnClickListener(new View.OnClickListener() {

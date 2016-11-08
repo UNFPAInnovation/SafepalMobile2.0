@@ -6,13 +6,14 @@ import android.content.IntentFilter;
 import android.net.ConnectivityManager;
 import android.net.Uri;
 import android.os.Bundle;
-import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.DialogFragment;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
@@ -52,15 +53,21 @@ public class AnotherPersonIncidentFormActivity extends AppCompatActivity {
     Button buttonNext;
     Button buttonExit;
 
+    //Logging purposes
+    final String TAG = AnotherPersonIncidentFormActivity.class.getSimpleName();
+
     //Encouraging messages
     TextView apifEncouragingMessagesTv;
 
     //Form variables
-    private Button apifDateOfBirthButton;
+//    private Button apifDateOfBirthButton;
+    TextView textViewChosenDate;
     private RadioGroup apifGenderRG;
     private RadioButton apifGenderRB;
     private Spinner apifIncidentTypeSpinner;
     private EditText apifIncidentLocationEt, apifIncidentDetailsEt;
+
+    DatePicker datePicker;
 
 
     @Override
@@ -72,13 +79,14 @@ public class AnotherPersonIncidentFormActivity extends AppCompatActivity {
         /** Declaration of user interface **/
         apifToolbar = (Toolbar) findViewById(R.id.apif_toolbar);
         buttonExit = (Button) findViewById(R.id.exit_app);
-        buttonNext = (Button) findViewById(R.id.next);
+        buttonNext = (Button) findViewById(R.id.finish);
 
         //encouraging messages
         apifEncouragingMessagesTv = (TextView)findViewById(R.id.apif_ecouraging_messages_tv);
 
        /** Form initialization **/
-        apifDateOfBirthButton = (Button)findViewById(R.id.apif_date_of_birth_button);
+//        apifDateOfBirthButton = (Button)findViewById(R.id.apif_date_of_birth_button);
+        textViewChosenDate = (TextView)findViewById(R.id.chosen_date);
 
         apifGenderRG=(RadioGroup)findViewById(R.id.apif_gender_rg);
         apifIncidentTypeSpinner = (Spinner) findViewById(R.id.apif_incident_type_spinner);
@@ -170,7 +178,9 @@ public class AnotherPersonIncidentFormActivity extends AppCompatActivity {
 
 
         String apifReportedBy = getIntent().getExtras().getString("relationshipToSurvivor");
-        String apifSurvivorDateOfBirth = apifDateOfBirthButton.getText().toString();;
+//        String apifSurvivorDateOfBirth = apifDateOfBirthButton.getText().toString();;
+        String apifSurvivorDateOfBirth = textViewChosenDate.getText().toString();
+//        String apifSurvivorDateOfBirth = datePicker.setOn todo get date in stribg
         String apifSurvivorGender = (String)apifGenderRB.getText();
         String apifIncidentType =(String)apifIncidentTypeSpinner.getSelectedItem();
         String apifIncidentLocation = apifIncidentLocationEt.getText().toString();
@@ -210,7 +220,12 @@ public class AnotherPersonIncidentFormActivity extends AppCompatActivity {
         }
         //updates the report if its already available
         else {
-            getContentResolver().update(reportIncidentUri, values, null, null);
+            try {
+                getContentResolver().update(reportIncidentUri, values, null, null);
+            } catch (Exception e) {
+                e.printStackTrace();
+                Log.e(TAG, "Error with incident rporting: " + e.toString() );
+            }
         }
 
     }

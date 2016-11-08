@@ -8,7 +8,6 @@ import android.location.Location;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Process;
-import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.ActivityCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.DefaultItemAnimator;
@@ -92,8 +91,8 @@ public class CsoActivity extends AppCompatActivity implements
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_cso);
 
-        //buttonNext and buttonExit buttons
-        buttonNext = (Button) findViewById(R.id.next);
+        //buttonFinish and buttonExit buttons
+        buttonNext = (Button) findViewById(R.id.finish);
         buttonExit = (Button) findViewById(R.id.exit_app);
 
         // choose someone else relationship spinner

@@ -6,7 +6,6 @@ import android.content.IntentFilter;
 import android.net.ConnectivityManager;
 import android.net.Uri;
 import android.os.Bundle;
-import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.support.v4.app.DialogFragment;
 import android.support.v7.app.AppCompatActivity;
@@ -89,7 +88,7 @@ public class SurvivorIncidentFormActivity extends AppCompatActivity {
         sifToolbar = (Toolbar) findViewById(R.id.sif_toolbar);
         //Abort fab of  sif activity
         buttonExit = (Button) findViewById(R.id.exit_app);
-        buttonNext = (Button) findViewById(R.id.next);
+        buttonNext = (Button) findViewById(R.id.finish);
 
 
         sifDateOfBirthButton = (Button)findViewById(R.id.sif_date_of_birth_button);

@@ -4,13 +4,10 @@ import android.content.Intent;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
-import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
-import android.view.Menu;
-import android.view.MenuItem;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.RadioButton;
@@ -21,7 +18,6 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.unfpa.safepal.R;
-import com.unfpa.safepal.home.HomeActivity;
 import com.unfpa.safepal.messages.EMessageDialogFragment;
 
 import java.util.Random;
@@ -56,7 +52,7 @@ public class WhoSGettingHelpActivity extends AppCompatActivity {
         //Abort fab of  who's getting help activity
         buttonExit = (Button) findViewById(R.id.exit_app);
         //Next fab of  who's getting help activity
-        buttonNext = (Button) findViewById(R.id.next);
+        buttonNext = (Button) findViewById(R.id.finish);
         // choose someone else relationship spinner
         wsghRelationshipSpinner = (Spinner) findViewById(R.id.wsgh_relationship_spinner);
 
@@ -169,9 +165,9 @@ public class WhoSGettingHelpActivity extends AppCompatActivity {
         switch(view.getId()) {
             case R.id.wsgh_yes_rb:
                 if (checked)
-                    startActivity(new Intent(getApplicationContext(), SurvivorIncidentFormActivity.class));
+                    //startActivity(new Intent(getApplicationContext(), SurvivorIncidentFormActivity.class));
                 // Pirates are the best
-                wsghSpinnerRl.setVisibility(View.GONE);
+                wsghSpinnerRl.setVisibility(View.INVISIBLE);
                 break;
             case R.id.wsgh_someoneelse_rb:
                 if (checked)

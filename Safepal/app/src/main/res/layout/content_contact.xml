@@ -48,17 +48,17 @@
         android:textColor="@color/colorAccent"
         android:layout_marginTop="10dp"/>
 
-    <TextView
-        android:id="@+id/contact_question_tv"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="@string/contact_u_or_not"
-        android:textSize="@dimen/wsgh_middle_text"
-        android:textStyle="bold"
-        android:textColor="@color/colorPrimary"
-        android:layout_above="@+id/contact_second_horizotal_line"
-        android:layout_marginTop="10dp"
-        />
+    <!--<TextView-->
+        <!--android:id="@+id/contact_question_tv"-->
+        <!--android:layout_width="match_parent"-->
+        <!--android:layout_height="wrap_content"-->
+        <!--android:text="@string/contact_u_or_not"-->
+        <!--android:textSize="@dimen/wsgh_middle_text"-->
+        <!--android:textStyle="bold"-->
+        <!--android:textColor="@color/colorPrimary"-->
+        <!--android:layout_above="@+id/contact_second_horizotal_line"-->
+        <!--android:layout_marginTop="10dp"-->
+        <!--/>-->
     <View
         android:id="@+id/contact_second_horizotal_line"
         android:layout_width="match_parent"
@@ -68,47 +68,60 @@
         android:background="@color/colorGreyDarker"
         android:layout_above="@+id/contact_me_rg"/>
 
-    <RadioGroup
-        android:id="@+id/contact_me_rg"
-        android:layout_centerInParent="true"
+<!--would u like us to contact u choices-->
+    <!--<LinearLayout-->
+        <!--android:orientation="horizontal"-->
+        <!--android:layout_width="match_parent"-->
+        <!--android:layout_height="wrap_content">-->
+        <!--<Button android:id="@+id/contact_me_yes_rb"-->
+            <!--style="@style/Widget.AppCompat.Button.Colored"-->
+            <!--android:layout_width="wrap_content"-->
+            <!--android:layout_height="wrap_content"-->
+            <!--android:layout_weight="1"-->
+            <!--android:button="@null"-->
+            <!--android:gravity="center"-->
+            <!--android:paddingTop="15dp"-->
+            <!--android:paddingBottom="15dp"-->
+            <!--android:text="@string/contact_yes"-->
+            <!--android:onClick="onContactRadioButtonClicked"-->
+            <!--/>-->
+        <!--<Button android:id="@+id/contact_me_not_rb"-->
+            <!--style="@style/Widget.AppCompat.Button.Colored"-->
+            <!--android:layout_width="wrap_content"-->
+            <!--android:layout_height="wrap_content"-->
+            <!--android:layout_weight="1"-->
+            <!--android:button="@null"-->
+            <!--android:gravity="center"-->
+            <!--android:paddingTop="15dp"-->
+            <!--android:paddingBottom="15dp"-->
+            <!--android:text="@string/contact_no"-->
+            <!--android:onClick="onContactRadioButtonClicked"-->
+            <!--/>-->
+
+    <!--</LinearLayout>-->
+
+
+
+    <!--check box to ask user if he wants to be contacted-->
+    <LinearLayout
+        android:orientation="horizontal"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginRight="5dp"
-        android:layout_marginLeft="5dp"
-        android:paddingTop="10dp"
-        android:paddingBottom="10dp"
-        android:gravity="center"
-        android:orientation="horizontal">
+        android:layout_height="wrap_content">
 
-
-        <RadioButton android:id="@+id/contact_me_yes_rb"
+        <CheckBox
+            android:id="@+id/checkbox_contact_me"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:background="@drawable/rbtn_rb_selector"
-            android:button="@null"
-            android:gravity="center"
-            android:paddingTop="15dp"
-            android:paddingBottom="15dp"
-            android:text="@string/contact_yes"
-            android:textColor="@drawable/rbtn_rb_textcolor_selector"
-            android:onClick="onContactRadioButtonClicked"
+            android:checked="false"
             />
-        <RadioButton android:id="@+id/contact_me_not_rb"
-            android:layout_width="wrap_content"
+        <TextView
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:background="@drawable/rbtn_rb_selector"
-            android:button="@null"
-            android:gravity="center"
-            android:paddingTop="15dp"
-            android:paddingBottom="15dp"
-            android:text="@string/contact_no"
-            android:textColor="@drawable/rbtn_rb_textcolor_selector"
-            android:onClick="onContactRadioButtonClicked"
-            />
-    </RadioGroup>
+            android:text="Contact me about this incidence"/>
 
+    </LinearLayout>
+
+    <!--contact details in case user allows us to ontact him-->
     <LinearLayout
         android:id="@+id/contact_phone_email_ll"
         android:layout_width="match_parent"
@@ -125,7 +138,6 @@
             android:layout_marginBottom="@dimen/overall_et_margin_bottom"
             android:layout_marginRight="@dimen/activity_horizontal_margin"
             android:padding="@dimen/overall_et_padding_top"
-            android:background="@drawable/rbtn_rb_selector"
             android:hint="Enter Phone Number *"
             android:inputType="phone"
             />
@@ -133,15 +145,38 @@
             android:id="@+id/contact_email_et"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_weight="1"
             android:layout_marginTop="@dimen/overall_et_margin_top"
             android:layout_marginBottom="@dimen/overall_et_margin_bottom"
             android:layout_marginRight="@dimen/activity_horizontal_margin"
             android:padding="@dimen/overall_et_padding_top"
-            android:background="@drawable/rbtn_rb_selector"
             android:hint="Enter your email (Optional)"
             android:inputType="textEmailAddress"/>
     </LinearLayout>
-    <include layout="@layout/footer_buttons" />
+
+    <!--footer-->
+    <LinearLayout
+
+        android:layout_marginTop="20dp"
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <Button
+            style="@style/Widget.AppCompat.Button.Colored"
+            android:text="@string/exitApp"
+            android:layout_weight="1"
+            android:id="@+id/exit_app"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content" />
+        <Button
+            style="@style/Widget.AppCompat.Button.Colored"
+            android:text="@string/finish"
+            android:layout_weight="1"
+            android:id="@+id/finish"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content" />
+
+    </LinearLayout>
+
 </LinearLayout>
 </android.support.v4.widget.NestedScrollView>

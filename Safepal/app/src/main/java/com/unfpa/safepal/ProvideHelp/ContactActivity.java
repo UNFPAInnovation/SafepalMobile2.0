@@ -4,37 +4,22 @@ import android.content.Intent;
 import android.database.Cursor;
 import android.os.Bundle;
 import android.os.Handler;
-import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.widget.Button;
+import android.widget.CheckBox;
+import android.widget.CompoundButton;
 import android.widget.EditText;
 import android.widget.LinearLayout;
-import android.widget.RadioButton;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.android.volley.Request;
-import com.android.volley.Response;
-import com.android.volley.VolleyError;
-import com.android.volley.toolbox.StringRequest;
-import com.unfpa.safepal.Location.GPSTracker;
 import com.unfpa.safepal.R;
 import com.unfpa.safepal.messages.EMessageDialogFragment;
-import com.unfpa.safepal.network.MySingleton;
-import com.unfpa.safepal.network.VolleyCallback;
 import com.unfpa.safepal.store.ReportIncidentContentProvider;
 import com.unfpa.safepal.store.ReportIncidentTable;
 
-import org.json.JSONException;
-import org.json.JSONObject;
-
-import java.util.HashMap;
-import java.util.Map;
-
-import static android.content.Intent.EXTRA_TITLE;
-import static com.unfpa.safepal.R.attr.title;
 import static com.unfpa.safepal.report.WhoSGettingHelpActivity.randMessageIndex;
 
 public class ContactActivity extends AppCompatActivity {
@@ -45,13 +30,14 @@ public class ContactActivity extends AppCompatActivity {
     /**
      * Next and buttonExit button
      */
-    Button buttonNext;
+    Button buttonFinish;
     Button buttonExit;
 
     private Toolbar contactToolbar;
     private LinearLayout contactPhoneEmailLl;
-    private RadioButton contactYesRB, contactNoRb;
+//    private RadioButton contactYesRB, contactNoRb;
     private EditText contactPhonenumber, contactEmail;
+    CheckBox checkBoxContactMe;
 
 
     @Override
@@ -68,10 +54,11 @@ public class ContactActivity extends AppCompatActivity {
         getSupportActionBar().setDisplayUseLogoEnabled(true);
         //assignment of UI in xml
         buttonExit = (Button) findViewById(R.id.exit_app);
-        buttonNext = (Button) findViewById(R.id.next);
+        buttonFinish = (Button) findViewById(R.id.finish);
 
-        contactYesRB = (RadioButton)findViewById(R.id.contact_me_yes_rb);
-        contactNoRb = (RadioButton)findViewById(R.id.contact_me_not_rb);
+//        contactYesRB = (RadioButton)findViewById(R.id.contact_me_yes_rb);
+        checkBoxContactMe = (CheckBox) findViewById(R.id.checkbox_contact_me);
+//        contactNoRb = (RadioButton)findViewById(R.id.contact_me_not_rb);
         contactPhoneEmailLl = (LinearLayout)findViewById(R.id.contact_phone_email_ll);
         contactEncouragingMessagesTv = (TextView)findViewById(R.id.contact_ecouraging_messages_tv);
         contactSafepalNo = (TextView)findViewById(R.id.contact_safepal_no);
@@ -93,18 +80,18 @@ public class ContactActivity extends AppCompatActivity {
 
 
 
-               /* moveTaskToBack(true);
-                android.os.Process.killProcess(android.os.Process.myPid());
-                System.buttonExit(1);*/
+//                moveTaskToBack(true);
+//                android.os.Process.killProcess(android.os.Process.myPid());
+////                System.buttonExit(1);
             }
         });
-        buttonNext.setOnClickListener(new View.OnClickListener() {
+        buttonFinish.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 Intent csoIntent = new Intent(getApplicationContext(), CsoActivity.class);
                 csoIntent.putExtra("safepalUniqueNumber",contactSafepalNo.getText().toString());
 
-                if(contactYesRB.isChecked()) {
+                if(checkBoxContactMe.isChecked()) {
 
                    if(contactPhonenumber.getText().length()<5 ){
                       Toast.makeText(getBaseContext(), "Provide us with a correct phone number", Toast.LENGTH_LONG).show();
@@ -113,13 +100,28 @@ public class ContactActivity extends AppCompatActivity {
                     startActivity(csoIntent);
                 }
 
-                else if(contactNoRb.isChecked()){
-                    startActivity(csoIntent);
-                }
+//                else if(!checkBoxContactMe.isChecked()){//user doent want to be contacted
+//                    startActivity(csoIntent);
+//                }
 
-                else {
-                    Toast.makeText(getBaseContext(), "Do you want to be contacted back? Choose???!!!", Toast.LENGTH_LONG).show();
+                else {//user doent want to be contacted
+//                    Toast.makeText(getBaseContext(), "Do you want to be contacted back? Choose???!!!", Toast.LENGTH_LONG).show();
+                    startActivity(csoIntent);
                     return;
+                }
+            }
+        });
+
+        checkBoxContactMe.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
+                if(b){//user selcted contact me
+                    //shows phone number and email
+                    contactPhoneEmailLl.setVisibility(View.VISIBLE);
+                }else{//user doesnt want to be contacted
+                    //hides phonenumber and email on UI
+                    contactPhoneEmailLl.setVisibility(View.GONE);
+
                 }
             }
         });
@@ -177,26 +179,28 @@ public class ContactActivity extends AppCompatActivity {
                 getString(R.string.close_dialog));
         emDialog.show(getSupportFragmentManager(), "encouraging message");
            }
-    public void onContactRadioButtonClicked(View view) {
-        // Is the button now checked?
-        boolean checked = ((RadioButton) view).isChecked();
+//    public void onContactRadioButtonClicked(View view) {
+//        // Is the button now checked?
+//        boolean checked = ((RadioButton) view).isChecked();
+//
+//        // checks if user wants to be contacted
+//        switch(view.getId()) {
+//            case R.id.contact_me_yes_rb:
+//                if (checked)
+//                    //shows phone number and email
+//                    contactPhoneEmailLl.setVisibility(View.VISIBLE);
+//                break;
+//            case R.id.contact_me_not_rb:
+//                if (checked)
+//                    //hides phonenumber and email on UI
+//                    contactPhoneEmailLl.setVisibility(View.GONE);
+//                    //starts cso activity to show nearest help
+//                    startActivity(new Intent(getApplicationContext(), CsoActivity.class));
+//
+//                break;
+//        }
+//    }
 
-        // checks if user wants to be contacted
-        switch(view.getId()) {
-            case R.id.contact_me_yes_rb:
-                if (checked)
-                    //shows phone number and email
-                    contactPhoneEmailLl.setVisibility(View.VISIBLE);
-                break;
-            case R.id.contact_me_not_rb:
-                if (checked)
-                    //hides phonenumber and email on UI
-                    contactPhoneEmailLl.setVisibility(View.GONE);
-                    //starts cso activity to show nearest help
-                    startActivity(new Intent(getApplicationContext(), CsoActivity.class));
 
-                break;
-        }
-    }
 
 }

@@ -125,5 +125,9 @@
     <string name="exitApp">Exit</string>
     <string name="next">Next</string>
     <string name="report_sexual_abuse">Report Sexual Abuse</string>
+    <string name="submit">Submit</string>
+    <string name="finish">Finish</string>
+    <string name="female">Female</string>
+    <string name="male">Male</string>
 
 </resources>
