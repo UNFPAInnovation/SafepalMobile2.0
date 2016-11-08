@@ -211,10 +211,10 @@ public class CsoActivity extends AppCompatActivity implements
                     TheCSO newCsos;
                     for (int i = 0; i < arr.length(); i++)
                     {
-                         String nearestCsoName =arr.getJSONObject(i).getString("cso_name");
-
-                          String nearestCsoDistance =arr.getJSONObject(i).getString("cso_distance");
-                            newCsos = new TheCSO(nearestCsoName, roundsOffCsoNearestDistance(nearestCsoDistance));
+                        String nearestCsoName = arr.getJSONObject(i).getString("cso_name");
+                        String nearestCsoDistrict = arr.getJSONObject(i).getString("cso_location");
+                        String nearestCsoDistance = arr.getJSONObject(i).getString("cso_distance");
+                        newCsos = new TheCSO(nearestCsoName + " in " + nearestCsoDistrict, roundsOffCsoNearestDistance(nearestCsoDistance));
                         csosList.add(newCsos);
 
                     }

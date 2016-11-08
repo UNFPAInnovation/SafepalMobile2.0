@@ -86,7 +86,9 @@
             android:layout_marginTop="14dp"
             android:textStyle="bold"
             android:maxLines="1"
-            android:onClick="onClickCsoCall"/>
+            android:onClick="onClickCsoCall"
+            style="@style/NiceButton"
+            />
         <View
             android:id="@+id/cso_horizotal_line_three"
             android:layout_width="match_parent"
