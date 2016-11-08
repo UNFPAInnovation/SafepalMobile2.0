@@ -12,6 +12,7 @@ import android.view.View;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.ArrayAdapter;
+import android.widget.Button;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.RelativeLayout;
@@ -28,7 +29,13 @@ import java.util.Random;
 public class WhoSGettingHelpActivity extends AppCompatActivity {
 
     Toolbar wsghToolbar;
-    FloatingActionButton wsghAbortAppFab, wsghBackFab, wsghNextFab;
+
+    /**
+     * Next and buttonExit button
+     */
+    Button buttonNext;
+    Button buttonExit;
+
     Spinner wsghRelationshipSpinner;
     RadioButton wsghYesRB, wsghSomeelseRb;
     RadioGroup wsghWhoRG;
@@ -47,11 +54,9 @@ public class WhoSGettingHelpActivity extends AppCompatActivity {
         //Toolbar of the who's getting help activity
         wsghToolbar = (Toolbar) findViewById(R.id.wsgh_toolbar);
         //Abort fab of  who's getting help activity
-        wsghAbortAppFab = (FloatingActionButton) findViewById(R.id.wsgh_abort_app_fab);
-        //Back fab of  who's getting help activity
-        wsghBackFab = (FloatingActionButton) findViewById(R.id.wsgh_back_fab);
+        buttonExit = (Button) findViewById(R.id.exit_app);
         //Next fab of  who's getting help activity
-        wsghNextFab = (FloatingActionButton) findViewById(R.id.wsgh_next_fab);
+        buttonNext = (Button) findViewById(R.id.next);
         // choose someone else relationship spinner
         wsghRelationshipSpinner = (Spinner) findViewById(R.id.wsgh_relationship_spinner);
 
@@ -87,7 +92,7 @@ public class WhoSGettingHelpActivity extends AppCompatActivity {
         });
 
         //exit application
-        wsghAbortAppFab.setOnClickListener(new View.OnClickListener() {
+        buttonExit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 if(Build.VERSION.SDK_INT>=21)  finishAndRemoveTask();
@@ -97,7 +102,7 @@ public class WhoSGettingHelpActivity extends AppCompatActivity {
             }
         });
         //uninstall application
-        wsghAbortAppFab.setOnLongClickListener(new View.OnLongClickListener() {
+        buttonExit.setOnLongClickListener(new View.OnLongClickListener() {
             @Override
             public boolean onLongClick(View view) {
                 Uri packageURI = Uri.parse("package:com.unfpa.safepal");
@@ -106,16 +111,8 @@ public class WhoSGettingHelpActivity extends AppCompatActivity {
                 return true;
             }
         });
-        //exit application
-        wsghBackFab.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-
-                startActivity(new Intent(getApplicationContext(), HomeActivity.class));
-            }
-        });
         //go to report form
-        wsghNextFab.setOnClickListener(new View.OnClickListener() {
+        buttonNext.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
 

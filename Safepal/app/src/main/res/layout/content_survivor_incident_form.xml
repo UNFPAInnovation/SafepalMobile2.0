@@ -221,6 +221,6 @@
 
             />
     </LinearLayout>
-
+    <include layout="@layout/footer_buttons" />
 </LinearLayout>
 </android.support.v4.widget.NestedScrollView>

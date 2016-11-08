@@ -46,8 +46,13 @@ public class SurvivorIncidentFormActivity extends AppCompatActivity {
 
     /*User Interface*/
     Toolbar sifToolbar;
-    //Floating action buttons
-    FloatingActionButton sifAbortAppFab, sifBackFab, sifSubmitFab;
+
+    /**
+     * Next and buttonExit button
+     */
+    Button buttonNext;
+    Button buttonExit;
+
     //Encouraging messages
     TextView sifEncouragingMessagesTv;
 
@@ -83,10 +88,8 @@ public class SurvivorIncidentFormActivity extends AppCompatActivity {
 
         sifToolbar = (Toolbar) findViewById(R.id.sif_toolbar);
         //Abort fab of  sif activity
-        sifAbortAppFab = (FloatingActionButton) findViewById(R.id.sif_abort_app_fab);
-        //Back fab of  sif activity
-        sifBackFab = (FloatingActionButton) findViewById(R.id.sif_back_fab);
-        sifSubmitFab = (FloatingActionButton)findViewById(R.id.sif_submit_fab);
+        buttonExit = (Button) findViewById(R.id.exit_app);
+        buttonNext = (Button) findViewById(R.id.next);
 
 
         sifDateOfBirthButton = (Button)findViewById(R.id.sif_date_of_birth_button);
@@ -119,7 +122,7 @@ public class SurvivorIncidentFormActivity extends AppCompatActivity {
 
 
         //exit the  application on click of exit
-        sifAbortAppFab.setOnClickListener(new View.OnClickListener() {
+        buttonExit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 moveTaskToBack(true);
@@ -129,7 +132,7 @@ public class SurvivorIncidentFormActivity extends AppCompatActivity {
         });
 
         //unistall application on long press of exit
-        sifAbortAppFab.setOnLongClickListener(new View.OnLongClickListener() {
+        buttonExit.setOnLongClickListener(new View.OnLongClickListener() {
             @Override
             public boolean onLongClick(View view) {
                 Uri packageURI = Uri.parse("package:com.unfpa.safepal");
@@ -137,13 +140,6 @@ public class SurvivorIncidentFormActivity extends AppCompatActivity {
                 startActivity(uninstallIntent);
 
                 return true;
-            }
-        });
-
-        sifBackFab.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                startActivity(new Intent(getApplicationContext(), WhoSGettingHelpActivity.class));
             }
         });
  }

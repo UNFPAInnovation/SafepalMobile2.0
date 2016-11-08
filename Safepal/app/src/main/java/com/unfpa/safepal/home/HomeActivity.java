@@ -1,16 +1,15 @@
 package com.unfpa.safepal.home;
 
 import android.content.Intent;
-import android.content.res.Resources;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
-import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.Button;
 
 import com.unfpa.safepal.R;
 
@@ -19,7 +18,12 @@ import com.unfpa.safepal.report.WhoSGettingHelpActivity;
 public class HomeActivity extends AppCompatActivity {
 
         //Global Variables 1234
-        FloatingActionButton homeAbortAppFab, homeReportFab;
+    /**
+     * Next and buttonExit button
+     */
+    Button fabReportCase;
+    Button buttonExit;
+
         RotateLayout homeInfoTGL;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -32,11 +36,11 @@ public class HomeActivity extends AppCompatActivity {
         getSupportActionBar().setLogo(R.mipmap.ic_launcher);
         getSupportActionBar().setDisplayUseLogoEnabled(true);
         // Assignments of variables
-        homeAbortAppFab = (FloatingActionButton) findViewById(R.id.home_abort_app_fab);
-        homeReportFab = (FloatingActionButton) findViewById(R.id.home_report_fab);
+        buttonExit = (Button) findViewById(R.id.exit_app);
+        fabReportCase = (Button) findViewById(R.id.next);
 
 
-        homeAbortAppFab.setOnClickListener(new View.OnClickListener() {
+        buttonExit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
 
@@ -44,7 +48,7 @@ public class HomeActivity extends AppCompatActivity {
                 else finish();
             }
         });
-        homeAbortAppFab.setOnLongClickListener(new View.OnLongClickListener() {
+        buttonExit.setOnLongClickListener(new View.OnLongClickListener() {
             @Override
             public boolean onLongClick(View view) {
                 Uri packageURI = Uri.parse("package:com.unfpa.safepal");
@@ -55,14 +59,14 @@ public class HomeActivity extends AppCompatActivity {
             }
         });
 
-        homeReportFab.setOnClickListener(new View.OnClickListener() {
+        fabReportCase.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 startActivity(new Intent(getApplicationContext(), WhoSGettingHelpActivity.class));
 
             }
         });
-        homeInfoTGL = new RotateLayout(this);
+//        homeInfoTGL = new RotateLayout(this);
     }
         //homeInfoTGL = new RotateLayout(this);
 

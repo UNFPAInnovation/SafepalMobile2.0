@@ -8,6 +8,7 @@ import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.RadioButton;
@@ -40,7 +41,13 @@ public class ContactActivity extends AppCompatActivity {
 
     private TextView contactEncouragingMessagesTv;
     private  TextView contactSafepalNo;
-    private FloatingActionButton contactAbortFAB, contactNextFAB;
+
+    /**
+     * Next and buttonExit button
+     */
+    Button buttonNext;
+    Button buttonExit;
+
     private Toolbar contactToolbar;
     private LinearLayout contactPhoneEmailLl;
     private RadioButton contactYesRB, contactNoRb;
@@ -64,8 +71,8 @@ public class ContactActivity extends AppCompatActivity {
         getSupportActionBar().setLogo(R.mipmap.ic_launcher);
         getSupportActionBar().setDisplayUseLogoEnabled(true);
         //assignment of UI in xml
-        contactAbortFAB = (FloatingActionButton)findViewById(R.id.contact_abort_fab);
-        contactNextFAB = (FloatingActionButton)findViewById(R.id.contact_next_fab);
+        buttonExit = (Button) findViewById(R.id.exit_app);
+        buttonNext = (Button) findViewById(R.id.next);
 
         contactYesRB = (RadioButton)findViewById(R.id.contact_me_yes_rb);
         contactNoRb = (RadioButton)findViewById(R.id.contact_me_not_rb);
@@ -84,7 +91,7 @@ public class ContactActivity extends AppCompatActivity {
          //userLocationTracker();
 
 
-        contactAbortFAB.setOnClickListener(new View.OnClickListener() {
+        buttonExit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
 
@@ -95,7 +102,7 @@ public class ContactActivity extends AppCompatActivity {
                 System.buttonExit(1);*/
             }
         });
-        contactNextFAB.setOnClickListener(new View.OnClickListener() {
+        buttonNext.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 Intent csoIntent = new Intent(getApplicationContext(), CsoActivity.class);

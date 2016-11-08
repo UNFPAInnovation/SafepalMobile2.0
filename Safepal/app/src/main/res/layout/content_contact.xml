@@ -142,6 +142,6 @@
             android:hint="Enter your email (Optional)"
             android:inputType="textEmailAddress"/>
     </LinearLayout>
-
+    <include layout="@layout/footer_buttons" />
 </LinearLayout>
 </android.support.v4.widget.NestedScrollView>

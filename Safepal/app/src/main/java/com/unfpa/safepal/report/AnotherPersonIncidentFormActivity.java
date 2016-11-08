@@ -46,8 +46,12 @@ public class AnotherPersonIncidentFormActivity extends AppCompatActivity {
 
     //apif toolbar
     Toolbar apifToolbar;
-    //Floating action buttons
-    FloatingActionButton apifAbortAppFab, apifBackFab, apifSubmitFab;
+    /**
+     * Next and buttonExit button
+     */
+    Button buttonNext;
+    Button buttonExit;
+
     //Encouraging messages
     TextView apifEncouragingMessagesTv;
 
@@ -67,9 +71,8 @@ public class AnotherPersonIncidentFormActivity extends AppCompatActivity {
 
         /** Declaration of user interface **/
         apifToolbar = (Toolbar) findViewById(R.id.apif_toolbar);
-        apifAbortAppFab = (FloatingActionButton) findViewById(R.id.apif_abort_app_fab);
-        apifBackFab = (FloatingActionButton) findViewById(R.id.apif_back_fab);
-        apifSubmitFab = (FloatingActionButton) findViewById(R.id.apif_submit_fab);
+        buttonExit = (Button) findViewById(R.id.exit_app);
+        buttonNext = (Button) findViewById(R.id.next);
 
         //encouraging messages
         apifEncouragingMessagesTv = (TextView)findViewById(R.id.apif_ecouraging_messages_tv);
@@ -94,7 +97,7 @@ public class AnotherPersonIncidentFormActivity extends AppCompatActivity {
 
         //click actions
         //exit application
-        apifAbortAppFab.setOnClickListener(new View.OnClickListener() {
+        buttonExit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 moveTaskToBack(true);
@@ -104,20 +107,13 @@ public class AnotherPersonIncidentFormActivity extends AppCompatActivity {
         });
 
         //uninstall application
-        apifAbortAppFab.setOnLongClickListener(new View.OnLongClickListener() {
+        buttonExit.setOnLongClickListener(new View.OnLongClickListener() {
             @Override
             public boolean onLongClick(View view) {
                 Uri packageURI = Uri.parse("package:com.unfpa.safepal");
                 Intent uninstallIntent = new Intent(Intent.ACTION_DELETE, packageURI);
                 startActivity(uninstallIntent);
                 return true;
-            }
-        });
-
-        apifBackFab.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                startActivity(new Intent(getApplicationContext(), WhoSGettingHelpActivity.class));
             }
         });
 
