@@ -32,7 +32,8 @@
         android:layout_height="wrap_content"
         android:layout_gravity="bottom|start"
         android:layout_margin="@dimen/fab_margin"
-        android:orientation="horizontal">
+        android:orientation="horizontal"
+        android:visibility="gone">
         <android.support.design.widget.FloatingActionButton
             android:id="@+id/sif_abort_app_fab"
             android:layout_width="wrap_content"
@@ -59,7 +60,8 @@
         android:layout_height="wrap_content"
         android:layout_gravity="bottom|center"
         android:layout_marginBottom="@dimen/fab_margin"
-        android:orientation="horizontal">
+        android:orientation="horizontal"
+        android:visibility="gone">
         <android.support.design.widget.FloatingActionButton
             android:id="@+id/sif_back_fab"
             android:layout_width="wrap_content"

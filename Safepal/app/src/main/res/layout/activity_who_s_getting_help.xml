@@ -23,35 +23,10 @@
     </android.support.design.widget.AppBarLayout>
 
     <!-- Contents of the WSGH activity-->
-    <include layout="@layout/content_who_sgetting_help" />
+    <include layout="@layout/content_who_sgetting_help"
+        android:id="@+id/include" />
 
     <!-- FAB and Text of WSGH abort -->
-    <LinearLayout
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="bottom|start"
-        android:layout_margin="@dimen/fab_margin"
-        android:orientation="horizontal">
-        <android.support.design.widget.FloatingActionButton
-            android:id="@+id/wsgh_abort_app_fab"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:src="@drawable/ic_exit_to_app_white_24dp"
-            app:rippleColor="@color/colorOrange"
-            app:fabSize="auto"
-            android:elevation="0dp"
-            />
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:layout_marginLeft="2dp"
-            android:padding="2dp"
-            android:background="@color/colorWhite"
-            android:text="@string/overall_exit"
-            android:textColor="@color/colorAccent"
-            />
-    </LinearLayout>
 
     <!-- FAB and Text of WSGH back -->
     <LinearLayout
@@ -59,7 +34,8 @@
         android:layout_height="wrap_content"
         android:layout_gravity="bottom|center"
         android:layout_marginBottom="@dimen/fab_margin"
-        android:orientation="horizontal">
+        android:orientation="horizontal"
+        android:visibility="gone">
         <android.support.design.widget.FloatingActionButton
             android:id="@+id/wsgh_back_fab"
             android:layout_width="wrap_content"
@@ -107,5 +83,35 @@
             android:elevation="0dp"
             app:fabSize="auto"/>
 
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="top|left"
+        android:layout_margin="@dimen/fab_margin"
+        android:orientation="horizontal"
+        app:layout_anchor="@+id/include"
+        app:layout_anchorGravity="bottom|left"
+        android:visibility="gone">
+        <android.support.design.widget.FloatingActionButton
+            android:id="@+id/wsgh_abort_app_fab"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/ic_exit_to_app_white_24dp"
+            app:rippleColor="@color/colorOrange"
+            app:fabSize="auto"
+            android:elevation="0dp"
+            />
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginLeft="2dp"
+            android:padding="2dp"
+            android:background="@color/colorWhite"
+            android:text="@string/overall_exit"
+            android:textColor="@color/colorAccent"
+            />
     </LinearLayout>
 </android.support.design.widget.CoordinatorLayout>

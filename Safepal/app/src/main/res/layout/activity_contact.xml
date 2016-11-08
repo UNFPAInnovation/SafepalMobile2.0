@@ -30,7 +30,8 @@
         android:layout_height="wrap_content"
         android:layout_gravity="bottom|start"
         android:layout_margin="@dimen/fab_margin"
-        android:orientation="horizontal">
+        android:orientation="horizontal"
+        android:visibility="gone">
         <android.support.design.widget.FloatingActionButton
             android:id="@+id/contact_abort_fab"
             android:layout_width="wrap_content"
