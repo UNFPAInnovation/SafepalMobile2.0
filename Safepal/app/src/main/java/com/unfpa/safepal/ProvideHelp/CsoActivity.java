@@ -17,6 +17,7 @@ import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.View;
+import android.widget.Button;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -57,7 +58,11 @@ public class CsoActivity extends AppCompatActivity implements
 
     Toolbar csoToolbar;
 
-    FloatingActionButton csoAbortAppFab, csoBackFab, csoFinishFab;
+    /**
+     * Next and buttonExit button
+     */
+    Button buttonNext;
+    Button buttonExit;
     TextView csoSafepalNo, csoEncouragingMessagesTV;
 
     //variables for the nearest cso list
@@ -86,12 +91,10 @@ public class CsoActivity extends AppCompatActivity implements
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_cso);
 
-        //Abort fab of  who's getting help activity
-        csoAbortAppFab = (FloatingActionButton) findViewById(R.id.cso_abort_app_fab);
-        //Back fab of  who's getting help activity
-        csoBackFab = (FloatingActionButton) findViewById(R.id.cso_back_fab);
-        //Next fab of  who's getting help activity
-        csoFinishFab = (FloatingActionButton) findViewById(R.id.cso_finish_fab);
+        //buttonNext and buttonExit buttons
+        buttonNext = (Button) findViewById(R.id.next);
+        buttonExit = (Button) findViewById(R.id.exit_app);
+
         // choose someone else relationship spinner
 
         csoEncouragingMessagesTV = (TextView) findViewById(R.id.cso_ecouraging_messages_tv);
@@ -122,7 +125,7 @@ public class CsoActivity extends AppCompatActivity implements
 
 
 
-        csoAbortAppFab.setOnClickListener(new View.OnClickListener() {
+        buttonExit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 moveTaskToBack(true);
@@ -131,7 +134,7 @@ public class CsoActivity extends AppCompatActivity implements
             }
         });
 
-        csoAbortAppFab.setOnLongClickListener(new View.OnLongClickListener() {
+        buttonExit.setOnLongClickListener(new View.OnLongClickListener() {
             @Override
             public boolean onLongClick(View view) {
                 Uri packageURI = Uri.parse("package:com.unfpa.safepal");
@@ -141,16 +144,16 @@ public class CsoActivity extends AppCompatActivity implements
                 return true;
             }
         });
-        csoBackFab.setOnClickListener(new View.OnClickListener() {
+//        csoFinishFab.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View view) {
+//
+//                startActivity(new Intent(getApplicationContext(), HomeActivity.class));
+//            }
+//        });
+        buttonNext.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                startActivity(new Intent(getApplicationContext(), ContactActivity.class));
-            }
-        });
-        csoFinishFab.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-
                 startActivity(new Intent(getApplicationContext(), HomeActivity.class));
             }
         });

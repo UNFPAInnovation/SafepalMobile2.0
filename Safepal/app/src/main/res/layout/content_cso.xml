@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+<android.support.v4.widget.NestedScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/content_cso"
@@ -12,9 +12,15 @@
     app:layout_behavior="@string/appbar_scrolling_view_behavior"
     tools:context="com.unfpa.safepal.ProvideHelp.CsoActivity"
     tools:showIn="@layout/activity_cso">
-    <RelativeLayout
+    <LinearLayout
+        android:orientation="vertical"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
+
+
+    <!--<RelativeLayout-->
+        <!--android:layout_width="match_parent"-->
+        <!--android:layout_height="match_parent">-->
 
         <TextView
             android:id="@+id/cso_ecouraging_messages_tv"
@@ -51,6 +57,8 @@
             android:textColor="@color/colorGreyDarker"
             />
         <TextView
+            android:layout_marginBottom="14dp"
+            android:layout_marginTop="14dp"
             android:id="@+id/cso_assurance_help"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -74,7 +82,8 @@
             android:layout_height="wrap_content"
             android:layout_below="@+id/cso_horizotal_line_two"
             android:text="Call Toll Free"
-
+            android:layout_marginBottom="14dp"
+            android:layout_marginTop="14dp"
             android:textStyle="bold"
             android:maxLines="1"
             android:onClick="onClickCsoCall"/>
@@ -91,17 +100,37 @@
             android:id="@+id/cso_recycler_view"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_centerInParent="true"
-            android:layout_below="@+id/cso_horizotal_line_three"
+            android:layout_marginBottom="14dp"
+            android:layout_marginTop="14dp"
             android:scrollbars="vertical"/>
 
         <ProgressBar
             android:id="@+id/cso_progress_bar"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_centerInParent="true"
-            android:layout_below="@+id/cso_horizotal_line_three"/>
+            android:layout_marginBottom="14dp"
+            android:layout_marginTop="14dp"/>
 
 
-    </RelativeLayout>
-</ScrollView>
+    <!--</RelativeLayout>-->
+        <LinearLayout
+            android:orientation="horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <Button
+                android:text="@string/exitApp"
+                android:layout_weight="1"
+                android:id="@+id/exit_app"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content" />
+            <Button
+                android:text="@string/next"
+                android:layout_weight="1"
+                android:id="@+id/next"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content" />
+
+        </LinearLayout>
+    </LinearLayout>
+</android.support.v4.widget.NestedScrollView>
