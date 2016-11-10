@@ -10,6 +10,7 @@ import android.support.design.widget.Snackbar;
 import android.support.v4.app.DialogFragment;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
@@ -57,6 +58,7 @@ public class SurvivorIncidentFormActivity extends AppCompatActivity {
 
     //Form variables
     private Button sifDateOfBirthButton;
+    TextView textViewChosenDate;
     private RadioGroup sifGenderRG;
     private RadioButton sifGenderRB;
     private Spinner sifIncidentTypeSpinner;
@@ -91,14 +93,15 @@ public class SurvivorIncidentFormActivity extends AppCompatActivity {
         buttonNext = (Button) findViewById(R.id.finish);
 
 
-        sifDateOfBirthButton = (Button)findViewById(R.id.sif_date_of_birth_button);
+//        sifDateOfBirthButton = (Button)findViewById(R.id.sif_date_of_birth_button);
+        textViewChosenDate = (TextView)findViewById(R.id.chosen_date);
 
-        sifGenderRG=(RadioGroup)findViewById(R.id.sif_gender_rg);
-        sifIncidentTypeSpinner = (Spinner) findViewById(R.id.sif_incident_type_spinner);
-        sifIncidentLocationEt = (EditText)findViewById(R.id.sif_incident_location_actv);
-        sifIncidentDetailsEt = (EditText)findViewById(R.id.sif_incident_details_rt);
+        sifGenderRG=(RadioGroup)findViewById(R.id.gender_rg);
+        sifIncidentTypeSpinner = (Spinner) findViewById(R.id.incident_type_spinner);
+        sifIncidentLocationEt = (EditText)findViewById(R.id.incident_location_actv);
+        sifIncidentDetailsEt = (EditText)findViewById(R.id.incident_details_rt);
 
-        sifEncouragingMessagesTv= (TextView) findViewById(R.id.sif_ecouraging_messages_tv);
+        sifEncouragingMessagesTv= (TextView) findViewById(R.id.ecouraging_messages_tv);
         //Toolbar
         setSupportActionBar(sifToolbar);
         getSupportActionBar().setDisplayShowHomeEnabled(true);
@@ -143,6 +146,20 @@ public class SurvivorIncidentFormActivity extends AppCompatActivity {
         });
  }
 
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        try {
+            unregisterReceiver(netReceiver);
+        } catch (Exception e) {
+            e.printStackTrace();
+            Log.e(TAG, "could not unregister receiver");
+        }
+    }
+
+    String TAG = SurvivorIncidentFormActivity.class.getSimpleName();
+
     public void showDatePickerDialog(View v) {
         DialogFragment dateFragment = new DatePickerFragment();
 
@@ -152,7 +169,7 @@ public class SurvivorIncidentFormActivity extends AppCompatActivity {
      * Code for referral was added here
      * @param view
      */
-    public void onClickAddIncidentSurvivor(View view) {
+    public void onClickSubmitIncident(View view) {
 
         int genderRBId = sifGenderRG.getCheckedRadioButtonId();
 
@@ -169,7 +186,8 @@ public class SurvivorIncidentFormActivity extends AppCompatActivity {
         //end check of radio group
 
         String reportedBy = "survivor";
-        String survivorDateOfBirth = sifDateOfBirthButton.getText().toString();;
+//        String survivorDateOfBirth = sifDateOfBirthButton.getText().toString();;
+        String apifSurvivorDateOfBirth = textViewChosenDate.getText().toString();
         String survivorGender = (String)sifGenderRB.getText();
         String incidentType =(String)sifIncidentTypeSpinner.getSelectedItem();
         String incidentLocation = sifIncidentLocationEt.getText().toString();
@@ -183,9 +201,9 @@ public class SurvivorIncidentFormActivity extends AppCompatActivity {
          *  Checks if the important fields are filled
          *  **/
         //checks if the birth of date is picked
-        if(sifDateOfBirthButton.getText().toString()== getResources().getText(R.string.sif_survivor_pick_age)){
-            sifFeedbackSnackbar = Snackbar.make(view,"Pick a date of birth",Snackbar.LENGTH_LONG);
-            sifFeedbackSnackbar.show();
+        //check if date is selected
+        if(textViewChosenDate.getText().toString().length() <= 2){
+            Toast.makeText(getBaseContext(), "Pick a date of birth",Toast.LENGTH_LONG).show();
             return;
         }
         //checks if the incident type is selected
@@ -211,7 +229,7 @@ public class SurvivorIncidentFormActivity extends AppCompatActivity {
          * **/
         ContentValues values = new ContentValues();
         values.put(ReportIncidentTable.COLUMN_REPORTED_BY, reportedBy);
-        values.put(ReportIncidentTable.COLUMN_SURVIVOR_DATE_OF_BIRTH, survivorDateOfBirth);
+        values.put(ReportIncidentTable.COLUMN_SURVIVOR_DATE_OF_BIRTH, apifSurvivorDateOfBirth);
         values.put(ReportIncidentTable.COLUMN_SURVIVOR_GENDER, survivorGender);
         values.put(ReportIncidentTable.COLUMN_INCIDENT_TYPE, incidentType);
         values.put(ReportIncidentTable.COLUMN_INCIDENT_LOCATION, incidentLocation);

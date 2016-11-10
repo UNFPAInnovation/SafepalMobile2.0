@@ -6,6 +6,7 @@ import android.content.IntentFilter;
 import android.net.ConnectivityManager;
 import android.net.Uri;
 import android.os.Bundle;
+import android.support.design.widget.Snackbar;
 import android.support.v4.app.DialogFragment;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
@@ -15,6 +16,7 @@ import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.Spinner;
@@ -23,6 +25,7 @@ import android.widget.Toast;
 
 import com.unfpa.safepal.ProvideHelp.ContactActivity;
 import com.unfpa.safepal.R;
+import com.unfpa.safepal.Utils.Layout;
 import com.unfpa.safepal.datepicker.apifDatePickerFragment;
 import com.unfpa.safepal.messages.EMessageDialogFragment;
 import com.unfpa.safepal.network.NetworkChangeReceiver;
@@ -52,6 +55,11 @@ public class AnotherPersonIncidentFormActivity extends AppCompatActivity {
      */
     Button buttonNext;
     Button buttonExit;
+    ImageView imageWhereHappen;
+    ImageView imageStory;
+    ImageView imageGender;
+    ImageView imageAge;
+    ImageView imageQnMark;
 
     //Logging purposes
     final String TAG = AnotherPersonIncidentFormActivity.class.getSimpleName();
@@ -80,19 +88,27 @@ public class AnotherPersonIncidentFormActivity extends AppCompatActivity {
         apifToolbar = (Toolbar) findViewById(R.id.apif_toolbar);
         buttonExit = (Button) findViewById(R.id.exit_app);
         buttonNext = (Button) findViewById(R.id.finish);
+        imageWhereHappen = (ImageView) findViewById(R.id.image_where_take_place);
+        imageStory = (ImageView) findViewById(R.id.image_story);
+        imageGender = (ImageView) findViewById(R.id.image_gender);
+        imageAge= (ImageView) findViewById(R.id.image_age);
+        imageQnMark= (ImageView) findViewById(R.id.image_spinner_what_happed);
+
+
 
         //encouraging messages
-        apifEncouragingMessagesTv = (TextView)findViewById(R.id.apif_ecouraging_messages_tv);
+        apifEncouragingMessagesTv = (TextView)findViewById(R.id.ecouraging_messages_tv);
 
        /** Form initialization **/
 //        apifDateOfBirthButton = (Button)findViewById(R.id.apif_date_of_birth_button);
         textViewChosenDate = (TextView)findViewById(R.id.chosen_date);
 
-        apifGenderRG=(RadioGroup)findViewById(R.id.apif_gender_rg);
-        apifIncidentTypeSpinner = (Spinner) findViewById(R.id.apif_incident_type_spinner);
+        apifGenderRG=(RadioGroup)findViewById(R.id.gender_rg);
+        apifIncidentTypeSpinner = (Spinner) findViewById(R.id.incident_type_spinner);
+        apifIncidentTypeSpinner.requestFocus();
 
-        apifIncidentLocationEt = (EditText)findViewById(R.id.apif_incident_location_actv);
-        apifIncidentDetailsEt = (EditText)findViewById(R.id.apif_incident_details_rt);
+        apifIncidentLocationEt = (EditText)findViewById(R.id.incident_location_actv);
+        apifIncidentDetailsEt = (EditText)findViewById(R.id.incident_details_rt);
 
         //setting up apif toolbar with logo
         setSupportActionBar(apifToolbar);
@@ -127,14 +143,44 @@ public class AnotherPersonIncidentFormActivity extends AppCompatActivity {
 
         // Create an ArrayAdapter using the string array and a default spinner layout
         ArrayAdapter<CharSequence> apifIncidentTypeAdapter = ArrayAdapter.createFromResource(this,
-                R.array.apif_incident_type, android.R.layout.simple_spinner_item);
+                R.array.apif_incident_type, R.layout.spinner_item);
         // Specify the layout to use when the list of choices appears
-        apifIncidentTypeAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        apifIncidentTypeAdapter.setDropDownViewResource( R.layout.spinner_dropdown);
         // Apply the apifIncidentTypeAdapter to the spinner
         apifIncidentTypeSpinner.setAdapter(apifIncidentTypeAdapter);
 
+        //give color to images
+        imageWhereHappen.setImageDrawable(
+                Layout.changeImageColor(getBaseContext(),
+                        imageWhereHappen.getDrawable(), getResources().getColor(R.color.colorImages)));
+        imageStory.setImageDrawable(
+                Layout.changeImageColor(getBaseContext(),
+                        imageStory.getDrawable(), getResources().getColor(R.color.colorImages)));
+        imageGender.setImageDrawable(
+                Layout.changeImageColor(getBaseContext(),
+                        imageGender.getDrawable(), getResources().getColor(R.color.colorImages)));
+        imageAge.setImageDrawable(
+                Layout.changeImageColor(getBaseContext(),
+                        imageAge.getDrawable(), getResources().getColor(R.color.colorImages)));
+        imageQnMark.setImageDrawable(
+                Layout.changeImageColor(getBaseContext(),
+                        imageQnMark.getDrawable(), getResources().getColor(R.color.colorImages)));
+
     }
-    public void showApifDatePickerDialog(View v) {
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        try {
+            unregisterReceiver(netReceiver);
+        } catch (Exception e) {
+            e.printStackTrace();
+            Log.e(TAG, "could not unregister receiver");
+        }
+    }
+
+
+    public void showDatePickerDialog(View v) {
         DialogFragment newFragment = new apifDatePickerFragment();
         newFragment.show(getSupportFragmentManager(), "datePicker");
     }
@@ -144,7 +190,7 @@ public class AnotherPersonIncidentFormActivity extends AppCompatActivity {
         apifEncouragingMessagesTv.setText(apifMessagesArray[randMessageIndex(0, apifMessagesArray.length)].toString());
     }
 
-    public void onClickSubmitApifIncident(View view){
+    public void onClickSubmitIncident(View view){
 
         int genderRBApifId = apifGenderRG.getCheckedRadioButtonId();
 
@@ -156,6 +202,12 @@ public class AnotherPersonIncidentFormActivity extends AppCompatActivity {
         View genderApifRBView = apifGenderRG.findViewById(genderRBApifId);
         int idx = apifGenderRG.indexOfChild(genderApifRBView);
         apifGenderRB =(RadioButton)apifGenderRG.getChildAt(idx);
+
+        //check if date is selected
+        if(textViewChosenDate.getText().toString().length() <= 2){
+            Toast.makeText(getBaseContext(), "Pick a date of birth",Toast.LENGTH_LONG).show();
+            return;
+        }
 
         //checks if the location of the incident is filled by the user
         if (apifIncidentLocationEt.length() == 0 ) {
@@ -230,7 +282,7 @@ public class AnotherPersonIncidentFormActivity extends AppCompatActivity {
 
     }
 
-    public void onClickApifEncouragingMessages(View view){
+    public void onClickEncouragingMessages(View view){
 
         EMessageDialogFragment emDialog = EMessageDialogFragment.newInstance(
                 getString(R.string.not_your_fault_alert_header),

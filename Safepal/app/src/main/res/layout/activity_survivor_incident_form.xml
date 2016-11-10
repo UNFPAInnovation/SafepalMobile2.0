@@ -24,7 +24,10 @@
 
     </android.support.design.widget.AppBarLayout>
 
-    <include layout="@layout/content_survivor_incident_form" />
+    <!--<include layout="@layout/content_survivor_incident_form" />-->
+    <!--they share the same form
+    the small differences are catered for programmatically-->
+    <include layout="@layout/content_person_incident_form" />
 
     <!--sif abort button and its label-->
     <LinearLayout

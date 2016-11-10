@@ -4,6 +4,7 @@ import android.app.DatePickerDialog;
 import android.app.Dialog;
 import android.os.Bundle;
 import android.support.v4.app.DialogFragment;
+import android.view.View;
 import android.widget.DatePicker;
 import android.widget.TextView;
 
@@ -37,8 +38,9 @@ public class apifDatePickerFragment extends DialogFragment
 //        rfyButtonDate.setText( String.valueOf(day)+" - "+ getMonth(month)+" - "+ String.valueOf(currentYear));
 
         TextView textViewChosenDate = (TextView)getActivity().findViewById(R.id.chosen_date);
-        textViewChosenDate.setText( "Chosen date: " + String.valueOf(day)+"-"+ getMonth(month)+"-"+ String.valueOf(year)
-         + " (" + (currentYear-year) + " Years)");
+        textViewChosenDate.setVisibility(View.VISIBLE);
+        textViewChosenDate.setText( String.valueOf(day)+"-"+ getMonth(month)+"-"+ String.valueOf(year)
+         + " (" + (currentYear-year) + " yrs)");
     }
     //Coverstion of month from interger to text
     public String getMonth(int month) {

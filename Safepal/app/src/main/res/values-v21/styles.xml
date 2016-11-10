@@ -6,4 +6,8 @@
         <item name="android:windowDrawsSystemBarBackgrounds">true</item>
         <item name="android:statusBarColor">@android:color/transparent</item>
     </style>
+
+    <style name="coolButtonAttention" parent="Widget.AppCompat.Button.Colored">
+        <item name="android:colorButtonNormal">@color/colorPrimary</item>
+    </style>
 </resources>

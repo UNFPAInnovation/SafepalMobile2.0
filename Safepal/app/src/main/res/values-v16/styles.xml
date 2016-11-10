@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <style name="RobotoTextViewStyle" parent="android:Widget.TextView">
+        <item name="android:fontFamily">sans-serif-light</item>
+    </style>
+
+    <style name="RobotoButtonStyle" parent="android:Widget.Holo.Button">
+    <item name="android:fontFamily">sans-serif-light</item>
+</style>
+
+    <style name="coolButtonNormal" parent="Widget.AppCompat.Button.Colored">
+        <item name="android:fontFamily">sans-serif-light</item>
+    </style>
+
+</resources>

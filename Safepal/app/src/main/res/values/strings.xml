@@ -56,11 +56,11 @@
     <!-- Who is getting help strings -->
     <string name="wsgh_activity_title"> Getting Help</string>
     <string name="wsgh_msgs_to_ecourage_survivor"> Messages to encourage the survivor or friend to report an incident - Programme team</string>
-    <string name="wsgh_happened_to_who">Was it you the incident happened to? *</string>
+    <string name="wsgh_happened_to_who">Was it you the incident happened to?</string>
     <string name="wsgh_yes">Yes, it was me</string>
     <string name="wsgh_someone_else">No, to someone else</string>
     <string-array name="wsgh_someone_else_array">
-        <item>How are you related to her/him? *</item>
+        <item>How are you related to her/him?</item>
         <item>Relative</item>
         <item>Friend</item>
         <item>School-mate</item>
@@ -70,16 +70,16 @@
 
     <!-- survivor incident form strings -->
     <string name="sif_activity_title">Getting Help </string>
-    <string name="sif_survivor_age">When is your birthday? *</string>
+    <string name="sif_survivor_age">When is your birthday?</string>
     <string name="sif_survivor_pick_age">choose a date </string>
-    <string name="sif_survivor_gender">Are you ? *</string>
-    <string name="sif_survivor_gender_above_18">Are you a Man or Woman? *</string>
-    <string name="sif_incident_location">Where did it happen? *</string>
-    <string name="sif_incident_details">Tell the story of the incident. *</string>
+    <string name="sif_survivor_gender">Are you ?</string>
+    <string name="sif_survivor_gender_above_18">Are you a Man or Woman?</string>
+    <string name="sif_incident_location">Where did it happen?</string>
+    <string name="sif_incident_details">Tell the story of the incident.</string>
     <string name="sif_male">Boy </string>
     <string name="sif_female">Girl </string>
     <string-array name="sif_incident_type">
-        <item>What happened to you? *</item>
+        <item>What happened to you?</item>
         <item>Bad touches </item>
         <item>Someone tried to rape me</item>
         <item>I was raped.</item>
@@ -89,15 +89,15 @@
 
     <!-- another person incident form strings -->
     <string name="apif_activity_title">Getting Help </string>
-    <string name="apif_survivor_age">How old is she/he? * </string>
-    <string name="apif_survivor_gender">Is He or She ? *</string>
-    <string name="apif_survivor_gender_above_18">Is she/he a Man or Woman? *</string>
-    <string name="apif_incident_location">Where did it happen? *</string>
-    <string name="apif_incident_details">Tell the story of the incident. *</string>
+    <string name="survivor_age">How old is she/he? </string>
+    <string name="apif_survivor_gender">Is He or She ?</string>
+    <string name="apif_survivor_gender_above_18">Is she/he a Man or Woman?</string>
+    <string name="incident_location">Where did it happen?</string>
+    <string name="incident_details">Tell the story of the incident.</string>
     <string name="apif_male">Boy </string>
     <string name="apif_female">Girl </string>
     <string-array name="apif_incident_type">
-        <item>What happened to you? *</item>
+        <item>What happened to you?</item>
         <item>Bad touches </item>
         <item>Someone tried to rape me</item>
         <item>He/She was raped.</item>
@@ -114,7 +114,7 @@
     <string name="close_dialog">Close</string>
     <string name="em_not_fault">It\'s not your fault</string>
     <string name="title_activity_contact">Nearest Help</string>
-     <string name="contact_u_or_not">Would you like to contact you? *</string>
+     <string name="contact_u_or_not">Would you like to contact you?</string>
     <string name="contact_yes">Yes</string>
     <string name="contact_no">No</string>
 
@@ -129,5 +129,6 @@
     <string name="finish">Finish</string>
     <string name="female">Female</string>
     <string name="male">Male</string>
+    <string name="gender">Gender</string>
 
 </resources>

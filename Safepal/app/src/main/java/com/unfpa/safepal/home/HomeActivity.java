@@ -9,7 +9,10 @@ import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
 import android.widget.Button;
+import android.widget.RelativeLayout;
 
 import com.unfpa.safepal.R;
 
@@ -23,6 +26,7 @@ public class HomeActivity extends AppCompatActivity {
      */
     Button fabReportCase;
     Button buttonExit;
+    RelativeLayout infoPanel;
 
         RotateLayout homeInfoTGL;
     @Override
@@ -33,11 +37,12 @@ public class HomeActivity extends AppCompatActivity {
         Toolbar toolbar = (Toolbar) findViewById(R.id.home_toolbar);
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayShowHomeEnabled(true);
-        getSupportActionBar().setLogo(R.mipmap.ic_launcher);
-        getSupportActionBar().setDisplayUseLogoEnabled(true);
+//        getSupportActionBar().setLogo(R.mipmap.ic_launcher);
+//        getSupportActionBar().setDisplayUseLogoEnabled(true);
         // Assignments of variables
         buttonExit = (Button) findViewById(R.id.exit_app);
         fabReportCase = (Button) findViewById(R.id.finish);
+        infoPanel = (RelativeLayout)findViewById(R.id.info_panel);
 
 
         buttonExit.setOnClickListener(new View.OnClickListener() {
@@ -66,7 +71,16 @@ public class HomeActivity extends AppCompatActivity {
 
             }
         });
-//        homeInfoTGL = new RotateLayout(this);
+
+
+        //information pannel animation
+        // Load the animation like this
+        Animation animSlide = AnimationUtils.loadAnimation(getApplicationContext(),
+                R.anim.right_to_left);
+
+        // Start the animation like this
+        infoPanel.startAnimation(animSlide);
+
     }
         //homeInfoTGL = new RotateLayout(this);
 

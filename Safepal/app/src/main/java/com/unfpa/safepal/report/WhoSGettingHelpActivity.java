@@ -71,9 +71,9 @@ public class WhoSGettingHelpActivity extends AppCompatActivity {
 
         // Create an ArrayAdapter using the string array and a default spinner layout
         ArrayAdapter<CharSequence> wsghRSadapter = ArrayAdapter.createFromResource(this,
-                R.array.wsgh_someone_else_array, android.R.layout.simple_spinner_item);
+                R.array.wsgh_someone_else_array,  R.layout.spinner_item);
         // Specify the layout to use when the list of choices appears
-        wsghRSadapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        wsghRSadapter.setDropDownViewResource( R.layout.spinner_dropdown );
         // Apply the (wsghRSadapter to the spinner
         wsghRelationshipSpinner.setAdapter(wsghRSadapter);
         /** ends wsghRelationshipSpinner **/
@@ -167,7 +167,7 @@ public class WhoSGettingHelpActivity extends AppCompatActivity {
                 if (checked)
                     //startActivity(new Intent(getApplicationContext(), SurvivorIncidentFormActivity.class));
                 // Pirates are the best
-                wsghSpinnerRl.setVisibility(View.INVISIBLE);
+                wsghSpinnerRl.setVisibility(View.GONE);
                 break;
             case R.id.wsgh_someoneelse_rb:
                 if (checked)

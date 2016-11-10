@@ -20,7 +20,7 @@
 
     </android.support.design.widget.AppBarLayout>
 
-    <include layout="@layout/content_another_person_incident_form" />
+    <include layout="@layout/content_person_incident_form" />
 
     <!--apif abort button and its label-->
     <LinearLayout

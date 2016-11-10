@@ -8,6 +8,10 @@
         <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
         <item name="colorAccent">@color/colorAccent</item>
         <!--<item name="android:windowBackground">@drawable/app_background</item>-->
+        <!--fonts-->
+        <item name="android:textViewStyle">@style/RobotoTextViewStyle</item>
+        <item name="android:buttonStyle">@style/RobotoButtonStyle</item>
+
     </style>
 
     <style name="AppTheme.NoActionBar">
@@ -45,4 +49,39 @@
         <item name="android:clickable">true</item>
     </style>
 
+    <!--fonts-->
+    <style name="RobotoTextViewStyle" parent="android:Widget.TextView">
+
+    </style>
+
+    <style name="RobotoButtonStyle" parent="android:Widget.Holo.Button">
+
+    </style>
+
+    <style name="coolButtonNormal" parent="Widget.AppCompat.Button.Colored">
+
+    </style>
+
+    <!--support from lollipop-->
+    <style name="coolButtonAttention" parent="Widget.AppCompat.Button.Colored">
+
+    </style>
+
+    <!--
+    spinner
+    <item name="android:background">@color/colorAccent</item>
+    <item name="android:background">@drawable/spinner_bg</item>
+    -->
+    <style name="coolSpinnerNormal" parent="Widget.AppCompat.Spinner.DropDown">
+
+        <item name="android:dropDownVerticalOffset">@dimen/spinner_dropdown_vert_offset</item>
+        <item name="android:paddingLeft">8dp</item>
+        <item name="android:paddingRight">20dp</item>
+        <item name="android:paddingTop">5dp</item>
+        <item name="android:paddingBottom">5dp</item>
+        <item name="android:popupBackground">#DFFFFFFF</item>
+
+    </style>
+
+    <dimen name="spinner_dropdown_vert_offset">40dp</dimen>
 </resources>
