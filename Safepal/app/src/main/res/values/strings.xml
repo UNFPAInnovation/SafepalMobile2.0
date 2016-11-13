@@ -114,11 +114,11 @@
     <string name="close_dialog">Close</string>
     <string name="em_not_fault">It\'s not your fault</string>
     <string name="title_activity_contact">Nearest Help</string>
-     <string name="contact_u_or_not">Would you like to contact you?</string>
+    <string name="contact_u_or_not">Would you like to contact you?</string>
     <string name="contact_yes">Yes</string>
     <string name="contact_no">No</string>
 
-    <string name="title_activity_cso"> Getting Help</string>
+    <string name="title_activity_cso">Help</string>
 
     <!--cso and child help line -->
     <string name="reset_button">Reset</string>
@@ -130,5 +130,12 @@
     <string name="female">Female</string>
     <string name="male">Male</string>
     <string name="gender">Gender</string>
+    <string name="title_activity_reporting">Report</string>
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="cannotLeaveBlank">Please kindly fill this field.</string>
+    <string name="next_message">next</string>
+    <string name="intro_encouraging_messages">Get familiar with important information by viewing the quick help information below. Press \'Next\' to show other information</string>
 
 </resources>

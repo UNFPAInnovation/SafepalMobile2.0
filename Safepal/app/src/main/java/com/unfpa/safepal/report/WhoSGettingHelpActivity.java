@@ -155,7 +155,7 @@ public class WhoSGettingHelpActivity extends AppCompatActivity {
                 getString(R.string.not_your_fault_alert_header),
                 wsghEncouragingMessagesTv.getText().toString(),
                 getString(R.string.close_dialog));
-        emDialog.show(getSupportFragmentManager(), "encouraging message");
+        emDialog.show(getFragmentManager(), "encouraging message");
     }
     public void onClickWSGHRadioButton(View view) {
         // Is the button now checked?

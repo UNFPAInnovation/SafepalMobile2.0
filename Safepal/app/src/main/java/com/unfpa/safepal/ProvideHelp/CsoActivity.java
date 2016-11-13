@@ -105,10 +105,12 @@ public class CsoActivity extends AppCompatActivity implements
 //        csoSafepalNo.setText(safepalNumber);
         //Encouraging messages
 
-        csoToolbar = (Toolbar) findViewById(R.id.cso_toolbar);
-        setSupportActionBar(csoToolbar);
-        getSupportActionBar().setLogo(R.mipmap.ic_launcher);
-        getSupportActionBar().setDisplayUseLogoEnabled(true);
+//        csoToolbar = (Toolbar) findViewById(R.id.cso_toolbar);
+//        setSupportActionBar(csoToolbar);
+//        getSupportActionBar().setLogo(R.mipmap.ic_launcher);
+//        getSupportActionBar().setDisplayUseLogoEnabled(true);
+        Toolbar toolbar = (Toolbar) findViewById(R.id.cso_toolbar);
+        setSupportActionBar(toolbar);
 
 
         loadCsoMessages();
@@ -151,12 +153,12 @@ public class CsoActivity extends AppCompatActivity implements
 //                startActivity(new Intent(getApplicationContext(), HomeActivity.class));
 //            }
 //        });
-        buttonNext.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                startActivity(new Intent(getApplicationContext(), HomeActivity.class));
-            }
-        });
+//        buttonNext.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View view) {
+//                startActivity(new Intent(getApplicationContext(), HomeActivity.class));
+//            }
+//        });
 
 
     }
@@ -174,7 +176,7 @@ public class CsoActivity extends AppCompatActivity implements
                 getString(R.string.signs_of_sgbv_header),
                 csoEncouragingMessagesTV.getText().toString(),
                 getString(R.string.close_dialog));
-        emDialog.show(getSupportFragmentManager(), "encouraging message");
+        emDialog.show(getFragmentManager(), "encouraging message");
     }
 
     public void onClickCsoCall(View view) {

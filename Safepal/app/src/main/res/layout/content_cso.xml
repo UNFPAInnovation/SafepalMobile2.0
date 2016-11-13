@@ -49,6 +49,7 @@
             android:textStyle="bold"
             android:textColor="@color/colorGreyDarker"
             android:text="You have no contacts "
+            android:layout_marginTop="10dp"
             />
         <TextView
             android:id="@+id/cso_assurance_help"
@@ -59,7 +60,42 @@
             android:layout_below="@+id/cso_contact_info"
             android:text="The available help will contact you using above info."/>
 
+
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Below is the Closest Help to You"
+            android:gravity="center"
+            android:textColor="#000000"
+            android:textStyle="bold"
+            android:maxLines="1"
+            android:textSize="18dp"/>
+
         <include layout="@layout/divider" />
+
+
+        <RelativeLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content">
+            <android.support.v7.widget.RecyclerView
+                android:id="@+id/cso_recycler_view"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginBottom="14dp"
+                android:layout_marginTop="14dp"
+                android:scrollbars="vertical"/>
+            <ProgressBar
+                android:layout_centerInParent="true"
+                android:id="@+id/cso_progress_bar"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="14dp"
+                android:layout_marginTop="14dp"/>
+        </RelativeLayout>
+
+
+        <!--<include layout="@layout/divider" />-->
 
 
         <!-- i removed this
@@ -79,36 +115,35 @@
 
             />
 
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="Below is the Closest Help to You"
-            android:gravity="center"
-            android:textColor="#000000"
-            android:textStyle="bold"
-            android:maxLines="1"
-            android:textSize="18dp"/>
 
-        <include layout="@layout/divider" />
-
-
-        <android.support.v7.widget.RecyclerView
-            android:id="@+id/cso_recycler_view"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_marginBottom="14dp"
-            android:layout_marginTop="14dp"
-            android:scrollbars="vertical"/>
-
-        <ProgressBar
-            android:id="@+id/cso_progress_bar"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="14dp"
-            android:layout_marginTop="14dp"/>
 
 
     <!--</RelativeLayout>-->
-        <include layout="@layout/footer_buttons" />
+        <!--<include layout="@layout/footer_buttons" />-->
+        <LinearLayout
+            android:layout_marginTop="20dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:orientation="horizontal"
+            android:gravity="bottom|start"
+            >
+
+            <Button
+                android:id="@+id/exit_app"
+                style="@style/Widget.AppCompat.Button.Colored"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/exitApp" />
+
+            <!--<Button-->
+            <!--android:id="@+id/finish"-->
+            <!--style="@style/Widget.AppCompat.Button.Colored"-->
+            <!--android:layout_width="0dp"-->
+            <!--android:layout_height="wrap_content"-->
+            <!--android:layout_weight="2"-->
+            <!--android:text="@string/report_sexual_abuse" />-->
+
+        </LinearLayout>
     </LinearLayout>
 </android.support.v4.widget.NestedScrollView>

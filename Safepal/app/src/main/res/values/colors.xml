@@ -1,12 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
+    <!--whats default colo for app background-->
     <color name="colorPrimary">#da4437</color>
     <color name="colorPrimaryDark">#a33325</color>
     <color name="colorAccent">#01a89e</color>
     <color name="colorOrange">#FCB040 </color>
     <color name="colorGrey">#d7d7d7</color>
-    <color name="colorWhite">#FFFFFF</color>
+    <color name="colorWhite">#FFFDFDFE</color>
     <!--FAB colors-->
     <color name="colorGreyDarker">#808080</color>
     <!--image color-->

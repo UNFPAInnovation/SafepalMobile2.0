@@ -7,6 +7,7 @@ import android.net.ConnectivityManager;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.design.widget.Snackbar;
+import android.support.design.widget.TextInputLayout;
 import android.support.v4.app.DialogFragment;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
@@ -60,6 +61,7 @@ public class AnotherPersonIncidentFormActivity extends AppCompatActivity {
     ImageView imageGender;
     ImageView imageAge;
     ImageView imageQnMark;
+    TextInputLayout textInputLayout;
 
     //Logging purposes
     final String TAG = AnotherPersonIncidentFormActivity.class.getSimpleName();
@@ -141,6 +143,19 @@ public class AnotherPersonIncidentFormActivity extends AppCompatActivity {
             }
         });
 
+        apifEncouragingMessagesTv.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                EMessageDialogFragment emDialog = EMessageDialogFragment.newInstance(
+                        getString(R.string.not_your_fault_alert_header),
+                        apifEncouragingMessagesTv.getText().toString(),
+                        getString(R.string.close_dialog));
+                emDialog.show(getFragmentManager(), "encouraging message");
+            }
+        });
+
+
+
         // Create an ArrayAdapter using the string array and a default spinner layout
         ArrayAdapter<CharSequence> apifIncidentTypeAdapter = ArrayAdapter.createFromResource(this,
                 R.array.apif_incident_type, R.layout.spinner_item);
@@ -181,8 +196,9 @@ public class AnotherPersonIncidentFormActivity extends AppCompatActivity {
 
 
     public void showDatePickerDialog(View v) {
-        DialogFragment newFragment = new apifDatePickerFragment();
-        newFragment.show(getSupportFragmentManager(), "datePicker");
+        Log.d(TAG, "commented out");
+//        DialogFragment newFragment = new apifDatePickerFragment();
+//        newFragment.show(getSupportFragmentManager(), "datePicker");
     }
 
     public void apifLoadMessages(){
@@ -267,8 +283,8 @@ public class AnotherPersonIncidentFormActivity extends AppCompatActivity {
             netReceiver = new NetworkChangeReceiver();
             registerReceiver(netReceiver, netMainFilter);
 
-            //starts a the  help activity
-            startActivity(new Intent(getApplicationContext(), ContactActivity.class));
+//            //starts a the  help activity
+//            startActivity(new Intent(getApplicationContext(), ContactActivity.class));
         }
         //updates the report if its already available
         else {
@@ -282,14 +298,14 @@ public class AnotherPersonIncidentFormActivity extends AppCompatActivity {
 
     }
 
-    public void onClickEncouragingMessages(View view){
-
-        EMessageDialogFragment emDialog = EMessageDialogFragment.newInstance(
-                getString(R.string.not_your_fault_alert_header),
-                apifEncouragingMessagesTv.getText().toString(),
-                getString(R.string.close_dialog));
-        emDialog.show(getSupportFragmentManager(), "encouraging message");
-    }
+//    public void onClickEncouragingMessages(View view){
+//
+//        EMessageDialogFragment emDialog = EMessageDialogFragment.newInstance(
+//                getString(R.string.not_your_fault_alert_header),
+//                apifEncouragingMessagesTv.getText().toString(),
+//                getString(R.string.close_dialog));
+//        emDialog.show(getFragmentManager(), "encouraging message");
+//    }
     //shows spinner dropdown for apif incident types
     public void onClickApifIVSpinner(View view){
         apifIncidentTypeSpinner.performClick();

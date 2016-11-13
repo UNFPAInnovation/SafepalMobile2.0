@@ -93,7 +93,7 @@ public class SurvivorIncidentFormActivity extends AppCompatActivity {
         buttonNext = (Button) findViewById(R.id.finish);
 
 
-//        sifDateOfBirthButton = (Button)findViewById(R.id.sif_date_of_birth_button);
+        sifDateOfBirthButton = (Button)findViewById(R.id.date_of_birth_button);
         textViewChosenDate = (TextView)findViewById(R.id.chosen_date);
 
         sifGenderRG=(RadioGroup)findViewById(R.id.gender_rg);
@@ -144,6 +144,15 @@ public class SurvivorIncidentFormActivity extends AppCompatActivity {
                 return true;
             }
         });
+
+        sifDateOfBirthButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                        android.app.DialogFragment dateFragment = new DatePickerFragment();
+
+        dateFragment.show(getFragmentManager(), "datePicker");
+            }
+        });
  }
 
 
@@ -160,115 +169,115 @@ public class SurvivorIncidentFormActivity extends AppCompatActivity {
 
     String TAG = SurvivorIncidentFormActivity.class.getSimpleName();
 
-    public void showDatePickerDialog(View v) {
-        DialogFragment dateFragment = new DatePickerFragment();
-
-        dateFragment.show(getSupportFragmentManager(), "datePicker");
-    }
-    /**
-     * Code for referral was added here
-     * @param view
-     */
-    public void onClickSubmitIncident(View view) {
-
-        int genderRBId = sifGenderRG.getCheckedRadioButtonId();
-
-        //checks if gender radio group isn't selected;
-        if(genderRBId==-1){
-            //feedback to developer
-            sifFeedbackSnackbar = Snackbar.make(view,"Tell us your gender please!!!",Snackbar.LENGTH_LONG);
-            sifFeedbackSnackbar.show();
-            return;
-        }
-        View genderRBView = sifGenderRG.findViewById(genderRBId);
-        int idx = sifGenderRG.indexOfChild(genderRBView);
-        sifGenderRB = (RadioButton) sifGenderRG.getChildAt(idx);
-        //end check of radio group
-
-        String reportedBy = "survivor";
-//        String survivorDateOfBirth = sifDateOfBirthButton.getText().toString();;
-        String apifSurvivorDateOfBirth = textViewChosenDate.getText().toString();
-        String survivorGender = (String)sifGenderRB.getText();
-        String incidentType =(String)sifIncidentTypeSpinner.getSelectedItem();
-        String incidentLocation = sifIncidentLocationEt.getText().toString();
-        String incidentStory = sifIncidentDetailsEt.getText().toString();;
-        String uniqueIdentifier = generateTempSafePalNumber(1000000,9999999);
-
-        //declarations of intents
-        provideHelpIntent = new Intent(SurvivorIncidentFormActivity.this, ContactActivity.class);
-
-        /**
-         *  Checks if the important fields are filled
-         *  **/
-        //checks if the birth of date is picked
-        //check if date is selected
-        if(textViewChosenDate.getText().toString().length() <= 2){
-            Toast.makeText(getBaseContext(), "Pick a date of birth",Toast.LENGTH_LONG).show();
-            return;
-        }
-        //checks if the incident type is selected
-        else if (sifIncidentTypeSpinner.getSelectedItemPosition() <= 0) {
-            sifFeedbackSnackbar = Snackbar.make(view,"Choose what happened to you.",Snackbar.LENGTH_LONG);
-            sifFeedbackSnackbar.show();
-            return;
-        }
-        //checks if the location of the incident is filled by the user
-        if (sifIncidentLocationEt.length() == 0 ) {
-            sifFeedbackSnackbar = Snackbar.make(view, "In what location did the incident happen?", Snackbar.LENGTH_LONG);
-            sifFeedbackSnackbar.show();
-            return;
-        }
-        //checks if the a proper story is told by the survivor
-        if ( sifIncidentDetailsEt.length() == 0) {
-            sifFeedbackSnackbar = Snackbar.make(view, "Kindly narrate the story of the incident that happened.", Snackbar.LENGTH_LONG);
-            sifFeedbackSnackbar.show();
-            return;
-        }
-        /**
-         * inserts incident report in to the mysql db through a content provider
-         * **/
-        ContentValues values = new ContentValues();
-        values.put(ReportIncidentTable.COLUMN_REPORTED_BY, reportedBy);
-        values.put(ReportIncidentTable.COLUMN_SURVIVOR_DATE_OF_BIRTH, apifSurvivorDateOfBirth);
-        values.put(ReportIncidentTable.COLUMN_SURVIVOR_GENDER, survivorGender);
-        values.put(ReportIncidentTable.COLUMN_INCIDENT_TYPE, incidentType);
-        values.put(ReportIncidentTable.COLUMN_INCIDENT_LOCATION, incidentLocation);
-        values.put(ReportIncidentTable.COLUMN_INCIDENT_STORY, incidentStory);
-        values.put(ReportIncidentTable.COLUMN_UNIQUE_IDENTIFIER, uniqueIdentifier);
-
-        //this inserts a new report in to the mysql db
-        if (reportIncidentUri == null) {
-            reportIncidentUri = getContentResolver().insert(ReportIncidentContentProvider.CONTENT_URI, values);
-
-            Toast.makeText(getBaseContext(), " The report is temporarily stored.", Toast.LENGTH_SHORT).show();
-
-            //Broadcast receiver that checks for the network status
-            IntentFilter netMainFilter =  new IntentFilter(ConnectivityManager.CONNECTIVITY_ACTION);
-
-            registerReceiver(netReceiver, netMainFilter);
-
-            //starts a the  help activity
-            startActivity(provideHelpIntent);
-        }
-        //updates the report if its already available
-        else {
-            getContentResolver().update(reportIncidentUri, values, null, null);
-        }
-    }
+//    public void showDatePickerDialog(View v) {
+//        Log.e(TAG, "commented out...");
+////        DialogFragment dateFragment = new DatePickerFragment();
+////
+////        dateFragment.show(getSupportFragmentManager(), "datePicker");
+//    }
+//    /**
+//     * Code for referral was added here
+//     * @param view
+//     */
+//    public void onClickSubmitIncident(View view) {
+//
+//        int genderRBId = sifGenderRG.getCheckedRadioButtonId();
+//
+//        //checks if gender radio group isn't selected;
+//        if(genderRBId==-1){
+//            //feedback to developer
+//            sifFeedbackSnackbar = Snackbar.make(view,"Tell us your gender please!!!",Snackbar.LENGTH_LONG);
+//            sifFeedbackSnackbar.show();
+//            return;
+//        }
+//        View genderRBView = sifGenderRG.findViewById(genderRBId);
+//        int idx = sifGenderRG.indexOfChild(genderRBView);
+//        sifGenderRB = (RadioButton) sifGenderRG.getChildAt(idx);
+//        //end check of radio group
+//
+//        String reportedBy = "survivor";
+//        String apifSurvivorDateOfBirth = textViewChosenDate.getText().toString();
+//        String survivorGender = (String)sifGenderRB.getText();
+//        String incidentType =(String)sifIncidentTypeSpinner.getSelectedItem();
+//        String incidentLocation = sifIncidentLocationEt.getText().toString();
+//        String incidentStory = sifIncidentDetailsEt.getText().toString();;
+//        String uniqueIdentifier = generateTempSafePalNumber(1000000,9999999);
+//
+//        //declarations of intents
+//        contactIntent = new Intent(SurvivorIncidentFormActivity.this, ContactActivity.class);
+//
+//        /**
+//         *  Checks if the important fields are filled
+//         *  **/
+//        //checks if the birth of date is picked
+//        //check if date is selected
+//        if(textViewChosenDate.getText().toString().length() <= 2){
+//            Toast.makeText(getBaseContext(), "Pick a date of birth",Toast.LENGTH_LONG).show();
+//            return;
+//        }
+//        //checks if the incident type is selected
+//        else if (sifIncidentTypeSpinner.getSelectedItemPosition() <= 0) {
+//            sifFeedbackSnackbar = Snackbar.make(view,"Choose what happened to you.",Snackbar.LENGTH_LONG);
+//            sifFeedbackSnackbar.show();
+//            return;
+//        }
+//        //checks if the location of the incident is filled by the user
+//        if (sifIncidentLocationEt.length() == 0 ) {
+//            sifFeedbackSnackbar = Snackbar.make(view, "In what location did the incident happen?", Snackbar.LENGTH_LONG);
+//            sifFeedbackSnackbar.show();
+//            return;
+//        }
+//        //checks if the a proper story is told by the survivor
+//        if ( sifIncidentDetailsEt.length() == 0) {
+//            sifFeedbackSnackbar = Snackbar.make(view, "Kindly narrate the story of the incident that happened.", Snackbar.LENGTH_LONG);
+//            sifFeedbackSnackbar.show();
+//            return;
+//        }
+//        /**
+//         * inserts incident report in to the mysql db through a content provider
+//         * **/
+//        ContentValues values = new ContentValues();
+//        values.put(ReportIncidentTable.COLUMN_REPORTED_BY, reportedBy);
+//        values.put(ReportIncidentTable.COLUMN_SURVIVOR_DATE_OF_BIRTH, apifSurvivorDateOfBirth);
+//        values.put(ReportIncidentTable.COLUMN_SURVIVOR_GENDER, survivorGender);
+//        values.put(ReportIncidentTable.COLUMN_INCIDENT_TYPE, incidentType);
+//        values.put(ReportIncidentTable.COLUMN_INCIDENT_LOCATION, incidentLocation);
+//        values.put(ReportIncidentTable.COLUMN_INCIDENT_STORY, incidentStory);
+//        values.put(ReportIncidentTable.COLUMN_UNIQUE_IDENTIFIER, uniqueIdentifier);
+//
+//        //this inserts a new report in to the mysql db
+//        if (reportIncidentUri == null) {
+//            reportIncidentUri = getContentResolver().insert(ReportIncidentContentProvider.CONTENT_URI, values);
+//
+//            Toast.makeText(getBaseContext(), " The report is temporarily stored.", Toast.LENGTH_SHORT).show();
+//
+//            //Broadcast receiver that checks for the network status
+//            IntentFilter netMainFilter =  new IntentFilter(ConnectivityManager.CONNECTIVITY_ACTION);
+//
+//            registerReceiver(netReceiver, netMainFilter);
+//
+//            //starts a the  help activity
+//            startActivity(contactIntent);
+//        }
+//        //updates the report if its already available
+//        else {
+//            getContentResolver().update(reportIncidentUri, values, null, null);
+//        }
+//    }
     //Randomly load encouraging messages to the Text View
     public void  loadSifMessages(){
         String[] sifMessagesArray = getResources().getStringArray(R.array.seek_medical_care_messages);
         sifEncouragingMessagesTv.setText(sifMessagesArray[randMessageIndex(0, sifMessagesArray.length)].toString());
     }
     //shows encouraging messages in dialog on click of the Text View
-    public void onClickSifEncouragingMessages(View view){
-
-        EMessageDialogFragment emDialog = EMessageDialogFragment.newInstance(
-                getString(R.string.not_your_fault_alert_header),
-                sifEncouragingMessagesTv.getText().toString(),
-                getString(R.string.close_dialog));
-        emDialog.show(getSupportFragmentManager(), "encouraging message");
-    }
+//    public void onClickSifEncouragingMessages(View view){
+//
+//        EMessageDialogFragment emDialog = EMessageDialogFragment.newInstance(
+//                getString(R.string.not_your_fault_alert_header),
+//                sifEncouragingMessagesTv.getText().toString(),
+//                getString(R.string.close_dialog));
+//        emDialog.show(getFragmentManager(), "encouraging message");
+//    }
 
     //shows spinner drop down for sif incident types
     public void onClickSifIVSpinner(View view){

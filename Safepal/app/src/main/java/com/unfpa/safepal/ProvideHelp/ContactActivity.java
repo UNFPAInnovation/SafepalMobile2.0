@@ -177,7 +177,7 @@ public class ContactActivity extends AppCompatActivity {
                 getString(R.string.seek_medical_alert_head),
                 contactEncouragingMessagesTv.getText().toString(),
                 getString(R.string.close_dialog));
-        emDialog.show(getSupportFragmentManager(), "encouraging message");
+        emDialog.show(getFragmentManager(), "encouraging message");
            }
 //    public void onContactRadioButtonClicked(View view) {
 //        // Is the button now checked?

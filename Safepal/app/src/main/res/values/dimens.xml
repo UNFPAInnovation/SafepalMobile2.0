@@ -18,5 +18,7 @@
     <dimen name="cso_name">17dp</dimen>
     <dimen name="cso_distance">15dip</dimen>
     <dimen name="subtitle_margin_bottom">10dp</dimen>
+    <dimen name="intro_text_margin_top">10dp</dimen>
+    <dimen name="cards_elevation">15dp</dimen>
 
 </resources>
