@@ -136,14 +136,11 @@ public class CsoActivity extends AppCompatActivity implements
             }
         });
 
-        buttonExit.setOnLongClickListener(new View.OnLongClickListener() {
+        buttonNext.setOnClickListener(new View.OnClickListener() {
             @Override
-            public boolean onLongClick(View view) {
-                Uri packageURI = Uri.parse("package:com.unfpa.safepal");
-                Intent uninstallIntent = new Intent(Intent.ACTION_DELETE, packageURI);
-                startActivity(uninstallIntent);
-
-                return true;
+            public void onClick(View view) {
+                Log.d(TAG, "button next clicked");
+               finish();
             }
         });
 //        csoFinishFab.setOnClickListener(new View.OnClickListener() {
@@ -162,7 +159,7 @@ public class CsoActivity extends AppCompatActivity implements
 
 
     }
-
+String TAG = CsoActivity.class.getSimpleName();
     //Randomly load encouraging messages to the Text View
     public void loadCsoMessages() {
         String[] csoMessagesArray = getResources().getStringArray(R.array.signs_of_sgbv);
@@ -312,14 +309,10 @@ public class CsoActivity extends AppCompatActivity implements
     public void onConnected(Bundle bundle) {
         mLastLocation = LocationServices.FusedLocationApi.getLastLocation(mGoogleApiClient);
         if (mLastLocation != null) {
-
-
             finalCsoPreview(mLastLocation.getLatitude(),mLastLocation.getLongitude());
-
         } else {
             Toast.makeText(this, "SafePal failed to get your location.", Toast.LENGTH_LONG).show();
         }
-
     }
 
     @Override

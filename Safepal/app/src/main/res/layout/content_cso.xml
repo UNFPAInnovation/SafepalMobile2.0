@@ -122,27 +122,27 @@
         <!--<include layout="@layout/footer_buttons" />-->
         <LinearLayout
             android:layout_marginTop="20dp"
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_alignParentBottom="true"
             android:orientation="horizontal"
-            android:gravity="bottom|start"
             >
 
             <Button
+                android:layout_weight="1"
                 android:id="@+id/exit_app"
                 style="@style/Widget.AppCompat.Button.Colored"
-                android:layout_width="wrap_content"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:text="@string/exitApp" />
 
-            <!--<Button-->
-            <!--android:id="@+id/finish"-->
-            <!--style="@style/Widget.AppCompat.Button.Colored"-->
-            <!--android:layout_width="0dp"-->
-            <!--android:layout_height="wrap_content"-->
-            <!--android:layout_weight="2"-->
-            <!--android:text="@string/report_sexual_abuse" />-->
+            <Button
+
+                style="@style/coolButtonNormal"
+                android:text="@string/home"
+                android:layout_weight="1"
+                android:id="@+id/finish"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content" />-->
 
         </LinearLayout>
     </LinearLayout>

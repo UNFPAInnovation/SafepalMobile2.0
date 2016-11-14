@@ -104,6 +104,26 @@
         <item>He/She was defiled.</item>
         <item>other</item>
     </string-array>
+    <string-array name="survivor_age_range">
+        <item>How old is he/she?</item>
+        <item>Below 10 years</item>
+        <item>11 years</item>
+        <item>12 years</item>
+        <item>13 years</item>
+        <item>14 years</item>
+        <item>15 years</item>
+        <item>16 years</item>
+        <item>17 years</item>
+        <item>18 years</item>
+        <item>19 years</item>
+        <item>20 years</item>
+        <item>21 years</item>
+        <item>22 years</item>
+        <item>23 years</item>
+        <item>24 years</item>
+        <item>Above 24 years</item>
+
+    </string-array>
     <string name="title_activity_main_activitysdas">MainActivitysdas</string>
     <string name="title_activity_referral">Contact Info…</string>
     <string name="after_submit_msg">Thank you for submitting the Incident. The incident was successfully delivered to SafePal. \nSafePal will in a short while provide you with a person to assist you.</string>
@@ -137,5 +157,7 @@
     <string name="cannotLeaveBlank">Please kindly fill this field.</string>
     <string name="next_message">next</string>
     <string name="intro_encouraging_messages">Get familiar with important information by viewing the quick help information below. Press \'Next\' to show other information</string>
+    <string name="home">Home</string>
+    <string name="auto_scroll_messages">Auto scroll</string>
 
 </resources>
