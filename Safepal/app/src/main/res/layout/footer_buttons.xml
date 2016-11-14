@@ -13,6 +13,7 @@ android:layout_height="wrap_content"
     android:layout_width="0dp"
     android:layout_height="wrap_content" />
 <Button
+
     style="@style/coolButtonNormal"
     android:text="@string/next"
     android:layout_weight="1"

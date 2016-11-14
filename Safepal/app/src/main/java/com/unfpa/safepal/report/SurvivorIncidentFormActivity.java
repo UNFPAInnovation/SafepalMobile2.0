@@ -111,7 +111,7 @@ public class SurvivorIncidentFormActivity extends AppCompatActivity {
         //content provider
         extras = getIntent().getExtras();
 
-
+         buttonNext.setText("Report");
         //messages to user
         loadSifMessages();
         // Create an ArrayAdapter using the string array and a default spinner layout

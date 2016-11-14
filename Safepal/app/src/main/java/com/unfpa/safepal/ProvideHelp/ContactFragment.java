@@ -3,6 +3,7 @@ package com.unfpa.safepal.ProvideHelp;
 import android.app.Fragment;
 import android.content.Context;
 import android.content.Intent;
+import android.database.ContentObserver;
 import android.database.Cursor;
 import android.net.Uri;
 import android.os.Bundle;
@@ -21,6 +22,7 @@ import android.widget.Toast;
 
 import com.unfpa.safepal.R;
 import com.unfpa.safepal.messages.EMessageDialogFragment;
+import com.unfpa.safepal.store.RIContentObserver;
 import com.unfpa.safepal.store.ReportIncidentContentProvider;
 import com.unfpa.safepal.store.ReportIncidentTable;
 
@@ -39,7 +41,7 @@ public class ContactFragment extends Fragment {
 
     private TextView contactEncouragingMessagesTv;
     public static   TextView contactSafepalNo;
-
+    RIContentObserver reportIncidentContentObserver;
     /**
      * Next and buttonExit button
      */
@@ -120,56 +122,12 @@ public class ContactFragment extends Fragment {
         contactPhoneEmailLl = (LinearLayout)view.findViewById(R.id.contact_phone_email_ll);
         contactEncouragingMessagesTv = (TextView)view.findViewById(R.id.contact_ecouraging_messages_tv);
         contactSafepalNo = (TextView)view.findViewById(R.id.contact_safepal_no);
-
         contactPhonenumber = (EditText)view.findViewById(R.id.contact_phone_et);
         contactEmail = (EditText)view.findViewById(R.id.contact_email_et);
 
         loadContactFeedbackMessages();
-        //updates user with the safepal number
-        //updateUIDTextView();
-
-        //picks and shows the mobile reporters location
-        //userLocationTracker();
-
-
-//        buttonExit.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View view) {
-//
-//
-//
-////                moveTaskToBack(true);
-////                android.os.Process.killProcess(android.os.Process.myPid());
-//////                System.buttonExit(1);
-//            }
-//        });
-//        buttonFinish.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View view) {
-//                Intent csoIntent = new Intent(getActivity(), CsoActivity.class);
-//                csoIntent.putExtra("safepalUniqueNumber",contactSafepalNo.getText().toString());
-//
-//                if(checkBoxContactMe.isChecked()) {
-//
-//                    if(contactPhonenumber.getText().length()<5 ){
-//                        Toast.makeText(getActivity(), "Provide us with a correct phone number", Toast.LENGTH_LONG).show();
-//                        return;
-//                    }
-//                    startActivity(csoIntent);
-//                }
-//
-////                else if(!checkBoxContactMe.isChecked()){//user doent want to be contacted
-////                    startActivity(csoIntent);
-////                }
-//
-//                else {//user doent want to be contacted
-////                    Toast.makeText(getActivity(), "Do you want to be contacted back? Choose???!!!", Toast.LENGTH_LONG).show();
-//                    startActivity(csoIntent);
-//                    return;
-//                }
-//            }
-//        });
-
+        //update unique number
+        updateUIDTextView();
         checkBoxContactMe.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
@@ -253,76 +211,49 @@ public class ContactFragment extends Fragment {
     /** All the  Methods **/
     //updates safepal number
     public void updateUIDTextView(){
+        Cursor cursor =  getActivity().getContentResolver().query(
+                ReportIncidentContentProvider.CONTENT_URI,
+                null,
+                null,
+                null,
+                null);
+        if(cursor != null) {
+            StringBuilder offline = new StringBuilder();
+            cursor.moveToLast();
+            offline.append("Your SafePal Number is: " + cursor.getString(cursor.getColumnIndex(ReportIncidentTable.COLUMN_UNIQUE_IDENTIFIER)));
 
-        final Handler handler = new Handler();
-        Runnable runnable = new Runnable() {
-            @Override
-            public void run() {
-                int k =0;
-                while (k<100)  {
-                    try{Thread.sleep(1000);
-                    }catch (InterruptedException e ){
-                        e.printStackTrace();
-                    }
-                    handler.post(new Runnable() {
-                        @Override
-                        public void run() {
-                            Cursor cursor =  getActivity().getContentResolver().query(
-                                    ReportIncidentContentProvider.CONTENT_URI,
-                                    null,
-                                    null,
-                                    null,
-                                    null);
+            cursor.close();
+            contactSafepalNo.setText(offline);
+        }
 
-                            cursor.moveToLast();
+        Handler riHandler = new Handler(){
+            public void handleMessage(android.os.Message msg) {
+                switch (msg.what) {
+                    case 1:
+                        String sb = (String) msg.obj;
+                        contactSafepalNo.setText(sb);
+                        break;
 
-                            ///action happens every sec
-                            contactSafepalNo.setText("Your SafePal Number is : " +  cursor.getString(cursor.getColumnIndex(ReportIncidentTable.COLUMN_UNIQUE_IDENTIFIER)));
+                    default:
 
-
-                        }
-                    });
-                    k++;
+                        break;
                 }
-            }
+            };
         };
 
-        new Thread(runnable).start();
+        reportIncidentContentObserver = new RIContentObserver(getActivity(), riHandler);
+        getActivity().getContentResolver().registerContentObserver(ReportIncidentContentProvider.CONTENT_URI,
+                true,
+                reportIncidentContentObserver);
+
 
     }
+
+
     private void  loadContactFeedbackMessages(){
         String[] wsghMessagesArray = getResources().getStringArray(R.array.seek_medical_care_messages);
         contactEncouragingMessagesTv.setText(wsghMessagesArray[randMessageIndex(0, wsghMessagesArray.length)].toString());
     }
-    //expand encouraging messages
-//    public void onClickContactEncouragingMessages(View view){
-//        EMessageDialogFragment emDialog = EMessageDialogFragment.newInstance(
-//                getString(R.string.seek_medical_alert_head),
-//                contactEncouragingMessagesTv.getText().toString(),
-//                getString(R.string.close_dialog));
-//        emDialog.show(getActivity().getFragmentManager(), "encouraging message");
-//    }
-//    public void onContactRadioButtonClicked(View view) {
-//        // Is the button now checked?
-//        boolean checked = ((RadioButton) view).isChecked();
-//
-//        // checks if user wants to be contacted
-//        switch(view.getId()) {
-//            case R.id.contact_me_yes_rb:
-//                if (checked)
-//                    //shows phone number and email
-//                    contactPhoneEmailLl.setVisibility(View.VISIBLE);
-//                break;
-//            case R.id.contact_me_not_rb:
-//                if (checked)
-//                    //hides phonenumber and email on UI
-//                    contactPhoneEmailLl.setVisibility(View.GONE);
-//                    //starts cso activity to show nearest help
-//                    startActivity(new Intent(getActivity(), CsoActivity.class));
-//
-//                break;
-//        }
-//    }
 
 
 

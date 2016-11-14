@@ -147,8 +147,10 @@ public class UIDPullService extends IntentService {
                 Map<String,String> params = new HashMap<String, String>();
                 params.put("survivor_gender",toServerSGender);
                 params.put("survivor_date_of_birth",toServerSDOB);
+
                 params.put("incident_type", toServerIType);
                 params.put("incident_location",toServerILocation);
+
                 params.put("status",toServerStatus);
                 params.put("incident_description", toServerIDescription);
                 params.put("reported_by", toServerReportedBy);

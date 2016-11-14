@@ -70,9 +70,9 @@
 
     <!-- survivor incident form strings -->
     <string name="sif_activity_title">Getting Help </string>
-    <string name="sif_survivor_age">When is your birthday?</string>
+    <string name="sif_survivor_age">When were you born ?</string>
     <string name="sif_survivor_pick_age">choose a date </string>
-    <string name="sif_survivor_gender">Are you ?</string>
+    <string name="sif_survivor_gender">Are you female or male ?</string>
     <string name="sif_survivor_gender_above_18">Are you a Man or Woman?</string>
     <string name="sif_incident_location">Where did it happen?</string>
     <string name="sif_incident_details">Tell the story of the incident.</string>
@@ -90,14 +90,14 @@
     <!-- another person incident form strings -->
     <string name="apif_activity_title">Getting Help </string>
     <string name="survivor_age">How old is she/he? </string>
-    <string name="apif_survivor_gender">Is He or She ?</string>
+    <string name="apif_survivor_gender">Is She or He?</string>
     <string name="apif_survivor_gender_above_18">Is she/he a Man or Woman?</string>
     <string name="incident_location">Where did it happen?</string>
     <string name="incident_details">Tell the story of the incident.</string>
     <string name="apif_male">Boy </string>
     <string name="apif_female">Girl </string>
     <string-array name="apif_incident_type">
-        <item>What happened to you?</item>
+        <item>What happened to him or her?</item>
         <item>Bad touches </item>
         <item>Someone tried to rape me</item>
         <item>He/She was raped.</item>

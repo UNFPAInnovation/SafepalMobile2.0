@@ -515,7 +515,7 @@ public class SurvivorIncidentFormFragment extends Fragment {
         //changes the negative number to  positve
         if(randomNum<0){randomNum= -randomNum;}
 
-        return Integer.toString(randomNum);
+        return "SPL" + Integer.toString(randomNum);
     }
 
 

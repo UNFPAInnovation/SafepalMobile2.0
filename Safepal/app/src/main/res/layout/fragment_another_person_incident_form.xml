@@ -139,7 +139,8 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:hint="@string/incident_details"
-                        android:inputType="text|textMultiLine" />
+                        android:inputType="text|textMultiLine"
+                        android:maxLines="3"/>
                 </android.support.design.widget.TextInputLayout>
             </RelativeLayout>
 
@@ -177,7 +178,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginBottom="@dimen/subtitle_margin_bottom"
-                    android:text="@string/gender"
+                    android:text="@string/apif_survivor_gender"
                     android:textColor="@color/colorAccent"
                     android:textStyle="bold"
                     />

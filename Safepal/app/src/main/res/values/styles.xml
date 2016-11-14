@@ -66,6 +66,10 @@
     <!--support from lollipop-->
     <style name="coolButtonAttention" parent="Widget.AppCompat.Button.Colored">
 
+        <item name="android:textSize">14sp</item>
+        <item name="android:textStyle">bold</item>
+        <item name="android:focusable">true</item>
+        <item name="android:clickable">true</item>
     </style>
 
     <!--
