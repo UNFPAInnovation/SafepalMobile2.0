@@ -131,7 +131,7 @@ $app->post('/api/v1/locations/nearest', function (Request $req, Response $res){
 		$this->pdo = null; //close connection
 
 		//return json
-		$req->withJson(sort($nearest));
+		$res->withJson(sort($nearest));
 	}
 
 });
