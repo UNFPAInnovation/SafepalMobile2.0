@@ -78,11 +78,12 @@ public class AnotherPersonIncidentFormFragment extends Fragment {
     TextView apifEncouragingMessagesTv;
 
     //Form variables
-    private Button apifDateOfBirthButton;
-    static TextView textViewChosenDate;
+//    private Button apifDateOfBirthButton;
+//    static TextView textViewChosenDate;
     private static RadioGroup apifGenderRG;
     private static RadioButton apifGenderRB;
     private static Spinner apifIncidentTypeSpinner;
+    private static Spinner spinnerAgeRange;
     private static EditText apifIncidentLocationEt;
     private static EditText apifIncidentDetailsEt;
 
@@ -158,12 +159,13 @@ public class AnotherPersonIncidentFormFragment extends Fragment {
         apifEncouragingMessagesTv = (TextView)rootView.findViewById(R.id.ecouraging_messages_tv);
 
         /** Form initialization **/
-        apifDateOfBirthButton = (Button)rootView.findViewById(R.id.date_of_birth_button);
-        textViewChosenDate = (TextView)rootView.findViewById(R.id.chosen_date);
+//        apifDateOfBirthButton = (Button)rootView.findViewById(R.id.date_of_birth_button);
+//        textViewChosenDate = (TextView)rootView.findViewById(R.id.chosen_date);
 
         apifGenderRG=(RadioGroup)rootView.findViewById(R.id.gender_rg);
         apifIncidentTypeSpinner = (Spinner) rootView.findViewById(R.id.incident_type_spinner);
-        apifIncidentTypeSpinner.requestFocus();
+        //age range spinner
+        spinnerAgeRange = (Spinner) rootView.findViewById(R.id.age_range_spinner);
 
         apifIncidentLocationEt = (EditText)rootView.findViewById(R.id.incident_location_actv);
         apifIncidentDetailsEt = (EditText)rootView.findViewById(R.id.incident_details_rt);
@@ -210,13 +212,13 @@ public class AnotherPersonIncidentFormFragment extends Fragment {
 //            }
 //        });
 
-        apifDateOfBirthButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                android.app.DialogFragment newFragment = new apifDatePickerFragment();
-                newFragment.show(getFragmentManager(), "datePicker");
-            }
-        });
+//        apifDateOfBirthButton.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View view) {
+//                android.app.DialogFragment newFragment = new apifDatePickerFragment();
+//                newFragment.show(getFragmentManager(), "datePicker");
+//            }
+//        });
 
         // Create an ArrayAdapter using the string array and a default spinner layout
         ArrayAdapter<CharSequence> apifIncidentTypeAdapter = ArrayAdapter.createFromResource(getActivity(),
@@ -225,6 +227,15 @@ public class AnotherPersonIncidentFormFragment extends Fragment {
         apifIncidentTypeAdapter.setDropDownViewResource( R.layout.spinner_dropdown);
         // Apply the apifIncidentTypeAdapter to the spinner
         apifIncidentTypeSpinner.setAdapter(apifIncidentTypeAdapter);
+
+        //prepare adapter for age range spinner
+        ArrayAdapter<CharSequence> ageRangeAdapter = ArrayAdapter.createFromResource(getActivity(),
+                R.array.survivor_age_range, R.layout.spinner_item);
+        // Specify the layout to use when the list of choices appears
+        ageRangeAdapter.setDropDownViewResource( R.layout.spinner_dropdown);
+        // Apply the apifIncidentTypeAdapter to the spinner
+        spinnerAgeRange.setAdapter(ageRangeAdapter);
+
 
         //give color to images
         imageWhereHappen.setImageDrawable(
@@ -309,13 +320,13 @@ return rootView;
         apifGenderRB =(RadioButton)apifGenderRG.getChildAt(idx);
 
         //check if date is selected
-        if(textViewChosenDate.getText().toString().length() <= 2){
-//            Toast.makeText(context, "Pick a date of birth",Toast.LENGTH_LONG).show();
-            sifFeedbackSnackbar = Snackbar.make(rootView ,"Pick a date of birth",
-                    Snackbar.LENGTH_LONG);
-            sifFeedbackSnackbar.show();
-            return ReportingActivity.STATUS_SUBMIT_REPORT_ERROR;
-        }
+//        if(textViewChosenDate.getText().toString().length() <= 2){
+////            Toast.makeText(context, "Pick a date of birth",Toast.LENGTH_LONG).show();
+//            sifFeedbackSnackbar = Snackbar.make(rootView ,"Pick a date of birth",
+//                    Snackbar.LENGTH_LONG);
+//            sifFeedbackSnackbar.show();
+//            return ReportingActivity.STATUS_SUBMIT_REPORT_ERROR;
+//        }
 
         //checks if the location of the incident is filled by the user
         if (apifIncidentLocationEt.length() == 0 ) {
@@ -336,6 +347,17 @@ return rootView;
             sifFeedbackSnackbar.show();
             return ReportingActivity.STATUS_SUBMIT_REPORT_ERROR;
         }
+        //age range check out
+
+        if (spinnerAgeRange.getSelectedItemPosition() <= 0) {
+//            if(idx==0) Toast.makeText(context, "Select the type of incident that happened to her.",Toast.LENGTH_LONG).show();
+//            else       Toast.makeText(context, "Select the type of incident happened to him.",Toast.LENGTH_LONG).show();
+            sifFeedbackSnackbar = Snackbar.make(rootView ,"Please select his/her age.",
+                    Snackbar.LENGTH_LONG);
+            sifFeedbackSnackbar.show();
+            return ReportingActivity.STATUS_SUBMIT_REPORT_ERROR;
+        }
+
         //checks if the a proper story is told by the survivor
         if ( apifIncidentDetailsEt.length() == 0) {
             sifFeedbackSnackbar = Snackbar.make(rootView ,"Kindly narrate the story of the incident that happened him/her",
@@ -348,8 +370,8 @@ return rootView;
 
         String apifReportedBy = relationshipToSurvivor;
         Log.d(TAG, "Relation shiop to..: " + apifReportedBy );
-        String apifSurvivorDateOfBirth = textViewChosenDate.getText().toString();
-//        String apifSurvivorDateOfBirth = datePicker.setOn todo get date in stribg
+        String apifSurvivorAge = (String)spinnerAgeRange.getSelectedItem();
+//        String apifSurvivorAge = datePicker.setOn todo get date in stribg
         String apifSurvivorGender = (String)apifGenderRB.getText();
         String apifIncidentType =(String)apifIncidentTypeSpinner.getSelectedItem();
         String apifIncidentLocation = apifIncidentLocationEt.getText().toString();
@@ -361,7 +383,7 @@ return rootView;
          * **/
         ContentValues values = new ContentValues();
         values.put(ReportIncidentTable.COLUMN_REPORTED_BY, apifReportedBy);
-        values.put(ReportIncidentTable.COLUMN_SURVIVOR_DATE_OF_BIRTH, apifSurvivorDateOfBirth);
+        values.put(ReportIncidentTable.COLUMN_SURVIVOR_DATE_OF_BIRTH, apifSurvivorAge);
         values.put(ReportIncidentTable.COLUMN_SURVIVOR_GENDER, apifSurvivorGender);
         values.put(ReportIncidentTable.COLUMN_INCIDENT_TYPE, apifIncidentType);
         values.put(ReportIncidentTable.COLUMN_INCIDENT_LOCATION, apifIncidentLocation);

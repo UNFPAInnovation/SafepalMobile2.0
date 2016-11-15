@@ -79,6 +79,7 @@ public class ReportingActivity extends AppCompatActivity implements SurvivorInci
                     if (WhoSGettingHelpFragment.wsghYesRB.isChecked()) {//happened to me
                         Log.d(TAG, "loading reporting fragment for self");
                         loadReportingFormSelfFragment();
+                        updateNextButtonToSubmit();
                     } else if (WhoSGettingHelpFragment.wsghSomeelseRb.isChecked()){//happened to someone else
                         if (WhoSGettingHelpFragment.wsghRelationshipSpinner.getSelectedItemPosition() <= 0) {
                             WhoSGettingHelpFragment.wsghFeedbackSnackbar = Snackbar.make(view, "what is your relationship to survivor?", Snackbar.LENGTH_LONG);
@@ -86,6 +87,7 @@ public class ReportingActivity extends AppCompatActivity implements SurvivorInci
                         }else {
                             Log.d(TAG, "loading reporting fragment for happeed to someone else");
                             loadReportingFormSomeOneElseFragment();
+                            updateNextButtonToSubmit();
                         }
                     }else {
                         Toast.makeText(getBaseContext(), "Who did the incident happen to? Choose one of the options to proceed.", Toast.LENGTH_LONG).show();
@@ -98,6 +100,7 @@ public class ReportingActivity extends AppCompatActivity implements SurvivorInci
                     if((status == ReportingActivity.STATUS_SUBMIT_REPORT_SUBMITED) || (status == ReportingActivity.STATUS_SUBMIT_REPORT_ALREADY_AVAILABLE)){
                         Log.d(TAG, "AnotherPersonIncidentFormFragment.submitForm successfull. Loading contact frag");
                         loadContactFragment();//ask whther to be contacted in next frag
+                        updateSubmitButtonToNext();
                     }else{
                         Log.d(TAG, "error in data????");
                     }
@@ -108,6 +111,7 @@ public class ReportingActivity extends AppCompatActivity implements SurvivorInci
                     int status = SurvivorIncidentFormFragment.submitForm(getBaseContext());//submit the form
                     if((status == ReportingActivity.STATUS_SUBMIT_REPORT_SUBMITED) || (status == ReportingActivity.STATUS_SUBMIT_REPORT_ALREADY_AVAILABLE)){
                         loadContactFragment();//ask whther to be contacted in next frag
+                        updateSubmitButtonToNext();
                         Log.d(TAG, "SurvivorIncidentFormFragment.submitForm successfull. Loading contact frag");
                     }else {
                         Log.d(TAG, "errpr on data????");
@@ -120,6 +124,7 @@ public class ReportingActivity extends AppCompatActivity implements SurvivorInci
                         Intent csoIntent = new Intent(getBaseContext(), CsoActivity.class);
                         csoIntent.putExtra("safepalUniqueNumber",ContactFragment.contactSafepalNo.getText().toString());
                         startActivity(csoIntent);
+                        finish();//close this activity after opening another.
                     }else{
                         Log.w(TAG, "some fields empty");
                     }
@@ -152,6 +157,21 @@ public class ReportingActivity extends AppCompatActivity implements SurvivorInci
             }
         });
 
+    }
+
+    /**
+     * changes text fron 'NEXT' to 'SUBMIT'
+     * while on the last frgamnet of reporting an incident
+     */
+    private void updateNextButtonToSubmit() {
+        buttonNext.setText(getString(R.string.submit));
+    }
+
+    /**
+     * changes text fron 'SUBMIT' to 'NEXT'
+     */
+    private void updateSubmitButtonToNext() {
+        buttonNext.setText(getString(R.string.next));
     }
 
     /**
