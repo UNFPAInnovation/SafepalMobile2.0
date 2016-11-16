@@ -31,35 +31,6 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".report.WhoSGettingHelpActivity"
-            android:autoRemoveFromRecents="true"
-            android:label="@string/wsgh_activity_title"
-            android:parentActivityName=".home.HomeActivity"
-            android:theme="@style/AppTheme.NoActionBar">
-            <meta-data
-                android:name="android.support.PARENT_ACTIVITY"
-                android:value=".home.HomeActivity" />
-        </activity>
-        <activity
-            android:name=".report.SurvivorIncidentFormActivity"
-            android:autoRemoveFromRecents="true"
-            android:label="@string/sif_activity_title"
-            android:parentActivityName=".report.WhoSGettingHelpActivity"
-            android:theme="@style/AppTheme.NoActionBar">
-            <meta-data
-                android:name="android.support.PARENT_ACTIVITY"
-                android:value=".report.WhoSGettingHelpActivity" />
-        </activity>
-        <activity
-            android:name=".report.AnotherPersonIncidentFormActivity"
-            android:autoRemoveFromRecents="true"
-            android:label="@string/apif_activity_title"
-            android:theme="@style/AppTheme.NoActionBar">
-            <meta-data
-                android:name="android.support.PARENT_ACTIVITY"
-                android:value=".report.WhoSGettingHelpActivity" />
-        </activity>
-        <activity
             android:name=".ProvideHelp.ContactActivity"
             android:autoRemoveFromRecents="true"
             android:label="@string/title_activity_contact"

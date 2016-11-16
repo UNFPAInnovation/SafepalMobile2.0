@@ -37,7 +37,6 @@ public class HomeActivity extends AppCompatActivity {
     TextView textViewMessage;
     AppCompatCheckBox checkBoxAutoScroll;
 
-        RotateLayout homeInfoTGL;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -190,9 +189,4 @@ public class HomeActivity extends AppCompatActivity {
         textViewMessage.setText(msg);
 
     }
-    //homeInfoTGL = new RotateLayout(this);
-
-
-
-
 }

@@ -1,9 +1,7 @@
 package com.unfpa.safepal.report;
 
 import android.app.Fragment;
-import android.content.Intent;
-import android.net.Uri;
-import android.os.Build;
+
 import android.os.Bundle;
 import android.support.design.widget.Snackbar;
 import android.support.v7.widget.Toolbar;
@@ -11,13 +9,11 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
-import android.widget.Button;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.RelativeLayout;
 import android.widget.Spinner;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.unfpa.safepal.R;
 import com.unfpa.safepal.messages.EMessageDialogFragment;
@@ -69,7 +65,7 @@ public class WhoSGettingHelpFragment extends Fragment {
          * */
 
         //Toolbar of the who's getting help activity
-        wsghToolbar = (Toolbar) rootView.findViewById(R.id.wsgh_toolbar);
+        wsghToolbar = (Toolbar) rootView.findViewById(R.id.reporting_toolbar);
 //        //Abort fab of  who's getting help activity
 //        buttonExit = (Button) rootView.findViewById(R.id.exit_app);
 //        //Next fab of  who's getting help activity
@@ -108,53 +104,6 @@ public class WhoSGettingHelpFragment extends Fragment {
             }
         });
 
-        //exit application
-//        buttonExit.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                if(Build.VERSION.SDK_INT>=21)  getActivity().finishAndRemoveTask();
-//                else getActivity().finish();
-//
-//
-//            }
-//        });
-        //uninstall application
-//        buttonExit.setOnLongClickListener(new View.OnLongClickListener() {
-//            @Override
-//            public boolean onLongClick(View view) {
-//                Uri packageURI = Uri.parse("package:com.unfpa.safepal");
-//                Intent uninstallIntent = new Intent(Intent.ACTION_DELETE, packageURI);
-//                startActivity(uninstallIntent);
-//                return true;
-//            }
-//        });
-        //go to report form
-//        buttonNext.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View view) {
-//
-//                if(wsghYesRB.isChecked())
-//                    startActivity(new Intent(getActivity(), SurvivorIncidentFormActivity.class));
-//
-//                else if (wsghSomeelseRb.isChecked()){
-//                    //checks if the relationship to the survivor has been selected
-//                    if (wsghRelationshipSpinner.getSelectedItemPosition() <= 0) {
-//                        wsghFeedbackSnackbar = Snackbar.make(view, "what is your relationship to survivor?", Snackbar.LENGTH_LONG);
-//                        wsghFeedbackSnackbar.show();
-//                        return;
-//                    }
-//
-//                    Intent apifIntent = new Intent(view.getContext(),AnotherPersonIncidentFormActivity.class);
-//                    apifIntent.putExtra("relationshipToSurvivor", wsghRelationshipSpinner.getSelectedItem().toString());
-//                    startActivity(apifIntent);
-//
-//                }
-//                else{
-//                    Toast.makeText(getActivity(), "Who did the incident happen to? Choose one of the options to proceed.", Toast.LENGTH_LONG).show();
-//                    return;
-//                }
-//            }
-//        });
 
         wsghYesRB.setOnClickListener(new View.OnClickListener() {
             @Override

@@ -20,7 +20,7 @@ import com.unfpa.safepal.messages.EMessageDialogFragment;
 import com.unfpa.safepal.store.ReportIncidentContentProvider;
 import com.unfpa.safepal.store.ReportIncidentTable;
 
-import static com.unfpa.safepal.report.WhoSGettingHelpActivity.randMessageIndex;
+import static com.unfpa.safepal.report.WhoSGettingHelpFragment.randMessageIndex;
 
 public class ContactActivity extends AppCompatActivity {
 
@@ -179,28 +179,5 @@ public class ContactActivity extends AppCompatActivity {
                 getString(R.string.close_dialog));
         emDialog.show(getFragmentManager(), "encouraging message");
            }
-//    public void onContactRadioButtonClicked(View view) {
-//        // Is the button now checked?
-//        boolean checked = ((RadioButton) view).isChecked();
-//
-//        // checks if user wants to be contacted
-//        switch(view.getId()) {
-//            case R.id.contact_me_yes_rb:
-//                if (checked)
-//                    //shows phone number and email
-//                    contactPhoneEmailLl.setVisibility(View.VISIBLE);
-//                break;
-//            case R.id.contact_me_not_rb:
-//                if (checked)
-//                    //hides phonenumber and email on UI
-//                    contactPhoneEmailLl.setVisibility(View.GONE);
-//                    //starts cso activity to show nearest help
-//                    startActivity(new Intent(getApplicationContext(), CsoActivity.class));
-//
-//                break;
-//        }
-//    }
-
-
 
 }
