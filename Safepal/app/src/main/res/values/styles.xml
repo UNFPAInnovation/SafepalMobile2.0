@@ -59,17 +59,19 @@
 
     </style>
 
-    <style name="coolButtonNormal" parent="Widget.AppCompat.Button.Colored">
+    <style name="materialButtonNormal" parent="Widget.AppCompat.Button.Colored">
 
     </style>
 
     <!--support from lollipop-->
-    <style name="coolButtonAttention" parent="Widget.AppCompat.Button.Colored">
+    <style name="materialButtonAttention" parent="Widget.AppCompat.Button.Colored">
 
         <item name="android:textSize">14sp</item>
         <item name="android:textStyle">bold</item>
         <item name="android:focusable">true</item>
         <item name="android:clickable">true</item>
+        <item name="colorButtonNormal">@color/colorPrimary</item>
+        <item name="android:background">@drawable/button_bg_attention</item>
     </style>
 
     <!--

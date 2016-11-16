@@ -262,7 +262,7 @@
             <Button
                 android:layout_marginTop="10dp"
                 android:id="@+id/date_of_birth_button"
-                style="@style/coolButtonNormal"
+                style="@style/materialButtonNormal"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:onClick="showDatePickerDialog"
@@ -285,7 +285,7 @@
 
             <Button
                 android:id="@+id/exit_app"
-                style="@style/coolButtonAttention"
+                style="@style/materialButtonAttention"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
@@ -293,7 +293,7 @@
 
             <Button
                 android:id="@+id/finish"
-                style="@style/coolButtonNormal"
+                style="@style/materialButtonNormal"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"

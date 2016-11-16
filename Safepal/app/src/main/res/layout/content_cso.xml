@@ -130,14 +130,14 @@
             <Button
                 android:layout_weight="1"
                 android:id="@+id/exit_app"
-                style="@style/Widget.AppCompat.Button.Colored"
+                style="@style/materialButtonAttention"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:text="@string/exitApp" />
 
             <Button
 
-                style="@style/coolButtonNormal"
+                style="@style/materialButtonNormal"
                 android:text="@string/home"
                 android:layout_weight="1"
                 android:id="@+id/finish"
