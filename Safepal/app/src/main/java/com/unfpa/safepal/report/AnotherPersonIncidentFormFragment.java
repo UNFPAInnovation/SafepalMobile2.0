@@ -3,7 +3,6 @@ package com.unfpa.safepal.report;
 import android.app.Fragment;
 import android.content.ContentValues;
 import android.content.Context;
-import android.content.Intent;
 import android.content.IntentFilter;
 import android.net.ConnectivityManager;
 import android.net.Uri;
@@ -26,18 +25,16 @@ import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.unfpa.safepal.ProvideHelp.ContactActivity;
 import com.unfpa.safepal.R;
 import com.unfpa.safepal.Utils.Layout;
-import com.unfpa.safepal.datepicker.apifDatePickerFragment;
 import com.unfpa.safepal.messages.EMessageDialogFragment;
 import com.unfpa.safepal.network.NetworkChangeReceiver;
 import com.unfpa.safepal.store.ReportIncidentContentProvider;
 import com.unfpa.safepal.store.ReportIncidentTable;
 
-import static com.unfpa.safepal.report.SurvivorIncidentFormActivity.netReceiver;
-import static com.unfpa.safepal.report.SurvivorIncidentFormActivity.reportIncidentUri;
-import static com.unfpa.safepal.report.WhoSGettingHelpActivity.randMessageIndex;
+import static com.unfpa.safepal.report.SurvivorIncidentFormFragment.netReceiver;
+import static com.unfpa.safepal.report.SurvivorIncidentFormFragment.reportIncidentUri;
+import static com.unfpa.safepal.report.WhoSGettingHelpFragment.randMessageIndex;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -72,7 +69,7 @@ public class AnotherPersonIncidentFormFragment extends Fragment {
     ImageView imageQnMark;
 
     //Logging purposes
-    static final String TAG = AnotherPersonIncidentFormActivity.class.getSimpleName();
+    static final String TAG = AnotherPersonIncidentFormFragment.class.getSimpleName();
 
     //Encouraging messages
     TextView apifEncouragingMessagesTv;
@@ -143,7 +140,7 @@ public class AnotherPersonIncidentFormFragment extends Fragment {
 
 
         /** Declaration of user interface **/
-        apifToolbar = (Toolbar) rootView.findViewById(R.id.apif_toolbar);
+        apifToolbar = (Toolbar) rootView.findViewById(R.id.reporting_toolbar);
 //        buttonExit = (Button) view.findViewById(R.id.exit_app);
 //        buttonNext = (Button) view.findViewById(R.id.finish);
         imageWhereHappen = (ImageView) rootView.findViewById(R.id.image_where_take_place);
@@ -156,7 +153,7 @@ public class AnotherPersonIncidentFormFragment extends Fragment {
 
 
         //encouraging messages
-        apifEncouragingMessagesTv = (TextView)rootView.findViewById(R.id.ecouraging_messages_tv);
+        apifEncouragingMessagesTv = (TextView)rootView.findViewById(R.id.apif_encouraging_messages_tv);
 
         /** Form initialization **/
 //        apifDateOfBirthButton = (Button)rootView.findViewById(R.id.date_of_birth_button);
@@ -183,44 +180,8 @@ public class AnotherPersonIncidentFormFragment extends Fragment {
         apifLoadMessages();
 
         //click actions
-        //exit application
-//        buttonExit.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                getActivity().moveTaskToBack(true);
-//                android.os.Process.killProcess(android.os.Process.myPid());
-//                System.exit(1);
-//            }
-//        });
 
-//        //uninstall application
-//        buttonExit.setOnLongClickListener(new View.OnLongClickListener() {
-//            @Override
-//            public boolean onLongClick(View view) {
-//                Uri packageURI = Uri.parse("package:com.unfpa.safepal");
-//                Intent uninstallIntent = new Intent(Intent.ACTION_DELETE, packageURI);
-//                startActivity(uninstallIntent);
-//                return true;
-//            }
-//        });
-//
-//        buttonNext.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View view) {
-//
-//
-//            }
-//        });
 
-//        apifDateOfBirthButton.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View view) {
-//                android.app.DialogFragment newFragment = new apifDatePickerFragment();
-//                newFragment.show(getFragmentManager(), "datePicker");
-//            }
-//        });
-
-        // Create an ArrayAdapter using the string array and a default spinner layout
         ArrayAdapter<CharSequence> apifIncidentTypeAdapter = ArrayAdapter.createFromResource(getActivity(),
                 R.array.apif_incident_type, R.layout.spinner_item);
         // Specify the layout to use when the list of choices appears
@@ -236,6 +197,17 @@ public class AnotherPersonIncidentFormFragment extends Fragment {
         // Apply the apifIncidentTypeAdapter to the spinner
         spinnerAgeRange.setAdapter(ageRangeAdapter);
 
+        apifEncouragingMessagesTv.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                EMessageDialogFragment emDialog = EMessageDialogFragment.newInstance(
+                        getString(R.string.not_your_fault_alert_header),
+                        apifEncouragingMessagesTv.getText().toString(),
+                        getString(R.string.close_dialog));
+                emDialog.show(getFragmentManager(), "encouraging message");
+
+            }
+        });
 
         //give color to images
         imageWhereHappen.setImageDrawable(
@@ -319,15 +291,6 @@ return rootView;
         int idx = apifGenderRG.indexOfChild(genderApifRBView);
         apifGenderRB =(RadioButton)apifGenderRG.getChildAt(idx);
 
-        //check if date is selected
-//        if(textViewChosenDate.getText().toString().length() <= 2){
-////            Toast.makeText(context, "Pick a date of birth",Toast.LENGTH_LONG).show();
-//            sifFeedbackSnackbar = Snackbar.make(rootView ,"Pick a date of birth",
-//                    Snackbar.LENGTH_LONG);
-//            sifFeedbackSnackbar.show();
-//            return ReportingActivity.STATUS_SUBMIT_REPORT_ERROR;
-//        }
-
         //checks if the location of the incident is filled by the user
         if (apifIncidentLocationEt.length() == 0 ) {
 //            if(idx==0) Toast.makeText(context, "In what location did the incident happen her?",Toast.LENGTH_LONG).show();
@@ -371,12 +334,11 @@ return rootView;
         String apifReportedBy = relationshipToSurvivor;
         Log.d(TAG, "Relation shiop to..: " + apifReportedBy );
         String apifSurvivorAge = (String)spinnerAgeRange.getSelectedItem();
-//        String apifSurvivorAge = datePicker.setOn todo get date in stribg
         String apifSurvivorGender = (String)apifGenderRB.getText();
         String apifIncidentType =(String)apifIncidentTypeSpinner.getSelectedItem();
         String apifIncidentLocation = apifIncidentLocationEt.getText().toString();
         String apifIncidentStory = apifIncidentDetailsEt.getText().toString();;
-        String apifUniqueIdentifier = SurvivorIncidentFormActivity.generateTempSafePalNumber(10000000,99999999);
+        String apifUniqueIdentifier = SurvivorIncidentFormFragment.generateTempSafePalNumber(10000000,99999999);
 
         /**
          * inserts incident report in to the mysql db through a content provider
@@ -437,118 +399,14 @@ return rootView;
         void onFragmentInteraction(Uri uri);
     }
 
-
-
-//    public void showDatePickerDialog(View v) {
-//        android.app.DialogFragment newFragment = new apifDatePickerFragment();
-//        newFragment.show(getFragmentManager(), "datePicker");
-//    }
-
     public void apifLoadMessages(){
-        String[] apifMessagesArray = getResources().getStringArray(R.array.seek_medical_care_messages);
+        String [] apifMessagesArray = getResources().getStringArray(R.array.seek_medical_care_messages);
         apifEncouragingMessagesTv.setText(apifMessagesArray[randMessageIndex(0, apifMessagesArray.length)].toString());
     }
 
-//    public void onClickSubmitIncident(View view){
-//
-//        int genderRBApifId = apifGenderRG.getCheckedRadioButtonId();
-//
-//        if(genderRBApifId==-1){
-//            Toast.makeText(getActivity(), "Select the survivors gender?",Toast.LENGTH_LONG).show();
-//            return;
-//        }
-//
-//        View genderApifRBView = apifGenderRG.findViewById(genderRBApifId);
-//        int idx = apifGenderRG.indexOfChild(genderApifRBView);
-//        apifGenderRB =(RadioButton)apifGenderRG.getChildAt(idx);
-//
-//        //check if date is selected
-//        if(textViewChosenDate.getText().toString().length() <= 2){
-//            Toast.makeText(getActivity(), "Pick a date of birth",Toast.LENGTH_LONG).show();
-//            return;
-//        }
-//
-//        //checks if the location of the incident is filled by the user
-//        if (apifIncidentLocationEt.length() == 0 ) {
-//            if(idx==0) Toast.makeText(getActivity(), "In what location did the incident happen her?",Toast.LENGTH_LONG).show();
-//            else       Toast.makeText(getActivity(), "In what location did the incident happen him?",Toast.LENGTH_LONG).show();
-//            return;
-//        }
-//
-//        if (apifIncidentTypeSpinner.getSelectedItemPosition() <= 0) {
-//            if(idx==0) Toast.makeText(getActivity(), "Select the type of incident that happened to her.",Toast.LENGTH_LONG).show();
-//            else       Toast.makeText(getActivity(), "Select the type of incident happened to him.",Toast.LENGTH_LONG).show();
-//            return;
-//        }
-//        //checks if the a proper story is told by the survivor
-//        if ( apifIncidentDetailsEt.length() == 0) {
-//            if(idx==0) Toast.makeText(getActivity(), "Kindly narrate the story of the incident that happened her",Toast.LENGTH_LONG).show();
-//            else Toast.makeText(getActivity(), "Kindly narrate the story of the incident that happened him",Toast.LENGTH_LONG).show();
-//            return;
-//        }
-//
-//
-//        String apifReportedBy = relationshipToSurvivor;
-//        Log.d(TAG, "Relation shiop to..: " + apifReportedBy );
-//        String apifSurvivorDateOfBirth = textViewChosenDate.getText().toString();
-////        String apifSurvivorDateOfBirth = datePicker.setOn todo get date in stribg
-//        String apifSurvivorGender = (String)apifGenderRB.getText();
-//        String apifIncidentType =(String)apifIncidentTypeSpinner.getSelectedItem();
-//        String apifIncidentLocation = apifIncidentLocationEt.getText().toString();
-//        String apifIncidentStory = apifIncidentDetailsEt.getText().toString();;
-//        String apifUniqueIdentifier = SurvivorIncidentFormActivity.generateTempSafePalNumber(10000000,99999999);
-//
-//        /**
-//         * inserts incident report in to the mysql db through a content provider
-//         * **/
-//        ContentValues values = new ContentValues();
-//        values.put(ReportIncidentTable.COLUMN_REPORTED_BY, apifReportedBy);
-//        values.put(ReportIncidentTable.COLUMN_SURVIVOR_DATE_OF_BIRTH, apifSurvivorDateOfBirth);
-//        values.put(ReportIncidentTable.COLUMN_SURVIVOR_GENDER, apifSurvivorGender);
-//        values.put(ReportIncidentTable.COLUMN_INCIDENT_TYPE, apifIncidentType);
-//        values.put(ReportIncidentTable.COLUMN_INCIDENT_LOCATION, apifIncidentLocation);
-//        values.put(ReportIncidentTable.COLUMN_INCIDENT_STORY, apifIncidentStory);
-//        values.put(ReportIncidentTable.COLUMN_UNIQUE_IDENTIFIER, apifUniqueIdentifier);
-//
-//        /**
-//         *  Checks if the important fields are filled
-//         *  **/
-//
-//        //checks if the incident type is selected
-//        //this inserts a new report in to the mysql db
-//        if (reportIncidentUri == null) {
-//            reportIncidentUri = getActivity().getContentResolver().insert(ReportIncidentContentProvider.CONTENT_URI, values);
-//
-//            Toast.makeText(getActivity(), " The report is temporarily stored.", Toast.LENGTH_SHORT).show();
-//
-//            //Broadcast receiver that checks for the network status
-//            IntentFilter netMainFilter =  new IntentFilter(ConnectivityManager.CONNECTIVITY_ACTION);
-//            netReceiver = new NetworkChangeReceiver();
-//            getActivity().registerReceiver(netReceiver, netMainFilter);
-//
-//            //starts a the  help activity
-//            startActivity(new Intent(getActivity(), ContactActivity.class));
-//        }
-//        //updates the report if its already available
-//        else {
-//            try {
-//                getActivity().getContentResolver().update(reportIncidentUri, values, null, null);
-//            } catch (Exception e) {
-//                e.printStackTrace();
-//                Log.e(TAG, "Error with incident rporting: " + e.toString() );
-//            }
-//        }
-//
-//    }
 
-    public void onClickEncouragingMessages(View view){
 
-        EMessageDialogFragment emDialog = EMessageDialogFragment.newInstance(
-                getString(R.string.not_your_fault_alert_header),
-                apifEncouragingMessagesTv.getText().toString(),
-                getString(R.string.close_dialog));
-        emDialog.show(getActivity().getFragmentManager(), "encouraging message");
-    }
+
     //shows spinner dropdown for apif incident types
     public void onClickApifIVSpinner(View view){
         apifIncidentTypeSpinner.performClick();

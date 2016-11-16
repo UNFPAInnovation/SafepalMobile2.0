@@ -9,7 +9,7 @@
         android:paddingRight="@dimen/activity_horizontal_margin"
         android:paddingTop="@dimen/activity_vertical_margin"
         app:layout_behavior="@string/appbar_scrolling_view_behavior"
-        tools:context=".report.AnotherPersonIncidentFormActivity"
+        tools:context=".report.AnotherPersonIncidentFormFragment"
         android:background="@color/colorWhite"
         >
 
@@ -22,15 +22,17 @@
             <!-- android:onClick="onClickEncouragingMessages"-->
             <TextView
                 android:layout_marginTop="@dimen/intro_text_margin_top"
-                android:id="@+id/ecouraging_messages_tv"
+                android:id="@+id/sif_encouraging_messages_tv"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_alignParentLeft="true"
                 android:layout_alignParentTop="true"
                 android:ellipsize="end"
                 android:maxLines="3"
-
-                android:text="@string/wsgh_msgs_to_ecourage_survivor" />
+                android:layout_gravity="center_vertical|right"
+                android:text="@string/wsgh_msgs_to_ecourage_survivor"
+                android:textStyle="bold"
+                />
 
             <include layout="@layout/divider" />
 

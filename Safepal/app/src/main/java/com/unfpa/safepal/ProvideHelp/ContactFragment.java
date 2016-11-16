@@ -26,7 +26,7 @@ import com.unfpa.safepal.store.RIContentObserver;
 import com.unfpa.safepal.store.ReportIncidentContentProvider;
 import com.unfpa.safepal.store.ReportIncidentTable;
 
-import static com.unfpa.safepal.report.WhoSGettingHelpActivity.randMessageIndex;
+import static com.unfpa.safepal.report.WhoSGettingHelpFragment.randMessageIndex;
 
 /**
  * A simple {@link Fragment} subclass.

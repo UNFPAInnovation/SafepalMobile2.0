@@ -1,7 +1,7 @@
 <?php
 
 /**
-* Utility classs
+* Utility class for multiple helper methods should the need arise
 */
 class Utils 
 {
