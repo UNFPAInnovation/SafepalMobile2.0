@@ -28,7 +28,11 @@
             android:layout_marginTop="@dimen/intro_text_margin_top"
             android:ellipsize="end"
             android:maxLines="3"
-            android:text="@string/wsgh_msgs_to_ecourage_survivor" />
+
+            android:layout_gravity="center_vertical|right"
+            android:text="@string/wsgh_msgs_to_ecourage_survivor"
+            android:textStyle="bold"
+            />
 
         <include layout="@layout/divider" />
 

@@ -2,13 +2,17 @@ package com.unfpa.safepal.report;
 
 import android.app.Fragment;
 
+import android.app.FragmentManager;
+import android.app.FragmentTransaction;
 import android.os.Bundle;
 import android.support.design.widget.Snackbar;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
+import android.widget.Button;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.RelativeLayout;
@@ -19,6 +23,8 @@ import com.unfpa.safepal.R;
 import com.unfpa.safepal.messages.EMessageDialogFragment;
 
 import java.util.Random;
+
+import static com.unfpa.safepal.report.SurvivorIncidentFormFragment.TAG;
 
 /**
  * A placeholder fragment containing a simple view.
@@ -118,6 +124,10 @@ public class WhoSGettingHelpFragment extends Fragment {
                             //startActivity(new Intent(getApplicationContext(), SurvivorIncidentFormActivity.class));
                             // Pirates are the best
                             wsghSpinnerRl.setVisibility(View.GONE);
+
+                   loadReportingFormSelfFragment();
+                        ((ReportingActivity)getActivity()).updateSubmitButtonToNext();
+
                         break;
                     case R.id.wsgh_someoneelse_rb:
                         if (checked)
@@ -172,24 +182,6 @@ public class WhoSGettingHelpFragment extends Fragment {
                 getString(R.string.close_dialog));
         emDialog.show(this.getFragmentManager(), "encouraging message");
     }
-    public void onClickWSGHRadioButton(View view) {
-        // Is the button now checked?
-        boolean checked = ((RadioButton) view).isChecked();
-
-        // Check which radio button was clicked
-        switch(view.getId()) {
-            case R.id.wsgh_yes_rb:
-                if (checked)
-                    //startActivity(new Intent(getActivity(), SurvivorIncidentFormActivity.class));
-                    // Pirates are the best
-                    wsghSpinnerRl.setVisibility(View.GONE);
-                break;
-            case R.id.wsgh_someoneelse_rb:
-                if (checked)
-                    wsghSpinnerRl.setVisibility(View.VISIBLE);
-                break;
-        }
-    }
     public void onClickWsghIvSpinner(View view){
         wsghRelationshipSpinner.performClick();
     }
@@ -202,6 +194,28 @@ public class WhoSGettingHelpFragment extends Fragment {
             return false;
         }
     }
-    
+
+    /**
+     * loads reporting for for the survivir him self
+     */
+    private void loadReportingFormSelfFragment() {
+
+        FragmentManager fragmentManager = getFragmentManager();
+        FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+
+        SurvivorIncidentFormFragment fragment = new SurvivorIncidentFormFragment();
+        if ((fragment != null) &&
+                fragment.isVisible()){
+
+            Log.d(TAG, "SurvivorIncidentFragment is already visible, not reforming another...");
+        }else {
+            fragmentTransaction.setCustomAnimations(R.animator.slide_in_left, R.animator.slide_out_right);
+            fragmentTransaction.replace(R.id.fragment_container, fragment, SurvivorIncidentFormFragment.class.getSimpleName());
+            fragmentTransaction.commit();
+            Log.d(TAG, "loaded 'SurvivorIncidentFormFragment' fragment");
+
+
+        }
+    }
     
 }

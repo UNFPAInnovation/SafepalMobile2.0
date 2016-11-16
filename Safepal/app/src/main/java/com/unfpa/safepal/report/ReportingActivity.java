@@ -35,14 +35,7 @@ public class ReportingActivity extends AppCompatActivity implements SurvivorInci
         Toolbar toolbar = (Toolbar) findViewById(R.id.reporting_toolbar);
         setSupportActionBar(toolbar);
 
-//        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
-//        fab.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View view) {
-//                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-//                        .setAction("Action", null).show();
-//            }
-//        });
+
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
 
@@ -163,14 +156,14 @@ public class ReportingActivity extends AppCompatActivity implements SurvivorInci
      * changes text fron 'NEXT' to 'SUBMIT'
      * while on the last frgamnet of reporting an incident
      */
-    private void updateNextButtonToSubmit() {
+    protected void updateNextButtonToSubmit() {
         buttonNext.setText(getString(R.string.submit));
     }
 
     /**
      * changes text fron 'SUBMIT' to 'NEXT'
      */
-    private void updateSubmitButtonToNext() {
+    protected void updateSubmitButtonToNext() {
         buttonNext.setText(getString(R.string.next));
     }
 
@@ -178,7 +171,7 @@ public class ReportingActivity extends AppCompatActivity implements SurvivorInci
      * Loads fragment with form for submitting details about someone else who has
      * suffered violence
      */
-    private void loadReportingFormSomeOneElseFragment() {
+    public  void loadReportingFormSomeOneElseFragment() {
         FragmentManager fragmentManager = getFragmentManager();
         FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
         AnotherPersonIncidentFormFragment fragment = AnotherPersonIncidentFormFragment

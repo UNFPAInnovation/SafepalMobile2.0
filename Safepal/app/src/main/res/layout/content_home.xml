@@ -14,38 +14,6 @@
     tools:showIn="@layout/activity_home">
 
 
-    <!--<LinearLayout-->
-        <!--android:layout_width="wrap_content"-->
-        <!--android:layout_height="wrap_content"-->
-        <!--android:layout_alignParentBottom="true"-->
-        <!--android:gravity="bottom|start"-->
-        <!--android:orientation="horizontal">-->
-
-        <!--<Button-->
-            <!--android:layout_alignParentBottom="true"-->
-            <!--android:id="@+id/exit_app"-->
-            <!--style="@style/Widget.AppCompat.Button.Colored"-->
-            <!--android:layout_width="wrap_content"-->
-            <!--android:layout_height="wrap_content"-->
-            <!--android:text="@string/exitApp" />-->
-
-        <!--<Button-->
-            <!--android:id="@+id/next_message"-->
-            <!--style="@style/Widget.AppCompat.Button.Colored"-->
-            <!--android:layout_width="wrap_content"-->
-            <!--android:layout_height="wrap_content"-->
-            <!--android:text="@string/exitApp" />-->
-
-        <!--<Button-->
-        <!--android:id="@+id/finish"-->
-        <!--style="@style/Widget.AppCompat.Button.Colored"-->
-        <!--android:layout_width="0dp"-->
-        <!--android:layout_height="wrap_content"-->
-        <!--android:layout_weight="2"-->
-        <!--android:text="@string/report_sexual_abuse" />-->
-
-    <!--</LinearLayout>-->
-
     <RelativeLayout
         android:id="@+id/abc_z"
         android:layout_width="match_parent"
@@ -67,22 +35,8 @@
             android:paddingTop="@dimen/activity_vertical_margin"
 
             app:layout_behavior="@string/appbar_scrolling_view_behavior"
-            tools:context=".report.WhoSGettingHelpActivity"
-            tools:showIn="@layout/activity_who_s_getting_help">
+            >
 
-
-            <!--<RelativeLayout-->
-            <!--android:layout_width="match_parent"-->
-            <!--android:layout_height="wrap_content"-->
-            <!--android:layout_alignParentLeft="true"-->
-            <!--android:layout_alignParentStart="true"-->
-            <!--android:layout_alignParentTop="true"-->
-            <!--android:orientation="vertical">-->
-
-            <!--<RelativeLayout-->
-            <!--android:layout_width="match_parent"-->
-            <!--android:layout_height="wrap_content"-->
-            <!--android:gravity="center">-->
 
             <TextView
                 android:id="@+id/wsgh_ecouraging_messages_tv"
@@ -114,6 +68,7 @@
                 android:ellipsize="end"
                 android:gravity="center"
                 android:text="@string/auto_scroll_messages"
+
                 android:layout_alignBaseline="@+id/auto_scroll_CheckBox"
                 android:layout_alignBottom="@+id/auto_scroll_CheckBox"
                 android:layout_toRightOf="@+id/auto_scroll_CheckBox"
@@ -140,7 +95,9 @@
                 android:layout_centerVertical="true"
                 android:gravity="center"
                 android:textSize="@dimen/wsgh_middle_text"
-                android:textStyle="bold" />
+                android:layout_gravity="center_vertical|right"
+                android:text="@string/wsgh_msgs_to_ecourage_survivor"
+                android:textStyle="bold"/>
 
 
 

@@ -381,15 +381,7 @@ public class SurvivorIncidentFormFragment extends Fragment {
         String[] sifMessagesArray = getResources().getStringArray(R.array.seek_medical_care_messages);
         sifEncouragingMessagesTv.setText(sifMessagesArray[randMessageIndex(0, sifMessagesArray.length)].toString());
     }
-    //shows encouraging messages in dialog on click of the Text View
-    public void onClickSifEncouragingMessages(View view){
 
-        EMessageDialogFragment emDialog = EMessageDialogFragment.newInstance(
-                getString(R.string.not_your_fault_alert_header),
-                sifEncouragingMessagesTv.getText().toString(),
-                getString(R.string.close_dialog));
-        emDialog.show(getFragmentManager(), "encouraging message");
-    }
 
     //shows spinner drop down for sif incident types
     public void onClickSifIVSpinner(View view){
