@@ -78,6 +78,7 @@ public class HomeActivity extends AppCompatActivity {
         buttonNext.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+
                 animateNextMessage();
 
             }
@@ -86,7 +87,7 @@ public class HomeActivity extends AppCompatActivity {
         fabReportCase.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                //startActivity(new Intent(getApplicationContext(), WhoSGettingHelpActivity.class)); // TODO: 12-Nov-16 restore
+                // TODO: 12-Nov-16 restore
                 startActivity(new Intent(getApplicationContext(), ReportingActivity.class));
 
             }
@@ -104,6 +105,7 @@ public class HomeActivity extends AppCompatActivity {
                 }
             }
         });
+
 
 
         //animations about messages
@@ -177,7 +179,7 @@ public class HomeActivity extends AppCompatActivity {
     private void updateMessageText() {//// TODO: 13-Nov-16 dynamically set messages
        //make adapter
         ArrayAdapter<CharSequence> messages = ArrayAdapter.createFromResource(this,
-                R.array.not_your_fault_messages, R.layout.spinner_item);//// TODO: 14-Nov-16 Is this the correct Array???
+                R.array.home_contact_info, R.layout.spinner_item);//// TODO: 14-Nov-16 Is this the correct Array???
         Random random = new Random();
         int min = 0;
         int max = messages.getCount();

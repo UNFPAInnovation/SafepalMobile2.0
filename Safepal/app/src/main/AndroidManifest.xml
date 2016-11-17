@@ -40,10 +40,9 @@
         <activity
             android:name=".ProvideHelp.CsoActivity"
             android:autoRemoveFromRecents="true"
-            android:label="@string/title_activity_cso"
+            android:label="@string/title_activity_contact"
             android:parentActivityName=".report.ReportingActivity"
-            android:theme="@style/AppTheme.NoActionBar"
-            >
+            android:theme="@style/AppTheme.NoActionBar">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value=".report.ReportingActivity" />
@@ -71,7 +70,7 @@
 
         <activity
             android:name=".report.ReportingActivity"
-            android:label="@string/title_activity_reporting"
+            android:label="@string/wsgh_activity_title"
             android:parentActivityName=".home.HomeActivity"
             android:theme="@style/AppTheme.NoActionBar">
             <meta-data
