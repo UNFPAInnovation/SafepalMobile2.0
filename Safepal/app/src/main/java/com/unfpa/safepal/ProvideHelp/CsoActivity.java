@@ -52,8 +52,7 @@ import com.google.android.gms.location.LocationServices;
 
 import static com.unfpa.safepal.report.WhoSGettingHelpFragment.randMessageIndex;
 
-public class CsoActivity extends AppCompatActivity implements
-        ConnectionCallbacks, OnConnectionFailedListener{
+public class CsoActivity extends AppCompatActivity {
 
     Toolbar csoToolbar;
 
@@ -74,11 +73,6 @@ public class CsoActivity extends AppCompatActivity implements
     // TheCSOs json url
     private static final String URL_CSO_API = "http://52.43.152.73/api/location.php";
 
-    //location
-    /**
-     * Provides the entry point to Google Play services.
-     */
-    protected GoogleApiClient mGoogleApiClient;
      /**
      * Represents a geographical location.
      */
@@ -109,12 +103,14 @@ public class CsoActivity extends AppCompatActivity implements
 //        setSupportActionBar(csoToolbar);
 //        getSupportActionBar().setLogo(R.mipmap.ic_launcher);
 //        getSupportActionBar().setDisplayUseLogoEnabled(true);
+
         Toolbar toolbar = (Toolbar) findViewById(R.id.cso_toolbar);
         setSupportActionBar(toolbar);
+        getSupportActionBar().setLogo(R.mipmap.ic_launcher);
+        getSupportActionBar().setDisplayUseLogoEnabled(true);
 
 
         loadCsoMessages();
-        buildGoogleApiClient();
 
         csoProgressBar = (ProgressBar) findViewById(R.id.cso_progress_bar);
         csosRecyclerView = (RecyclerView) findViewById(R.id.cso_recycler_view);
@@ -125,7 +121,7 @@ public class CsoActivity extends AppCompatActivity implements
         csosRecyclerView.setItemAnimator(new DefaultItemAnimator());
         csosRecyclerView.setAdapter(csosAdapter);
 
-
+        finalCsoPreview(0.212211,33.123434);
 
         buttonExit.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -281,49 +277,6 @@ String TAG = CsoActivity.class.getSimpleName();
 
     }
 
-    /**
-     * Builds a GoogleApiClient. Uses the addApi() method to request the LocationServices API.
-     */
-    protected synchronized void buildGoogleApiClient() {
-        mGoogleApiClient = new GoogleApiClient.Builder(this)
-                .addConnectionCallbacks(this)
-                .addOnConnectionFailedListener(this)
-                .addApi(LocationServices.API)
-                .build();
-    }
-    @Override
-    public void onStart() {
-        super.onStart();
-        mGoogleApiClient.connect();
-    }
-        @Override
-        public void onStop () {
-            super.onStop();
-            if (mGoogleApiClient.isConnected()) {
-                mGoogleApiClient.disconnect();
-            }
 
-        }
-
-    @Override
-    public void onConnected(Bundle bundle) {
-        mLastLocation = LocationServices.FusedLocationApi.getLastLocation(mGoogleApiClient);
-        if (mLastLocation != null) {
-            finalCsoPreview(mLastLocation.getLatitude(),mLastLocation.getLongitude());
-        } else {
-            Toast.makeText(this, "SafePal failed to get your location.", Toast.LENGTH_LONG).show();
-        }
-    }
-
-    @Override
-    public void onConnectionSuspended(int result) {
-        //Log.i("status", "Connection failed: ConnectionResult.getErrorCode() = " + result.getErrorCode());
-    }
-
-    @Override
-    public void onConnectionFailed(ConnectionResult connectionResult) {
-        Log.i("Location Status: ", "Connection suspended");
-        mGoogleApiClient.connect();
-    }
 }
 
