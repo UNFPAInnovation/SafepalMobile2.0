@@ -47,50 +47,6 @@ android:layout_marginBottom="20dp"
             android:textColor="@color/colorAccent"
             android:textStyle="bold|italic" />
 
-        <!--<TextView-->
-        <!--android:id="@+id/contact_question_tv"-->
-        <!--android:layout_width="match_parent"-->
-        <!--android:layout_height="wrap_content"-->
-        <!--android:text="@string/contact_u_or_not"-->
-        <!--android:textSize="@dimen/wsgh_middle_text"-->
-        <!--android:textStyle="bold"-->
-        <!--android:textColor="@color/colorPrimary"-->
-        <!--android:layout_above="@+id/contact_second_horizotal_line"-->
-        <!--android:layout_marginTop="10dp"-->
-        <!--/>-->
-
-        <!--would u like us to contact u choices-->
-        <!--<LinearLayout-->
-        <!--android:orientation="horizontal"-->
-        <!--android:layout_width="match_parent"-->
-        <!--android:layout_height="wrap_content">-->
-        <!--<Button android:id="@+id/contact_me_yes_rb"-->
-        <!--style="@style/Widget.AppCompat.Button.Colored"-->
-        <!--android:layout_width="wrap_content"-->
-        <!--android:layout_height="wrap_content"-->
-        <!--android:layout_weight="1"-->
-        <!--android:button="@null"-->
-        <!--android:gravity="center"-->
-        <!--android:paddingTop="15dp"-->
-        <!--android:paddingBottom="15dp"-->
-        <!--android:text="@string/contact_yes"-->
-        <!--android:onClick="onContactRadioButtonClicked"-->
-        <!--/>-->
-        <!--<Button android:id="@+id/contact_me_not_rb"-->
-        <!--style="@style/Widget.AppCompat.Button.Colored"-->
-        <!--android:layout_width="wrap_content"-->
-        <!--android:layout_height="wrap_content"-->
-        <!--android:layout_weight="1"-->
-        <!--android:button="@null"-->
-        <!--android:gravity="center"-->
-        <!--android:paddingTop="15dp"-->
-        <!--android:paddingBottom="15dp"-->
-        <!--android:text="@string/contact_no"-->
-        <!--android:onClick="onContactRadioButtonClicked"-->
-        <!--/>-->
-
-        <!--</LinearLayout>-->
-
 
         <!--check box to ask user if he wants to be contacted-->
         <LinearLayout

@@ -20,6 +20,9 @@ import com.unfpa.safepal.messages.EMessageDialogFragment;
 import com.unfpa.safepal.store.ReportIncidentContentProvider;
 import com.unfpa.safepal.store.ReportIncidentTable;
 
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+
 import static com.unfpa.safepal.report.WhoSGettingHelpFragment.randMessageIndex;
 
 public class ContactActivity extends AppCompatActivity {
@@ -67,22 +70,15 @@ public class ContactActivity extends AppCompatActivity {
         contactEmail = (EditText)findViewById(R.id.contact_email_et);
 
         loadContactFeedbackMessages();
-        //updates user with the safepal number
-        //updateUIDTextView();
-
-        //picks and shows the mobile reporters location
-         //userLocationTracker();
 
 
         buttonExit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
 
+               moveTaskToBack(true);
+               android.os.Process.killProcess(android.os.Process.myPid());
 
-
-//                moveTaskToBack(true);
-//                android.os.Process.killProcess(android.os.Process.myPid());
-////                System.buttonExit(1);
             }
         });
         buttonFinish.setOnClickListener(new View.OnClickListener() {
@@ -93,10 +89,17 @@ public class ContactActivity extends AppCompatActivity {
 
                 if(checkBoxContactMe.isChecked()) {
 
-                   if(contactPhonenumber.getText().length()<5 ){
+                   if(contactPhonenumber.getText().length()<10 ){
                       Toast.makeText(getBaseContext(), "Provide us with a correct phone number", Toast.LENGTH_LONG).show();
                        return;
                    }
+
+                    csoIntent.putExtra("sendUserPhonenumber", contactPhonenumber.getText().toString());
+
+                    if(isEmailValid(contactEmail.getText().toString())){
+                        csoIntent.putExtra("sendUserEmail",contactEmail.getText().toString());
+                    }
+
                     startActivity(csoIntent);
                 }
 
@@ -180,4 +183,17 @@ public class ContactActivity extends AppCompatActivity {
         emDialog.show(getFragmentManager(), "encouraging message");
            }
 
+    public static boolean isEmailValid(String email) {
+        boolean isValid = false;
+
+        String expression = "^[\\w\\.-]+@([\\w\\-]+\\.)+[A-Z]{2,4}$";
+        CharSequence inputStr = email;
+
+        Pattern pattern = Pattern.compile(expression, Pattern.CASE_INSENSITIVE);
+        Matcher matcher = pattern.matcher(inputStr);
+        if (matcher.matches()) {
+            isValid = true;
+        }
+        return isValid;
+    }
 }
