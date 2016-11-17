@@ -2,13 +2,16 @@ package com.unfpa.safepal.ProvideHelp;
 
 import android.Manifest;
 import android.content.ActivityNotFoundException;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.location.Location;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Process;
+import android.provider.Settings;
 import android.support.v4.app.ActivityCompat;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
@@ -25,6 +28,7 @@ import com.android.volley.Request;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
+import com.unfpa.safepal.Location.TrackGPS;
 import com.unfpa.safepal.ProvideHelp.RVCsoModel.CsoRvAdapter;
 import com.unfpa.safepal.ProvideHelp.RVCsoModel.TheCSO;
 import com.unfpa.safepal.R;
@@ -76,9 +80,8 @@ public class CsoActivity extends AppCompatActivity {
      /**
      * Represents a geographical location.
      */
-    protected Location mLastLocation;
-    protected String mLatitudeLabel;
-    protected String mLongitudeLabel;
+
+     private TrackGPS gps;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -90,25 +93,15 @@ public class CsoActivity extends AppCompatActivity {
         buttonExit = (Button) findViewById(R.id.exit_app);
 
         // choose someone else relationship spinner
-
         csoEncouragingMessagesTV = (TextView) findViewById(R.id.cso_ecouraging_messages_tv);
 
 
-//        csoSafepalNo = (TextView) findViewById(R.id.cso_safepal_no);
-//        String safepalNumber =getIntent().getExtras().getString("safepalUniqueNumber").toString();
-//        csoSafepalNo.setText(safepalNumber);
-        //Encouraging messages
-
-//        csoToolbar = (Toolbar) findViewById(R.id.cso_toolbar);
-//        setSupportActionBar(csoToolbar);
-//        getSupportActionBar().setLogo(R.mipmap.ic_launcher);
-//        getSupportActionBar().setDisplayUseLogoEnabled(true);
 
         Toolbar toolbar = (Toolbar) findViewById(R.id.cso_toolbar);
         setSupportActionBar(toolbar);
         getSupportActionBar().setLogo(R.mipmap.ic_launcher);
         getSupportActionBar().setDisplayUseLogoEnabled(true);
-
+        gps = new TrackGPS(CsoActivity.this);
 
         loadCsoMessages();
 
@@ -121,7 +114,16 @@ public class CsoActivity extends AppCompatActivity {
         csosRecyclerView.setItemAnimator(new DefaultItemAnimator());
         csosRecyclerView.setAdapter(csosAdapter);
 
-        finalCsoPreview(0.212211,33.123434);
+
+        if(gps.canGetLocation()){
+            finalCsoPreview(gps.getLatitude(), gps.getLongitude());
+
+        }
+        else
+        {
+
+            gps.showSettingsAlert();
+        }
 
         buttonExit.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -139,21 +141,6 @@ public class CsoActivity extends AppCompatActivity {
                finish();
             }
         });
-//        csoFinishFab.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View view) {
-//
-//                startActivity(new Intent(getApplicationContext(), HomeActivity.class));
-//            }
-//        });
-//        buttonNext.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View view) {
-//                startActivity(new Intent(getApplicationContext(), HomeActivity.class));
-//            }
-//        });
-
-
     }
 String TAG = CsoActivity.class.getSimpleName();
     //Randomly load encouraging messages to the Text View
@@ -278,5 +265,10 @@ String TAG = CsoActivity.class.getSimpleName();
     }
 
 
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        gps.stopUsingGPS();
+    }
 }
 
