@@ -6,7 +6,7 @@ android:layout_height="wrap_content"
     android:layout_marginTop="20dp">
 
 <Button
-    style="@style/coolButtonAttention"
+    style="@style/materialButtonAttention"
     android:text="@string/exitApp"
     android:layout_weight="1"
     android:id="@+id/exit_app"
@@ -14,11 +14,13 @@ android:layout_height="wrap_content"
     android:layout_height="wrap_content" />
 <Button
 
-    style="@style/coolButtonNormal"
+    style="@style/materialButtonNormal"
     android:text="@string/next"
     android:layout_weight="1"
     android:id="@+id/finish"
     android:layout_width="0dp"
-    android:layout_height="wrap_content" />
+    android:layout_height="wrap_content"
+
+    />
 
 </LinearLayout>

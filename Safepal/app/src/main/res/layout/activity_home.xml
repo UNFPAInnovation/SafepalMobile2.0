@@ -42,7 +42,7 @@
         android:layout_margin="@dimen/fab_margin"
         android:layout_gravity="bottom"
         android:id="@+id/next_message"
-        style="@style/Widget.AppCompat.Button.Colored"
+        style="@style/materialButtonNormal"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/next_message" />
@@ -51,7 +51,7 @@
         android:layout_margin="@dimen/fab_margin"
         android:layout_gravity="bottom|start"
         android:id="@+id/exit_app"
-        style="@style/Widget.AppCompat.Button.Colored"
+        style="@style/materialButtonAttention"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/exitApp" />
