@@ -20,6 +20,7 @@ import android.widget.TextView;
 
 import com.unfpa.safepal.R;
 
+import com.unfpa.safepal.messages.EMessageDialogFragment;
 import com.unfpa.safepal.report.ReportingActivity;
 
 import java.util.Random;
@@ -191,4 +192,15 @@ public class HomeActivity extends AppCompatActivity {
         textViewMessage.setText(msg);
 
     }
+
+
+    //expand encouraging messages
+    public void onClickInfoPopUp(View view){
+        EMessageDialogFragment emDialog = EMessageDialogFragment.newInstance(
+                "Safepal",
+                textViewMessage.getText().toString(),
+                getString(R.string.close_dialog));
+        emDialog.show(getFragmentManager(), "encouraging message");
+    }
+
 }

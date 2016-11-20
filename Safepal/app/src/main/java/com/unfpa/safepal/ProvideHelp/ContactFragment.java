@@ -107,12 +107,7 @@ public class ContactFragment extends Fragment {
 
         //Toolbar of contact activity
         contactToolbar = (Toolbar) view.findViewById(R.id.contact_toolbar);
-//        setSupportActionBar(contactToolbar);
-//        //adds logo and title to toolbar
-//        getSupportActionBar().setDisplayShowHomeEnabled(true);
-//        getSupportActionBar().setLogo(R.mipmap.ic_launcher);
-//        getSupportActionBar().setDisplayUseLogoEnabled(true);
-        //assignment of UI in xml
+       //assignment of UI in xml
         buttonExit = (Button) view.findViewById(R.id.exit_app);
         buttonFinish = (Button) view.findViewById(R.id.finish);
 

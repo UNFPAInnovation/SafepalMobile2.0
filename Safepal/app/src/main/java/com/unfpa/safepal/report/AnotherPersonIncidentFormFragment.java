@@ -338,7 +338,7 @@ return rootView;
         String apifIncidentType =(String)apifIncidentTypeSpinner.getSelectedItem();
         String apifIncidentLocation = apifIncidentLocationEt.getText().toString();
         String apifIncidentStory = apifIncidentDetailsEt.getText().toString();;
-        String apifUniqueIdentifier = SurvivorIncidentFormFragment.generateTempSafePalNumber(10000000,99999999);
+        String apifUniqueIdentifier = SurvivorIncidentFormFragment.generateTempSafePalNumber(10000,99999);
 
         /**
          * inserts incident report in to the mysql db through a content provider
@@ -352,6 +352,15 @@ return rootView;
         values.put(ReportIncidentTable.COLUMN_INCIDENT_STORY, apifIncidentStory);
         values.put(ReportIncidentTable.COLUMN_UNIQUE_IDENTIFIER, apifUniqueIdentifier);
 
+
+        values.put(ReportIncidentTable.COLUMN_REPORTER_LOCATION_LAT, "0.2123232");
+        values.put(ReportIncidentTable.COLUMN_REPORTER_LOCATION_LNG, "32.123233");
+        values.put(ReportIncidentTable.COLUMN_REPORTER_PHONE_NUMBER, "null");
+        values.put(ReportIncidentTable.COLUMN_REPORTER_EMAIL, "null");
+
+
+
+
         /**
          *  Checks if the important fields are filled
          *  **/
@@ -360,8 +369,6 @@ return rootView;
         //this inserts a new report in to the mysql db
         if (reportIncidentUri == null) {
             reportIncidentUri = context.getContentResolver().insert(ReportIncidentContentProvider.CONTENT_URI, values);
-
-            Toast.makeText(context, " The report is temporarily stored.", Toast.LENGTH_SHORT).show();
 
             //Broadcast receiver that checks for the network status
             IntentFilter netMainFilter =  new IntentFilter(ConnectivityManager.CONNECTIVITY_ACTION);

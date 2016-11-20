@@ -280,7 +280,7 @@ public class SurvivorIncidentFormFragment extends Fragment {
         String incidentType =(String)sifIncidentTypeSpinner.getSelectedItem();
         String incidentLocation = sifIncidentLocationEt.getText().toString();
         String incidentStory = sifIncidentDetailsEt.getText().toString();;
-        String uniqueIdentifier = generateTempSafePalNumber(1000000,9999999);
+        String uniqueIdentifier = generateTempSafePalNumber(1000,9999);
 
 //        //declarations of intents
         contactIntent = new Intent(context, ContactActivity.class);
@@ -327,11 +327,16 @@ public class SurvivorIncidentFormFragment extends Fragment {
         values.put(ReportIncidentTable.COLUMN_INCIDENT_STORY, incidentStory);
         values.put(ReportIncidentTable.COLUMN_UNIQUE_IDENTIFIER, uniqueIdentifier);
 
+        values.put(ReportIncidentTable.COLUMN_REPORTER_LOCATION_LAT, "0.2123232");
+        values.put(ReportIncidentTable.COLUMN_REPORTER_LOCATION_LNG, "32.123233");
+        values.put(ReportIncidentTable.COLUMN_REPORTER_PHONE_NUMBER, "null");
+        values.put(ReportIncidentTable.COLUMN_REPORTER_EMAIL, "null");
+
+
+
         //this inserts a new report in to the mysql db
         if (reportIncidentUri == null) {
             reportIncidentUri = context.getContentResolver().insert(ReportIncidentContentProvider.CONTENT_URI, values);
-
-            Toast.makeText(context, " The report is temporarily stored.", Toast.LENGTH_SHORT).show();
 
             //Broadcast receiver that checks for the network status
             IntentFilter netMainFilter =  new IntentFilter(ConnectivityManager.CONNECTIVITY_ACTION);
@@ -396,7 +401,7 @@ public class SurvivorIncidentFormFragment extends Fragment {
         //changes the negative number to  positve
         if(randomNum<0){randomNum= -randomNum;}
 
-        return "SPL" + Integer.toString(randomNum);
+        return "TMP_SPL" + Integer.toString(randomNum);
     }
 
 

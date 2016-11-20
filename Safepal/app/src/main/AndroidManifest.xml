@@ -41,11 +41,11 @@
             android:name=".ProvideHelp.CsoActivity"
             android:autoRemoveFromRecents="true"
             android:label="@string/title_activity_contact"
-            android:parentActivityName=".report.ReportingActivity"
+            android:parentActivityName=".ProvideHelp.ContactActivity"
             android:theme="@style/AppTheme.NoActionBar">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value=".report.ReportingActivity" />
+                android:value=".ProvideHelp.ContactActivity" />
         </activity>
 
         <provider

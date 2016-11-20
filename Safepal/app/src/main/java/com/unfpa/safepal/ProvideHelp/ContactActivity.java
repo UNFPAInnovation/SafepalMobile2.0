@@ -15,6 +15,7 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.unfpa.safepal.Location.TrackGPS;
 import com.unfpa.safepal.R;
 import com.unfpa.safepal.messages.EMessageDialogFragment;
 import com.unfpa.safepal.store.ReportIncidentContentProvider;
@@ -40,7 +41,13 @@ public class ContactActivity extends AppCompatActivity {
     private LinearLayout contactPhoneEmailLl;
 //    private RadioButton contactYesRB, contactNoRb;
     private EditText contactPhonenumber, contactEmail;
+
     CheckBox checkBoxContactMe;
+
+    String sendLat, sendLng;
+
+    //user location
+    private TrackGPS gps;
 
 
     @Override
@@ -51,10 +58,13 @@ public class ContactActivity extends AppCompatActivity {
         //Toolbar of contact activity
         contactToolbar = (Toolbar) findViewById(R.id.contact_toolbar);
         setSupportActionBar(contactToolbar);
-        //adds logo and title to toolbar
-        getSupportActionBar().setDisplayShowHomeEnabled(true);
         getSupportActionBar().setLogo(R.mipmap.ic_launcher);
         getSupportActionBar().setDisplayUseLogoEnabled(true);
+
+       // gps = new TrackGPS(ContactActivity.this);
+
+        //getUserLocation();
+
         //assignment of UI in xml
         buttonExit = (Button) findViewById(R.id.exit_app);
         buttonFinish = (Button) findViewById(R.id.finish);
@@ -103,11 +113,9 @@ public class ContactActivity extends AppCompatActivity {
                     startActivity(csoIntent);
                 }
 
-//                else if(!checkBoxContactMe.isChecked()){//user doent want to be contacted
-//                    startActivity(csoIntent);
-//                }
 
-                else {//user doent want to be contacted
+                else {
+                    //user does not want to be contacted
 //                    Toast.makeText(getBaseContext(), "Do you want to be contacted back? Choose???!!!", Toast.LENGTH_LONG).show();
                     startActivity(csoIntent);
                     return;
@@ -195,5 +203,28 @@ public class ContactActivity extends AppCompatActivity {
             isValid = true;
         }
         return isValid;
+    }
+
+    public void getUserLocation(){
+
+         if(gps.canGetLocation()){
+            double latitude =gps.getLatitude();
+            double longitude = gps.getLongitude();
+
+        }
+        else
+        {
+
+            gps.showSettingsAlert();
+        }
+
+    }
+
+
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        gps.stopUsingGPS();
     }
 }

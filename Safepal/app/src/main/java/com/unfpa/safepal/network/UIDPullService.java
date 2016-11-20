@@ -75,7 +75,18 @@ public class UIDPullService extends IntentService {
                     cursor.getString(cursor.getColumnIndex(ReportIncidentTable.COLUMN_INCIDENT_LOCATION)),
                     "WTBC",
                     cursor.getString(cursor.getColumnIndex(ReportIncidentTable.COLUMN_INCIDENT_STORY)),
-                    cursor.getString(cursor.getColumnIndex(ReportIncidentTable.COLUMN_REPORTED_BY)), localUrlString,
+                    cursor.getString(cursor.getColumnIndex(ReportIncidentTable.COLUMN_REPORTED_BY)),
+
+                    cursor.getString(cursor.getColumnIndex(ReportIncidentTable.COLUMN_REPORTER_LOCATION_LAT)),
+                    cursor.getString(cursor.getColumnIndex(ReportIncidentTable.COLUMN_REPORTER_LOCATION_LNG)),
+
+                    cursor.getString(cursor.getColumnIndex(ReportIncidentTable.COLUMN_REPORTER_PHONE_NUMBER)),
+                    cursor.getString(cursor.getColumnIndex(ReportIncidentTable.COLUMN_REPORTER_EMAIL)),
+
+                    localUrlString,
+
+
+
                     new VolleyCallback() {
 
 
@@ -126,7 +137,14 @@ public class UIDPullService extends IntentService {
                                 final String toServerILocation,
                                 final String toServerStatus,
                                 final String toServerIDescription,
-                                final String toServerReportedBy, String URL_SAFEPAL_API, final VolleyCallback callback ){
+                                final String toServerReportedBy,
+
+                                final String toServerReporterLat,
+                                final String toServerReportedLng,
+                                final String toServerReporterPhonenumber,
+                                final String toServerReporterEmail,
+
+                                String URL_SAFEPAL_API, final VolleyCallback callback ){
 
 
         StringRequest stringRequest = new StringRequest(Request.Method.POST, URL_SAFEPAL_API,
@@ -145,6 +163,7 @@ public class UIDPullService extends IntentService {
             @Override
             protected Map<String,String> getParams(){
                 Map<String,String> params = new HashMap<String, String>();
+
                 params.put("survivor_gender",toServerSGender);
                 params.put("survivor_date_of_birth",toServerSDOB);
 
@@ -154,10 +173,12 @@ public class UIDPullService extends IntentService {
                 params.put("status",toServerStatus);
                 params.put("incident_description", toServerIDescription);
                 params.put("reported_by", toServerReportedBy);
-                params.put("reporter_lat", "tmp_null");
-                params.put("reporter_long","tmp_null");
-                params.put("survivor_contact_phone_number", "tmp_null");
-                params.put("survivor_contact_email","tmp_null");
+
+                params.put("reporter_lat", toServerReporterLat);
+                params.put("reporter_long",toServerReportedLng);
+                params.put("survivor_contact_phone_number", toServerReporterPhonenumber);
+                params.put("survivor_contact_email",toServerReporterEmail);
+
                 return params;
             }
 

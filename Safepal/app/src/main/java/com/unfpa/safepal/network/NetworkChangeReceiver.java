@@ -27,11 +27,12 @@ public class NetworkChangeReceiver extends BroadcastReceiver{
             mServiceIntent = new Intent(context, UIDPullService.class).setData(Uri.parse(URL_SAFEPAL_API));
             context.startService(mServiceIntent);
 
-            //Toast.makeText(context, status, Toast.LENGTH_LONG).show();
+            Toast.makeText(context, " Your report has been successfully received.", Toast.LENGTH_SHORT).show();
+
         }
         else {
 
-            Toast.makeText(context, "There's "+status, Toast.LENGTH_LONG).show();
+            Toast.makeText(context, "No Internet Connection. Your report will be submitted once you are connected", Toast.LENGTH_LONG).show();
         }
     }
 }

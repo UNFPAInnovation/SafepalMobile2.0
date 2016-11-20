@@ -170,10 +170,23 @@ public class ReportIncidentContentProvider extends ContentProvider {
 
     private void checkColumns(String[] projection) {
         String[] available = { ReportIncidentTable.COLUMN_REPORTED_BY,
-                ReportIncidentTable.COLUMN_SURVIVOR_DATE_OF_BIRTH, ReportIncidentTable.COLUMN_SURVIVOR_GENDER,
-                ReportIncidentTable.COLUMN_INCIDENT_TYPE, ReportIncidentTable.COLUMN_INCIDENT_LOCATION,ReportIncidentTable.COLUMN_REPORTERS_LOCATION_NAME,
-                ReportIncidentTable.COLUMN_REPORTERS_LOCATION_LAT,ReportIncidentTable.COLUMN_REPORTERS_LOCATION_LAG,
-                ReportIncidentTable.COLUMN_INCIDENT_STORY, ReportIncidentTable.COLUMN_UNIQUE_IDENTIFIER,
+                ReportIncidentTable.COLUMN_SURVIVOR_DATE_OF_BIRTH,
+                ReportIncidentTable.COLUMN_SURVIVOR_GENDER,
+
+                ReportIncidentTable.COLUMN_INCIDENT_TYPE,
+                ReportIncidentTable.COLUMN_INCIDENT_LOCATION,
+                ReportIncidentTable.COLUMN_INCIDENT_STORY,
+
+                ReportIncidentTable.COLUMN_UNIQUE_IDENTIFIER,
+
+                ReportIncidentTable.COLUMN_REPORTER_LOCATION_LAT,
+                ReportIncidentTable.COLUMN_REPORTER_LOCATION_LNG,
+
+                ReportIncidentTable.COLUMN_REPORTER_PHONE_NUMBER,
+                ReportIncidentTable.COLUMN_REPORTER_EMAIL,
+
+                ReportIncidentTable.COLUMN_FLAG,
+
                 ReportIncidentTable.COLUMN_ID };
 
         if (projection != null) {

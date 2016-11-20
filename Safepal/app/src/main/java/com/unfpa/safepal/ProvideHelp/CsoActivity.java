@@ -5,9 +5,11 @@ import android.content.ActivityNotFoundException;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
+import android.database.Cursor;
 import android.location.Location;
 import android.net.Uri;
 import android.os.Bundle;
+import android.os.Handler;
 import android.os.Process;
 import android.provider.Settings;
 import android.support.v4.app.ActivityCompat;
@@ -28,14 +30,15 @@ import com.android.volley.Request;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
-import com.unfpa.safepal.Location.TrackGPS;
 import com.unfpa.safepal.ProvideHelp.RVCsoModel.CsoRvAdapter;
 import com.unfpa.safepal.ProvideHelp.RVCsoModel.TheCSO;
 import com.unfpa.safepal.R;
-import com.unfpa.safepal.home.HomeActivity;
 import com.unfpa.safepal.messages.EMessageDialogFragment;
 import com.unfpa.safepal.network.MySingleton;
 import com.unfpa.safepal.network.VolleyCallback;
+import com.unfpa.safepal.store.RIContentObserver;
+import com.unfpa.safepal.store.ReportIncidentContentProvider;
+import com.unfpa.safepal.store.ReportIncidentTable;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -47,12 +50,6 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-
-import com.google.android.gms.common.ConnectionResult;
-import com.google.android.gms.common.api.GoogleApiClient;
-import com.google.android.gms.common.api.GoogleApiClient.ConnectionCallbacks;
-import com.google.android.gms.common.api.GoogleApiClient.OnConnectionFailedListener;
-import com.google.android.gms.location.LocationServices;
 
 import static com.unfpa.safepal.report.WhoSGettingHelpFragment.randMessageIndex;
 
@@ -81,7 +78,6 @@ public class CsoActivity extends AppCompatActivity {
      * Represents a geographical location.
      */
 
-     private TrackGPS gps;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -97,13 +93,15 @@ public class CsoActivity extends AppCompatActivity {
 
 
 
-        Toolbar toolbar = (Toolbar) findViewById(R.id.cso_toolbar);
-        setSupportActionBar(toolbar);
-        getSupportActionBar().setLogo(R.mipmap.ic_launcher);
-        getSupportActionBar().setDisplayUseLogoEnabled(true);
-        gps = new TrackGPS(CsoActivity.this);
+        Toolbar csoToolbar = (Toolbar) findViewById(R.id.cso_toolbar);
+        setSupportActionBar(csoToolbar);
+
 
         loadCsoMessages();
+
+        finalCsoPreview(0.211212, 32.5585);
+
+
 
         csoProgressBar = (ProgressBar) findViewById(R.id.cso_progress_bar);
         csosRecyclerView = (RecyclerView) findViewById(R.id.cso_recycler_view);
@@ -114,16 +112,6 @@ public class CsoActivity extends AppCompatActivity {
         csosRecyclerView.setItemAnimator(new DefaultItemAnimator());
         csosRecyclerView.setAdapter(csosAdapter);
 
-
-        if(gps.canGetLocation()){
-            finalCsoPreview(gps.getLatitude(), gps.getLongitude());
-
-        }
-        else
-        {
-
-            gps.showSettingsAlert();
-        }
 
         buttonExit.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -142,9 +130,9 @@ public class CsoActivity extends AppCompatActivity {
             }
         });
     }
-String TAG = CsoActivity.class.getSimpleName();
+     String TAG = CsoActivity.class.getSimpleName();
     //Randomly load encouraging messages to the Text View
-    public void loadCsoMessages() {
+     public void loadCsoMessages() {
         String[] csoMessagesArray = getResources().getStringArray(R.array.signs_of_sgbv);
         csoEncouragingMessagesTV.setText(csoMessagesArray[randMessageIndex(0, csoMessagesArray.length)].toString());
     }
@@ -200,8 +188,6 @@ String TAG = CsoActivity.class.getSimpleName();
                         csosList.add(newCsos);
 
                     }
-                    Toast.makeText(getBaseContext(), Integer.toString(arr.length()), Toast.LENGTH_LONG).show();
-
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }
@@ -264,11 +250,46 @@ String TAG = CsoActivity.class.getSimpleName();
 
     }
 
+    /** All the  Methods **/
+    //updates safepal number
+    public void updateCsoUIDTV(){
+        Cursor cursor =  getContentResolver().query(
+                ReportIncidentContentProvider.CONTENT_URI,
+                null,
+                null,
+                null,
+                null);
+        if(cursor != null) {
+            StringBuilder offline = new StringBuilder();
+            cursor.moveToLast();
+            offline.append("Your SafePal Number is: " + cursor.getString(cursor.getColumnIndex(ReportIncidentTable.COLUMN_UNIQUE_IDENTIFIER)));
 
-    @Override
-    protected void onDestroy() {
-        super.onDestroy();
-        gps.stopUsingGPS();
+            cursor.close();
+            csoSafepalNo.setText(offline);
+        }
+
+        Handler riHandler = new Handler(){
+            public void handleMessage(android.os.Message msg) {
+                switch (msg.what) {
+                    case 1:
+                        String sb = (String) msg.obj;
+                        csoSafepalNo.setText(sb);
+                        break;
+
+                    default:
+
+                        break;
+                }
+            };
+        };
+
+        RIContentObserver rICsoContentObserver = new RIContentObserver(this, riHandler);
+
+        getContentResolver().registerContentObserver(ReportIncidentContentProvider.CONTENT_URI,
+                true,
+                rICsoContentObserver);
+
+
     }
 }
 
