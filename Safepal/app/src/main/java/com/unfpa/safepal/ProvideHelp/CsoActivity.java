@@ -90,7 +90,7 @@ public class CsoActivity extends AppCompatActivity {
 
         // choose someone else relationship spinner
         csoEncouragingMessagesTV = (TextView) findViewById(R.id.cso_ecouraging_messages_tv);
-
+        csoSafepalNo = (TextView)findViewById(R.id.cso_safepal_number);
 
 
         Toolbar csoToolbar = (Toolbar) findViewById(R.id.cso_toolbar);
@@ -99,8 +99,7 @@ public class CsoActivity extends AppCompatActivity {
 
         loadCsoMessages();
 
-        finalCsoPreview(0.211212, 32.5585);
-
+        updateCsoUIDTV();
 
 
         csoProgressBar = (ProgressBar) findViewById(R.id.cso_progress_bar);
@@ -112,6 +111,9 @@ public class CsoActivity extends AppCompatActivity {
         csosRecyclerView.setItemAnimator(new DefaultItemAnimator());
         csosRecyclerView.setAdapter(csosAdapter);
 
+
+
+        finalCsoPreview(0.211212, 32.5585);
 
         buttonExit.setOnClickListener(new View.OnClickListener() {
             @Override
