@@ -22,9 +22,7 @@ import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.Spinner;
 import android.widget.TextView;
-import android.widget.Toast;
 
-import com.unfpa.safepal.ProvideHelp.ContactActivity;
 import com.unfpa.safepal.R;
 import com.unfpa.safepal.datepicker.DatePickerFragment;
 import com.unfpa.safepal.messages.EMessageDialogFragment;
@@ -78,8 +76,6 @@ public class SurvivorIncidentFormFragment extends Fragment {
 
     private static Snackbar sifFeedbackSnackbar;
 
-    //Intents
-    public static Intent contactIntent;
 
     //content provider
     Bundle extras;
@@ -282,9 +278,7 @@ public class SurvivorIncidentFormFragment extends Fragment {
         String incidentStory = sifIncidentDetailsEt.getText().toString();;
         String uniqueIdentifier = generateTempSafePalNumber(1000,9999);
 
-//        //declarations of intents
-        contactIntent = new Intent(context, ContactActivity.class);
-
+//
         /**
          *  Checks if the important fields are filled
          *  **/

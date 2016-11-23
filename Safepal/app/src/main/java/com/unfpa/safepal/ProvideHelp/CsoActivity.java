@@ -2,6 +2,7 @@ package com.unfpa.safepal.ProvideHelp;
 
 import android.Manifest;
 import android.content.ActivityNotFoundException;
+import android.content.ContentValues;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
@@ -63,7 +64,7 @@ public class CsoActivity extends AppCompatActivity {
     Button buttonNext;
     Button buttonExit;
 
-    TextView csoSafepalNo, csoEncouragingMessagesTV;
+    TextView csoSafepalNo, csoContactInfo,csoAssuranceHelp, csoEncouragingMessagesTV;
 
     //variables for the nearest cso list
     private List<TheCSO> csosList = new ArrayList<>();
@@ -91,7 +92,8 @@ public class CsoActivity extends AppCompatActivity {
         // choose someone else relationship spinner
         csoEncouragingMessagesTV = (TextView) findViewById(R.id.cso_ecouraging_messages_tv);
         csoSafepalNo = (TextView)findViewById(R.id.cso_safepal_number);
-
+        csoContactInfo= (TextView)findViewById(R.id.cso_contact_info);
+        csoAssuranceHelp = (TextView)findViewById(R.id.cso_assurance_help);
 
         Toolbar csoToolbar = (Toolbar) findViewById(R.id.cso_toolbar);
         setSupportActionBar(csoToolbar);
@@ -110,10 +112,12 @@ public class CsoActivity extends AppCompatActivity {
         csosRecyclerView.setLayoutManager(mLayoutManager);
         csosRecyclerView.setItemAnimator(new DefaultItemAnimator());
         csosRecyclerView.setAdapter(csosAdapter);
+        updateUserWithCsos();
 
 
 
-        finalCsoPreview(0.211212, 32.5585);
+
+
 
         buttonExit.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -168,7 +172,7 @@ public class CsoActivity extends AppCompatActivity {
         }
     }
 
-    public void finalCsoPreview(double lat, double lng) {
+    public void finalCsoPreview(String lat, String lng) {
 
         getNearestCSOs(lat, lng, new VolleyCallback() {
             @Override
@@ -200,7 +204,7 @@ public class CsoActivity extends AppCompatActivity {
     }
 
     // Method pushes the data to json server suing volley
-    private void getNearestCSOs(final double toServerReporterLat, final double toServerReporterLng, final VolleyCallback callback) {
+    private void getNearestCSOs(final String toServerReporterLat, final String toServerReporterLng, final VolleyCallback callback) {
 
 
         StringRequest stringRequest = new StringRequest(Request.Method.POST, URL_CSO_API,
@@ -225,8 +229,8 @@ public class CsoActivity extends AppCompatActivity {
             @Override
             protected Map<String, String> getParams() {
                 Map<String, String> params = new HashMap<String, String>();
-                params.put("reporter_lat", String.valueOf(toServerReporterLat));
-                params.put("reporter_long", String.valueOf(toServerReporterLng));
+                params.put("reporter_lat", toServerReporterLat);
+                params.put("reporter_long", toServerReporterLng);
                 return params;
             }
 
@@ -291,6 +295,43 @@ public class CsoActivity extends AppCompatActivity {
                 true,
                 rICsoContentObserver);
 
+
+    }
+    //retrieves lat and lng from db and inserts them into the remote method for retreiving the csos
+    public void updateUserWithCsos(){
+
+        Cursor cursorRetrieveLatLng =  getContentResolver().query(
+                ReportIncidentContentProvider.CONTENT_URI,
+                null,
+                null,
+                null,
+                null);
+
+        if (cursorRetrieveLatLng != null) {
+            cursorRetrieveLatLng.moveToLast();
+
+            String lat =  cursorRetrieveLatLng.getString(cursorRetrieveLatLng.getColumnIndex(ReportIncidentTable.COLUMN_REPORTER_LOCATION_LAT));
+            String lng =  cursorRetrieveLatLng.getString(cursorRetrieveLatLng.getColumnIndex(ReportIncidentTable.COLUMN_REPORTER_LOCATION_LNG));
+            String phone =  cursorRetrieveLatLng.getString(cursorRetrieveLatLng.getColumnIndex(ReportIncidentTable.COLUMN_REPORTER_PHONE_NUMBER));
+            String email =  cursorRetrieveLatLng.getString(cursorRetrieveLatLng.getColumnIndex(ReportIncidentTable.COLUMN_REPORTER_EMAIL));
+
+            if(phone.length()>8){
+                csoContactInfo.setText("Contact Phonenumber: " + phone);
+                if(email.length()>8){
+                    csoContactInfo.setText("Contact Phonenumber: " + phone+ "\nContact Email: " +email);
+
+                }
+            }
+            else {
+                csoContactInfo.setText("No Contacts provided. " );
+                csoAssuranceHelp.setText("Safepal service providers will not contact you back. Use the safepal no with the help below ");
+
+            }
+
+            finalCsoPreview(lat, lng);
+
+
+        }
 
     }
 }

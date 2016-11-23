@@ -104,7 +104,7 @@ public class UIDPullService extends IntentService {
                                         null);
                                 ContentValues dataValues = new ContentValues();
                                 dataValues.put(ReportIncidentTable.COLUMN_UNIQUE_IDENTIFIER, response.getString("unique_code"));
-                                Toast.makeText(getBaseContext(), " The SafePal No." + response.getString("unique_code"),Toast.LENGTH_SHORT).show();
+                               // Toast.makeText(getBaseContext(), " The SafePal No." + response.getString("unique_code"),Toast.LENGTH_SHORT).show();
 
                                 if (cursorUpdate != null) {
                                     cursorUpdate.moveToLast();

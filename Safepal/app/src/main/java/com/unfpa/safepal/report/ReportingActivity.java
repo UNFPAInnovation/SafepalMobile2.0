@@ -256,4 +256,6 @@ public class ReportingActivity extends AppCompatActivity implements SurvivorInci
     public void onFragmentInteraction(Uri uri) {
 
     }
+
+
 }
