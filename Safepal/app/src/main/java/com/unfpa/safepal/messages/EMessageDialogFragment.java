@@ -5,6 +5,7 @@ import android.app.Dialog;
 import android.app.DialogFragment;
 import android.content.DialogInterface;
 import android.os.Bundle;
+import android.text.Html;
 
 import com.unfpa.safepal.R;
 
@@ -33,7 +34,8 @@ public class EMessageDialogFragment extends DialogFragment {
 
         AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
 
-         builder.setMessage(eMessage).setTitle(emTitle)
+         builder.setMessage(eMessage)
+                .setTitle(Html.fromHtml("<center><font color='#01a89e'>"+emTitle+"</font></center>"))
                 .setIcon(R.mipmap.ic_launcher)
                 .setPositiveButton(emButtonText, new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int id) {

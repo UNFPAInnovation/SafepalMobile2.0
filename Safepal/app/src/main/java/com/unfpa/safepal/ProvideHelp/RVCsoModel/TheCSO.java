@@ -7,13 +7,15 @@ package com.unfpa.safepal.ProvideHelp.RVCsoModel;
 public class TheCSO {
     private String cso_name;
     private String cso_distance;
+    private String cso_phonenumber;
 
     public TheCSO() {
     }
 
-    public TheCSO(String cso_name, String cso_distance) {
+    public TheCSO(String cso_name, String cso_distance, String cso_phonenumber) {
         this.cso_name = cso_name;
         this.cso_distance = cso_distance;
+        this.cso_phonenumber = cso_phonenumber;
     }
 
     public String getCso_name() {
@@ -30,5 +32,13 @@ public class TheCSO {
 
     public void setCso_distance(String cso_distance) {
         this.cso_distance = cso_distance;
+    }
+
+    public String getCso_phonenumber() {
+        return cso_phonenumber;
+    }
+
+    public void setCso_phonenumber(String cso_phonenumber) {
+        this.cso_phonenumber = cso_phonenumber;
     }
 }

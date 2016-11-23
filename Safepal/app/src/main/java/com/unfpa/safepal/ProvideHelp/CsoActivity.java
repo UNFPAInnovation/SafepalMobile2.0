@@ -114,11 +114,6 @@ public class CsoActivity extends AppCompatActivity {
         csosRecyclerView.setAdapter(csosAdapter);
         updateUserWithCsos();
 
-
-
-
-
-
         buttonExit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -190,7 +185,9 @@ public class CsoActivity extends AppCompatActivity {
                         String nearestCsoName = arr.getJSONObject(i).getString("cso_name");
                         String nearestCsoDistrict = arr.getJSONObject(i).getString("cso_location");
                         String nearestCsoDistance = arr.getJSONObject(i).getString("cso_distance");
-                        newCsos = new TheCSO(nearestCsoName + " in " + nearestCsoDistrict, roundsOffCsoNearestDistance(nearestCsoDistance));
+                        String nearestCsophonenumber = arr.getJSONObject(i).getString("cso_phone_number");
+
+                        newCsos = new TheCSO(nearestCsoName + " in " + nearestCsoDistrict, roundsOffCsoNearestDistance(nearestCsoDistance), nearestCsophonenumber);
                         csosList.add(newCsos);
 
                     }
@@ -317,14 +314,14 @@ public class CsoActivity extends AppCompatActivity {
 
             if(phone.length()>8){
                 csoContactInfo.setText("Contact Phonenumber: " + phone);
+                csoAssuranceHelp.setText("Safepal will contact you on the above phonenumber.");
                 if(email.length()>8){
                     csoContactInfo.setText("Contact Phonenumber: " + phone+ "\nContact Email: " +email);
-
-                }
+                    csoAssuranceHelp.setText("Safepal will contact you on the above phonenumber or email. "); }
             }
             else {
                 csoContactInfo.setText("No Contacts provided. " );
-                csoAssuranceHelp.setText("Safepal service providers will not contact you back. Use the safepal no with the help below ");
+                csoAssuranceHelp.setText("Safepal service providers will not contact you back. Walk in to any provider below with our safepal number and they will attend to you. ");
 
             }
 

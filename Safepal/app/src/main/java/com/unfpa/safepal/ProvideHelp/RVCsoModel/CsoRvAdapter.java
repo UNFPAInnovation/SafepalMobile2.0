@@ -1,12 +1,22 @@
 package com.unfpa.safepal.ProvideHelp.RVCsoModel;
 
+import android.Manifest;
+import android.content.ActivityNotFoundException;
+import android.content.Intent;
+import android.content.pm.PackageManager;
+import android.net.Uri;
+import android.support.v4.app.ActivityCompat;
+import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.unfpa.safepal.R;
+import com.unfpa.safepal.messages.EMessageDialogFragment;
+import com.unfpa.safepal.messages.csoDialogFragment;
 
 import java.util.List;
 
@@ -18,14 +28,30 @@ public class CsoRvAdapter extends RecyclerView.Adapter<CsoRvAdapter.CustomViewHo
 
     private List<TheCSO> csosList;
 
-    public class CustomViewHolder extends RecyclerView.ViewHolder {
-        public TextView csoName, csoDistance;
+    public class CustomViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
+        public TextView csoName, csoDistance, csoPhonenumber;
 
         public CustomViewHolder(View view) {
             super(view);
+
+            view.setOnClickListener(this);
+
             csoName = (TextView) view.findViewById(R.id.cso_name);
             csoDistance = (TextView) view.findViewById(R.id.cso_distance);
+            csoPhonenumber = (TextView) view.findViewById(R.id.cso_phonenumber);
+        }
 
+        @Override
+        public void onClick(View view) {
+            csoDialogFragment singleCsoDialog = csoDialogFragment.newInstance(
+                    csoName.getText().toString(),
+                    csoDistance.getText().toString(),
+                    csoPhonenumber.getText().toString(),
+                    "Call",
+                    "Close"
+            );
+
+            singleCsoDialog.show(((AppCompatActivity)view.getContext()).getFragmentManager(), "call");
         }
     }
 
@@ -46,7 +72,8 @@ public class CsoRvAdapter extends RecyclerView.Adapter<CsoRvAdapter.CustomViewHo
         TheCSO cso = csosList.get(position);
         holder.csoName.setText(cso.getCso_name());
         holder.csoDistance.setText(cso.getCso_distance()+ " km away from you");
-         }
+        holder.csoPhonenumber.setText(cso.getCso_phonenumber());
+    }
 
     @Override
     public int getItemCount() {
