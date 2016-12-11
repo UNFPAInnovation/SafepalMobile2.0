@@ -31,6 +31,7 @@ import com.android.volley.Request;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
+import com.unfpa.safepal.Location.TrackGPS;
 import com.unfpa.safepal.ProvideHelp.RVCsoModel.CsoRvAdapter;
 import com.unfpa.safepal.ProvideHelp.RVCsoModel.TheCSO;
 import com.unfpa.safepal.R;
@@ -78,6 +79,7 @@ public class CsoActivity extends AppCompatActivity {
      /**
      * Represents a geographical location.
      */
+
 
 
     @Override
@@ -267,9 +269,10 @@ public class CsoActivity extends AppCompatActivity {
             cursor.moveToLast();
             offline.append("Your SafePal Number is: " + cursor.getString(cursor.getColumnIndex(ReportIncidentTable.COLUMN_UNIQUE_IDENTIFIER)));
 
-            cursor.close();
+
             csoSafepalNo.setText(offline);
         }
+        cursor.close();
 
         Handler riHandler = new Handler(){
             public void handleMessage(android.os.Message msg) {
@@ -331,5 +334,8 @@ public class CsoActivity extends AppCompatActivity {
         }
 
     }
+
+
+
 }
 

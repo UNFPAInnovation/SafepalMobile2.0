@@ -72,7 +72,7 @@ public class TrackGPS extends Service implements LocationListener {
                 this.canGetLocation = true;
                 // First get location from Network Provider
                 if (checkNetwork) {
-                    Toast.makeText(mContext, "Network", Toast.LENGTH_SHORT).show();
+                 //   Toast.makeText(mContext, "Network", Toast.LENGTH_SHORT).show();
 
                     try {
                         locationManager.requestLocationUpdates(
@@ -97,7 +97,7 @@ public class TrackGPS extends Service implements LocationListener {
             }
             // if GPS Enabled get lat/long using GPS Services
             if (checkGPS) {
-                Toast.makeText(mContext, "GPS", Toast.LENGTH_SHORT).show();
+               // Toast.makeText(mContext, "GPS", Toast.LENGTH_SHORT).show();
                 if (loc == null) {
                     try {
                         locationManager.requestLocationUpdates(
@@ -150,7 +150,7 @@ public class TrackGPS extends Service implements LocationListener {
 
         alertDialog.setTitle("GPS Not Enabled");
 
-        alertDialog.setMessage("Do you wants to turn On GPS");
+        alertDialog.setMessage("To get assistance, let your device turn on location using GPS");
 
 
         alertDialog.setPositiveButton("Yes", new DialogInterface.OnClickListener() {
@@ -175,7 +175,7 @@ public class TrackGPS extends Service implements LocationListener {
     public void stopUsingGPS() {
         if (locationManager != null) {
 
-            if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+            if (ActivityCompat.checkSelfPermission(mContext, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(mContext, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
                 // TODO: Consider calling
                 //    ActivityCompat#requestPermissions
                 // here to request the missing permissions, and then overriding

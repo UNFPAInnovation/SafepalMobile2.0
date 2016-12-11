@@ -1,14 +1,21 @@
 package com.unfpa.safepal.ProvideHelp;
 
+import android.Manifest;
 import android.app.Fragment;
 import android.content.ContentValues;
 import android.content.Context;
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.database.ContentObserver;
 import android.database.Cursor;
+import android.location.Location;
+import android.location.LocationListener;
+import android.location.LocationManager;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Handler;
+import android.provider.Settings;
+import android.support.v4.app.ActivityCompat;
 import android.support.v7.widget.Toolbar;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -24,12 +31,11 @@ import android.widget.Toast;
 import com.unfpa.safepal.Location.TrackGPS;
 import com.unfpa.safepal.R;
 import com.unfpa.safepal.messages.EMessageDialogFragment;
+import com.unfpa.safepal.messages.gpsTurnOnDialogFragment;
 import com.unfpa.safepal.store.RIContentObserver;
 import com.unfpa.safepal.store.ReportIncidentContentProvider;
 import com.unfpa.safepal.store.ReportIncidentTable;
 
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
 
 import static com.unfpa.safepal.report.WhoSGettingHelpFragment.randMessageIndex;
 
@@ -46,9 +52,10 @@ public class ContactFragment extends Fragment {
 
     private TextView contactEncouragingMessagesTv;
 
-    public static   TextView contactSafepalNo;
+    public static TextView contactSafepalNo;
 
     RIContentObserver reportIncidentContentObserver;
+    private TrackGPS gps;
     /**
      * Next and buttonExit button
      */
@@ -59,10 +66,8 @@ public class ContactFragment extends Fragment {
     private LinearLayout contactPhoneEmailLl;
     //    private RadioButton contactYesRB, contactNoRb;
     private static EditText contactPhonenumber;
-    private static  EditText contactEmail;
+    private static EditText contactEmail;
     static CheckBox checkBoxContactMe;
-    //user location
-    private TrackGPS gps;
 
 
     // TODO: Rename parameter arguments, choose names that match
@@ -105,6 +110,8 @@ public class ContactFragment extends Fragment {
             mParam1 = getArguments().getString(ARG_PARAM1);
             mParam2 = getArguments().getString(ARG_PARAM2);
         }
+
+
     }
 
     @Override
@@ -113,21 +120,21 @@ public class ContactFragment extends Fragment {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_contact, container, false);
 
-
+         pickLocation();
         //Toolbar of contact activity
-     //   contactToolbar = (Toolbar) view.findViewById(R.id.contact_toolbar);
-       //assignment of UI in xml
+        //   contactToolbar = (Toolbar) view.findViewById(R.id.contact_toolbar);
+        //assignment of UI in xml
         buttonExit = (Button) view.findViewById(R.id.exit_app);
         buttonFinish = (Button) view.findViewById(R.id.finish);
 
 //        contactYesRB = (RadioButton)view.findViewById(R.id.contact_me_yes_rb);
         checkBoxContactMe = (CheckBox) view.findViewById(R.id.checkbox_contact_me);
 //        contactNoRb = (RadioButton)view.findViewById(R.id.contact_me_not_rb);
-        contactPhoneEmailLl = (LinearLayout)view.findViewById(R.id.contact_phone_email_ll);
-        contactEncouragingMessagesTv = (TextView)view.findViewById(R.id.contact_ecouraging_messages_tv);
-        contactSafepalNo = (TextView)view.findViewById(R.id.contact_safepal_no);
-        contactPhonenumber = (EditText)view.findViewById(R.id.contact_phone_et);
-        contactEmail = (EditText)view.findViewById(R.id.contact_email_et);
+        contactPhoneEmailLl = (LinearLayout) view.findViewById(R.id.contact_phone_email_ll);
+        contactEncouragingMessagesTv = (TextView) view.findViewById(R.id.contact_ecouraging_messages_tv);
+        contactSafepalNo = (TextView) view.findViewById(R.id.contact_safepal_no);
+        contactPhonenumber = (EditText) view.findViewById(R.id.contact_phone_et);
+        contactEmail = (EditText) view.findViewById(R.id.contact_email_et);
 
         loadContactFeedbackMessages();
         //update unique number
@@ -136,10 +143,10 @@ public class ContactFragment extends Fragment {
         checkBoxContactMe.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
-                if(b){//user selcted contact me
+                if (b) {//user selcted contact me
                     //shows phone number and email
                     contactPhoneEmailLl.setVisibility(View.VISIBLE);
-                }else{//user doesnt want to be contacted
+                } else {//user doesnt want to be contacted
                     //hides phonenumber and email on UI
                     contactPhoneEmailLl.setVisibility(View.GONE);
 
@@ -161,6 +168,7 @@ public class ContactFragment extends Fragment {
         return view;
 
     }
+
 
     // TODO: Rename method, update argument and hook method into UI event
     public void onButtonPressed(Uri uri) {
@@ -187,14 +195,14 @@ public class ContactFragment extends Fragment {
     }
 
     public static boolean areFieldsSet(Context context) {
-        if(checkBoxContactMe.isChecked()) {
-            if(contactPhonenumber.getText().length() <=8  ){
+        if (checkBoxContactMe.isChecked()) {
+            if (contactPhonenumber.getText().length() <= 8) {
                 Toast.makeText(context, "Please enter a correct phone number", Toast.LENGTH_LONG).show();
                 return false;
             }
 
             //updates the  phone number, email, latitude and longitude
-            Cursor cursorUpdate =  context.getContentResolver().query(
+            Cursor cursorUpdate = context.getContentResolver().query(
                     ReportIncidentContentProvider.CONTENT_URI,
                     null,
                     null,
@@ -206,7 +214,7 @@ public class ContactFragment extends Fragment {
 
             dataValues.put(ReportIncidentTable.COLUMN_REPORTER_PHONE_NUMBER, contactPhonenumber.getText().toString());
 
-            if(contactEmail.getText().length()>=10){
+            if (contactEmail.getText().length() >= 10) {
                 //update only correct email to db
                 dataValues.put(ReportIncidentTable.COLUMN_REPORTER_PHONE_NUMBER, contactPhonenumber.getText().toString());
             }
@@ -227,6 +235,7 @@ public class ContactFragment extends Fragment {
         return true;
     }
 
+
     /**
      * This interface must be implemented by activities that contain this
      * fragment to allow an interaction in this fragment to be communicated
@@ -243,14 +252,14 @@ public class ContactFragment extends Fragment {
     }
 
     //updates safepal number to the user
-    public void updateUIDTextView(){
-        Cursor cursor =  getActivity().getContentResolver().query(
+    public void updateUIDTextView() {
+        Cursor cursor = getActivity().getContentResolver().query(
                 ReportIncidentContentProvider.CONTENT_URI,
                 null,
                 null,
                 null,
                 null);
-        if(cursor != null) {
+        if (cursor != null) {
             StringBuilder offline = new StringBuilder();
             cursor.moveToLast();
             offline.append("Your SafePal Number is: " + cursor.getString(cursor.getColumnIndex(ReportIncidentTable.COLUMN_UNIQUE_IDENTIFIER)));
@@ -259,7 +268,7 @@ public class ContactFragment extends Fragment {
             contactSafepalNo.setText(offline);
         }
 
-        Handler riHandler = new Handler(){
+        Handler riHandler = new Handler() {
             public void handleMessage(android.os.Message msg) {
                 switch (msg.what) {
                     case 1:
@@ -271,7 +280,9 @@ public class ContactFragment extends Fragment {
 
                         break;
                 }
-            };
+            }
+
+            ;
         };
 
         reportIncidentContentObserver = new RIContentObserver(getActivity(), riHandler);
@@ -281,15 +292,22 @@ public class ContactFragment extends Fragment {
 
 
     }
-   private void  loadContactFeedbackMessages(){
+
+    private void loadContactFeedbackMessages() {
         String[] wsghMessagesArray = getResources().getStringArray(R.array.seek_medical_care_messages);
         contactEncouragingMessagesTv.setText(wsghMessagesArray[randMessageIndex(0, wsghMessagesArray.length)].toString());
     }
-   /* public void getUserLocation(){
+
+
+    public void pickLocation(){
+        gps = new TrackGPS(getActivity());
+
 
         if(gps.canGetLocation()){
-            double latitude =gps.getLatitude();
-            double longitude = gps.getLongitude();
+
+
+            Double longitude = gps.getLongitude();
+            Double latitude = gps .getLatitude();
 
             //updates the  phone number, email, latitude and longitude
             Cursor cursorUpdate =  getActivity().getContentResolver().query(
@@ -300,10 +318,8 @@ public class ContactFragment extends Fragment {
                     null);
             ContentValues dataValues = new ContentValues();
             // end of the updates
-
-
-            dataValues.put(ReportIncidentTable.COLUMN_REPORTER_LOCATION_LAT, Double.valueOf(latitude));
-            dataValues.put(ReportIncidentTable.COLUMN_REPORTER_LOCATION_LAT, Double.valueOf(longitude));
+            dataValues.put(ReportIncidentTable.COLUMN_REPORTER_LOCATION_LAT, Double.toString(latitude));
+            dataValues.put(ReportIncidentTable.COLUMN_REPORTER_LOCATION_LNG, Double.toString(longitude));
             if (cursorUpdate != null) {
                 cursorUpdate.moveToLast();
 
@@ -313,7 +329,10 @@ public class ContactFragment extends Fragment {
                                 ReportIncidentTable.COLUMN_ID)), null);
 
             }
+          cursorUpdate.close();
 
+
+            //Toast.makeText(getActivity().getApplicationContext(),"Longitude:"+Double.toString(longitude)+"\nLatitude:"+Double.toString(latitude),Toast.LENGTH_SHORT).show();
         }
         else
         {
@@ -321,28 +340,13 @@ public class ContactFragment extends Fragment {
             gps.showSettingsAlert();
         }
 
-
     }
-
-*/
-
-
-    public static boolean isEmailValid(String email) {
-        boolean isValid = false;
-
-        String expression = "^[\\w\\.-]+@([\\w\\-]+\\.)+[A-Z]{2,4}$";
-        CharSequence inputStr = email;
-
-        Pattern pattern = Pattern.compile(expression, Pattern.CASE_INSENSITIVE);
-        Matcher matcher = pattern.matcher(inputStr);
-        if (matcher.matches()) {
-            isValid = true;
-        }
-        return isValid;
-    }
-
     @Override
     public void onDestroy() {
         super.onDestroy();
+        gps.stopUsingGPS();
     }
+
+
 }
+

@@ -32,7 +32,7 @@ public class NetworkChangeReceiver extends BroadcastReceiver{
         }
         else {
 
-            Toast.makeText(context, "No Internet Connection. Your report will be submitted once you are connected", Toast.LENGTH_LONG).show();
+            Toast.makeText(context, "No Internet Connection. Your report will be submitted when your device is connected to the internet.", Toast.LENGTH_LONG).show();
         }
     }
 }
