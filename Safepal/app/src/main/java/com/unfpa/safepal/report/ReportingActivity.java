@@ -19,7 +19,8 @@ import com.unfpa.safepal.ProvideHelp.ContactFragment;
 import com.unfpa.safepal.ProvideHelp.CsoActivity;
 import com.unfpa.safepal.R;
 
-public class ReportingActivity extends AppCompatActivity implements SurvivorIncidentFormFragment.OnFragmentInteractionListener {
+public class ReportingActivity extends AppCompatActivity implements SurvivorIncidentFormFragment.OnFragmentInteractionListener,
+ContactFragment.OnFragmentInteractionListener, AnotherPersonIncidentFormFragment.OnFragmentInteractionListener{
 
     String TAG = ReportingActivity.class.getSimpleName();
     /**

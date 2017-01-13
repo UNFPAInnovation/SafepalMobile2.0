@@ -1,10 +1,13 @@
 package com.unfpa.safepal.home;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.support.design.widget.FloatingActionButton;
+import android.support.v4.app.DialogFragment;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.AppCompatCheckBox;
 import android.support.v7.widget.Toolbar;
@@ -20,6 +23,7 @@ import android.widget.TextView;
 
 import com.unfpa.safepal.R;
 
+import com.unfpa.safepal.Utils.General;
 import com.unfpa.safepal.messages.EMessageDialogFragment;
 import com.unfpa.safepal.report.ReportingActivity;
 
@@ -94,6 +98,7 @@ public class HomeActivity extends AppCompatActivity {
             }
         });
 
+        //for internal support
         checkBoxAutoScroll.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
@@ -133,10 +138,24 @@ public class HomeActivity extends AppCompatActivity {
         });
 
         animateNextMessage();//show first message
+        showDisclaimer();
 
     }
 
-     Animation animSlideIn;
+    private void showDisclaimer() {
+        SharedPreferences prefs = getSharedPreferences(getString(R.string.shared_pref_name), MODE_PRIVATE);
+        boolean isFirstTime = prefs.getBoolean(getString(R.string.first_time), true);
+        if( isFirstTime ){
+            General.showDisclaimerDialog(this);
+            SharedPreferences.Editor editor = prefs.edit();
+            editor.putBoolean(getString(R.string.first_time), false);
+            editor.apply();//indicate that app has ever been opened
+        }else {
+            //General.showDisclaimerDialog(this);
+        }
+    }
+
+    Animation animSlideIn;
     Animation animExit;
     void animateNextMessage(){
         infoPanel.startAnimation(animExit);
