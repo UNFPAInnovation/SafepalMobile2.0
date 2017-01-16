@@ -63,15 +63,8 @@
 
     </string-array>
 
-
-
-
-
-
     <!-- menu strings-->
-    <string name="action_home_help">Home</string>
-    <string name="action_home_getting_started">Getting Started</string>
-    <string name="action_home_about">About</string>
+    <string name="action_disclaimer">Disclaimer</string>
 
     <!-- Home Activity strings-->
 
@@ -84,7 +77,7 @@
     <string name="wsgh_msgs_to_ecourage_survivor"> Messages to encourage the survivor or friend to report an incident - Programme team</string>
     <string name="wsgh_happened_to_who">Did the incident happen to you?</string>
     <string name="wsgh_yes">Yes, it was me.</string>
-    <string name="wsgh_someone_else">No, to somebody I know.</string>
+    <string name="wsgh_someone_else">No, to somebody I know</string>
     <string-array name="wsgh_someone_else_array">
         <item>How are you related to her/him?</item>
         <item>Relative</item>
@@ -108,8 +101,8 @@
         <item>What happened to you?</item>
         <item>Bad touches </item>
         <item>Someone tried to rape me</item>
-        <item>I was raped.</item>
-        <item>I was defiled.</item>
+        <item>I was raped</item>
+        <item>I was defiled</item>
         <item>other</item>
     </string-array>
 
@@ -126,8 +119,8 @@
         <item>What happened to him or her?</item>
         <item>Bad touches </item>
         <item>Someone tried to rape me</item>
-        <item>He/She was raped.</item>
-        <item>He/She was defiled.</item>
+        <item>He/She was raped</item>
+        <item>He/She was defiled</item>
         <item>other</item>
     </string-array>
     <string-array name="survivor_age_range">
@@ -187,7 +180,7 @@
     <string name="auto_scroll_messages">Auto scroll</string>
     <string name="shared_pref_name">safepal_prefs</string>
     <string name="first_time">first_time_to_run_app</string>
-    <string name="disclaimer_detail">Disclaimer will be here!</string>
+    <string name="disclaimer_detail">Safepal services shall only be restricted within the area divisions of Kampala district in Uganda and shall therefore not be held accountable for the incident cases that are not responded to in areas other than above specified.</string>
     <string name="disclaimer">Disclaimer</string>
 
 </resources>

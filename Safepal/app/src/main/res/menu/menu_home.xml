@@ -3,19 +3,9 @@
     xmlns:tools="http://schemas.android.com/tools"
     tools:context=".report.WhoSGettingHelpActivity">
     <item
-        android:id="@+id/menu_home_help"
+        android:id="@+id/menu_disclaimer"
         android:orderInCategory="100"
-        android:title="@string/action_home_help"
+        android:title="@string/action_disclaimer"
         app:showAsAction="never" />
-    <item
-        android:id="@+id/menu_home_getting_started"
-        android:orderInCategory="100"
-        android:title="@string/action_home_getting_started"
-        app:showAsAction="never" />
-
-    <item
-        android:id="@+id/menu_home_about"
-        android:orderInCategory="100"
-        android:title="@string/action_home_about"
-        app:showAsAction="never" />
+   >
 </menu>
