@@ -31,7 +31,6 @@ import android.widget.Toast;
 import com.unfpa.safepal.Location.TrackGPS;
 import com.unfpa.safepal.R;
 import com.unfpa.safepal.messages.EMessageDialogFragment;
-import com.unfpa.safepal.messages.gpsTurnOnDialogFragment;
 import com.unfpa.safepal.store.RIContentObserver;
 import com.unfpa.safepal.store.ReportIncidentContentProvider;
 import com.unfpa.safepal.store.ReportIncidentTable;

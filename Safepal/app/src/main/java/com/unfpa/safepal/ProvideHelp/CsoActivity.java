@@ -31,7 +31,6 @@ import com.android.volley.Request;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
-import com.unfpa.safepal.Location.TrackGPS;
 import com.unfpa.safepal.ProvideHelp.RVCsoModel.CsoRvAdapter;
 import com.unfpa.safepal.ProvideHelp.RVCsoModel.TheCSO;
 import com.unfpa.safepal.R;
@@ -324,7 +323,7 @@ public class CsoActivity extends AppCompatActivity {
             }
             else {
                 csoContactInfo.setText("No Contacts provided. " );
-                csoAssuranceHelp.setText("Safepal service providers will not contact you back. Walk in to any provider below with our safepal number and they will attend to you. ");
+                csoAssuranceHelp.setText("Since you did not provide a contact number, safepal service providers will not be able to contact you directly. But you can still walk in to any of the service providers below with your safepal number and they will attend to you. ");
 
             }
 

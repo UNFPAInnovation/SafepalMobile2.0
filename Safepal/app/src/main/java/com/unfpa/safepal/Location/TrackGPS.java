@@ -148,9 +148,10 @@ public class TrackGPS extends Service implements LocationListener {
         AlertDialog.Builder alertDialog = new AlertDialog.Builder(mContext);
 
 
-        alertDialog.setTitle("GPS Not Enabled");
+        alertDialog.setTitle("Enable GPS");
 
-        alertDialog.setMessage("To get assistance, let your device turn on location using GPS");
+        alertDialog.setMessage("To get better assistance, we need to know your current location. \n" +
+                "Turn on you location GPS\n");
 
 
         alertDialog.setPositiveButton("Yes", new DialogInterface.OnClickListener() {
