@@ -89,8 +89,10 @@ ContactFragment.OnFragmentInteractionListener, AnotherPersonIncidentFormFragment
 
                 } else if (isFragmentVisible(getFragmentManager().findFragmentByTag(
                         AnotherPersonIncidentFormFragment.class.getSimpleName()))) {//cuurent frag AnotherPersonIncidentFormFragment
+
                     Log.d(TAG, "submitting another-person form");
                     int status = AnotherPersonIncidentFormFragment.submitForm(getBaseContext());//submit the form
+
                     if((status == ReportingActivity.STATUS_SUBMIT_REPORT_SUBMITED) || (status == ReportingActivity.STATUS_SUBMIT_REPORT_ALREADY_AVAILABLE)){
                         Log.d(TAG, "AnotherPersonIncidentFormFragment.submitForm successfull. Loading contact frag");
                         loadContactFragment();//ask whther to be contacted in next frag

@@ -383,8 +383,10 @@ return rootView;
         }
         //updates the report if its already available // TODO: 13-Nov-16 look 4 try catches... is this difference okay
         else {
-            Log.e(TAG, "is this nprmal???");
-            context.getContentResolver().update(reportIncidentUri, values, null, null);
+            Log.e(TAG, "is this normal???");
+            Log.e(TAG, "The  case was not submitted");
+
+            // context.getContentResolver().update(reportIncidentUri, values, null, null);
             return ReportingActivity.STATUS_SUBMIT_REPORT_ALREADY_AVAILABLE;
         }
 
