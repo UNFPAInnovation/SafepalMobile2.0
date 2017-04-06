@@ -2,19 +2,14 @@ package com.unfpa.safepal.ProvideHelp;
 
 import android.Manifest;
 import android.content.ActivityNotFoundException;
-import android.content.ContentValues;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.database.Cursor;
-import android.location.Location;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Process;
-import android.provider.Settings;
 import android.support.v4.app.ActivityCompat;
-import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
@@ -23,6 +18,7 @@ import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -51,7 +47,6 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-
 import static com.unfpa.safepal.report.WhoSGettingHelpFragment.randMessageIndex;
 
 public class CsoActivity extends AppCompatActivity {
@@ -70,8 +65,11 @@ public class CsoActivity extends AppCompatActivity {
     private List<TheCSO> csosList = new ArrayList<>();
     private RecyclerView csosRecyclerView;
     private CsoRvAdapter csosAdapter;
-    private ProgressBar csoProgressBar;
 
+    //no internet connection
+    private ProgressBar csoProgressBar;
+    private LinearLayout csoNoInternetLL;
+    private Button csoNoInternetButton;
     // TheCSOs json url
     private static final String URL_CSO_API = "http://52.43.152.73/api/location.php";
 
@@ -89,6 +87,9 @@ public class CsoActivity extends AppCompatActivity {
         //buttonFinish and buttonExit buttons
         buttonNext = (Button) findViewById(R.id.finish);
         buttonExit = (Button) findViewById(R.id.exit_app);
+
+        csoNoInternetButton = (Button)findViewById(R.id.cso_no_internet_button);
+        csoNoInternetLL = (LinearLayout)findViewById(R.id.cso_no_internet_ll);
 
         // choose someone else relationship spinner
         csoEncouragingMessagesTV = (TextView) findViewById(R.id.cso_ecouraging_messages_tv);
@@ -173,10 +174,10 @@ public class CsoActivity extends AppCompatActivity {
         getNearestCSOs(lat, lng, new VolleyCallback() {
             @Override
             public void onSuccessResponse(String result) {
-                hidePDialog();
 
 
                 try {
+                    hidePDialog();
                     JSONObject response = new JSONObject(result);
                     JSONArray arr = response.getJSONArray("posts");
 
@@ -220,8 +221,7 @@ public class CsoActivity extends AppCompatActivity {
                     public void onErrorResponse(VolleyError error) {
 
                         //VolleyLog.d("test", "Error: " + error.getMessage());
-                        hidePDialog();
-
+                       showInternetRetry();
                     }
                 }) {
             @Override
@@ -238,9 +238,20 @@ public class CsoActivity extends AppCompatActivity {
 
     }
 
-    //hides the progress bar
+    //hides the progress bar and no internet text
     private void hidePDialog() {
         csoProgressBar.setVisibility(View.GONE);
+        csoNoInternetLL.setVisibility(View.GONE);
+    }
+    private void showPDialog(){
+        csoProgressBar.setVisibility(View.VISIBLE);
+        csoNoInternetLL.setVisibility(View.GONE);
+    }
+
+    private void showInternetRetry(){
+        csoProgressBar.setVisibility(View.GONE);
+        csoNoInternetLL.setVisibility(View.VISIBLE);
+
     }
 
     private String roundsOffCsoNearestDistance(String survivorToCso){

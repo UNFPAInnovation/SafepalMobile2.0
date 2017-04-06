@@ -3,7 +3,6 @@ package com.unfpa.safepal.report;
 import android.app.Fragment;
 import android.content.ContentValues;
 import android.content.Context;
-import android.content.Intent;
 import android.content.IntentFilter;
 import android.net.ConnectivityManager;
 import android.net.Uri;
@@ -16,6 +15,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
+import android.widget.AutoCompleteTextView;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.RadioButton;
@@ -71,9 +71,8 @@ public class SurvivorIncidentFormFragment extends Fragment {
     private static RadioGroup sifGenderRG;
     private static RadioButton sifGenderRB;
     private static Spinner sifIncidentTypeSpinner;
-    private static EditText sifIncidentLocationEt;
+    private static AutoCompleteTextView sifIncidentLocationEt;
     private static EditText sifIncidentDetailsEt;
-
     private static Snackbar sifFeedbackSnackbar;
 
 
@@ -153,7 +152,7 @@ public class SurvivorIncidentFormFragment extends Fragment {
 
         sifGenderRG=(RadioGroup)rootView.findViewById(R.id.gender_rg);
         sifIncidentTypeSpinner = (Spinner) rootView.findViewById(R.id.incident_type_spinner);
-        sifIncidentLocationEt = (EditText)rootView.findViewById(R.id.incident_location_actv);
+        sifIncidentLocationEt = (AutoCompleteTextView) rootView.findViewById(R.id.incident_location_actv);
         sifIncidentDetailsEt = (EditText)rootView.findViewById(R.id.incident_details_rt);
 
         sifEncouragingMessagesTv= (TextView) rootView.findViewById(R.id.sif_encouraging_messages_tv);
@@ -171,9 +170,18 @@ public class SurvivorIncidentFormFragment extends Fragment {
         //content provider
         extras = getActivity().getIntent().getExtras();
 
+        //loads autocomplete places
+        //  ArrayAdapter<String> reportPlacesAdapter = new ArrayAdapter<String>(getActivity(),
+        // android.R.layout.simple_dropdown_item_1line, getResources().getStringArray(R.array.auto_complete_report_places));
+        // sifIncidentLocationEt.setAdapter(reportPlacesAdapter);
 
         //messages to user
         loadSifMessages();
+
+        ArrayAdapter <String> sifReportPlacesAdapter = new ArrayAdapter<String>(getActivity(),
+               android.R.layout.simple_dropdown_item_1line, getResources().getStringArray(R.array.auto_complete_report_places) );
+        sifIncidentLocationEt.setAdapter(sifReportPlacesAdapter);
+
         // Create an ArrayAdapter using the string array and a default spinner layout
         ArrayAdapter<CharSequence> sifIncidentTypeAdapter = ArrayAdapter.createFromResource(getActivity(),
                 R.array.sif_incident_type, android.R.layout.simple_spinner_item);

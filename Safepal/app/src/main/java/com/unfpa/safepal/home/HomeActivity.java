@@ -5,9 +5,7 @@ import android.content.SharedPreferences;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
-import android.preference.PreferenceManager;
 import android.support.design.widget.FloatingActionButton;
-import android.support.v4.app.DialogFragment;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.AppCompatCheckBox;
 import android.support.v7.widget.Toolbar;
@@ -16,6 +14,7 @@ import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.ViewGroup;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.widget.ArrayAdapter;
@@ -24,8 +23,9 @@ import android.widget.CompoundButton;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import com.github.amlcurran.showcaseview.ShowcaseView;
+import com.github.amlcurran.showcaseview.targets.ViewTarget;
 import com.unfpa.safepal.R;
-
 import com.unfpa.safepal.Utils.General;
 import com.unfpa.safepal.messages.EMessageDialogFragment;
 import com.unfpa.safepal.report.ReportingActivity;
@@ -44,7 +44,9 @@ public class HomeActivity extends AppCompatActivity {
     RelativeLayout infoPanel;
     TextView textViewMessage;
     AppCompatCheckBox checkBoxAutoScroll;
-
+    //This shows only the first time the app is installed
+    ShowcaseView homeReportGuideSv, homeMessageGuideSv;
+    RelativeLayout.LayoutParams lps;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -58,10 +60,18 @@ public class HomeActivity extends AppCompatActivity {
         // Assignments of variables
         buttonExit = (Button) findViewById(R.id.exit_app);
         buttonNext = (Button) findViewById(R.id.next_message);
-        fabReportCase = (FloatingActionButton) findViewById(R.id.fab);
+        fabReportCase = (FloatingActionButton) findViewById(R.id.fab_report_incident);
         infoPanel = (RelativeLayout)findViewById(R.id.info_panel);
         textViewMessage = (TextView) findViewById(R.id.message);
         checkBoxAutoScroll = (AppCompatCheckBox)findViewById(R.id.auto_scroll_CheckBox) ;
+
+
+        //guide for the first time users
+        lps = new RelativeLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
+        lps.addRule(RelativeLayout.ALIGN_PARENT_BOTTOM);
+        lps.addRule(RelativeLayout.ALIGN_PARENT_LEFT);
+        int margin = ((Number) (getResources().getDisplayMetrics().density * 12)).intValue();
+        lps.setMargins(margin, margin, margin, margin);
 
 
         buttonExit.setOnClickListener(new View.OnClickListener() {
@@ -150,6 +160,8 @@ public class HomeActivity extends AppCompatActivity {
         boolean isFirstTime = prefs.getBoolean(getString(R.string.first_time), true);
         if( isFirstTime ){
             General.showDisclaimerDialog(this);
+            homeReportGuide();
+
             SharedPreferences.Editor editor = prefs.edit();
             editor.putBoolean(getString(R.string.first_time), false);
             editor.apply();//indicate that app has ever been opened
@@ -237,12 +249,41 @@ public class HomeActivity extends AppCompatActivity {
         // Handle item selection
         switch (item.getItemId()) {
             case R.id.menu_disclaimer:
+
                 General.showDisclaimerDialog(this);
+                return true;
+            case R.id.menu_guide:
+                 homeReportGuide();
                 return true;
             default:
                 return super.onOptionsItemSelected(item);
         }
     }
 
+    //This is a tutorial for the first  time reporters
+    public void homeReportGuide(){
+
+        ViewTarget target = new ViewTarget(R.id.fab_report_incident, this);
+        homeReportGuideSv = new ShowcaseView.Builder(this)
+                .withNewStyleShowcase()
+                .setTarget(target)
+                .setStyle(R.style.CustomShowcaseTheme2)
+                .setContentTitle(R.string.fab_report_guide_title)
+                .setContentText(R.string.fab_report_guide_text)
+                .build();
+        homeReportGuideSv.setButtonPosition(lps);
+
+    }
+    //This is a tutorial for the first time users
+    public void homeMessagesGuide(){
+        homeMessageGuideSv = new ShowcaseView.Builder(this)
+                .withNewStyleShowcase()
+                .setTarget(new ViewTarget(R.id.info_panel,this ))
+                .setStyle(R.style.CustomShowcaseTheme2)
+                .setContentTitle(R.string.fab_report_guide_title)
+                .setContentText(R.string.fab_report_guide_text)
+                .build();
+        homeMessageGuideSv.setButtonPosition(lps);
+    }
 
 }

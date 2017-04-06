@@ -64,7 +64,8 @@
     </string-array>
 
     <!-- menu strings-->
-    <string name="action_disclaimer">Disclaimer</string>
+    <string name="action_home_disclaimer">Disclaimer</string>
+    <string name="action_home_guide">Guide</string>
 
     <!-- Home Activity strings-->
 
@@ -183,4 +184,26 @@
     <string name="disclaimer_detail">Safepal services shall only be restricted within the area divisions of Kampala district in Uganda and shall therefore not be held accountable for the incident cases that are not responded to in areas other than above specified.</string>
     <string name="disclaimer">Disclaimer</string>
 
+    <string-array name="auto_complete_report_places">
+        <item>Class room</item>
+        <item>Friend\'s home</item>
+        <item>Home</item>
+        <item>Hotel</item>
+        <item>Office</item>
+        <item>Market</item>
+        <item>Restaurant</item>
+        <item>School</item>
+        <item>Street</item>
+    </string-array>
+
+    <!-- 2017 Changes -->
+    <!-- No internet feedback-->
+    <string name="cso_no_internet_text">No internet connection. Make sure Wi-Fi or cellular data is turned on, then try again </string>
+    <string name="cso_no_internet_retry">Retry</string>
+
+
+    <!--- Guide -->
+    <string name="fab_report_guide_title">Report an incident </string>
+    <string name="fab_report_guide_text">Click on the right bottom button to report a sexual violence incident directly to safepal
+    and get linked to the nearest service provider for help. </string>
 </resources>

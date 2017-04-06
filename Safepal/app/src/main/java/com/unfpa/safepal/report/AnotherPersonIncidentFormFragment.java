@@ -15,7 +15,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
-import android.widget.Button;
+import android.widget.AutoCompleteTextView;
 import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.ImageView;
@@ -81,7 +81,7 @@ public class AnotherPersonIncidentFormFragment extends Fragment {
     private static RadioButton apifGenderRB;
     private static Spinner apifIncidentTypeSpinner;
     private static Spinner spinnerAgeRange;
-    private static EditText apifIncidentLocationEt;
+    private static AutoCompleteTextView apifIncidentLocationEt;
     private static EditText apifIncidentDetailsEt;
 
     DatePicker datePicker;
@@ -164,7 +164,7 @@ public class AnotherPersonIncidentFormFragment extends Fragment {
         //age range spinner
         spinnerAgeRange = (Spinner) rootView.findViewById(R.id.age_range_spinner);
 
-        apifIncidentLocationEt = (EditText)rootView.findViewById(R.id.incident_location_actv);
+        apifIncidentLocationEt = (AutoCompleteTextView) rootView.findViewById(R.id.incident_location_actv);
         apifIncidentDetailsEt = (EditText)rootView.findViewById(R.id.incident_details_rt);
 
 
@@ -180,6 +180,12 @@ public class AnotherPersonIncidentFormFragment extends Fragment {
         apifLoadMessages();
 
         //click actions
+
+          //loads autocomplete places
+        ArrayAdapter<String> apifReportPlacesAdapter = new ArrayAdapter<String>(getActivity(),
+                android.R.layout.simple_dropdown_item_1line, getResources().getStringArray(R.array.auto_complete_report_places));
+        apifIncidentLocationEt.setAdapter(apifReportPlacesAdapter);
+
 
 
         ArrayAdapter<CharSequence> apifIncidentTypeAdapter = ArrayAdapter.createFromResource(getActivity(),
