@@ -178,10 +178,6 @@ public class SurvivorIncidentFormFragment extends Fragment {
         //messages to user
         loadSifMessages();
 
-        ArrayAdapter <String> sifReportPlacesAdapter = new ArrayAdapter<String>(getActivity(),
-               android.R.layout.simple_dropdown_item_1line, getResources().getStringArray(R.array.auto_complete_report_places) );
-        sifIncidentLocationEt.setAdapter(sifReportPlacesAdapter);
-
         // Create an ArrayAdapter using the string array and a default spinner layout
         ArrayAdapter<CharSequence> sifIncidentTypeAdapter = ArrayAdapter.createFromResource(getActivity(),
                 R.array.sif_incident_type, android.R.layout.simple_spinner_item);
@@ -407,6 +403,6 @@ public class SurvivorIncidentFormFragment extends Fragment {
     }
 
 
-    
-    
+
+
 }

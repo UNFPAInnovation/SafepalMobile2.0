@@ -76,21 +76,44 @@
 
     <dimen name="spinner_dropdown_vert_offset">40dp</dimen>
 
+  <!-- Styles for the show case view guide -->
 
-    <style name="CustomTitle2" parent="TextAppearance.ShowcaseView.Title.Light">
-        <item name="android:textColor">#000000</item>
+    <style name="ReportTitle" parent="TextAppearance.ShowcaseView.Title.Light">
+        <item name="android:textColor">#fffdfd</item>
     </style>
 
-    <style name="CustomText2" parent="TextAppearance.ShowcaseView.Detail.Light">
+    <style name="GuideText" parent="TextAppearance.ShowcaseView.Detail.Light">
         <item name="android:textColor">#181b2b</item>
     </style>
 
-    <style name="CustomShowcaseTheme2" parent="ShowcaseView">
-        <item name="sv_backgroundColor">#FCB040 </item>
-        <item name="sv_showcaseColor">#181925</item>
+
+    <style name="GuideText2" parent="TextAppearance.ShowcaseView.Detail.Light">
+        <item name="android:textColor">#eceffc</item>
+    </style>
+    <style name="ReportShowcaseTheme" parent="ShowcaseView">
+        <item name="sv_backgroundColor">#eb01a89e</item>
+        <item name="sv_showcaseColor">#002d30</item>
         <item name="sv_buttonText">Next</item>
-        <item name="sv_titleTextAppearance">@style/CustomTitle2</item>
-        <item name="sv_detailTextAppearance">@style/CustomText2</item>
+        <item name="sv_titleTextAppearance">@style/ReportTitle</item>
+        <item name="sv_detailTextAppearance">@style/GuideText</item>
+    </style>
+
+
+    <style name="ExitShowcaseTheme" parent="ShowcaseView">
+        <item name="sv_backgroundColor">#e2e48900</item>
+        <item name="sv_showcaseColor">#663d00</item>
+        <item name="sv_buttonText">Next</item>
+        <item name="sv_titleTextAppearance">@style/ReportTitle</item>
+        <item name="sv_detailTextAppearance">@style/GuideText</item>
+    </style>
+
+
+    <style name="NextShowcaseTheme" parent="ShowcaseView">
+        <item name="sv_backgroundColor">#dd00840d</item>
+        <item name="sv_showcaseColor">#0d5900</item>
+        <item name="sv_buttonText">Got it</item>
+        <item name="sv_titleTextAppearance">@style/ReportTitle</item>
+        <item name="sv_detailTextAppearance">@style/GuideText2</item>
     </style>
 
 </resources>

@@ -44,9 +44,10 @@ public class HomeActivity extends AppCompatActivity {
     RelativeLayout infoPanel;
     TextView textViewMessage;
     AppCompatCheckBox checkBoxAutoScroll;
-    //This shows only the first time the app is installed
-    ShowcaseView homeReportGuideSv, homeMessageGuideSv;
-    RelativeLayout.LayoutParams lps;
+
+    //guide for safepal
+    ShowcaseView homeReportGuideSv, homeExitSv, homeNextSv ;
+     RelativeLayout.LayoutParams lps, nextLps;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -59,19 +60,13 @@ public class HomeActivity extends AppCompatActivity {
         getSupportActionBar().setDisplayUseLogoEnabled(true);
         // Assignments of variables
         buttonExit = (Button) findViewById(R.id.exit_app);
-        buttonNext = (Button) findViewById(R.id.next_message);
+        buttonNext = (Button) findViewById(R.id.home_next_message);
         fabReportCase = (FloatingActionButton) findViewById(R.id.fab_report_incident);
-        infoPanel = (RelativeLayout)findViewById(R.id.info_panel);
+        infoPanel = (RelativeLayout)findViewById(R.id.home_info_panel);
         textViewMessage = (TextView) findViewById(R.id.message);
         checkBoxAutoScroll = (AppCompatCheckBox)findViewById(R.id.auto_scroll_CheckBox) ;
 
 
-        //guide for the first time users
-        lps = new RelativeLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
-        lps.addRule(RelativeLayout.ALIGN_PARENT_BOTTOM);
-        lps.addRule(RelativeLayout.ALIGN_PARENT_LEFT);
-        int margin = ((Number) (getResources().getDisplayMetrics().density * 12)).intValue();
-        lps.setMargins(margin, margin, margin, margin);
 
 
         buttonExit.setOnClickListener(new View.OnClickListener() {
@@ -159,8 +154,8 @@ public class HomeActivity extends AppCompatActivity {
         SharedPreferences prefs = getSharedPreferences(getString(R.string.shared_pref_name), MODE_PRIVATE);
         boolean isFirstTime = prefs.getBoolean(getString(R.string.first_time), true);
         if( isFirstTime ){
-            General.showDisclaimerDialog(this);
             homeReportGuide();
+            General.showDisclaimerDialog(this);
 
             SharedPreferences.Editor editor = prefs.edit();
             editor.putBoolean(getString(R.string.first_time), false);
@@ -263,27 +258,76 @@ public class HomeActivity extends AppCompatActivity {
     //This is a tutorial for the first  time reporters
     public void homeReportGuide(){
 
+        //guide for the first time users
+        lps = new RelativeLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
+        lps.addRule(RelativeLayout.ALIGN_PARENT_BOTTOM);
+        lps.addRule(RelativeLayout.ALIGN_PARENT_LEFT);
+        int margin = ((Number) (getResources().getDisplayMetrics().density * 12)).intValue();
+        lps.setMargins(margin, margin, margin, margin);
+
         ViewTarget target = new ViewTarget(R.id.fab_report_incident, this);
         homeReportGuideSv = new ShowcaseView.Builder(this)
-                .withNewStyleShowcase()
+                .withHoloShowcase()
                 .setTarget(target)
-                .setStyle(R.style.CustomShowcaseTheme2)
-                .setContentTitle(R.string.fab_report_guide_title)
-                .setContentText(R.string.fab_report_guide_text)
+                .setContentTitle(R.string.home_guide_fab_report_title)
+                .setContentText(R.string.home_guide_fab_report_text)
+                .setStyle(R.style.ReportShowcaseTheme)
+                 .setOnClickListener(new View.OnClickListener() {
+                     @Override
+                     public void onClick(View v) {
+                         homeReportGuideSv.hide();
+                         homeExitGuide();
+                     }
+                 })
                 .build();
         homeReportGuideSv.setButtonPosition(lps);
-
     }
-    //This is a tutorial for the first time users
-    public void homeMessagesGuide(){
-        homeMessageGuideSv = new ShowcaseView.Builder(this)
-                .withNewStyleShowcase()
-                .setTarget(new ViewTarget(R.id.info_panel,this ))
-                .setStyle(R.style.CustomShowcaseTheme2)
-                .setContentTitle(R.string.fab_report_guide_title)
-                .setContentText(R.string.fab_report_guide_text)
+
+    public void homeExitGuide(){
+
+
+        ViewTarget eTarget = new ViewTarget(R.id.exit_app, HomeActivity.this);
+        homeExitSv = new ShowcaseView.Builder(HomeActivity.this)
+                .withHoloShowcase()
+                .setTarget(eTarget)
+                .setContentTitle(R.string.home_guide_fab_exit_title)
+                .setContentText(R.string.home_guide_fab_exit_text)
+                .setStyle(R.style.ExitShowcaseTheme)
+                .setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                    homeExitSv.hide();
+                    homeNextGuide();
+
+                    }
+                })
                 .build();
-        homeMessageGuideSv.setButtonPosition(lps);
+
     }
 
+    public void homeNextGuide(){
+        //guide for the first time users
+        nextLps = new RelativeLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
+        nextLps.addRule(RelativeLayout.CENTER_IN_PARENT);
+        int margin = ((Number) (getResources().getDisplayMetrics().density * 12)).intValue();
+        nextLps.setMargins(margin, margin, margin, margin);
+
+        ViewTarget nTarget = new ViewTarget(R.id.home_next_message, HomeActivity.this);
+
+        homeNextSv = new ShowcaseView.Builder(HomeActivity.this)
+                .withHoloShowcase()
+                .setTarget(nTarget)
+                .setContentTitle(R.string.home_guide_fab_exit_title)
+                .setContentText(R.string.home_guide_fab_exit_text)
+                .setStyle(R.style.NextShowcaseTheme)
+                .build();
+
+        homeNextSv.setButtonPosition(nextLps);
+        homeNextSv.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                homeNextSv.hide();
+            }
+        });
+    }
 }

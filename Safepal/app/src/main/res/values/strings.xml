@@ -203,7 +203,9 @@
 
 
     <!--- Guide -->
-    <string name="fab_report_guide_title">Report an incident </string>
-    <string name="fab_report_guide_text">Click on the right bottom button to report a sexual violence incident directly to safepal
+    <string name="home_guide_fab_report_title">Report an incident </string>
+    <string name="home_guide_fab_report_text">Click on the right bottom button to report a sexual violence incident directly to safepal
     and get linked to the nearest service provider for help. </string>
+    <string name="home_guide_fab_exit_title">Quick Exit </string>
+    <string name="home_guide_fab_exit_text"> If you are suspicious that perpetrator knows you are reporting him/her, use the left bottom \'Exit\' button to exit the safepal app or quickly uninstall it by long pressing on the \'Exit\' button.</string>
 </resources>

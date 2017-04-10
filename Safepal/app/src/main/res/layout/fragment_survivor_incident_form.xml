@@ -105,14 +105,13 @@
                         android:layout_toRightOf="@id/image_where_take_place"
                         >
 
-                        <AutoCompleteTextView
+                        <com.unfpa.safepal.places.CustomAutoCompleteTextView
                             android:id="@+id/incident_location_actv"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:hint="@string/incident_location"
                             android:maxLines="1"
                             android:maxLength="25"
-                            android:name="com.google.android.gms.location.places.ui.PlaceAutocompleteFragment"
                             />
                     </android.support.design.widget.TextInputLayout>
                 </RelativeLayout>
