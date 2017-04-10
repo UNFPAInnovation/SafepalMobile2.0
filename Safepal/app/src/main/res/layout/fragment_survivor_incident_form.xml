@@ -105,7 +105,7 @@
                         android:layout_toRightOf="@id/image_where_take_place"
                         >
 
-                        <com.unfpa.safepal.places.CustomAutoCompleteTextView
+                        <AutoCompleteTextView
                             android:id="@+id/incident_location_actv"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
