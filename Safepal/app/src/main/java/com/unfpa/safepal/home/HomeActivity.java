@@ -317,8 +317,8 @@ public class HomeActivity extends AppCompatActivity {
         homeNextSv = new ShowcaseView.Builder(HomeActivity.this)
                 .withHoloShowcase()
                 .setTarget(nTarget)
-                .setContentTitle(R.string.home_guide_fab_exit_title)
-                .setContentText(R.string.home_guide_fab_exit_text)
+                .setContentTitle(R.string.home_guide_fab_next_title)
+                .setContentText(R.string.home_guide_fab_next_text)
                 .setStyle(R.style.NextShowcaseTheme)
                 .build();
 

@@ -98,7 +98,15 @@
     <string name="sif_incident_details">Tell the story of the incident.</string>
     <string name="sif_male">Boy </string>
     <string name="sif_female">Girl </string>
-    <string-array name="sif_incident_type">
+    <string-array name="sif_incident_type_below">
+        <item>What happened to you?</item>
+        <item>Bad touches </item>
+        <item>Someone tried to defiled me</item>
+        <item>I was defiled</item>
+        <item>other</item>
+    </string-array>
+
+    <string-array name="sif_incident_type_above">
         <item>What happened to you?</item>
         <item>Bad touches </item>
         <item>Someone tried to rape me</item>
@@ -116,14 +124,28 @@
     <string name="incident_details">Tell the story of the incident.</string>
     <string name="apif_male">Boy </string>
     <string name="apif_female">Girl </string>
-    <string-array name="apif_incident_type">
+
+    <string-array name="apif_incident_type_below">
         <item>What happened to him or her?</item>
         <item>Bad touches </item>
-        <item>Someone tried to rape me</item>
-        <item>He/She was raped</item>
+        <item>Someone tried to defile me</item>
         <item>He/She was defiled</item>
+        <item>He/She was forced into prostitution</item>
         <item>other</item>
     </string-array>
+
+    <string-array name="apif_incident_type_above">
+        <item>What happened to him or her?</item>
+        <item>Bad touches </item>
+        <item>Someone tried to rape him or her</item>
+        <item>He/She was raped</item>
+        <item>He/She was forced into prostitution</item>
+        <item>other</item>
+    </string-array>
+
+
+
+
     <string-array name="survivor_age_range">
         <item>How old is he/she?</item>
         <item>Below 10 years</item>
@@ -208,4 +230,6 @@
     and get linked to the nearest service provider for help. </string>
     <string name="home_guide_fab_exit_title">Quick Exit </string>
     <string name="home_guide_fab_exit_text"> If you are suspicious that perpetrator knows you are reporting him/her, use the left bottom \'Exit\' button to exit the safepal app or quickly uninstall it by long pressing on the \'Exit\' button.</string>
+    <string name="home_guide_fab_next_title">Important Information </string>
+    <string name="home_guide_fab_next_text"> \"Learning never ends\" - the saying goes, use the \'Next\' button in the middle bottom to get more information about sexual violence. Together, we can fight gender based violence </string>
 </resources>

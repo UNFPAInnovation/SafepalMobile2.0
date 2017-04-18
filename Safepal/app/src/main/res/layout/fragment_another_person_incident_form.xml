@@ -36,6 +36,54 @@
 
         <include layout="@layout/divider" />
 
+        <!-- Age Textbox and Button-->
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginTop="20dp">
+
+            <ImageView
+                android:id="@+id/image_age"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="10dp"
+                android:layout_marginRight="10dp"
+                android:src="@mipmap/ic_action_go_to_today"
+                android:layout_alignTop="@+id/date_of_birth_spinner_container"
+                android:layout_alignBottom="@+id/date_of_birth_spinner_container" />
+
+            <RelativeLayout
+                android:layout_marginTop="20dp"
+                android:id="@+id/date_of_birth_spinner_container"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@drawable/spinner_bg"
+                android:text="@string/sif_survivor_pick_age"
+                android:orientation="vertical"
+                android:layout_toEndOf="@id/image_age"
+                android:layout_toRightOf="@id/image_age"
+                >
+                <Spinner
+                    android:id="@+id/age_range_spinner"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="5dp"
+                    android:layout_marginStart="5dp"
+                    android:gravity="center"
+                    android:paddingBottom="10dp"
+                    android:paddingTop="10dp"
+                    android:spinnerMode="dropdown"
+                    style="@style/coolSpinnerNormal"
+
+                    />
+            </RelativeLayout>
+
+        </RelativeLayout>
+
+
+        <include layout="@layout/divider" />
+
 
         <RelativeLayout
             android:layout_width="match_parent"
@@ -216,126 +264,6 @@
 
         </RelativeLayout>
 
-        <include layout="@layout/divider" />
-
-        <!-- Age Textbox and Button-->
-
-        <RelativeLayout
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_marginTop="20dp">
-
-            <ImageView
-                android:id="@+id/image_age"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="10dp"
-                android:layout_marginRight="10dp"
-                android:src="@mipmap/ic_action_go_to_today"
-                android:layout_alignTop="@+id/date_of_birth_spinner_container"
-                android:layout_alignBottom="@+id/date_of_birth_spinner_container" />
-
-            <!--<LinearLayout-->
-
-                <!--android:id="@+id/age_linear_layout"-->
-                <!--android:layout_width="match_parent"-->
-                <!--android:layout_height="wrap_content"-->
-                <!--android:orientation="vertical"-->
-                <!--android:layout_marginTop="10dp"-->
-                <!--android:layout_toEndOf="@id/image_age"-->
-                <!--android:layout_toRightOf="@id/image_age"-->
-
-                >
-
-                <!--<TextView-->
-                    <!--android:id="@+id/age_tv"-->
-                    <!--android:layout_width="350dp"-->
-                    <!--android:layout_height="wrap_content"-->
-                    <!--android:text="@string/survivor_age"-->
-                    <!--android:textColor="@color/colorAccent"-->
-                    <!--android:textStyle="bold"-->
-                    <!--/>-->
-
-                <!--&lt;!&ndash;afer choosing aa date, chosem date will appear here&ndash;&gt;-->
-                <!--<TextView-->
-                    <!--android:id="@+id/chosen_date"-->
-                    <!--android:layout_width="match_parent"-->
-                    <!--android:layout_height="wrap_content"-->
-                    <!--android:text=""-->
-                    <!--android:textColor="@color/colorPrimary"-->
-                    <!--android:textStyle="bold"-->
-                    <!--android:visibility="gone" />-->
-
-                <!--<Button-->
-                    <!--android:layout_marginTop="10dp"-->
-                    <!--android:id="@+id/date_of_birth_button"-->
-                    <!--style="@style/coolButtonNormal"-->
-                    <!--android:layout_width="wrap_content"-->
-                    <!--android:layout_height="wrap_content"-->
-                    <!--android:text="@string/sif_survivor_pick_age"-->
-
-                    <!--/>-->
-
-                <RelativeLayout
-                    android:layout_marginTop="20dp"
-                    android:id="@+id/date_of_birth_spinner_container"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:background="@drawable/spinner_bg"
-                    android:text="@string/sif_survivor_pick_age"
-
-                    android:orientation="vertical"
-                    android:layout_toEndOf="@id/image_age"
-                    android:layout_toRightOf="@id/image_age"
-                    >
-                    <Spinner
-                        android:id="@+id/age_range_spinner"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginLeft="5dp"
-                        android:layout_marginStart="5dp"
-                        android:gravity="center"
-                        android:paddingBottom="10dp"
-                        android:paddingTop="10dp"
-                        android:spinnerMode="dropdown"
-                        style="@style/coolSpinnerNormal"
-
-                        />
-                </RelativeLayout>
-
-
-
-            <!--</LinearLayout>-->
-        </RelativeLayout>
-
-        <!--<include layout="@layout/divider" />-->
-
-        <!--The footer that conststs of two buttons-->
-        <!--<LinearLayout-->
-            <!--android:layout_width="match_parent"-->
-            <!--android:layout_height="wrap_content"-->
-            <!--android:layout_marginTop="20dp"-->
-            <!--android:orientation="horizontal">-->
-
-            <!--<Button-->
-                <!--android:id="@+id/exit_app"-->
-                <!--style="@style/coolButtonAttention"-->
-                <!--android:layout_width="0dp"-->
-                <!--android:layout_height="wrap_content"-->
-                <!--android:layout_weight="1"-->
-                <!--android:text="@string/exitApp" />-->
-
-            <!--<Button-->
-                <!--android:id="@+id/finish"-->
-                <!--style="@style/coolButtonNormal"-->
-                <!--android:layout_width="0dp"-->
-                <!--android:layout_height="wrap_content"-->
-                <!--android:layout_weight="1"-->
-                <!--android:onClick="onClickSubmitIncident"-->
-                <!--android:text="@string/submit" />-->
-
-        <!--</LinearLayout>-->
-        <!--end of The footer that conststs of two buttons-->
 
     </LinearLayout>
 </android.support.v4.widget.NestedScrollView>

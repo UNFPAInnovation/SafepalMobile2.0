@@ -16,6 +16,9 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.LinearLayout;
@@ -27,6 +30,8 @@ import com.android.volley.Request;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
+import com.github.amlcurran.showcaseview.ShowcaseView;
+import com.github.amlcurran.showcaseview.targets.ViewTarget;
 import com.unfpa.safepal.ProvideHelp.RVCsoModel.CsoRvAdapter;
 import com.unfpa.safepal.ProvideHelp.RVCsoModel.TheCSO;
 import com.unfpa.safepal.R;
@@ -346,6 +351,36 @@ public class CsoActivity extends AppCompatActivity {
     }
 
 
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        MenuInflater inflater = getMenuInflater();
+        inflater.inflate(R.menu.menu_cso, menu);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        // Handle item selection
+        switch (item.getItemId()) {
+            case R.id.menu_cso_guide:
+                csoGuide();
+                return true;
+            default:
+                return super.onOptionsItemSelected(item);
+        }
+    }
+
+    public void csoGuide(){
+        ViewTarget eTarget = new ViewTarget(R.id.cso_childhelpline_btn, this);
+        ShowcaseView homeExitSv = new ShowcaseView.Builder(this)
+                .withHoloShowcase()
+                .setTarget(eTarget)
+                .setContentTitle("Talk to someone")
+                .setContentText("Click on the call button in order to talk to someone for help")
+                .setStyle(R.style.ExitShowcaseTheme)
+                .build();
+
+    }
 
 }
 

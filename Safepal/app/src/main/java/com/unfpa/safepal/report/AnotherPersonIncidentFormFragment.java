@@ -14,6 +14,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
 import android.widget.DatePicker;
@@ -31,6 +32,8 @@ import com.unfpa.safepal.messages.EMessageDialogFragment;
 import com.unfpa.safepal.network.NetworkChangeReceiver;
 import com.unfpa.safepal.store.ReportIncidentContentProvider;
 import com.unfpa.safepal.store.ReportIncidentTable;
+
+import java.util.Random;
 
 import static com.unfpa.safepal.report.SurvivorIncidentFormFragment.netReceiver;
 import static com.unfpa.safepal.report.SurvivorIncidentFormFragment.reportIncidentUri;
@@ -188,12 +191,9 @@ public class AnotherPersonIncidentFormFragment extends Fragment {
 
 
 
-        ArrayAdapter<CharSequence> apifIncidentTypeAdapter = ArrayAdapter.createFromResource(getActivity(),
-                R.array.apif_incident_type, R.layout.spinner_item);
-        // Specify the layout to use when the list of choices appears
-        apifIncidentTypeAdapter.setDropDownViewResource( R.layout.spinner_dropdown);
-        // Apply the apifIncidentTypeAdapter to the spinner
-        apifIncidentTypeSpinner.setAdapter(apifIncidentTypeAdapter);
+
+
+
 
         //prepare adapter for age range spinner
         ArrayAdapter<CharSequence> ageRangeAdapter = ArrayAdapter.createFromResource(getActivity(),
@@ -202,6 +202,60 @@ public class AnotherPersonIncidentFormFragment extends Fragment {
         ageRangeAdapter.setDropDownViewResource( R.layout.spinner_dropdown);
         // Apply the apifIncidentTypeAdapter to the spinner
         spinnerAgeRange.setAdapter(ageRangeAdapter);
+
+
+        //Calculations for the age range and where incident happened spinners
+        spinnerAgeRange.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                if(position>8){
+                   ArrayAdapter<CharSequence> apifIncidentTypeAdapter = ArrayAdapter.createFromResource(getActivity(),
+                            R.array.apif_incident_type_above, R.layout.spinner_item);
+                    // Specify the layout to use when the list of choices appears
+                    apifIncidentTypeAdapter.setDropDownViewResource( R.layout.spinner_dropdown);
+                    // Apply the apifIncidentTypeAdapter to the spinner
+                    apifIncidentTypeSpinner.setAdapter(apifIncidentTypeAdapter);
+
+                }
+                if(position<=8 && position>0){
+                    ArrayAdapter<CharSequence> apifIncidentTypeAdapter = ArrayAdapter.createFromResource(getActivity(),
+                            R.array.apif_incident_type_below, R.layout.spinner_item);
+                    // Specify the layout to use when the list of choices appears
+                    apifIncidentTypeAdapter.setDropDownViewResource( R.layout.spinner_dropdown);
+                    // Apply the apifIncidentTypeAdapter to the spinner
+                    apifIncidentTypeSpinner.setAdapter(apifIncidentTypeAdapter);
+
+                }
+                if(position==0){
+                    ArrayAdapter<CharSequence> apifIncidentTypeAdapter = ArrayAdapter.createFromResource(getActivity(),
+                            R.array.apif_incident_type_above, R.layout.spinner_item);
+                    // Specify the layout to use when the list of choices appears
+                    apifIncidentTypeAdapter.setDropDownViewResource( R.layout.spinner_dropdown);
+                    // Apply the apifIncidentTypeAdapter to the spinner
+                    apifIncidentTypeSpinner.setAdapter(apifIncidentTypeAdapter);
+                    //Generates random feed back to the user
+                    String [] randFeedback = {"What is his/her age?", "Please select his/her age.", "How old is He/She?"};
+                    Random rn = new Random();
+                    Toast.makeText(rootView.getContext(), randFeedback[rn.nextInt(randFeedback.length)], Toast.LENGTH_LONG).show();
+                }
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+
+
+            }
+        });
+
+
+
+
+
+
+
+
+
+
 
         apifEncouragingMessagesTv.setOnClickListener(new View.OnClickListener() {
             @Override

@@ -1,0 +1,12 @@
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:context=".report.WhoSGettingHelpActivity">
+
+    <item
+        android:id="@+id/menu_cso_guide"
+        android:orderInCategory="100"
+        android:title="@string/action_home_guide"
+        app:showAsAction="never" />
+
+</menu>

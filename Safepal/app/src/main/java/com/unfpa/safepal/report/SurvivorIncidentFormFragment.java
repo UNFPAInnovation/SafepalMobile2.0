@@ -180,7 +180,7 @@ public class SurvivorIncidentFormFragment extends Fragment {
 
         // Create an ArrayAdapter using the string array and a default spinner layout
         ArrayAdapter<CharSequence> sifIncidentTypeAdapter = ArrayAdapter.createFromResource(getActivity(),
-                R.array.sif_incident_type, android.R.layout.simple_spinner_item);
+                R.array.sif_incident_type_above, android.R.layout.simple_spinner_item);
         // Specify the layout to use when the list of choices appears
         sifIncidentTypeAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         // Apply the sifIncidentTypeAdapter to the spinner

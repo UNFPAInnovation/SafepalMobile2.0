@@ -9,6 +9,7 @@ import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
+import android.webkit.URLUtil;
 import android.widget.Toast;
 
 public class NetworkChangeReceiver extends BroadcastReceiver{
@@ -24,10 +25,15 @@ public class NetworkChangeReceiver extends BroadcastReceiver{
         String status = NetworkUtil.getConnectivityStatusString(context);
 
         if(status=="Wifi enabled"||status=="Mobile data enabled"){
-            mServiceIntent = new Intent(context, UIDPullService.class).setData(Uri.parse(URL_SAFEPAL_API));
-            context.startService(mServiceIntent);
 
-            Toast.makeText(context, " Your report has been successfully received.", Toast.LENGTH_SHORT).show();
+            if(URLUtil.isValidUrl(URL_SAFEPAL_API)) {
+                mServiceIntent = new Intent(context, UIDPullService.class).setData(Uri.parse(URL_SAFEPAL_API));
+                context.startService(mServiceIntent);
+                Toast.makeText(context, " Your report has been successfully received.", Toast.LENGTH_SHORT).show();
+            }
+            else{
+            Toast.makeText(context, "Poor internet connection. The report will be sent later.", Toast.LENGTH_SHORT).show();
+            }
 
         }
         else {
