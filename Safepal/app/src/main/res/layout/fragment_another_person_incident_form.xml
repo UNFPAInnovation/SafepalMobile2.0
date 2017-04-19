@@ -161,6 +161,7 @@
                         android:hint="@string/incident_location"
                         android:maxLines="1"
                         android:maxLength="25"/>
+                    <requestFocus />
                 </android.support.design.widget.TextInputLayout>
             </RelativeLayout>
 

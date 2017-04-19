@@ -26,6 +26,7 @@ import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.unfpa.safepal.Places.GooglePlacesAutocompleteAdapter;
 import com.unfpa.safepal.R;
 import com.unfpa.safepal.Utils.Layout;
 import com.unfpa.safepal.messages.EMessageDialogFragment;
@@ -185,10 +186,16 @@ public class AnotherPersonIncidentFormFragment extends Fragment {
         //click actions
 
           //loads autocomplete places
-        ArrayAdapter<String> apifReportPlacesAdapter = new ArrayAdapter<String>(getActivity(),
-                android.R.layout.simple_dropdown_item_1line, getResources().getStringArray(R.array.auto_complete_report_places));
-        apifIncidentLocationEt.setAdapter(apifReportPlacesAdapter);
-
+        //ArrayAdapter<String> apifReportPlacesAdapter = new ArrayAdapter<String>(getActivity(),
+          //      android.R.layout.simple_dropdown_item_1line, getResources().getStringArray(R.array.auto_complete_report_places));
+        apifIncidentLocationEt.setAdapter(new GooglePlacesAutocompleteAdapter(rootView.getContext(), R.layout.location_list_item));
+        apifIncidentLocationEt.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                String str = (String) parent.getItemAtPosition(position);
+                Toast.makeText(rootView.getContext(), str, Toast.LENGTH_SHORT).show();
+            }
+        });
 
 
 

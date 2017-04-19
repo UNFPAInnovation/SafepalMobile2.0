@@ -19,6 +19,7 @@
             android:orientation="vertical">
 
 
+
             <!-- android:onClick="onClickEncouragingMessages"-->
             <TextView
                 android:layout_marginTop="@dimen/intro_text_margin_top"
@@ -33,6 +34,71 @@
                 android:text="@string/wsgh_msgs_to_ecourage_survivor"
                 android:textStyle="bold"
                 />
+
+
+
+            <include layout="@layout/divider" />
+
+            <!-- Age Textbox and Button-->
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginTop="20dp">
+
+                <ImageView
+                    android:id="@+id/image_age"
+                    android:layout_width="30dp"
+                    android:layout_height="30dp"
+                    android:layout_marginTop="10dp"
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginRight="10dp"
+                    android:src="@mipmap/ic_action_go_to_today" />
+
+                <LinearLayout
+
+                    android:id="@+id/age_linear_layout"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:layout_marginTop="10dp"
+                    android:layout_toEndOf="@id/image_age"
+                    android:layout_toRightOf="@id/image_age"
+
+                    >
+
+                    <TextView
+                        android:id="@+id/age_tv"
+                        android:layout_width="350dp"
+                        android:layout_height="wrap_content"
+                        android:text="@string/sif_survivor_age"
+                        android:textColor="@color/colorAccent"
+                        android:textStyle="bold"
+                        />
+
+                    <!--afer choosing aa date, chosem date will appear here-->
+                    <TextView
+                        android:id="@+id/chosen_date"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text=""
+                        android:textColor="@color/colorPrimary"
+                        android:textStyle="bold"
+                        android:visibility="gone" />
+
+                    <Button
+                        android:layout_marginTop="10dp"
+                        android:id="@+id/date_of_birth_button"
+                        style="@style/materialButtonNormal"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/sif_survivor_pick_age"
+
+                        />
+
+
+                </LinearLayout>
+            </RelativeLayout>
 
             <include layout="@layout/divider" />
 
@@ -216,68 +282,6 @@
 
             </RelativeLayout>
 
-            <include layout="@layout/divider" />
-
-            <!-- Age Textbox and Button-->
-
-            <RelativeLayout
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_marginTop="20dp">
-
-                <ImageView
-                    android:id="@+id/image_age"
-                    android:layout_width="30dp"
-                    android:layout_height="30dp"
-                    android:layout_marginTop="10dp"
-                    android:layout_marginLeft="10dp"
-                    android:layout_marginRight="10dp"
-                    android:src="@mipmap/ic_action_go_to_today" />
-
-                <LinearLayout
-
-                    android:id="@+id/age_linear_layout"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:orientation="vertical"
-                    android:layout_marginTop="10dp"
-                    android:layout_toEndOf="@id/image_age"
-                    android:layout_toRightOf="@id/image_age"
-
-                    >
-
-                    <TextView
-                        android:id="@+id/age_tv"
-                        android:layout_width="350dp"
-                        android:layout_height="wrap_content"
-                        android:text="@string/sif_survivor_age"
-                        android:textColor="@color/colorAccent"
-                        android:textStyle="bold"
-                        />
-
-                    <!--afer choosing aa date, chosem date will appear here-->
-                    <TextView
-                        android:id="@+id/chosen_date"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:text=""
-                        android:textColor="@color/colorPrimary"
-                        android:textStyle="bold"
-                        android:visibility="gone" />
-
-                    <Button
-                        android:layout_marginTop="10dp"
-                        android:id="@+id/date_of_birth_button"
-                        style="@style/materialButtonNormal"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="@string/sif_survivor_pick_age"
-
-                        />
-
-
-                </LinearLayout>
-            </RelativeLayout>
 
         </LinearLayout>
     </android.support.v4.widget.NestedScrollView>
