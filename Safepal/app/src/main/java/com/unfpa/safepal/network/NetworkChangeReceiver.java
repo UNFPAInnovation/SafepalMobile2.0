@@ -15,7 +15,7 @@ import android.widget.Toast;
 public class NetworkChangeReceiver extends BroadcastReceiver{
 
     //Volley requests
-    final String URL_SAFEPAL_API = "http://52.43.152.73/api/addselfreport.php";
+    final String URL_SAFEPAL_API = " https://api-safepal.herokuapp.com/index.php/api/v1/reports/addreport";
     // Intent for starting the IntentService that downloads the Picasa featured picture RSS feed
     private Intent mServiceIntent;
 

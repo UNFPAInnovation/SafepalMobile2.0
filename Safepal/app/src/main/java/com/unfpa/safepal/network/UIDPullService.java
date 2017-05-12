@@ -5,8 +5,8 @@ import android.content.ContentValues;
 import android.content.Intent;
 import android.database.Cursor;
 import android.util.Log;
-import android.widget.Toast;
 
+import com.android.volley.AuthFailureError;
 import com.android.volley.Request;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
@@ -68,34 +68,24 @@ public class UIDPullService extends IntentService {
         if (cursor != null) {
             cursor.moveToLast();
 
-            populateOnline(
+            sendReportToServer(
                     cursor.getString(cursor.getColumnIndex(ReportIncidentTable.COLUMN_SURVIVOR_GENDER)),
                     cursor.getString(cursor.getColumnIndex(ReportIncidentTable.COLUMN_SURVIVOR_DATE_OF_BIRTH)),
                     cursor.getString(cursor.getColumnIndex(ReportIncidentTable.COLUMN_INCIDENT_TYPE)),
-                    cursor.getString(cursor.getColumnIndex(ReportIncidentTable.COLUMN_INCIDENT_LOCATION)),
-                    "WTBC",
                     cursor.getString(cursor.getColumnIndex(ReportIncidentTable.COLUMN_INCIDENT_STORY)),
                     cursor.getString(cursor.getColumnIndex(ReportIncidentTable.COLUMN_REPORTED_BY)),
-
                     cursor.getString(cursor.getColumnIndex(ReportIncidentTable.COLUMN_REPORTER_LOCATION_LAT)),
                     cursor.getString(cursor.getColumnIndex(ReportIncidentTable.COLUMN_REPORTER_LOCATION_LNG)),
-
                     cursor.getString(cursor.getColumnIndex(ReportIncidentTable.COLUMN_REPORTER_PHONE_NUMBER)),
-                    cursor.getString(cursor.getColumnIndex(ReportIncidentTable.COLUMN_REPORTER_EMAIL)),
-
                     localUrlString,
 
-
-
                     new VolleyCallback() {
-
-
 
                         @Override
                         public void onSuccessResponse(String result) {
                             try {
                                 JSONObject response = new JSONObject(result);
-                                Log.d("",response.getString("unique_code"));
+                                Log.d("",response.getString("casenumber"));
                                 Cursor cursorUpdate =  getContentResolver().query(
                                         ReportIncidentContentProvider.CONTENT_URI,
                                         null,
@@ -129,64 +119,118 @@ public class UIDPullService extends IntentService {
         }
 
     }
+    public void sendReportToServer(
+                                   final String toServerSGender,
+                                   final String toServerSDOB,
+                                   final String toServerIType,
+                                   final String toServerIDescription,
+                                   final String toServerReportedBy,
 
-    // Method pushes the data to json server suing volley
-    private void populateOnline(final String toServerSGender,
-                                final String toServerSDOB,
-                                final String toServerIType,
-                                final String toServerILocation,
-                                final String toServerStatus,
-                                final String toServerIDescription,
-                                final String toServerReportedBy,
-
-                                final String toServerReporterLat,
-                                final String toServerReportedLng,
-                                final String toServerReporterPhonenumber,
-                                final String toServerReporterEmail,
-
-                                String URL_SAFEPAL_API, final VolleyCallback callback ){
+                                   final String toServerReporterLat,
+                                   final String toServerReportedLng,
+                                   final String toServerReporterPhonenumber,
+                                   final String addReportUrl, final VolleyCallback reportCallback ){
 
 
-        StringRequest stringRequest = new StringRequest(Request.Method.POST, URL_SAFEPAL_API,
+        getTokenFromServer(new VolleyCallback() {
+            @Override
+            public void onSuccessResponse(String tokenResponse) {
+                try {
+                    JSONObject tokenObject = new JSONObject(tokenResponse);
+                    final  String  serverReceivedToken = tokenObject.getString("token");
+
+                    // This volley request sends a report to the server with the received token
+                    StringRequest addReportRequest = new StringRequest(Request.Method.POST, addReportUrl,
+                            new Response.Listener<String>() {
+                                @Override
+                                public void onResponse(String addReportReponse) {
+                                    reportCallback.onSuccessResponse(addReportReponse);
+                                }
+                            },
+                            new Response.ErrorListener() {
+                                @Override
+                                public void onErrorResponse(VolleyError error) {
+                                    Log.d("Not Submitted", error.getMessage());
+                                }
+                            }){
+
+                        @Override
+                        protected Map<String, String> getParams() throws AuthFailureError {
+                            HashMap<String, String> addReport = new HashMap<String, String>();
+
+                            addReport.put("token", serverReceivedToken);
+                            addReport.put("type",toServerIType);
+                            addReport.put("gender",toServerSGender);
+                            addReport.put("reporter",toServerReportedBy);
+                            addReport.put("incident_date","null");
+                            addReport.put("perpetuator","Unknown");
+                            addReport.put("age",toServerSDOB);
+                            addReport.put("contact",toServerReporterPhonenumber);
+                            addReport.put("latitude",toServerReporterLat);
+                            addReport.put("longitude",toServerReportedLng);
+                            addReport.put("details",toServerIDescription);
+                            addReport.put("report_source","android user");
+                            addReport.put("reportDate","2017-12-05");
+                            return addReport;                        }
+
+                        @Override
+                        public Map<String, String> getHeaders() throws AuthFailureError {
+                            HashMap<String, String> addReportHeaders = new HashMap<String, String>();
+                            addReportHeaders.put("userid", "C7rPaEAN9NpPGR8e9wz9bzw");
+                            return  addReportHeaders;
+                        }
+
+                    };
+
+
+                    MySingleton.getInstance(getApplicationContext()).addToRequestQueue(addReportRequest);
+
+
+
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+
+
+            }
+        });
+    }
+
+
+
+    public void getTokenFromServer(final VolleyCallback tokenCallback) {
+
+
+        final String tokenUrl = " https://api-safepal.herokuapp.com/index.php/api/v1/auth/newtoken";
+
+        // This volley request gets a token from the server
+        StringRequest tokenRequest = new StringRequest(Request.Method.GET, tokenUrl,
                 new Response.Listener<String>() {
                     @Override
-                    public void onResponse(String response) {
-                        callback.onSuccessResponse(response);
+                    public void onResponse(String tokenResponse) {
+                        tokenCallback.onSuccessResponse(tokenResponse);
+
+
                     }
                 },
                 new Response.ErrorListener() {
                     @Override
                     public void onErrorResponse(VolleyError error) {
-
+                        Log.d("Failed to get token", error.getMessage());
                     }
                 }){
             @Override
-            protected Map<String,String> getParams(){
-                Map<String,String> params = new HashMap<String, String>();
+            public Map<String, String> getHeaders() throws AuthFailureError {
+                HashMap<String, String> headers = new HashMap<String, String>();
+                headers.put("userid", "C7rPaEAN9NpPGR8e9wz9bzw");
 
-                params.put("survivor_gender",toServerSGender);
-                params.put("survivor_date_of_birth",toServerSDOB);
-
-                params.put("incident_type", toServerIType);
-                params.put("incident_location",toServerILocation);
-
-                params.put("status",toServerStatus);
-                params.put("incident_description", toServerIDescription);
-                params.put("reported_by", toServerReportedBy);
-
-                params.put("reporter_lat", toServerReporterLat);
-                params.put("reporter_long",toServerReportedLng);
-                params.put("survivor_contact_phone_number", toServerReporterPhonenumber);
-                params.put("survivor_contact_email",toServerReporterEmail);
-
-                return params;
+                return headers;
             }
-
         };
+        //add request to queue
 
-        MySingleton.getInstance(this).addToRequestQueue(stringRequest);
+        MySingleton.getInstance(this).addToRequestQueue(tokenRequest);
 
     }
-
 
 }

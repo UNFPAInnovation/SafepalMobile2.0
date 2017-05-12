@@ -34,7 +34,7 @@ import java.util.Random;
 
 public class HomeActivity extends AppCompatActivity {
 
-        //Global Variables 1234
+    //Global Variables 1234
     /**
      * Next and buttonExit button
      */
@@ -46,8 +46,9 @@ public class HomeActivity extends AppCompatActivity {
     AppCompatCheckBox checkBoxAutoScroll;
 
     //guide for safepal
-    ShowcaseView homeReportGuideSv, homeExitSv, homeNextSv ;
-     RelativeLayout.LayoutParams lps, nextLps;
+    ShowcaseView homeReportGuideSv, homeExitSv, homeNextSv;
+    RelativeLayout.LayoutParams lps, nextLps;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -62,18 +63,16 @@ public class HomeActivity extends AppCompatActivity {
         buttonExit = (Button) findViewById(R.id.exit_app);
         buttonNext = (Button) findViewById(R.id.home_next_message);
         fabReportCase = (FloatingActionButton) findViewById(R.id.fab_report_incident);
-        infoPanel = (RelativeLayout)findViewById(R.id.home_info_panel);
+        infoPanel = (RelativeLayout) findViewById(R.id.home_info_panel);
         textViewMessage = (TextView) findViewById(R.id.message);
-        checkBoxAutoScroll = (AppCompatCheckBox)findViewById(R.id.auto_scroll_CheckBox) ;
-
-
+        checkBoxAutoScroll = (AppCompatCheckBox) findViewById(R.id.auto_scroll_CheckBox);
 
 
         buttonExit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
 
-                if(Build.VERSION.SDK_INT>=21)  finishAndRemoveTask();
+                if (Build.VERSION.SDK_INT >= 21) finishAndRemoveTask();
                 else finish();
             }
         });
@@ -93,7 +92,7 @@ public class HomeActivity extends AppCompatActivity {
             public void onClick(View view) {
 
                 animateNextMessage();
-
+               // getTokenFromServer();
             }
         });
 
@@ -110,16 +109,15 @@ public class HomeActivity extends AppCompatActivity {
         checkBoxAutoScroll.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
-                if(b){
+                if (b) {
                     activateAutoScrollTimer();
                     Log.d(TAG, "activated timer");
-                }else {
+                } else {
                     Log.d(TAG, "deactivated timer");
                     deactivateAutoScrollTimer();
                 }
             }
         });
-
 
 
         //animations about messages
@@ -153,32 +151,34 @@ public class HomeActivity extends AppCompatActivity {
     private void showDisclaimer() {
         SharedPreferences prefs = getSharedPreferences(getString(R.string.shared_pref_name), MODE_PRIVATE);
         boolean isFirstTime = prefs.getBoolean(getString(R.string.first_time), true);
-        if( isFirstTime ){
+        if (isFirstTime) {
             homeReportGuide();
             General.showDisclaimerDialog(this);
 
             SharedPreferences.Editor editor = prefs.edit();
             editor.putBoolean(getString(R.string.first_time), false);
             editor.apply();//indicate that app has ever been opened
-        }else {
+        } else {
             //General.showDisclaimerDialog(this);
         }
     }
 
     Animation animSlideIn;
     Animation animExit;
-    void animateNextMessage(){
+
+    void animateNextMessage() {
         infoPanel.startAnimation(animExit);
     }
 
-    boolean isAutoScrollOn= true;
+    boolean isAutoScrollOn = true;
     Thread threadScrolling;
+
     private void activateAutoScrollTimer() {
         isAutoScrollOn = true;
         threadScrolling = new Thread(new Runnable() {
             @Override
             public void run() {
-                while (isAutoScrollOn){
+                while (isAutoScrollOn) {
                     try {
                         Log.d(TAG, "loop!");
                         int timeOut = getResources().getInteger(R.integer.message_timeout);
@@ -192,29 +192,32 @@ public class HomeActivity extends AppCompatActivity {
                         });
                     } catch (InterruptedException e) {
                         e.printStackTrace();
-                        Log.e(TAG, "error: " + e.toString() );
+                        Log.e(TAG, "error: " + e.toString());
                     }
                 }
                 Log.d(TAG, "done n thread");
             }
-        });threadScrolling.start();
+        });
+        threadScrolling.start();
 
     }
+
     private void deactivateAutoScrollTimer() {
         isAutoScrollOn = false;
 
     }
 
     String TAG = HomeActivity.class.getSimpleName();
+
     private void updateMessageText() {//// TODO: 13-Nov-16 dynamically set messages
-       //make adapter
+        //make adapter
         ArrayAdapter<CharSequence> messages = ArrayAdapter.createFromResource(this,
                 R.array.home_contact_info, R.layout.spinner_item);//// TODO: 14-Nov-16 Is this the correct Array???
         Random random = new Random();
         int min = 0;
         int max = messages.getCount();
         Log.d(TAG, "max: " + max);
-        int randomIndex = random.nextInt(max-min)+min;
+        int randomIndex = random.nextInt(max - min) + min;
         Log.d(TAG, "randomIndex: " + randomIndex);
         String msg = messages.getItem(randomIndex).toString();
         Log.d(TAG, "textViewMessage: " + msg);
@@ -224,7 +227,7 @@ public class HomeActivity extends AppCompatActivity {
 
 
     //expand encouraging messages
-    public void onClickInfoPopUp(View view){
+    public void onClickInfoPopUp(View view) {
         EMessageDialogFragment emDialog = EMessageDialogFragment.newInstance(
                 "Safepal",
                 textViewMessage.getText().toString(),
@@ -248,7 +251,7 @@ public class HomeActivity extends AppCompatActivity {
                 General.showDisclaimerDialog(this);
                 return true;
             case R.id.menu_guide:
-                 homeReportGuide();
+                homeReportGuide();
                 return true;
             default:
                 return super.onOptionsItemSelected(item);
@@ -256,7 +259,7 @@ public class HomeActivity extends AppCompatActivity {
     }
 
     //This is a tutorial for the first  time reporters
-    public void homeReportGuide(){
+    public void homeReportGuide() {
 
         //guide for the first time users
         lps = new RelativeLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
@@ -272,18 +275,18 @@ public class HomeActivity extends AppCompatActivity {
                 .setContentTitle(R.string.home_guide_fab_report_title)
                 .setContentText(R.string.home_guide_fab_report_text)
                 .setStyle(R.style.ReportShowcaseTheme)
-                 .setOnClickListener(new View.OnClickListener() {
-                     @Override
-                     public void onClick(View v) {
-                         homeReportGuideSv.hide();
-                         homeExitGuide();
-                     }
-                 })
+                .setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        homeReportGuideSv.hide();
+                        homeExitGuide();
+                    }
+                })
                 .build();
         homeReportGuideSv.setButtonPosition(lps);
     }
 
-    public void homeExitGuide(){
+    public void homeExitGuide() {
 
 
         ViewTarget eTarget = new ViewTarget(R.id.exit_app, HomeActivity.this);
@@ -296,8 +299,8 @@ public class HomeActivity extends AppCompatActivity {
                 .setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                    homeExitSv.hide();
-                    homeNextGuide();
+                        homeExitSv.hide();
+                        homeNextGuide();
 
                     }
                 })
@@ -305,8 +308,8 @@ public class HomeActivity extends AppCompatActivity {
 
     }
 
-    public void homeNextGuide(){
-        //guide for the first time users
+    public void homeNextGuide() {
+      //guide for the first time users
         nextLps = new RelativeLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
         nextLps.addRule(RelativeLayout.CENTER_IN_PARENT);
         int margin = ((Number) (getResources().getDisplayMetrics().density * 12)).intValue();
@@ -329,5 +332,9 @@ public class HomeActivity extends AppCompatActivity {
                 homeNextSv.hide();
             }
         });
+
+
     }
+
+
 }

@@ -1,7 +1,6 @@
 package com.unfpa.safepal.report;
 
 import android.app.Fragment;
-
 import android.app.FragmentManager;
 import android.app.FragmentTransaction;
 import android.os.Bundle;
@@ -12,7 +11,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
-import android.widget.Button;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.RelativeLayout;
@@ -46,7 +44,6 @@ public class WhoSGettingHelpFragment extends Fragment {
     static Snackbar wsghFeedbackSnackbar;
     RelativeLayout wsghSpinnerRl;
     TextView wsghEncouragingMessagesTv;
-
 
     
     
@@ -85,11 +82,6 @@ public class WhoSGettingHelpFragment extends Fragment {
         wsghSomeelseRb = (RadioButton)rootView.findViewById(R.id.wsgh_someoneelse_rb);
         wsghEncouragingMessagesTv = (TextView)rootView.findViewById(R.id.wsgh_ecouraging_messages_tv);
 
-//        setSupportActionBar(wsghToolbar);
-//        getSupportActionBar().setDisplayShowHomeEnabled(true);
-//        getSupportActionBar().setLogo(R.mipmap.ic_launcher);
-//        getSupportActionBar().setDisplayUseLogoEnabled(true);
-
         /**  wsghRelationshipSpinner  **/
 
         // Create an ArrayAdapter using the string array and a default spinner layout
@@ -114,7 +106,9 @@ public class WhoSGettingHelpFragment extends Fragment {
         wsghYesRB.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                // Is the button now checked?
+
+
+               // Is the button now checked?
                 boolean checked = ((RadioButton) view).isChecked();
 
                 // Check which radio button was clicked
@@ -224,5 +218,13 @@ public class WhoSGettingHelpFragment extends Fragment {
 
         }
     }
-    
-}
+
+
+
+
+
+
+
+
+    }
+
