@@ -91,8 +91,8 @@ public class AnotherPersonIncidentFormFragment extends Fragment {
     DatePicker datePicker;
 
 
-    
-    
+
+
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private static final String ARG_RELATIONSHIP_TO_SURVIVOR = "";
@@ -293,7 +293,7 @@ public class AnotherPersonIncidentFormFragment extends Fragment {
                 Layout.changeImageColor(getActivity(),
                         imageQnMark.getDrawable(), getResources().getColor(R.color.colorImages)));
 return rootView;
-        
+
     }
 
 
@@ -307,7 +307,7 @@ return rootView;
             Log.e(TAG, "could not unregister receiver");
         }
     }
-    
+
     // TODO: Rename method, update argument and hook method into UI event
     public void onButtonPressed(Uri uri) {
         if (mListener != null) {
@@ -442,10 +442,9 @@ return rootView;
             netReceiver = new NetworkChangeReceiver();
             context.registerReceiver(netReceiver, netMainFilter);
 
-//            //starts a the  help activity
-//            Intent intent = new Intent(context,  ContactActivity.class);
-//            intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-//            context.startActivity(intent);
+
+            Log.d(TAG, "part one executed");
+
             return ReportingActivity.STATUS_SUBMIT_REPORT_SUBMITED;
         }
         //updates the report if its already available // TODO: 13-Nov-16 look 4 try catches... is this difference okay
@@ -453,7 +452,9 @@ return rootView;
             Log.e(TAG, "is this normal???");
             Log.e(TAG, "The  case was not submitted");
 
-            // context.getContentResolver().update(reportIncidentUri, values, null, null);
+             context.getContentResolver().update(reportIncidentUri, values, null, null);
+
+            Log.d(TAG, "part two executed");
             return ReportingActivity.STATUS_SUBMIT_REPORT_ALREADY_AVAILABLE;
         }
 
@@ -488,7 +489,7 @@ return rootView;
         apifIncidentTypeSpinner.performClick();
     }
 
-    
-    
+
+
 
 }

@@ -5,6 +5,7 @@ import android.content.ContentValues;
 import android.content.Intent;
 import android.database.Cursor;
 import android.util.Log;
+import android.widget.Toast;
 
 import com.android.volley.AuthFailureError;
 import com.android.volley.Request;
@@ -83,9 +84,12 @@ public class UIDPullService extends IntentService {
 
                         @Override
                         public void onSuccessResponse(String result) {
+
+                            Log.d("result", result);
+
                             try {
                                 JSONObject response = new JSONObject(result);
-                                Log.d("",response.getString("casenumber"));
+                                Log.d("",response.toString());
                                 Cursor cursorUpdate =  getContentResolver().query(
                                         ReportIncidentContentProvider.CONTENT_URI,
                                         null,
@@ -93,8 +97,8 @@ public class UIDPullService extends IntentService {
                                         null,
                                         null);
                                 ContentValues dataValues = new ContentValues();
-                                dataValues.put(ReportIncidentTable.COLUMN_UNIQUE_IDENTIFIER, response.getString("unique_code"));
-                               // Toast.makeText(getBaseContext(), " The SafePal No." + response.getString("unique_code"),Toast.LENGTH_SHORT).show();
+                                dataValues.put(ReportIncidentTable.COLUMN_UNIQUE_IDENTIFIER, response.getString("casenumber"));
+                                Toast.makeText(getBaseContext(), " The SafePal No." + response.getString("casenumber"),Toast.LENGTH_SHORT).show();
 
                                 if (cursorUpdate != null) {
                                     cursorUpdate.moveToLast();
@@ -108,6 +112,7 @@ public class UIDPullService extends IntentService {
                             } catch (JSONException e) {
                                 e.printStackTrace();
                             }
+
 
 
                         }

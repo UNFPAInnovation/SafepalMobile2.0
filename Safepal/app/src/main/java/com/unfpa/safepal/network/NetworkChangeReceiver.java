@@ -9,14 +9,13 @@ import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
-import android.webkit.URLUtil;
 import android.widget.Toast;
 
 public class NetworkChangeReceiver extends BroadcastReceiver{
 
     //Volley requests
     final String URL_SAFEPAL_API = " https://api-safepal.herokuapp.com/index.php/api/v1/reports/addreport";
-    // Intent for starting the IntentService that downloads the Picasa featured picture RSS feed
+    // Intent for starting the IntentService for submitting a survivor case
     private Intent mServiceIntent;
 
     @Override
@@ -26,14 +25,12 @@ public class NetworkChangeReceiver extends BroadcastReceiver{
 
         if(status=="Wifi enabled"||status=="Mobile data enabled"){
 
-            if(URLUtil.isValidUrl(URL_SAFEPAL_API)) {
+
                 mServiceIntent = new Intent(context, UIDPullService.class).setData(Uri.parse(URL_SAFEPAL_API));
                 context.startService(mServiceIntent);
-                Toast.makeText(context, " Your report has been successfully received.", Toast.LENGTH_SHORT).show();
-            }
-            else{
-            Toast.makeText(context, "Poor internet connection. The report will be sent later.", Toast.LENGTH_SHORT).show();
-            }
+
+
+                Toast.makeText(context, "You have submitted you incident .", Toast.LENGTH_SHORT).show();
 
         }
         else {

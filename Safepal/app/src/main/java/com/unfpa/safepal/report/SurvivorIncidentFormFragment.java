@@ -161,19 +161,8 @@ public class SurvivorIncidentFormFragment extends Fragment {
         textInputLayoutWhereHappened = (TextInputLayout)rootView.findViewById(R.id.inpu_latout_where);
 
 
-        //Toolbar
-//        setSupportActionBar(sifToolbar);
-//        getActivity().getSupportActionBar().setDisplayShowHomeEnabled(true);
-//        getSupportActionBar().setLogo(R.mipmap.ic_launcher);
-//        getSupportActionBar().setDisplayUseLogoEnabled(true);
-
         //content provider
         extras = getActivity().getIntent().getExtras();
-
-        //loads autocomplete places
-        //  ArrayAdapter<String> reportPlacesAdapter = new ArrayAdapter<String>(getActivity(),
-        // android.R.layout.simple_dropdown_item_1line, getResources().getStringArray(R.array.auto_complete_report_places));
-        // sifIncidentLocationEt.setAdapter(reportPlacesAdapter);
 
         //messages to user
         loadSifMessages();
@@ -341,8 +330,8 @@ public class SurvivorIncidentFormFragment extends Fragment {
 
             context.registerReceiver(netReceiver, netMainFilter);
 
-//            //starts a the  help activity
-//            context.startActivity(contactIntent);
+
+
             return ReportingActivity.STATUS_SUBMIT_REPORT_SUBMITED;
         }
         //updates the report if its already available

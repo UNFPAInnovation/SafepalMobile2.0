@@ -1,22 +1,12 @@
 package com.unfpa.safepal.ProvideHelp;
 
-import android.Manifest;
 import android.app.Fragment;
 import android.content.ContentValues;
 import android.content.Context;
-import android.content.Intent;
-import android.content.pm.PackageManager;
-import android.database.ContentObserver;
 import android.database.Cursor;
-import android.location.Location;
-import android.location.LocationListener;
-import android.location.LocationManager;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Handler;
-import android.provider.Settings;
-import android.support.v4.app.ActivityCompat;
-import android.support.v7.widget.Toolbar;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -34,7 +24,6 @@ import com.unfpa.safepal.messages.EMessageDialogFragment;
 import com.unfpa.safepal.store.RIContentObserver;
 import com.unfpa.safepal.store.ReportIncidentContentProvider;
 import com.unfpa.safepal.store.ReportIncidentTable;
-
 
 import static com.unfpa.safepal.report.WhoSGettingHelpFragment.randMessageIndex;
 
@@ -340,11 +329,7 @@ public class ContactFragment extends Fragment {
         }
 
     }
-    @Override
-    public void onDestroy() {
-        super.onDestroy();
-        gps.stopUsingGPS();
-    }
+
 
 
 }
