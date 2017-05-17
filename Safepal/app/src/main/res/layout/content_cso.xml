@@ -85,13 +85,7 @@
                 android:layout_marginBottom="14dp"
                 android:layout_marginTop="14dp"
                 android:scrollbars="vertical"/>
-            <ProgressBar
-                android:layout_centerInParent="true"
-                android:id="@+id/cso_progress_bar"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginBottom="14dp"
-                android:layout_marginTop="14dp"/>
+
             <LinearLayout
                 android:id="@+id/cso_no_internet_ll"
                 android:layout_centerInParent="true"

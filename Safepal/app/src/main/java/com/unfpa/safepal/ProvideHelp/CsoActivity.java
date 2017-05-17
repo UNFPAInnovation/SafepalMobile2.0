@@ -8,7 +8,6 @@ import android.database.Cursor;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Handler;
-import android.os.Process;
 import android.support.v4.app.ActivityCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.DefaultItemAnimator;
@@ -26,31 +25,23 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.android.volley.Request;
-import com.android.volley.Response;
-import com.android.volley.VolleyError;
-import com.android.volley.toolbox.StringRequest;
 import com.github.amlcurran.showcaseview.ShowcaseView;
 import com.github.amlcurran.showcaseview.targets.ViewTarget;
+import com.unfpa.safepal.ProvideHelp.RVCsoModel.BeforeCsoInfo;
 import com.unfpa.safepal.ProvideHelp.RVCsoModel.CsoRvAdapter;
 import com.unfpa.safepal.ProvideHelp.RVCsoModel.TheCSO;
 import com.unfpa.safepal.R;
 import com.unfpa.safepal.messages.EMessageDialogFragment;
-import com.unfpa.safepal.network.MySingleton;
-import com.unfpa.safepal.network.VolleyCallback;
 import com.unfpa.safepal.store.RIContentObserver;
 import com.unfpa.safepal.store.ReportIncidentContentProvider;
 import com.unfpa.safepal.store.ReportIncidentTable;
 
-import org.json.JSONArray;
-import org.json.JSONException;
-import org.json.JSONObject;
-
-import java.math.BigDecimal;
+import java.math.RoundingMode;
+import java.text.DecimalFormat;
 import java.util.ArrayList;
-import java.util.HashMap;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
-import java.util.Map;
 
 import static com.unfpa.safepal.report.WhoSGettingHelpFragment.randMessageIndex;
 
@@ -67,7 +58,10 @@ public class CsoActivity extends AppCompatActivity {
     TextView csoSafepalNo, csoContactInfo,csoAssuranceHelp, csoEncouragingMessagesTV;
 
     //variables for the nearest cso list
+
+    private List<BeforeCsoInfo> beforeCsoList = new ArrayList<>();
     private List<TheCSO> csosList = new ArrayList<>();
+
     private RecyclerView csosRecyclerView;
     private CsoRvAdapter csosAdapter;
 
@@ -77,6 +71,8 @@ public class CsoActivity extends AppCompatActivity {
     private Button csoNoInternetButton;
     // TheCSOs json url
     private static final String URL_CSO_API = "http://52.43.152.73/api/location.php";
+     //This is a temporary list of cso's hard coded here
+
 
      /**
      * Represents a geographical location.
@@ -88,6 +84,8 @@ public class CsoActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_cso);
+
+
 
         //buttonFinish and buttonExit buttons
         buttonNext = (Button) findViewById(R.id.finish);
@@ -111,7 +109,6 @@ public class CsoActivity extends AppCompatActivity {
         updateCsoUIDTV();
 
 
-        csoProgressBar = (ProgressBar) findViewById(R.id.cso_progress_bar);
         csosRecyclerView = (RecyclerView) findViewById(R.id.cso_recycler_view);
 
         csosAdapter = new CsoRvAdapter(csosList);
@@ -124,9 +121,12 @@ public class CsoActivity extends AppCompatActivity {
         buttonExit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                moveTaskToBack(true);
+               /* moveTaskToBack(true);
                 Process.killProcess(Process.myPid());
-                System.exit(1);
+                System.exit(1);*/
+                Log.d("distance", Double.toString(distanceCordinates(0.3356299,32.5994707,0.3431490411038098,32.590298652648926,"K")));
+                Log.d("xxxxx", "3232");
+
             }
         });
 
@@ -135,6 +135,7 @@ public class CsoActivity extends AppCompatActivity {
             public void onClick(View view) {
                 Log.d(TAG, "button next clicked");
                finish();
+
             }
         });
     }
@@ -174,101 +175,48 @@ public class CsoActivity extends AppCompatActivity {
         }
     }
 
-    public void finalCsoPreview(String lat, String lng) {
-
-        getNearestCSOs(lat, lng, new VolleyCallback() {
-            @Override
-            public void onSuccessResponse(String result) {
-
-
-                try {
-                    hidePDialog();
-                    JSONObject response = new JSONObject(result);
-                    JSONArray arr = response.getJSONArray("posts");
-
-                    TheCSO newCsos;
-                    for (int i = 0; i < arr.length(); i++)
-                    {
-                        String nearestCsoName = arr.getJSONObject(i).getString("cso_name");
-                        String nearestCsoDistrict = arr.getJSONObject(i).getString("cso_location");
-                        String nearestCsoDistance = arr.getJSONObject(i).getString("cso_distance");
-                        String nearestCsophonenumber = arr.getJSONObject(i).getString("cso_phone_number");
-
-                        newCsos = new TheCSO(nearestCsoName + " in " + nearestCsoDistrict, roundsOffCsoNearestDistance(nearestCsoDistance), nearestCsophonenumber);
-                        csosList.add(newCsos);
-
-                    }
-                } catch (JSONException e) {
-                    e.printStackTrace();
-                }
-
-                csosAdapter.notifyDataSetChanged();
-            }
-        });
-    }
 
     // Method pushes the data to json server suing volley
-    private void getNearestCSOs(final String toServerReporterLat, final String toServerReporterLng, final VolleyCallback callback) {
+    private void getNearestCSOs() {
+
+        Cursor cursorRetrieveLatLng =  getContentResolver().query(
+                ReportIncidentContentProvider.CONTENT_URI,
+                null,
+                null,
+                null,
+                null);
+
+        
 
 
-        StringRequest stringRequest = new StringRequest(Request.Method.POST, URL_CSO_API,
-                new Response.Listener<String>() {
-                    @Override
-                    public void onResponse(String response) {
-                        // Toast.makeText(getBaseContext(), response.toString(),Toast.LENGTH_LONG).show();
 
-                        callback.onSuccessResponse(response);
-                    }
+        beforeCsoList.add(new BeforeCsoInfo("Action Aid Sir Apollo Rd",0.3422478,32.56282210,"00000000000"));
+        beforeCsoList.add(new BeforeCsoInfo("Reproductive Health Uganda",0.3374639,32.58227210,"+256312207100"));
+        beforeCsoList.add(new BeforeCsoInfo("Naguru Teenage Center",0.3209888,32.6172358,"0800112222"));
+        beforeCsoList.add(new BeforeCsoInfo("Fida",0.3482041,32.59633630,"00000000000"));
 
-                },
-                new Response.ErrorListener() {
-                    @Override
-                    public void onErrorResponse(VolleyError error) {
 
-                        //VolleyLog.d("test", "Error: " + error.getMessage());
-                       showInternetRetry();
-                    }
-                }) {
+        for(int i =0 ; i<beforeCsoList.size(); i++){
+            String disBetweenCso = String.format("%.2f",distanceCordinates(0.3356299,32.5994707,beforeCsoList.get(i).getBefore_cso_lat(),beforeCsoList.get(i).getBefore_cso_long(),"K"));
+            Log.d("all", disBetweenCso );
+            csosList.add(new TheCSO(beforeCsoList.get(i).getBefore_cso_name(), disBetweenCso, beforeCsoList.get(i).getBefore_cso_phonenumber()));
+        }
+        Collections.sort(csosList, new Comparator<TheCSO>() {
             @Override
-            protected Map<String, String> getParams() {
-                Map<String, String> params = new HashMap<String, String>();
-                params.put("reporter_lat", toServerReporterLat);
-                params.put("reporter_long", toServerReporterLng);
-                return params;
+            public int compare(TheCSO o1, TheCSO o2) {
+                return o1.getCso_distance().compareTo(o2.getCso_distance());
             }
+        });
 
-        };
+        csosAdapter.notifyDataSetChanged();
 
-        MySingleton.getInstance(this).addToRequestQueue(stringRequest);
 
-    }
 
-    //hides the progress bar and no internet text
-    private void hidePDialog() {
-        csoProgressBar.setVisibility(View.GONE);
-        csoNoInternetLL.setVisibility(View.GONE);
-    }
-    private void showPDialog(){
-        csoProgressBar.setVisibility(View.VISIBLE);
-        csoNoInternetLL.setVisibility(View.GONE);
-    }
 
-    private void showInternetRetry(){
-        csoProgressBar.setVisibility(View.GONE);
-        csoNoInternetLL.setVisibility(View.VISIBLE);
+
 
     }
 
-    private String roundsOffCsoNearestDistance(String survivorToCso){
-      String convert=null;
-       try{
-           float floatValue = Float.valueOf(survivorToCso);
-           floatValue= BigDecimal.valueOf(floatValue).setScale(2, BigDecimal.ROUND_HALF_UP).floatValue();
-           convert = Float.toString(floatValue);
-       }catch (Exception  d){}
-        return convert;
-
-    }
 
     /** All the  Methods **/
     //updates safepal number
@@ -343,8 +291,8 @@ public class CsoActivity extends AppCompatActivity {
 
             }
 
-            finalCsoPreview(lat, lng);
-
+            //finalCsoPreview(lat, lng);
+            getNearestCSOs();
 
         }
 
@@ -382,5 +330,40 @@ public class CsoActivity extends AppCompatActivity {
 
     }
 
+
+
+
+
+
+    private static double distanceCordinates(double lat1, double lon1, double lat2, double lon2, String unit) {
+        double theta = lon1 - lon2;
+        double dist = Math.sin(deg2rad(lat1)) * Math.sin(deg2rad(lat2)) + Math.cos(deg2rad(lat1)) * Math.cos(deg2rad(lat2)) * Math.cos(deg2rad(theta));
+        dist = Math.acos(dist);
+        dist = rad2deg(dist);
+        dist = dist * 60 * 1.1515;
+        if (unit == "K") {
+            dist = dist * 1.609344;
+        } else if (unit == "N") {
+            dist = dist * 0.8684;
+        }
+        DecimalFormat df = new DecimalFormat("##.##");
+        df.setRoundingMode(RoundingMode.DOWN);
+
+        return (dist);
+    }
+
+    /*:::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::*/
+	/*::	This function converts decimal degrees to radians						 :*/
+	/*:::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::*/
+    private static double deg2rad(double deg) {
+        return (deg * Math.PI / 180.0);
+    }
+
+    /*:::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::*/
+	/*::	This function converts radians to decimal degrees						 :*/
+	/*:::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::*/
+    private static double rad2deg(double rad) {
+        return (rad * 180 / Math.PI);
+    }
 }
 
