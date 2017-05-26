@@ -5,6 +5,7 @@ import android.content.ActivityNotFoundException;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.database.Cursor;
+import android.location.Location;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Handler;
@@ -36,8 +37,6 @@ import com.unfpa.safepal.store.RIContentObserver;
 import com.unfpa.safepal.store.ReportIncidentContentProvider;
 import com.unfpa.safepal.store.ReportIncidentTable;
 
-import java.math.RoundingMode;
-import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
@@ -121,11 +120,11 @@ public class CsoActivity extends AppCompatActivity {
         buttonExit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-               /* moveTaskToBack(true);
-                Process.killProcess(Process.myPid());
-                System.exit(1);*/
-                Log.d("distance", Double.toString(distanceCordinates(0.3356299,32.5994707,0.3431490411038098,32.590298652648926,"K")));
-                Log.d("xxxxx", "3232");
+                moveTaskToBack(true);
+                //Process.killProcess(Process.myPid());
+                System.exit(1);
+                //Log.d("distance", Double.toString(distanceCoordinates(0.3356299,32.5994707,0.3431490411038098,32.590298652648926,"K")));
+                //Log.d("xxxxx", "3232");
 
             }
         });
@@ -133,7 +132,7 @@ public class CsoActivity extends AppCompatActivity {
         buttonNext.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Log.d(TAG, "button next clicked");
+                //Log.d(TAG, "button next clicked");
                finish();
 
             }
@@ -177,27 +176,17 @@ public class CsoActivity extends AppCompatActivity {
 
 
     // Method pushes the data to json server suing volley
-    private void getNearestCSOs() {
-
-        Cursor cursorRetrieveLatLng =  getContentResolver().query(
-                ReportIncidentContentProvider.CONTENT_URI,
-                null,
-                null,
-                null,
-                null);
-
-        
+    private void getNearestCSOs(Float getLat, Float getLong) {
 
 
-
-        beforeCsoList.add(new BeforeCsoInfo("Action Aid Sir Apollo Rd",0.3422478,32.56282210,"00000000000"));
-        beforeCsoList.add(new BeforeCsoInfo("Reproductive Health Uganda",0.3374639,32.58227210,"+256312207100"));
-        beforeCsoList.add(new BeforeCsoInfo("Naguru Teenage Center",0.3209888,32.6172358,"0800112222"));
-        beforeCsoList.add(new BeforeCsoInfo("Fida",0.3482041,32.59633630,"00000000000"));
-
+        beforeCsoList.add(new BeforeCsoInfo("Reproductive Health Uganda, Kamokya",0.3374639,32.58227210,"+256312207100"));
+        beforeCsoList.add(new BeforeCsoInfo("Naguru Teenage Center , Bugolobi",0.3209888,32.6172358,"0800112222"));
+        beforeCsoList.add(new BeforeCsoInfo("Fida, Kira Road",0.348204,32.596336,"+256414530848"));
+        //beforeCsoList.add(new BeforeCsoInfo("Action Aid , Sir Apollo Rd",0.34204130858355,32.5625579059124,"00000000000"));
 
         for(int i =0 ; i<beforeCsoList.size(); i++){
-            String disBetweenCso = String.format("%.2f",distanceCordinates(0.3356299,32.5994707,beforeCsoList.get(i).getBefore_cso_lat(),beforeCsoList.get(i).getBefore_cso_long(),"K"));
+            String disBetweenCso = String.format("%.2f", newDistanceBetween(getLat,getLong,beforeCsoList.get(i).getBefore_cso_lat(),beforeCsoList.get(i).getBefore_cso_long()));
+
             Log.d("all", disBetweenCso );
             csosList.add(new TheCSO(beforeCsoList.get(i).getBefore_cso_name(), disBetweenCso, beforeCsoList.get(i).getBefore_cso_phonenumber()));
         }
@@ -269,20 +258,21 @@ public class CsoActivity extends AppCompatActivity {
                 null,
                 null,
                 null);
+        cursorRetrieveLatLng.moveToLast();
 
         if (cursorRetrieveLatLng != null) {
-            cursorRetrieveLatLng.moveToLast();
 
-            String lat =  cursorRetrieveLatLng.getString(cursorRetrieveLatLng.getColumnIndex(ReportIncidentTable.COLUMN_REPORTER_LOCATION_LAT));
-            String lng =  cursorRetrieveLatLng.getString(cursorRetrieveLatLng.getColumnIndex(ReportIncidentTable.COLUMN_REPORTER_LOCATION_LNG));
-            String phone =  cursorRetrieveLatLng.getString(cursorRetrieveLatLng.getColumnIndex(ReportIncidentTable.COLUMN_REPORTER_PHONE_NUMBER));
-            String email =  cursorRetrieveLatLng.getString(cursorRetrieveLatLng.getColumnIndex(ReportIncidentTable.COLUMN_REPORTER_EMAIL));
 
-            if(phone.length()>8){
-                csoContactInfo.setText("Contact Phonenumber: " + phone);
+            String dbLatString =  cursorRetrieveLatLng.getString(cursorRetrieveLatLng.getColumnIndex(ReportIncidentTable.COLUMN_REPORTER_LOCATION_LAT));
+            String dbLngString =  cursorRetrieveLatLng.getString(cursorRetrieveLatLng.getColumnIndex(ReportIncidentTable.COLUMN_REPORTER_LOCATION_LNG));
+            String dbPhoneString =  cursorRetrieveLatLng.getString(cursorRetrieveLatLng.getColumnIndex(ReportIncidentTable.COLUMN_REPORTER_PHONE_NUMBER));
+            String dbEmailString =  cursorRetrieveLatLng.getString(cursorRetrieveLatLng.getColumnIndex(ReportIncidentTable.COLUMN_REPORTER_EMAIL));
+
+            if(dbPhoneString.length()>8){
+                csoContactInfo.setText("Contact Phonenumber: " + dbPhoneString);
                 csoAssuranceHelp.setText("Safepal will contact you on the above phonenumber.");
-                if(email.length()>8){
-                    csoContactInfo.setText("Contact Phonenumber: " + phone+ "\nContact Email: " +email);
+                if(dbEmailString.length()>8){
+                    csoContactInfo.setText("Contact Phonenumber: " + dbPhoneString+ "\nContact Email: " +dbEmailString);
                     csoAssuranceHelp.setText("Safepal will contact you on the above phonenumber or email. "); }
             }
             else {
@@ -292,7 +282,12 @@ public class CsoActivity extends AppCompatActivity {
             }
 
             //finalCsoPreview(lat, lng);
-            getNearestCSOs();
+            getNearestCSOs(Float.parseFloat(dbLatString), Float.parseFloat(dbLngString));
+            Log.d("xx", dbLatString);
+            Log.d("xx", dbLngString);
+
+
+
 
         }
 
@@ -335,7 +330,7 @@ public class CsoActivity extends AppCompatActivity {
 
 
 
-    private static double distanceCordinates(double lat1, double lon1, double lat2, double lon2, String unit) {
+   /* private static double distanceCoordinates(double lat1, double lon1, double lat2, double lon2, String unit) {
         double theta = lon1 - lon2;
         double dist = Math.sin(deg2rad(lat1)) * Math.sin(deg2rad(lat2)) + Math.cos(deg2rad(lat1)) * Math.cos(deg2rad(lat2)) * Math.cos(deg2rad(theta));
         dist = Math.acos(dist);
@@ -350,6 +345,14 @@ public class CsoActivity extends AppCompatActivity {
         df.setRoundingMode(RoundingMode.DOWN);
 
         return (dist);
+    }*/
+
+
+    private  float newDistanceBetween(double lat1, double lon1, double lat2, double lon2){
+        float [] dist = new float[2];
+        Location.distanceBetween(lat1, lon1, lat2, lon2, dist);
+
+        return dist[1] * 0.000621371192f;
     }
 
     /*:::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::*/
@@ -365,5 +368,8 @@ public class CsoActivity extends AppCompatActivity {
     private static double rad2deg(double rad) {
         return (rad * 180 / Math.PI);
     }
+
+
+
 }
 

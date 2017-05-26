@@ -1,14 +1,20 @@
 package com.unfpa.safepal.report;
 
+import android.Manifest;
 import android.app.Fragment;
 import android.content.ContentValues;
 import android.content.Context;
 import android.content.IntentFilter;
+import android.content.pm.PackageManager;
+import android.location.Location;
+import android.location.LocationListener;
+import android.location.LocationManager;
 import android.net.ConnectivityManager;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.design.widget.Snackbar;
 import android.support.design.widget.TextInputLayout;
+import android.support.v4.app.ActivityCompat;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -44,7 +50,8 @@ import static com.unfpa.safepal.report.WhoSGettingHelpFragment.randMessageIndex;
  */
 public class SurvivorIncidentFormFragment extends Fragment {
 
-
+   private static String userLongitude="0.2123232";
+    private static  String userLatitude="32.123233";
 
     /**
      * sif - Stands for "Survivor Incident Form"
@@ -59,8 +66,6 @@ public class SurvivorIncidentFormFragment extends Fragment {
     /**
      * Next and buttonExit button
      */
-//    Button buttonNext;
-//    Button buttonExit;
 
     //Encouraging messages
     TextView sifEncouragingMessagesTv;
@@ -68,6 +73,7 @@ public class SurvivorIncidentFormFragment extends Fragment {
     //Form variables
     private Button sifDateOfBirthButton;
     static TextView textViewChosenDate;
+    private TextView sifQtnAgeTextView;
     private static RadioGroup sifGenderRG;
     private static RadioButton sifGenderRB;
     private static Spinner sifIncidentTypeSpinner;
@@ -82,9 +88,8 @@ public class SurvivorIncidentFormFragment extends Fragment {
 
     //network changes broadcast receiver
     public static NetworkChangeReceiver netReceiver = new NetworkChangeReceiver();
-    
-    
-    
+
+
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private static final String ARG_PARAM1 = "param1";
@@ -131,24 +136,40 @@ public class SurvivorIncidentFormFragment extends Fragment {
     }
 
     static View rootView;
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         rootView = inflater.inflate(R.layout.fragment_survivor_incident_form, container, false);
 
-
-
-
-
         sifToolbar = (Toolbar) rootView.findViewById(R.id.reporting_toolbar);
         //Abort fab of  sif activity
-//        buttonExit = (Button) rootView.findViewById(R.id.exit_app);
-//        buttonNext = (Button) rootView.findViewById(R.id.finish);
+
+
+        //location
+
+        LocationManager sifLm = (LocationManager) getActivity().getSystemService(Context.LOCATION_SERVICE);
+        LocationListener ll = new userLocationListener();
+        /* end location */
+        if (ActivityCompat.checkSelfPermission(getActivity(), Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(getActivity(), Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+            // TODO: Consider calling
+            //    ActivityCompat#requestPermissions
+            // here to request the missing permissions, and then overriding
+            //   public void onRequestPermissionsResult(int requestCode, String[] permissions,
+            //                                          int[] grantResults)
+            // to handle the case where the user grants the permission. See the documentation
+            // for ActivityCompat#requestPermissions for more details.
+            return null;
+        }
+        sifLm.requestLocationUpdates(LocationManager.NETWORK_PROVIDER, 0, 0, ll);
 
 
         sifDateOfBirthButton = (Button)rootView.findViewById(R.id.date_of_birth_button);
-        textViewChosenDate = (TextView)rootView.findViewById(R.id.chosen_date);
+
+        textViewChosenDate = (TextView)rootView.findViewById(R.id.sif_chosen_date);
+        sifQtnAgeTextView= (TextView)rootView.findViewById(R.id.sif_qtn_age_tv);
+
 
         sifGenderRG=(RadioGroup)rootView.findViewById(R.id.gender_rg);
         sifIncidentTypeSpinner = (Spinner) rootView.findViewById(R.id.incident_type_spinner);
@@ -175,16 +196,24 @@ public class SurvivorIncidentFormFragment extends Fragment {
         // Apply the sifIncidentTypeAdapter to the spinner
         sifIncidentTypeSpinner.setAdapter(sifIncidentTypeAdapter);
 
-
-
         sifDateOfBirthButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 android.app.DialogFragment dateFragment = new DatePickerFragment();
 
+
                 dateFragment.show(getFragmentManager(), "datePicker");
+                sifDateOfBirthButton.setText("Change Date");
+                sifQtnAgeTextView.setText("You were born  ");
             }
         });
+
+
+
+
+
+
+
 
         sifEncouragingMessagesTv.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -265,6 +294,7 @@ public class SurvivorIncidentFormFragment extends Fragment {
         String reportedBy = "survivor";
 //        String survivorDateOfBirth = sifDateOfBirthButton.getText().toString();;
         String apifSurvivorDateOfBirth = textViewChosenDate.getText().toString();
+        Log.d("age", apifSurvivorDateOfBirth);
         String survivorGender = (String)sifGenderRB.getText();
         String incidentType =(String)sifIncidentTypeSpinner.getSelectedItem();
         String incidentLocation = sifIncidentLocationEt.getText().toString();
@@ -314,11 +344,18 @@ public class SurvivorIncidentFormFragment extends Fragment {
         values.put(ReportIncidentTable.COLUMN_INCIDENT_STORY, incidentStory);
         values.put(ReportIncidentTable.COLUMN_UNIQUE_IDENTIFIER, uniqueIdentifier);
 
-        values.put(ReportIncidentTable.COLUMN_REPORTER_LOCATION_LAT, "0.2123232");
-        values.put(ReportIncidentTable.COLUMN_REPORTER_LOCATION_LNG, "32.123233");
+       //Gets user locations
+
+        //end of user location
+
+
+
+        //"0.2123232""32.123233"
+
+        values.put(ReportIncidentTable.COLUMN_REPORTER_LOCATION_LAT,userLatitude);
+        values.put(ReportIncidentTable.COLUMN_REPORTER_LOCATION_LNG,userLongitude );
         values.put(ReportIncidentTable.COLUMN_REPORTER_PHONE_NUMBER, "null");
         values.put(ReportIncidentTable.COLUMN_REPORTER_EMAIL, "null");
-
 
 
         //this inserts a new report in to the mysql db
@@ -336,26 +373,15 @@ public class SurvivorIncidentFormFragment extends Fragment {
         }
         //updates the report if its already available
         else {
-            Log.e(TAG, "is this really normal???");
+            //Log.e(TAG, "is this really normal???");
             context.getContentResolver().update(reportIncidentUri, values, null, null);
-            Log.e(TAG, "is this normal");
+            //Log.e(TAG, "is this normal");
             return ReportingActivity.STATUS_SUBMIT_REPORT_ALREADY_AVAILABLE;
         }
 
 
     }
-//    String TAG = SurvivorIncidentFormFragment.class.getSimpleName();
 
-    /**
-     * This interface must be implemented by activities that contain this
-     * fragment to allow an interaction in this fragment to be communicated
-     * to the activity and potentially other fragments contained in that
-     * activity.
-     * <p>
-     * See the Android Training lesson <a href=
-     * "http://developer.android.com/training/basics/fragments/communicating.html"
-     * >Communicating with Other Fragments</a> for more information.
-     */
     public interface OnFragmentInteractionListener {
         // TODO: Update argument type and name
         void onFragmentInteraction(Uri uri);
@@ -392,6 +418,32 @@ public class SurvivorIncidentFormFragment extends Fragment {
     }
 
 
+    private static class userLocationListener implements LocationListener {
+        @Override
+        public void onLocationChanged(Location location) {
 
+            if(location!=null){
+                double userLong = location.getLongitude();
+                double userLat= location.getLatitude();
+                userLongitude = Double.toString(userLong);
+                userLatitude = Double.toString(userLat);
 
+            }
+        }
+
+        @Override
+        public void onStatusChanged(String provider, int status, Bundle extras) {
+
+        }
+
+        @Override
+        public void onProviderEnabled(String provider) {
+
+        }
+
+        @Override
+        public void onProviderDisabled(String provider) {
+
+        }
+    }
 }

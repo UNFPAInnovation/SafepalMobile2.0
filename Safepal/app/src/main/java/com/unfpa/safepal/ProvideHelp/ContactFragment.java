@@ -18,7 +18,6 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.unfpa.safepal.Location.TrackGPS;
 import com.unfpa.safepal.R;
 import com.unfpa.safepal.messages.EMessageDialogFragment;
 import com.unfpa.safepal.store.RIContentObserver;
@@ -43,7 +42,6 @@ public class ContactFragment extends Fragment {
     public static TextView contactSafepalNo;
 
     RIContentObserver reportIncidentContentObserver;
-    private TrackGPS gps;
     /**
      * Next and buttonExit button
      */
@@ -108,7 +106,6 @@ public class ContactFragment extends Fragment {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_contact, container, false);
 
-         pickLocation();
         //Toolbar of contact activity
         //   contactToolbar = (Toolbar) view.findViewById(R.id.contact_toolbar);
         //assignment of UI in xml
@@ -224,16 +221,6 @@ public class ContactFragment extends Fragment {
     }
 
 
-    /**
-     * This interface must be implemented by activities that contain this
-     * fragment to allow an interaction in this fragment to be communicated
-     * to the activity and potentially other fragments contained in that
-     * activity.
-     * <p>
-     * See the Android Training lesson <a href=
-     * "http://developer.android.com/training/basics/fragments/communicating.html"
-     * >Communicating with Other Fragments</a> for more information.
-     */
     public interface OnFragmentInteractionListener {
         // TODO: Update argument type and name
         void onFragmentInteraction(Uri uri);
@@ -286,49 +273,6 @@ public class ContactFragment extends Fragment {
         contactEncouragingMessagesTv.setText(wsghMessagesArray[randMessageIndex(0, wsghMessagesArray.length)].toString());
     }
 
-
-    public void pickLocation(){
-        gps = new TrackGPS(getActivity());
-
-
-        if(gps.canGetLocation()){
-
-
-            Double longitude = gps.getLongitude();
-            Double latitude = gps .getLatitude();
-
-            //updates the  phone number, email, latitude and longitude
-            Cursor cursorUpdate =  getActivity().getContentResolver().query(
-                    ReportIncidentContentProvider.CONTENT_URI,
-                    null,
-                    null,
-                    null,
-                    null);
-            ContentValues dataValues = new ContentValues();
-            // end of the updates
-            dataValues.put(ReportIncidentTable.COLUMN_REPORTER_LOCATION_LAT, Double.toString(latitude));
-            dataValues.put(ReportIncidentTable.COLUMN_REPORTER_LOCATION_LNG, Double.toString(longitude));
-            if (cursorUpdate != null) {
-                cursorUpdate.moveToLast();
-
-                // Update reported incident
-                getActivity().getContentResolver().update(ReportIncidentContentProvider.CONTENT_URI, dataValues, ReportIncidentTable.COLUMN_ID + "=" +
-                        cursorUpdate.getString(cursorUpdate.getColumnIndex(
-                                ReportIncidentTable.COLUMN_ID)), null);
-
-            }
-          cursorUpdate.close();
-
-
-            //Toast.makeText(getActivity().getApplicationContext(),"Longitude:"+Double.toString(longitude)+"\nLatitude:"+Double.toString(latitude),Toast.LENGTH_SHORT).show();
-        }
-        else
-        {
-
-            gps.showSettingsAlert();
-        }
-
-    }
 
 
 

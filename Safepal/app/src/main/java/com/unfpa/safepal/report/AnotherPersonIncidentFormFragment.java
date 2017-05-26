@@ -17,7 +17,6 @@ import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
-import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.RadioButton;
@@ -26,6 +25,7 @@ import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.unfpa.safepal.Location.TrackGPS;
 import com.unfpa.safepal.Places.GooglePlacesAutocompleteAdapter;
 import com.unfpa.safepal.R;
 import com.unfpa.safepal.Utils.Layout;
@@ -87,8 +87,7 @@ public class AnotherPersonIncidentFormFragment extends Fragment {
     private static Spinner spinnerAgeRange;
     private static AutoCompleteTextView apifIncidentLocationEt;
     private static EditText apifIncidentDetailsEt;
-
-    DatePicker datePicker;
+    private  static TrackGPS apifGPS;
 
 
 
@@ -153,7 +152,7 @@ public class AnotherPersonIncidentFormFragment extends Fragment {
         imageAge= (ImageView) rootView.findViewById(R.id.image_age);
         imageQnMark= (ImageView) rootView.findViewById(R.id.image_spinner_what_happed);
         textInputLayoutWhereHappened = (TextInputLayout)rootView.findViewById(R.id.inpu_latout_where);
-
+        apifGPS = new TrackGPS(getActivity());
 
 
         //encouraging messages
@@ -253,16 +252,6 @@ public class AnotherPersonIncidentFormFragment extends Fragment {
 
             }
         });
-
-
-
-
-
-
-
-
-
-
 
         apifEncouragingMessagesTv.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -420,14 +409,17 @@ return rootView;
         values.put(ReportIncidentTable.COLUMN_UNIQUE_IDENTIFIER, apifUniqueIdentifier);
 
 
-        values.put(ReportIncidentTable.COLUMN_REPORTER_LOCATION_LAT, "0.2123232");
-        values.put(ReportIncidentTable.COLUMN_REPORTER_LOCATION_LNG, "32.123233");
+        values.put(ReportIncidentTable.COLUMN_REPORTER_LOCATION_LAT, "0.33563");
+       //Log.d("lat", Double.toString(apifGPS.getLatitude()));
+       // Log.d("lat", Double.toString(apifGPS.getLongitude()));
+
+        values.put(ReportIncidentTable.COLUMN_REPORTER_LOCATION_LNG, "32.559947");
         values.put(ReportIncidentTable.COLUMN_REPORTER_PHONE_NUMBER, "null");
         values.put(ReportIncidentTable.COLUMN_REPORTER_EMAIL, "null");
 
 
 
-
+        Log.d("Last", "executed");
         /**
          *  Checks if the important fields are filled
          *  **/

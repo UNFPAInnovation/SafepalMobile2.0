@@ -18,6 +18,8 @@ import com.unfpa.safepal.store.ReportIncidentTable;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -85,11 +87,11 @@ public class UIDPullService extends IntentService {
                         @Override
                         public void onSuccessResponse(String result) {
 
-                            Log.d("result", result);
+                          //  Log.d("result", result);
 
                             try {
                                 JSONObject response = new JSONObject(result);
-                                Log.d("",response.toString());
+                               // Log.d("",response.toString());
                                 Cursor cursorUpdate =  getContentResolver().query(
                                         ReportIncidentContentProvider.CONTENT_URI,
                                         null,
@@ -137,6 +139,10 @@ public class UIDPullService extends IntentService {
                                    final String addReportUrl, final VolleyCallback reportCallback ){
 
 
+
+        final String currentDate = new SimpleDateFormat("yyyy-MM-dd").format(new Date());
+
+
         getTokenFromServer(new VolleyCallback() {
             @Override
             public void onSuccessResponse(String tokenResponse) {
@@ -175,7 +181,7 @@ public class UIDPullService extends IntentService {
                             addReport.put("longitude",toServerReportedLng);
                             addReport.put("details",toServerIDescription);
                             addReport.put("report_source","android user");
-                            addReport.put("reportDate","2017-12-05");
+                            addReport.put("reportDate",currentDate);
                             return addReport;                        }
 
                         @Override

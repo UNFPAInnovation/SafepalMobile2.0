@@ -240,7 +240,7 @@
             >
 
             <TextView
-                android:id="@+id/age_tv"
+                android:id="@+id/sif_qtn_age_tv"
                 android:layout_width="350dp"
                 android:layout_height="wrap_content"
                 android:text="@string/survivor_age"
@@ -250,7 +250,7 @@
 
             <!--afer choosing aa date, chosem date will appear here-->
             <TextView
-                android:id="@+id/chosen_date"
+                android:id="@+id/sif_chosen_date"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text=""
