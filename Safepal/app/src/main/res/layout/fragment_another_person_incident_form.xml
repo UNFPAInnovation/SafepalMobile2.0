@@ -159,6 +159,8 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:hint="@string/incident_location"
+                        android:inputType="textCapSentences"
+                        android:imeOptions="actionNext"
                         android:maxLines="1"
                         android:maxLength="25"/>
                     <requestFocus />
@@ -189,12 +191,14 @@
                     android:layout_toRightOf="@id/image_story">
 
                     <EditText
-                        android:id="@+id/incident_details_rt"
+                        android:id="@+id/sif_incident_details_et"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:hint="@string/incident_details"
-                        android:inputType="text|textMultiLine"
-                        android:maxLines="3"/>
+                        android:inputType="text|textImeMultiLine"
+                        android:maxLines="3"
+                        android:imeOptions="actionDone"
+                        />
                 </android.support.design.widget.TextInputLayout>
             </RelativeLayout>
 
@@ -239,7 +243,7 @@
 
 
                 <RadioGroup
-                    android:id="@+id/gender_rg"
+                    android:id="@+id/sif_gender_rg"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:orientation="vertical">

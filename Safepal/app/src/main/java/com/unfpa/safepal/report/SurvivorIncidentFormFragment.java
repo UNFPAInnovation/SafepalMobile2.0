@@ -21,7 +21,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
-import android.widget.AutoCompleteTextView;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.RadioButton;
@@ -73,7 +72,7 @@ public class SurvivorIncidentFormFragment extends Fragment {
     private static RadioGroup sifGenderRG;
     private static RadioButton sifGenderRB;
     private static Spinner sifIncidentTypeSpinner;
-    private static AutoCompleteTextView sifIncidentLocationEt;
+    private static EditText sifIncidentLocationEt;
     private static EditText sifIncidentDetailsEt;
     private static Snackbar sifFeedbackSnackbar;
 
@@ -167,10 +166,10 @@ public class SurvivorIncidentFormFragment extends Fragment {
         sifQtnAgeTextView= (TextView)rootView.findViewById(R.id.sif_qtn_age_tv);
 
 
-        sifGenderRG=(RadioGroup)rootView.findViewById(R.id.gender_rg);
+        sifGenderRG=(RadioGroup)rootView.findViewById(R.id.sif_gender_rg);
         sifIncidentTypeSpinner = (Spinner) rootView.findViewById(R.id.incident_type_spinner);
-        sifIncidentLocationEt = (AutoCompleteTextView) rootView.findViewById(R.id.incident_location_actv);
-        sifIncidentDetailsEt = (EditText)rootView.findViewById(R.id.incident_details_rt);
+        sifIncidentLocationEt = (EditText) rootView.findViewById(R.id.incident_location_actv);
+        sifIncidentDetailsEt = (EditText)rootView.findViewById(R.id.sif_incident_details_et);
 
         sifEncouragingMessagesTv= (TextView) rootView.findViewById(R.id.sif_encouraging_messages_tv);
 

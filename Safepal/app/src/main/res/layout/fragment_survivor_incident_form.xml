@@ -172,14 +172,16 @@
                         android:layout_toRightOf="@id/image_where_take_place"
                         >
 
-                        <AutoCompleteTextView
+                        <EditText
                             android:id="@+id/incident_location_actv"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:hint="@string/incident_location"
                             android:maxLines="1"
                             android:maxLength="25"
-                            />
+                            android:inputType="textCapSentences"
+                            android:imeOptions="actionNext"
+                            android:nextFocusDown="@id/sif_incident_details_et"/>
                     </android.support.design.widget.TextInputLayout>
                 </RelativeLayout>
 
@@ -207,11 +209,13 @@
                         android:layout_toRightOf="@id/image_story">
 
                         <EditText
-                            android:id="@+id/incident_details_rt"
+                            android:id="@+id/sif_incident_details_et"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:hint="@string/incident_details"
                             android:inputType="text|textMultiLine"
+                            android:imeOptions="actionDone"
+                            android:nextFocusDown="@id/sif_gender_rg"
                             android:maxLines="3"/>
                     </android.support.design.widget.TextInputLayout>
                 </RelativeLayout>
@@ -257,7 +261,7 @@
 
 
                     <RadioGroup
-                        android:id="@+id/gender_rg"
+                        android:id="@+id/sif_gender_rg"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:orientation="vertical">

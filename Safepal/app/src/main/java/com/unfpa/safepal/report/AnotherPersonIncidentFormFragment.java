@@ -169,13 +169,13 @@ public class AnotherPersonIncidentFormFragment extends Fragment {
 //        apifDateOfBirthButton = (Button)rootView.findViewById(R.id.date_of_birth_button);
 //        textViewChosenDate = (TextView)rootView.findViewById(R.id.chosen_date);
 
-        apifGenderRG=(RadioGroup)rootView.findViewById(R.id.gender_rg);
+        apifGenderRG=(RadioGroup)rootView.findViewById(R.id.sif_gender_rg);
         apifIncidentTypeSpinner = (Spinner) rootView.findViewById(R.id.incident_type_spinner);
         //age range spinner
         spinnerAgeRange = (Spinner) rootView.findViewById(R.id.age_range_spinner);
 
         apifIncidentLocationEt = (AutoCompleteTextView) rootView.findViewById(R.id.incident_location_actv);
-        apifIncidentDetailsEt = (EditText)rootView.findViewById(R.id.incident_details_rt);
+        apifIncidentDetailsEt = (EditText)rootView.findViewById(R.id.sif_incident_details_et);
 
 
         textInputLayoutStory = (TextInputLayout)rootView.findViewById(R.id.input_latout_story);
