@@ -27,10 +27,10 @@ import java.util.Map;
  * Created by Kisa on 10/8/2016.
  */
 
-public class UIDPullService extends IntentService {
+public class AddReportService extends IntentService {
 
     // Used to write to the system log from this class.
-    public static final String LOG_TAG = "UIDPullService";
+    public static final String LOG_TAG = "AddReportService";
 
 
     /**
@@ -39,8 +39,8 @@ public class UIDPullService extends IntentService {
      * string supplied to the super constructor is used to give a name to the IntentService's
      * background thread.
      */
-    public UIDPullService() {
-        super("UIDPullService");
+    public AddReportService() {
+        super("AddReportService");
     }
 
     /**
@@ -209,7 +209,7 @@ public class UIDPullService extends IntentService {
 
 
 
-    public void getTokenFromServer(final VolleyCallback tokenCallback) {
+    private void getTokenFromServer(final VolleyCallback tokenCallback) {
 
 
         final String tokenUrl = " https://api-safepal.herokuapp.com/index.php/api/v1/auth/newtoken";

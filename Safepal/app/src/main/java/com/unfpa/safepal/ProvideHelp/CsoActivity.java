@@ -33,6 +33,7 @@ import com.unfpa.safepal.ProvideHelp.RVCsoModel.CsoRvAdapter;
 import com.unfpa.safepal.ProvideHelp.RVCsoModel.TheCSO;
 import com.unfpa.safepal.R;
 import com.unfpa.safepal.messages.EMessageDialogFragment;
+import com.unfpa.safepal.network.UpdateContactBroadReceiver;
 import com.unfpa.safepal.store.RIContentObserver;
 import com.unfpa.safepal.store.ReportIncidentContentProvider;
 import com.unfpa.safepal.store.ReportIncidentTable;
@@ -53,6 +54,9 @@ public class CsoActivity extends AppCompatActivity {
      */
     Button buttonNext;
     Button buttonExit;
+
+    private UpdateContactBroadReceiver receiver;
+
 
     TextView csoSafepalNo, csoContactInfo,csoAssuranceHelp, csoEncouragingMessagesTV;
 
@@ -84,6 +88,7 @@ public class CsoActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_cso);
 
+        receiver = new UpdateContactBroadReceiver();
 
 
         //buttonFinish and buttonExit buttons
@@ -120,11 +125,14 @@ public class CsoActivity extends AppCompatActivity {
         buttonExit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                moveTaskToBack(true);
+               // moveTaskToBack(true);
                 //Process.killProcess(Process.myPid());
-                System.exit(1);
+               // System.exit(1);
                 //Log.d("distance", Double.toString(distanceCoordinates(0.3356299,32.5994707,0.3431490411038098,32.590298652648926,"K")));
                 //Log.d("xxxxx", "3232");
+//Broadcast receiver that checks for the network sta
+
+
 
             }
         });
@@ -283,8 +291,8 @@ public class CsoActivity extends AppCompatActivity {
 
             //finalCsoPreview(lat, lng);
             getNearestCSOs(Float.parseFloat(dbLatString), Float.parseFloat(dbLngString));
-            Log.d("xx", dbLatString);
-            Log.d("xx", dbLngString);
+          //  Log.d("xx", dbLatString);
+           // Log.d("xx", dbLngString);
 
 
 
@@ -368,7 +376,6 @@ public class CsoActivity extends AppCompatActivity {
     private static double rad2deg(double rad) {
         return (rad * 180 / Math.PI);
     }
-
 
 
 }

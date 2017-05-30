@@ -14,7 +14,7 @@ import android.widget.Toast;
 public class NetworkChangeReceiver extends BroadcastReceiver{
 
     //Volley requests
-    final String URL_SAFEPAL_API = " https://api-safepal.herokuapp.com/index.php/api/v1/reports/addreport";
+    final String URL_SAFEPAL_API = "https://api-safepal.herokuapp.com/index.php/api/v1/reports/addreport";
     // Intent for starting the IntentService for submitting a survivor case
     private Intent mServiceIntent;
 
@@ -26,7 +26,7 @@ public class NetworkChangeReceiver extends BroadcastReceiver{
         if(status=="Wifi enabled"||status=="Mobile data enabled"){
 
 
-                mServiceIntent = new Intent(context, UIDPullService.class).setData(Uri.parse(URL_SAFEPAL_API));
+                mServiceIntent = new Intent(context, AddReportService.class).setData(Uri.parse(URL_SAFEPAL_API));
                 context.startService(mServiceIntent);
 
 

@@ -54,7 +54,7 @@
         service is only available to this app.
         -->
         <service
-            android:name=".network.UIDPullService"
+            android:name=".network.AddReportService"
             android:exported="false" />
         <!--
  ATTENTION: This was auto-generated to add Google Play services to your project for
