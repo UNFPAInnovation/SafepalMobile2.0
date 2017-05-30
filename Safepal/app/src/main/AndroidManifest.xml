@@ -73,6 +73,9 @@
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="com.unfpa.safepal.home.HomeActivity" />
         </activity>
+        <meta-data
+            android:name="io.fabric.ApiKey"
+            android:value="ce2a98765613a05fab5da52a5597e554b815136d" />
     </application>
 
 </manifest>

@@ -23,6 +23,7 @@ import android.widget.CompoundButton;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import com.crashlytics.android.Crashlytics;
 import com.github.amlcurran.showcaseview.ShowcaseView;
 import com.github.amlcurran.showcaseview.targets.ViewTarget;
 import com.unfpa.safepal.R;
@@ -30,6 +31,7 @@ import com.unfpa.safepal.Utils.General;
 import com.unfpa.safepal.messages.EMessageDialogFragment;
 import com.unfpa.safepal.report.ReportingActivity;
 
+import io.fabric.sdk.android.Fabric;
 import java.util.Random;
 
 public class HomeActivity extends AppCompatActivity {
@@ -52,6 +54,7 @@ public class HomeActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        Fabric.with(this, new Crashlytics());
         setContentView(R.layout.activity_home);
 
         Toolbar toolbar = (Toolbar) findViewById(R.id.home_toolbar);
