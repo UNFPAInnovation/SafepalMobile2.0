@@ -63,10 +63,6 @@ public class SurvivorIncidentFormFragment extends Fragment {
     /*User Interface*/
     Toolbar sifToolbar;
 
-    /**
-     * Next and buttonExit button
-     */
-
     //Encouraging messages
     TextView sifEncouragingMessagesTv;
 
@@ -81,13 +77,13 @@ public class SurvivorIncidentFormFragment extends Fragment {
     private static EditText sifIncidentDetailsEt;
     private static Snackbar sifFeedbackSnackbar;
 
+    //Data Layer
 
     //content provider
     Bundle extras;
-    public static Uri reportIncidentUri;
-
+    private static Uri sifReportIncidentUri;
     //network changes broadcast receiver
-    public static NetworkChangeReceiver netReceiver = new NetworkChangeReceiver();
+    private static NetworkChangeReceiver sifNetReceiver = new NetworkChangeReceiver();
 
 
     // TODO: Rename parameter arguments, choose names that match
@@ -131,7 +127,7 @@ public class SurvivorIncidentFormFragment extends Fragment {
         }
         // Volley Request
         // check from the saved Instance
-        reportIncidentUri = (bundle == null) ? null : (Uri) bundle
+        sifReportIncidentUri = (bundle == null) ? null : (Uri) bundle
                 .getParcelable(ReportIncidentContentProvider.CONTENT_ITEM_TYPE);
     }
 
@@ -241,7 +237,7 @@ public class SurvivorIncidentFormFragment extends Fragment {
     public void onDestroy() {
         super.onDestroy();
         try {
-            getActivity().unregisterReceiver(netReceiver);
+            getActivity().unregisterReceiver(sifNetReceiver);
         } catch (Exception e) {
             e.printStackTrace();
             Log.e(TAG, "could not unregister receiver");
@@ -359,13 +355,13 @@ public class SurvivorIncidentFormFragment extends Fragment {
 
 
         //this inserts a new report in to the mysql db
-        if (reportIncidentUri == null) {
-            reportIncidentUri = context.getContentResolver().insert(ReportIncidentContentProvider.CONTENT_URI, values);
+        if (sifReportIncidentUri == null) {
+            sifReportIncidentUri = context.getContentResolver().insert(ReportIncidentContentProvider.CONTENT_URI, values);
 
             //Broadcast receiver that checks for the network status
             IntentFilter netMainFilter =  new IntentFilter(ConnectivityManager.CONNECTIVITY_ACTION);
 
-            context.registerReceiver(netReceiver, netMainFilter);
+            context.registerReceiver(sifNetReceiver, netMainFilter);
 
 
 
@@ -374,7 +370,7 @@ public class SurvivorIncidentFormFragment extends Fragment {
         //updates the report if its already available
         else {
             //Log.e(TAG, "is this really normal???");
-            context.getContentResolver().update(reportIncidentUri, values, null, null);
+            context.getContentResolver().update(sifReportIncidentUri, values, null, null);
             //Log.e(TAG, "is this normal");
             return ReportingActivity.STATUS_SUBMIT_REPORT_ALREADY_AVAILABLE;
         }

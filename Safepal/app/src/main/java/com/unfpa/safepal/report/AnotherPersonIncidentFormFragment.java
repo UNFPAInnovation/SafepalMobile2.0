@@ -36,8 +36,6 @@ import com.unfpa.safepal.store.ReportIncidentTable;
 
 import java.util.Random;
 
-import static com.unfpa.safepal.report.SurvivorIncidentFormFragment.netReceiver;
-import static com.unfpa.safepal.report.SurvivorIncidentFormFragment.reportIncidentUri;
 import static com.unfpa.safepal.report.WhoSGettingHelpFragment.randMessageIndex;
 
 /**
@@ -50,6 +48,10 @@ import static com.unfpa.safepal.report.WhoSGettingHelpFragment.randMessageIndex;
  */
 public class AnotherPersonIncidentFormFragment extends Fragment {
 
+    //Data and Network Layers
+    //network changes broadcast receiver
+    private static NetworkChangeReceiver apifNetReceiver = new NetworkChangeReceiver();
+    private static Uri apifReportIncidentUri;
     /**
      * apif - Stands for "Another Person Incident Form"
      * */
@@ -126,12 +128,17 @@ public class AnotherPersonIncidentFormFragment extends Fragment {
     }
 
     @Override
-    public void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
+    public void onCreate(Bundle bundle) {
+        super.onCreate(bundle);
         if (getArguments() != null) {
             relationshipToSurvivor = getArguments().getString(ARG_RELATIONSHIP_TO_SURVIVOR);
             mParam2 = getArguments().getString(ARG_PARAM2);
         }
+
+        // Volley Request
+        // check from the saved Instance
+        apifReportIncidentUri = (bundle == null) ? null : (Uri) bundle
+                .getParcelable(ReportIncidentContentProvider.CONTENT_ITEM_TYPE);
     }
 
     static View rootView;
@@ -290,7 +297,7 @@ return rootView;
     public void onDestroy() {
         super.onDestroy();
         try {
-            getActivity().unregisterReceiver(netReceiver);
+            getActivity().unregisterReceiver(apifNetReceiver);
         } catch (Exception e) {
             e.printStackTrace();
             Log.e(TAG, "could not unregister receiver");
@@ -426,13 +433,13 @@ return rootView;
 
         //checks if the incident type is selected
         //this inserts a new report in to the mysql db
-        if (reportIncidentUri == null) {
-            reportIncidentUri = context.getContentResolver().insert(ReportIncidentContentProvider.CONTENT_URI, values);
+        if (apifReportIncidentUri == null) {
+            apifReportIncidentUri = context.getContentResolver().insert(ReportIncidentContentProvider.CONTENT_URI, values);
 
             //Broadcast receiver that checks for the network status
-            IntentFilter netMainFilter =  new IntentFilter(ConnectivityManager.CONNECTIVITY_ACTION);
-            netReceiver = new NetworkChangeReceiver();
-            context.registerReceiver(netReceiver, netMainFilter);
+            IntentFilter apifNetMainFilter =  new IntentFilter(ConnectivityManager.CONNECTIVITY_ACTION);
+            apifNetReceiver = new NetworkChangeReceiver();
+            context.registerReceiver(apifNetReceiver, apifNetMainFilter);
 
 
             Log.d(TAG, "part one executed");
@@ -444,7 +451,7 @@ return rootView;
             Log.e(TAG, "is this normal???");
             Log.e(TAG, "The  case was not submitted");
 
-             context.getContentResolver().update(reportIncidentUri, values, null, null);
+             context.getContentResolver().update(apifReportIncidentUri, values, null, null);
 
             Log.d(TAG, "part two executed");
             return ReportingActivity.STATUS_SUBMIT_REPORT_ALREADY_AVAILABLE;
