@@ -5,7 +5,6 @@ import android.content.ActivityNotFoundException;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.database.Cursor;
-import android.location.Location;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Handler;
@@ -125,13 +124,9 @@ public class CsoActivity extends AppCompatActivity {
         buttonExit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-               // moveTaskToBack(true);
+                moveTaskToBack(true);
                 //Process.killProcess(Process.myPid());
-               // System.exit(1);
-                //Log.d("distance", Double.toString(distanceCoordinates(0.3356299,32.5994707,0.3431490411038098,32.590298652648926,"K")));
-                //Log.d("xxxxx", "3232");
-//Broadcast receiver that checks for the network sta
-
+               System.exit(1);
 
 
             }
@@ -184,18 +179,18 @@ public class CsoActivity extends AppCompatActivity {
 
 
     // Method pushes the data to json server suing volley
-    private void getNearestCSOs(Float getLat, Float getLong) {
+    private void getNearestCSOs(double getLat, double getLong) {
 
 
         beforeCsoList.add(new BeforeCsoInfo("Reproductive Health Uganda, Kamokya",0.3374639,32.58227210,"+256312207100"));
         beforeCsoList.add(new BeforeCsoInfo("Naguru Teenage Center , Bugolobi",0.3209888,32.6172358,"0800112222"));
         beforeCsoList.add(new BeforeCsoInfo("Fida, Kira Road",0.348204,32.596336,"+256414530848"));
-        //beforeCsoList.add(new BeforeCsoInfo("Action Aid , Sir Apollo Rd",0.34204130858355,32.5625579059124,"00000000000"));
+        beforeCsoList.add(new BeforeCsoInfo("Action Aid , Sir Apollo Rd",0.34204130858355,32.5625579059124,"00000000000"));
 
         for(int i =0 ; i<beforeCsoList.size(); i++){
-            String disBetweenCso = String.format("%.2f", newDistanceBetween(getLat,getLong,beforeCsoList.get(i).getBefore_cso_lat(),beforeCsoList.get(i).getBefore_cso_long()));
+            String disBetweenCso = String.format("%.2f", geographicalDistance(getLat,getLong,beforeCsoList.get(i).getBefore_cso_lat(),beforeCsoList.get(i).getBefore_cso_long()));
 
-            Log.d("all", disBetweenCso );
+            Log.d("all", getLat +":"+getLong);
             csosList.add(new TheCSO(beforeCsoList.get(i).getBefore_cso_name(), disBetweenCso, beforeCsoList.get(i).getBefore_cso_phonenumber()));
         }
         Collections.sort(csosList, new Comparator<TheCSO>() {
@@ -334,48 +329,27 @@ public class CsoActivity extends AppCompatActivity {
     }
 
 
-
-
-
-
-   /* private static double distanceCoordinates(double lat1, double lon1, double lat2, double lon2, String unit) {
+    private double geographicalDistance(double lat1, double lon1, double lat2, double lon2) {
         double theta = lon1 - lon2;
-        double dist = Math.sin(deg2rad(lat1)) * Math.sin(deg2rad(lat2)) + Math.cos(deg2rad(lat1)) * Math.cos(deg2rad(lat2)) * Math.cos(deg2rad(theta));
+        double dist = Math.sin(deg2rad(lat1))
+                * Math.sin(deg2rad(lat2))
+                + Math.cos(deg2rad(lat1))
+                * Math.cos(deg2rad(lat2))
+                * Math.cos(deg2rad(theta));
         dist = Math.acos(dist);
         dist = rad2deg(dist);
         dist = dist * 60 * 1.1515;
-        if (unit == "K") {
-            dist = dist * 1.609344;
-        } else if (unit == "N") {
-            dist = dist * 0.8684;
-        }
-        DecimalFormat df = new DecimalFormat("##.##");
-        df.setRoundingMode(RoundingMode.DOWN);
-
         return (dist);
-    }*/
-
-
-    private  float newDistanceBetween(double lat1, double lon1, double lat2, double lon2){
-        float [] dist = new float[2];
-        Location.distanceBetween(lat1, lon1, lat2, lon2, dist);
-
-        return dist[1] * 0.000621371192f;
     }
 
-    /*:::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::*/
-	/*::	This function converts decimal degrees to radians						 :*/
-	/*:::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::*/
-    private static double deg2rad(double deg) {
+    private double deg2rad(double deg) {
         return (deg * Math.PI / 180.0);
     }
 
-    /*:::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::*/
-	/*::	This function converts radians to decimal degrees						 :*/
-	/*:::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::*/
-    private static double rad2deg(double rad) {
-        return (rad * 180 / Math.PI);
+    private double rad2deg(double rad) {
+        return (rad * 180.0 / Math.PI);
     }
+
 
 
 }
