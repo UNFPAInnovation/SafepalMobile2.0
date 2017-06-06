@@ -109,12 +109,21 @@ public class SurvivorIncidentFormFragment extends Fragment {
      */
     // TODO: Rename and change types and number of parameters
     public static SurvivorIncidentFormFragment newInstance(String param1, String param2) {
+//        SurvivorIncidentFormFragment fragment = new SurvivorIncidentFormFragment();
+//        Bundle args = new Bundle();
+//        args.putString(ARG_PARAM1, param1);
+//        args.putString(ARG_PARAM2, param2);
+//        fragment.setArguments(args);
+//        return fragment;
+
         SurvivorIncidentFormFragment fragment = new SurvivorIncidentFormFragment();
         Bundle args = new Bundle();
         args.putString(ARG_PARAM1, param1);
         args.putString(ARG_PARAM2, param2);
         fragment.setArguments(args);
         return fragment;
+
+
     }
 
     @Override
@@ -138,6 +147,12 @@ public class SurvivorIncidentFormFragment extends Fragment {
         // Inflate the layout for this fragment
         rootView = inflater.inflate(R.layout.fragment_survivor_incident_form, container, false);
 
+
+       // rootView =  inflater.inflate(R.layout.fragment_another_person_incident_form, container, false);
+
+
+
+Log.i(TAG, "taff is reaching in vreateView");
         sifToolbar = (Toolbar) rootView.findViewById(R.id.reporting_toolbar);
         //Abort fab of  sif activity
 
@@ -148,6 +163,7 @@ public class SurvivorIncidentFormFragment extends Fragment {
         LocationListener ll = new userLocationListener();
         /* end location */
         if (ActivityCompat.checkSelfPermission(getActivity(), Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(getActivity(), Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+            Log.e(TAG, "We dont have permission to request for location and reqquesting is nt yet implemented, should be fixed...");
             // TODO: Consider calling
             //    ActivityCompat#requestPermissions
             // here to request the missing permissions, and then overriding
@@ -155,10 +171,10 @@ public class SurvivorIncidentFormFragment extends Fragment {
             //                                          int[] grantResults)
             // to handle the case where the user grants the permission. See the documentation
             // for ActivityCompat#requestPermissions for more details.
-            return null;
+            //return null; // TODO: 06-Jun-17 DO NOT RETURN HERE, Also consider requesting for permissions
+        }else {
+            sifLm.requestLocationUpdates(LocationManager.NETWORK_PROVIDER, 0, 0, ll);
         }
-        sifLm.requestLocationUpdates(LocationManager.NETWORK_PROVIDER, 0, 0, ll);
-
 
         sifDateOfBirthButton = (Button)rootView.findViewById(R.id.date_of_birth_button);
 
@@ -220,8 +236,8 @@ public class SurvivorIncidentFormFragment extends Fragment {
                 emDialog.show(getFragmentManager(), "encouraging message");
             }
         });
-        
-        
+
+
 
         return rootView;
     }
@@ -392,7 +408,12 @@ public class SurvivorIncidentFormFragment extends Fragment {
     //Randomly load encouraging messages to the Text View
     public void  loadSifMessages(){
         String[] sifMessagesArray = getResources().getStringArray(R.array.seek_medical_care_messages);
-        sifEncouragingMessagesTv.setText(sifMessagesArray[randMessageIndex(0, sifMessagesArray.length)].toString());
+        if(sifEncouragingMessagesTv == null){
+            Log.e(TAG, "sifEncouragingMessagesTv is null");
+        }else{
+            sifEncouragingMessagesTv.setText(sifMessagesArray[randMessageIndex(0, sifMessagesArray.length)].toString());
+        }
+
     }
 
 

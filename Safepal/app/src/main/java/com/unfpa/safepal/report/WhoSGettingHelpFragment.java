@@ -119,12 +119,12 @@ public class WhoSGettingHelpFragment extends Fragment {
                             // Pirates are the best
                             wsghSpinnerRl.setVisibility(View.GONE);
 
-                        loadReportingFormSelfFragment();
-
-
-                        if(getActivity() instanceof ReportingActivity){
-                             ((ReportingActivity) getActivity()).updateNextButtonToSubmit();
-                        }
+//                        loadReportingFormSelfFragment();
+//
+//
+//                        if(getActivity() instanceof ReportingActivity){
+//                             ((ReportingActivity) getActivity()).updateNextButtonToSubmit();
+//                        }
 
 
                         break;
@@ -199,25 +199,41 @@ public class WhoSGettingHelpFragment extends Fragment {
     /**
      * loads reporting for for the survivir him self
      */
-    private void loadReportingFormSelfFragment() {
+//    private void loadReportingFormSelfFragment() {
+//
+//        FragmentManager fragmentManager = getFragmentManager();
+//        FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+//
+//        SurvivorIncidentFormFragment fragment = SurvivorIncidentFormFragment
+//                .newInstance( "UNUSED", "UNUSED");
+//        if ((fragment != null) &&
+//                fragment.isVisible()){
+//
+//            Log.d(TAG, "SurvivorIncidentFragment is already visible, not reforming another...");
+//        }else {
+//            fragmentTransaction.setCustomAnimations(R.animator.slide_in_left, R.animator.slide_out_right);
+//            fragmentTransaction.replace(R.id.fragment_container, fragment, SurvivorIncidentFormFragment.class.getSimpleName());
+//            fragmentTransaction.commit();
+//            Log.d(TAG, "loaded 'SurvivorIncidentFormFragment' fragment @");
+//
+//
+//        }
+//    }
 
+
+    public  void loadReportingFormSelfFragment() {
         FragmentManager fragmentManager = getFragmentManager();
         FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
 
-        SurvivorIncidentFormFragment fragment = new SurvivorIncidentFormFragment();
-        if ((fragment != null) &&
-                fragment.isVisible()){
+        SurvivorIncidentFormFragment fragment = SurvivorIncidentFormFragment
+                .newInstance(WhoSGettingHelpFragment.wsghRelationshipSpinner.getSelectedItem().toString(), "UNUSED");
 
-            Log.d(TAG, "SurvivorIncidentFragment is already visible, not reforming another...");
-        }else {
             fragmentTransaction.setCustomAnimations(R.animator.slide_in_left, R.animator.slide_out_right);
-            fragmentTransaction.replace(R.id.fragment_container, fragment, SurvivorIncidentFormFragment.class.getSimpleName());
+            fragmentTransaction.replace(R.id.fragment_container, fragment, AnotherPersonIncidentFormFragment.class.getSimpleName());
             fragmentTransaction.commit();
-            Log.d(TAG, "loaded 'SurvivorIncidentFormFragment' fragment");
-
-
-        }
+            Log.d(TAG, "loaded 'AnotherPersonIncidentFormFragment' fragment");
     }
+
 
 
 

@@ -88,8 +88,8 @@ ContactFragment.OnFragmentInteractionListener, AnotherPersonIncidentFormFragment
                 if (isFragmentVisible(getFragmentManager().findFragmentByTag(
                         WhoSGettingHelpFragment.class.getSimpleName()))) {//cuurent frag WhoSGettingHelpFragment
                     if (WhoSGettingHelpFragment.wsghYesRB.isChecked()) {//happened to me
-                        Log.d(TAG, "loading reporting fragment for self");
-                        loadReportingFormSelfFragment();
+                        //Log.d(TAG, "loading reporting fragment for self");
+                        loadReportingFormSelfFragment();//used in the WHoIsGettingHelp Fragment
                         updateNextButtonToSubmit();
                     } else if (WhoSGettingHelpFragment.wsghSomeelseRb.isChecked()){//happened to someone else
                         if (WhoSGettingHelpFragment.wsghRelationshipSpinner.getSelectedItemPosition() <= 0) {
@@ -197,6 +197,7 @@ ContactFragment.OnFragmentInteractionListener, AnotherPersonIncidentFormFragment
     public  void loadReportingFormSomeOneElseFragment() {
         FragmentManager fragmentManager = getFragmentManager();
         FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+
         AnotherPersonIncidentFormFragment fragment = AnotherPersonIncidentFormFragment
                 .newInstance(WhoSGettingHelpFragment.wsghRelationshipSpinner.getSelectedItem().toString(), "UNUSED");
         if (isFragmentVisible(fragment)) {
@@ -217,14 +218,16 @@ ContactFragment.OnFragmentInteractionListener, AnotherPersonIncidentFormFragment
         FragmentManager fragmentManager = getFragmentManager();
         FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
 
-        SurvivorIncidentFormFragment fragment = new SurvivorIncidentFormFragment();
+        //SurvivorIncidentFormFragment fragment = new SurvivorIncidentFormFragment();
+        SurvivorIncidentFormFragment fragment = SurvivorIncidentFormFragment
+                .newInstance( "UNUSED", "UNUSED");
         if (isFragmentVisible(fragment)) {
             Log.d(TAG, "SurvivorIncidentFormFragment is already visible, not reforming another...");
         } else {
             fragmentTransaction.setCustomAnimations(R.animator.slide_in_left, R.animator.slide_out_right);
             fragmentTransaction.replace(R.id.fragment_container, fragment, SurvivorIncidentFormFragment.class.getSimpleName());
             fragmentTransaction.commit();
-            Log.d(TAG, "loaded 'SurvivorIncidentFormFragment' fragment");
+            Log.d(TAG, "loaded 'SurvivorIncidentFormFragment' fragment!");
         }
     }
 
