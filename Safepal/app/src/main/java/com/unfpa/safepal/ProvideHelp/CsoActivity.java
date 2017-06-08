@@ -186,24 +186,28 @@ public class CsoActivity extends AppCompatActivity {
 
 
         for(int i =0 ; i<beforeCsoList.size(); i++){
-            Log.d("cso lat" + Integer.toString(i),Double.toString(beforeCsoList.get(i).getBefore_cso_lat()) );
+           if(getLat.equalsIgnoreCase("0.0")  || getLong =="0.0"){
+               csosList.add(new TheCSO(beforeCsoList.get(i).getBefore_cso_name(), "We failed to locate you", beforeCsoList.get(i).getBefore_cso_phonenumber()));
+           }
+            else{
+               String disBetweenCso = String.format("%.2f", geographicalDistance(
+                       Double.parseDouble(getLat),
+                       Double.parseDouble(getLong),
+                       beforeCsoList.get(i).getBefore_cso_lat(),
+                       beforeCsoList.get(i).getBefore_cso_long()));
+
+               Log.d("location from db", getLat +":" + getLong);
+               csosList.add(new TheCSO(beforeCsoList.get(i).getBefore_cso_name(), disBetweenCso + "Km away from you", beforeCsoList.get(i).getBefore_cso_phonenumber()));
+           }
+            Collections.sort(csosList, new Comparator<TheCSO>() {
+                @Override
+                public int compare(TheCSO o1, TheCSO o2) {
+                    return o1.getCso_distance().compareTo(o2.getCso_distance());
+                }
+            });
+           }
 
 
-            String disBetweenCso = String.format("%.2f", geographicalDistance(
-                    Double.parseDouble(getLat),
-                    Double.parseDouble(getLong),
-                    beforeCsoList.get(i).getBefore_cso_lat(),
-                    beforeCsoList.get(i).getBefore_cso_long()));
-
-            Log.d("location from db", getLat +":" + getLong);
-            csosList.add(new TheCSO(beforeCsoList.get(i).getBefore_cso_name(), disBetweenCso + "Km away from you", beforeCsoList.get(i).getBefore_cso_phonenumber()));
-        }
-        Collections.sort(csosList, new Comparator<TheCSO>() {
-            @Override
-            public int compare(TheCSO o1, TheCSO o2) {
-                return o1.getCso_distance().compareTo(o2.getCso_distance());
-            }
-        });
 
         csosAdapter.notifyDataSetChanged();
 

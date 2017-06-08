@@ -21,6 +21,7 @@ import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.Spinner;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.unfpa.safepal.Location.UserLocation;
 import com.unfpa.safepal.R;
@@ -47,8 +48,8 @@ public class SurvivorIncidentFormFragment extends Fragment {
 
     //user location
     private  static UserLocation sifGPS;
-    private static  double userLatitude=0.334307;
-    private static double userLongitude=32.600917;
+    private static  double userLatitude=0.0;
+    private static double userLongitude=0.0;
 
     /**
      * sif - Stands for "Survivor Incident Form"
@@ -269,6 +270,16 @@ public class SurvivorIncidentFormFragment extends Fragment {
     static TextInputLayout textInputLayoutStory;
 
     public static int submitForm(Context context) {
+
+        if(sifGPS.canGetLocation()){
+            if(sifGPS.getLatitude()!= 0.0 || sifGPS.getLongitude()!=0.0){
+                userLatitude= sifGPS.getLatitude();
+                userLongitude = sifGPS.getLongitude();
+            }
+
+        }
+
+        Toast.makeText(context,"Lat: "+ Double.toString(userLatitude) +"Long: "+ Double.toString(userLongitude), Toast.LENGTH_LONG).show();
         int genderRBId = sifGenderRG.getCheckedRadioButtonId();
 
         //checks if gender radio group isn't selected;
@@ -335,14 +346,6 @@ public class SurvivorIncidentFormFragment extends Fragment {
         values.put(ReportIncidentTable.COLUMN_INCIDENT_LOCATION, incidentLocation);
         values.put(ReportIncidentTable.COLUMN_INCIDENT_STORY, incidentStory);
         values.put(ReportIncidentTable.COLUMN_UNIQUE_IDENTIFIER, uniqueIdentifier);
-
-       //Gets user locations
-
-        //end of user location
-
-
-
-        //"0.2123232""32.123233"
 
         values.put(ReportIncidentTable.COLUMN_REPORTER_LOCATION_LAT,userLatitude);
         values.put(ReportIncidentTable.COLUMN_REPORTER_LOCATION_LNG,userLongitude );
