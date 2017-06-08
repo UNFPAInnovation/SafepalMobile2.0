@@ -32,7 +32,6 @@ import com.unfpa.safepal.ProvideHelp.RVCsoModel.CsoRvAdapter;
 import com.unfpa.safepal.ProvideHelp.RVCsoModel.TheCSO;
 import com.unfpa.safepal.R;
 import com.unfpa.safepal.messages.EMessageDialogFragment;
-import com.unfpa.safepal.network.UpdateContactBroadReceiver;
 import com.unfpa.safepal.store.RIContentObserver;
 import com.unfpa.safepal.store.ReportIncidentContentProvider;
 import com.unfpa.safepal.store.ReportIncidentTable;
@@ -54,7 +53,6 @@ public class CsoActivity extends AppCompatActivity {
     Button buttonNext;
     Button buttonExit;
 
-    private UpdateContactBroadReceiver receiver;
 
 
     TextView csoSafepalNo, csoContactInfo,csoAssuranceHelp, csoEncouragingMessagesTV;
@@ -87,7 +85,6 @@ public class CsoActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_cso);
 
-        receiver = new UpdateContactBroadReceiver();
 
 
         //buttonFinish and buttonExit buttons
@@ -179,7 +176,7 @@ public class CsoActivity extends AppCompatActivity {
 
 
     // Method pushes the data to json server suing volley
-    private void getNearestCSOs(double getLat, double getLong) {
+    private void getNearestCSOs(String getLat, String getLong) {
 
 
         beforeCsoList.add(new BeforeCsoInfo("Reproductive Health Uganda, Kamokya",0.3374639,32.58227210,"+256312207100"));
@@ -187,11 +184,19 @@ public class CsoActivity extends AppCompatActivity {
         beforeCsoList.add(new BeforeCsoInfo("Fida, Kira Road",0.348204,32.596336,"+256414530848"));
         beforeCsoList.add(new BeforeCsoInfo("Action Aid , Sir Apollo Rd",0.34204130858355,32.5625579059124,"00000000000"));
 
-        for(int i =0 ; i<beforeCsoList.size(); i++){
-            String disBetweenCso = String.format("%.2f", geographicalDistance(getLat,getLong,beforeCsoList.get(i).getBefore_cso_lat(),beforeCsoList.get(i).getBefore_cso_long()));
 
-            Log.d("all", getLat +":"+getLong);
-            csosList.add(new TheCSO(beforeCsoList.get(i).getBefore_cso_name(), disBetweenCso, beforeCsoList.get(i).getBefore_cso_phonenumber()));
+        for(int i =0 ; i<beforeCsoList.size(); i++){
+            Log.d("cso lat" + Integer.toString(i),Double.toString(beforeCsoList.get(i).getBefore_cso_lat()) );
+
+
+            String disBetweenCso = String.format("%.2f", geographicalDistance(
+                    Double.parseDouble(getLat),
+                    Double.parseDouble(getLong),
+                    beforeCsoList.get(i).getBefore_cso_lat(),
+                    beforeCsoList.get(i).getBefore_cso_long()));
+
+            Log.d("location from db", getLat +":" + getLong);
+            csosList.add(new TheCSO(beforeCsoList.get(i).getBefore_cso_name(), disBetweenCso + "Km away from you", beforeCsoList.get(i).getBefore_cso_phonenumber()));
         }
         Collections.sort(csosList, new Comparator<TheCSO>() {
             @Override
@@ -201,11 +206,6 @@ public class CsoActivity extends AppCompatActivity {
         });
 
         csosAdapter.notifyDataSetChanged();
-
-
-
-
-
 
     }
 
@@ -261,11 +261,10 @@ public class CsoActivity extends AppCompatActivity {
                 null,
                 null,
                 null);
-        cursorRetrieveLatLng.moveToLast();
 
         if (cursorRetrieveLatLng != null) {
 
-
+            cursorRetrieveLatLng.moveToLast();
             String dbLatString =  cursorRetrieveLatLng.getString(cursorRetrieveLatLng.getColumnIndex(ReportIncidentTable.COLUMN_REPORTER_LOCATION_LAT));
             String dbLngString =  cursorRetrieveLatLng.getString(cursorRetrieveLatLng.getColumnIndex(ReportIncidentTable.COLUMN_REPORTER_LOCATION_LNG));
             String dbPhoneString =  cursorRetrieveLatLng.getString(cursorRetrieveLatLng.getColumnIndex(ReportIncidentTable.COLUMN_REPORTER_PHONE_NUMBER));
@@ -284,15 +283,10 @@ public class CsoActivity extends AppCompatActivity {
 
             }
 
-            //finalCsoPreview(lat, lng);
-            getNearestCSOs(Float.parseFloat(dbLatString), Float.parseFloat(dbLngString));
-          //  Log.d("xx", dbLatString);
-           // Log.d("xx", dbLngString);
-
-
-
-
+            getNearestCSOs(dbLatString,dbLngString);
+            Log.d("cso lat and long", dbLatString+"- : -"+dbLngString);
         }
+        cursorRetrieveLatLng.close();
 
     }
 

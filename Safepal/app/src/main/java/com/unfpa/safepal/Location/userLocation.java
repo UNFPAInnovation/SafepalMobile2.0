@@ -1,12 +1,17 @@
 package com.unfpa.safepal.Location;
 
+/**
+ * Created by Jjingo on 7/06/2017.
+ */
+
+//copy below code
+
 import android.Manifest;
 import android.app.AlertDialog;
 import android.app.Service;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
-
 import android.content.pm.PackageManager;
 import android.location.Location;
 import android.location.LocationListener;
@@ -14,17 +19,14 @@ import android.location.LocationManager;
 import android.os.Bundle;
 import android.os.IBinder;
 import android.provider.Settings;
-
-
 import android.support.v4.app.ActivityCompat;
 import android.util.Log;
-import android.widget.Toast;
 
 /**
  * Created by ANQ on 8/8/2016.
  */
 
-public class TrackGPS extends Service implements LocationListener {
+public class UserLocation extends Service implements LocationListener {
 
     private final Context mContext;
 
@@ -47,7 +49,7 @@ public class TrackGPS extends Service implements LocationListener {
     private static final long MIN_TIME_BW_UPDATES = 1000 * 60 * 1;
     protected LocationManager locationManager;
 
-    public TrackGPS(Context mContext) {
+    public UserLocation(Context mContext) {
         this.mContext = mContext;
         getLocation();
     }
@@ -67,12 +69,13 @@ public class TrackGPS extends Service implements LocationListener {
                     .isProviderEnabled(LocationManager.NETWORK_PROVIDER);
 
             if (!checkGPS && !checkNetwork) {
-                Toast.makeText(mContext, "No Service Provider Available", Toast.LENGTH_SHORT).show();
+                Log.d("Location","No Service Provider Available");
+                //Toast.makeText(mContext, "No Service Provider Available", Toast.LENGTH_SHORT).show();
             } else {
                 this.canGetLocation = true;
                 // First get location from Network Provider
                 if (checkNetwork) {
-                 //   Toast.makeText(mContext, "Network", Toast.LENGTH_SHORT).show();
+                    Log.d("Location","Network");
 
                     try {
                         locationManager.requestLocationUpdates(
@@ -98,6 +101,8 @@ public class TrackGPS extends Service implements LocationListener {
             // if GPS Enabled get lat/long using GPS Services
             if (checkGPS) {
                // Toast.makeText(mContext, "GPS", Toast.LENGTH_SHORT).show();
+                Log.d("Location","Getting location with gps");
+
                 if (loc == null) {
                     try {
                         locationManager.requestLocationUpdates(
@@ -148,10 +153,9 @@ public class TrackGPS extends Service implements LocationListener {
         AlertDialog.Builder alertDialog = new AlertDialog.Builder(mContext);
 
 
-        alertDialog.setTitle("Enable GPS");
+        alertDialog.setTitle("GPS Not Enabled");
 
-        alertDialog.setMessage("To get better assistance, we need to know your current location. \n" +
-                "Turn on you location GPS\n");
+        alertDialog.setMessage("Do you wants to turn On GPS");
 
 
         alertDialog.setPositiveButton("Yes", new DialogInterface.OnClickListener() {
@@ -176,7 +180,7 @@ public class TrackGPS extends Service implements LocationListener {
     public void stopUsingGPS() {
         if (locationManager != null) {
 
-            if (ActivityCompat.checkSelfPermission(mContext, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(mContext, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+            if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
                 // TODO: Consider calling
                 //    ActivityCompat#requestPermissions
                 // here to request the missing permissions, and then overriding
@@ -186,7 +190,7 @@ public class TrackGPS extends Service implements LocationListener {
                 // for ActivityCompat#requestPermissions for more details.
                 return;
             }
-            locationManager.removeUpdates(TrackGPS.this);
+            locationManager.removeUpdates(UserLocation.this);
         }
     }
 

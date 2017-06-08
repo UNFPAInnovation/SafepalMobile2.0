@@ -39,6 +39,68 @@
 
             <include layout="@layout/divider" />
 
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginTop="20dp">
+
+                <ImageView
+                    android:id="@+id/image_gender"
+                    android:layout_width="30dp"
+                    android:layout_height="30dp"
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginRight="10dp"
+                    android:src="@mipmap/gender"
+                    android:layout_marginTop="10dp"
+                    />
+
+
+                <LinearLayout
+                    android:id="@+id/gender_linear_layout"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    android:layout_toEndOf="@id/image_gender"
+                    android:layout_toRightOf="@id/image_gender"
+                    android:orientation="vertical">
+
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="@dimen/subtitle_margin_bottom"
+                        android:text="@string/sif_survivor_gender"
+                        android:textColor="@color/colorAccent"
+                        android:textStyle="bold"
+                        />
+
+
+                    <RadioGroup
+                        android:id="@+id/sif_gender_rg"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal">
+
+                        <RadioButton
+                            android:id="@+id/gender_girl_rb"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:paddingBottom="10dp"
+                            android:paddingTop="10dp"
+                            android:text="@string/female" />
+
+                        <RadioButton
+                            android:id="@+id/gender_boy_rb"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:paddingBottom="10dp"
+                            android:paddingTop="10dp"
+                            android:text="@string/male" />
+                    </RadioGroup>
+
+                </LinearLayout>
+
+            </RelativeLayout>
             <!-- Age Textbox and Button-->
 
             <RelativeLayout
@@ -214,9 +276,9 @@
                             android:layout_height="wrap_content"
                             android:hint="@string/incident_details"
                             android:inputType="text|textMultiLine"
+                            android:maxLines="3"
                             android:imeOptions="actionDone"
-                            android:nextFocusDown="@id/sif_gender_rg"
-                            android:maxLines="3"/>
+                            />
                     </android.support.design.widget.TextInputLayout>
                 </RelativeLayout>
 
@@ -224,68 +286,6 @@
 
             <include layout="@layout/divider" />
 
-            <RelativeLayout
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_marginTop="20dp">
-
-                <ImageView
-                    android:id="@+id/image_gender"
-                    android:layout_width="30dp"
-                    android:layout_height="30dp"
-                    android:layout_marginLeft="10dp"
-                    android:layout_marginRight="10dp"
-                    android:src="@mipmap/gender"
-                    android:layout_marginTop="10dp"
-                    />
-
-
-                <LinearLayout
-                    android:id="@+id/gender_linear_layout"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="10dp"
-                    android:layout_toEndOf="@id/image_gender"
-                    android:layout_toRightOf="@id/image_gender"
-                    android:orientation="vertical">
-
-
-                    <TextView
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginBottom="@dimen/subtitle_margin_bottom"
-                        android:text="@string/sif_survivor_gender"
-                        android:textColor="@color/colorAccent"
-                        android:textStyle="bold"
-                        />
-
-
-                    <RadioGroup
-                        android:id="@+id/sif_gender_rg"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:orientation="vertical">
-
-                        <RadioButton
-                            android:id="@+id/gender_girl_rb"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:paddingBottom="10dp"
-                            android:paddingTop="10dp"
-                            android:text="@string/female" />
-
-                        <RadioButton
-                            android:id="@+id/gender_boy_rb"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:paddingBottom="10dp"
-                            android:paddingTop="10dp"
-                            android:text="@string/male" />
-                    </RadioGroup>
-
-                </LinearLayout>
-
-            </RelativeLayout>
 
 
         </LinearLayout>

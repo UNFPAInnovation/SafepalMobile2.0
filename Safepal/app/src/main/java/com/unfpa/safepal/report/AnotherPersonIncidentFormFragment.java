@@ -25,7 +25,7 @@ import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.unfpa.safepal.Location.TrackGPS;
+import com.unfpa.safepal.Location.UserLocation;
 import com.unfpa.safepal.Places.GooglePlacesAutocompleteAdapter;
 import com.unfpa.safepal.R;
 import com.unfpa.safepal.Utils.Layout;
@@ -89,7 +89,11 @@ public class AnotherPersonIncidentFormFragment extends Fragment {
     private static Spinner spinnerAgeRange;
     private static AutoCompleteTextView apifIncidentLocationEt;
     private static EditText apifIncidentDetailsEt;
-    private  static TrackGPS apifGPS;
+
+    //user location
+    private  static UserLocation apifGPS;
+    private static  double userLatitude=0.334307;
+    private static double userLongitude=32.600917;
 
 
 
@@ -159,7 +163,8 @@ public class AnotherPersonIncidentFormFragment extends Fragment {
         imageAge= (ImageView) rootView.findViewById(R.id.image_age);
         imageQnMark= (ImageView) rootView.findViewById(R.id.image_spinner_what_happed);
         textInputLayoutWhereHappened = (TextInputLayout)rootView.findViewById(R.id.inpu_latout_where);
-        apifGPS = new TrackGPS(getActivity());
+
+        apifGPS = new UserLocation(getActivity());
 
 
         //encouraging messages
@@ -288,7 +293,21 @@ public class AnotherPersonIncidentFormFragment extends Fragment {
         imageQnMark.setImageDrawable(
                 Layout.changeImageColor(getActivity(),
                         imageQnMark.getDrawable(), getResources().getColor(R.color.colorImages)));
-return rootView;
+
+        //picks the location of the user
+        if(apifGPS.canGetLocation()){
+            if(apifGPS.getLatitude()!= 0.0 || apifGPS.getLongitude()!=0.0){
+            userLatitude= apifGPS.getLatitude();
+            userLongitude = apifGPS.getLongitude();
+            }
+
+        }
+        else {
+            apifGPS.showSettingsAlert();
+        }
+
+
+        return rootView;
 
     }
 
@@ -356,8 +375,7 @@ return rootView;
 
         //checks if the location of the incident is filled by the user
         if (apifIncidentLocationEt.length() == 0 ) {
-//            if(idx==0) Toast.makeText(context, "In what location did the incident happen her?",Toast.LENGTH_LONG).show();
-//            else       Toast.makeText(context, "In what location did the incident happen him?",Toast.LENGTH_LONG).show();
+
             sifFeedbackSnackbar = Snackbar.make(rootView ,"In what location did the incident happen him/her?",
                     Snackbar.LENGTH_LONG);
             sifFeedbackSnackbar.show();
@@ -416,11 +434,11 @@ return rootView;
         values.put(ReportIncidentTable.COLUMN_UNIQUE_IDENTIFIER, apifUniqueIdentifier);
 
 
-        values.put(ReportIncidentTable.COLUMN_REPORTER_LOCATION_LAT, "0.33563");
+        values.put(ReportIncidentTable.COLUMN_REPORTER_LOCATION_LAT, Double.toString(userLatitude));
        //Log.d("lat", Double.toString(apifGPS.getLatitude()));
        // Log.d("lat", Double.toString(apifGPS.getLongitude()));
-
-        values.put(ReportIncidentTable.COLUMN_REPORTER_LOCATION_LNG, "32.559947");
+       //  Toast.makeText(context, Double.toString(userLongitude)+ ":"+ Double.toString(userLatitude),Toast.LENGTH_LONG).show();
+        values.put(ReportIncidentTable.COLUMN_REPORTER_LOCATION_LNG, Double.toString(userLongitude));
         values.put(ReportIncidentTable.COLUMN_REPORTER_PHONE_NUMBER, "null");
         values.put(ReportIncidentTable.COLUMN_REPORTER_EMAIL, "null");
 

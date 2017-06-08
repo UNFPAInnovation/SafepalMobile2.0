@@ -72,12 +72,22 @@ android:layout_marginBottom="20dp"
             android:id="@+id/contact_phone_email_ll"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="vertical"
+            android:orientation="horizontal"
             android:visibility="gone">
-
+            <Button
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="3"
+                android:layout_marginTop="10dp"
+                android:layout_marginBottom="10dp"
+                android:paddingTop="10dp"
+                android:paddingBottom="10dp"
+                android:text="+256"
+                />
             <android.support.design.widget.TextInputLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content">
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="10">
 
                 <EditText
                     android:id="@+id/contact_phone_et"
@@ -89,25 +99,11 @@ android:layout_marginBottom="20dp"
                     android:layout_weight="1"
                     android:hint="Enter Phone Number *"
                     android:inputType="phone"
+                    android:maxLength="12"
                     android:padding="@dimen/overall_et_padding_top" />
             </android.support.design.widget.TextInputLayout>
 
-            <android.support.design.widget.TextInputLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content">
 
-                <EditText
-                    android:id="@+id/contact_email_et"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginBottom="@dimen/overall_et_margin_bottom"
-                    android:layout_marginRight="@dimen/activity_horizontal_margin"
-                    android:layout_marginTop="@dimen/overall_et_margin_top"
-                    android:hint="Enter your email (Optional)"
-                    android:inputType="textEmailAddress"
-                    android:padding="@dimen/overall_et_padding_top"
-                    android:visibility="gone"/>
-            </android.support.design.widget.TextInputLayout>
         </LinearLayout>
 
     </LinearLayout>

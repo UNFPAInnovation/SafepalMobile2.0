@@ -1,20 +1,14 @@
 package com.unfpa.safepal.report;
 
-import android.Manifest;
 import android.app.Fragment;
 import android.content.ContentValues;
 import android.content.Context;
 import android.content.IntentFilter;
-import android.content.pm.PackageManager;
-import android.location.Location;
-import android.location.LocationListener;
-import android.location.LocationManager;
 import android.net.ConnectivityManager;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.design.widget.Snackbar;
 import android.support.design.widget.TextInputLayout;
-import android.support.v4.app.ActivityCompat;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -28,6 +22,7 @@ import android.widget.RadioGroup;
 import android.widget.Spinner;
 import android.widget.TextView;
 
+import com.unfpa.safepal.Location.UserLocation;
 import com.unfpa.safepal.R;
 import com.unfpa.safepal.datepicker.DatePickerFragment;
 import com.unfpa.safepal.messages.EMessageDialogFragment;
@@ -49,8 +44,11 @@ import static com.unfpa.safepal.report.WhoSGettingHelpFragment.randMessageIndex;
  */
 public class SurvivorIncidentFormFragment extends Fragment {
 
-   private static String userLongitude="0.2123232";
-    private static  String userLatitude="32.123233";
+
+    //user location
+    private  static UserLocation sifGPS;
+    private static  double userLatitude=0.334307;
+    private static double userLongitude=32.600917;
 
     /**
      * sif - Stands for "Survivor Incident Form"
@@ -146,35 +144,13 @@ public class SurvivorIncidentFormFragment extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         rootView = inflater.inflate(R.layout.fragment_survivor_incident_form, container, false);
+        sifGPS = new UserLocation(getActivity());
 
 
-       // rootView =  inflater.inflate(R.layout.fragment_another_person_incident_form, container, false);
-
-
-
-Log.i(TAG, "taff is reaching in vreateView");
+        //Log.i(TAG, "taff is reaching in vreateView");
         sifToolbar = (Toolbar) rootView.findViewById(R.id.reporting_toolbar);
         //Abort fab of  sif activity
 
-
-        //location
-
-        LocationManager sifLm = (LocationManager) getActivity().getSystemService(Context.LOCATION_SERVICE);
-        LocationListener ll = new userLocationListener();
-        /* end location */
-        if (ActivityCompat.checkSelfPermission(getActivity(), Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(getActivity(), Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
-            Log.e(TAG, "We dont have permission to request for location and reqquesting is nt yet implemented, should be fixed...");
-            // TODO: Consider calling
-            //    ActivityCompat#requestPermissions
-            // here to request the missing permissions, and then overriding
-            //   public void onRequestPermissionsResult(int requestCode, String[] permissions,
-            //                                          int[] grantResults)
-            // to handle the case where the user grants the permission. See the documentation
-            // for ActivityCompat#requestPermissions for more details.
-            //return null; // TODO: 06-Jun-17 DO NOT RETURN HERE, Also consider requesting for permissions
-        }else {
-            sifLm.requestLocationUpdates(LocationManager.NETWORK_PROVIDER, 0, 0, ll);
-        }
 
         sifDateOfBirthButton = (Button)rootView.findViewById(R.id.date_of_birth_button);
 
@@ -220,12 +196,6 @@ Log.i(TAG, "taff is reaching in vreateView");
         });
 
 
-
-
-
-
-
-
         sifEncouragingMessagesTv.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -238,6 +208,17 @@ Log.i(TAG, "taff is reaching in vreateView");
         });
 
 
+        //picks the location of the user
+        if(sifGPS.canGetLocation()){
+            if(sifGPS.getLatitude()!= 0.0 || sifGPS.getLongitude()!=0.0){
+                userLatitude= sifGPS.getLatitude();
+                userLongitude = sifGPS.getLongitude();
+            }
+
+        }
+        else {
+            sifGPS.showSettingsAlert();
+        }
 
         return rootView;
     }
@@ -433,33 +414,4 @@ Log.i(TAG, "taff is reaching in vreateView");
         return "TMP_SPL" + Integer.toString(randomNum);
     }
 
-
-    private static class userLocationListener implements LocationListener {
-        @Override
-        public void onLocationChanged(Location location) {
-
-            if(location!=null){
-                double userLong = location.getLongitude();
-                double userLat= location.getLatitude();
-                userLongitude = Double.toString(userLong);
-                userLatitude = Double.toString(userLat);
-
-            }
-        }
-
-        @Override
-        public void onStatusChanged(String provider, int status, Bundle extras) {
-
-        }
-
-        @Override
-        public void onProviderEnabled(String provider) {
-
-        }
-
-        @Override
-        public void onProviderDisabled(String provider) {
-
-        }
-    }
 }

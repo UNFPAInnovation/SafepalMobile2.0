@@ -118,7 +118,7 @@
     <!-- another person incident form strings -->
     <string name="apif_activity_title">Getting Help </string>
     <string name="survivor_age">How old is she/he? </string>
-    <string name="apif_survivor_gender">Is She or He?</string>
+    <string name="apif_survivor_gender">Is this person female or male?</string>
     <string name="apif_survivor_gender_above_18">Is she/he a Man or Woman?</string>
     <string name="incident_location">Where did it happen?</string>
     <string name="incident_details">Tell the story of the incident.</string>
@@ -128,9 +128,8 @@
     <string-array name="apif_incident_type_below">
         <item>What happened to him or her?</item>
         <item>Bad touches </item>
-        <item>Someone tried to defile me</item>
+        <item>Someone tried to defile him or her</item>
         <item>He/She was defiled</item>
-        <item>He/She was forced into prostitution</item>
         <item>other</item>
     </string-array>
 
@@ -139,7 +138,6 @@
         <item>Bad touches </item>
         <item>Someone tried to rape him or her</item>
         <item>He/She was raped</item>
-        <item>He/She was forced into prostitution</item>
         <item>other</item>
     </string-array>
 

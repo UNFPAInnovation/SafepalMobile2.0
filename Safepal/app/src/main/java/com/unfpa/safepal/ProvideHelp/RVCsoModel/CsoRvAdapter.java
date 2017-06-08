@@ -1,21 +1,13 @@
 package com.unfpa.safepal.ProvideHelp.RVCsoModel;
 
-import android.Manifest;
-import android.content.ActivityNotFoundException;
-import android.content.Intent;
-import android.content.pm.PackageManager;
-import android.net.Uri;
-import android.support.v4.app.ActivityCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.unfpa.safepal.R;
-import com.unfpa.safepal.messages.EMessageDialogFragment;
 import com.unfpa.safepal.messages.csoDialogFragment;
 
 import java.util.List;
@@ -71,7 +63,7 @@ public class CsoRvAdapter extends RecyclerView.Adapter<CsoRvAdapter.CustomViewHo
     public void onBindViewHolder(CustomViewHolder holder, int position) {
         TheCSO cso = csosList.get(position);
         holder.csoName.setText(cso.getCso_name());
-        holder.csoDistance.setText(cso.getCso_distance()+ " km away from you");
+        holder.csoDistance.setText(cso.getCso_distance());
         holder.csoPhonenumber.setText(cso.getCso_phonenumber());
     }
 

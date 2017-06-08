@@ -118,14 +118,15 @@ public class WhoSGettingHelpFragment extends Fragment {
                             //startActivity(new Intent(getApplicationContext(), SurvivorIncidentFormActivity.class));
                             // Pirates are the best
                             wsghSpinnerRl.setVisibility(View.GONE);
+                        //loadReportingFormSelfFragment();
+                         // loadReportingFormSelfFragment();
 
-//                        loadReportingFormSelfFragment();
-//
-//
-//                        if(getActivity() instanceof ReportingActivity){
-//                             ((ReportingActivity) getActivity()).updateNextButtonToSubmit();
-//                        }
+/*
+                        if(getActivity() instanceof ReportingActivity){
+                            ((ReportingActivity) getActivity()).updateNextButtonToSubmit();;
+                        }
 
+*/
 
                         break;
                     case R.id.wsgh_someoneelse_rb:

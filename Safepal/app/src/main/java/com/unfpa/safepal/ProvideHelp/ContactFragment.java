@@ -7,6 +7,8 @@ import android.database.Cursor;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Handler;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -52,7 +54,6 @@ public class ContactFragment extends Fragment {
     private LinearLayout contactPhoneEmailLl;
     //    private RadioButton contactYesRB, contactNoRb;
     private static EditText contactPhonenumber;
-    private static EditText contactEmail;
     static CheckBox checkBoxContactMe;
 
 
@@ -119,7 +120,38 @@ public class ContactFragment extends Fragment {
         contactEncouragingMessagesTv = (TextView) view.findViewById(R.id.contact_ecouraging_messages_tv);
         contactSafepalNo = (TextView) view.findViewById(R.id.contact_safepal_no);
         contactPhonenumber = (EditText) view.findViewById(R.id.contact_phone_et);
-        contactEmail = (EditText) view.findViewById(R.id.contact_email_et);
+
+        contactPhonenumber.addTextChangedListener(new TextWatcher() {
+            int length_before = 0;
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+                length_before = s.length();
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+                if (length_before < s.length()) {
+
+                        if (s.length() == 3 || s.length() == 7)
+                            s.append("-");
+                        if (s.length() > 3) {
+                            if (Character.isDigit(s.charAt(3)))
+                                s.insert(3, "-");
+                        }
+                        if (s.length() > 7) {
+                            if (Character.isDigit(s.charAt(7)))
+                                s.insert(7, "-");
+
+                    }
+                }
+
+            }
+        });
 
         loadContactFeedbackMessages();
         //update unique number
@@ -199,10 +231,6 @@ public class ContactFragment extends Fragment {
 
             dataValues.put(ReportIncidentTable.COLUMN_REPORTER_PHONE_NUMBER, contactPhonenumber.getText().toString());
 
-            if (contactEmail.getText().length() >= 10) {
-                //update only correct email to db
-                dataValues.put(ReportIncidentTable.COLUMN_REPORTER_PHONE_NUMBER, contactPhonenumber.getText().toString());
-            }
 
 
             if (cursorUpdate != null) {
