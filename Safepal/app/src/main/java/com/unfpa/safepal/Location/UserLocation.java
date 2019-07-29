@@ -26,7 +26,7 @@ import android.util.Log;
  * Created by ANQ on 8/8/2016.
  */
 
-public class UserLocation extends Service implements LocationListener {
+public final class UserLocation extends Service implements LocationListener {
 
     private final Context mContext;
 
