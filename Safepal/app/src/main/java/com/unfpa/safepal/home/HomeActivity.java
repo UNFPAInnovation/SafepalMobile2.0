@@ -1,5 +1,6 @@
 package com.unfpa.safepal.home;
 
+import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.net.Uri;
@@ -13,6 +14,7 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.animation.Animation;
@@ -22,6 +24,7 @@ import android.widget.Button;
 import android.widget.CompoundButton;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.crashlytics.android.Crashlytics;
 import com.github.amlcurran.showcaseview.ShowcaseView;
@@ -51,6 +54,7 @@ public class HomeActivity extends AppCompatActivity {
     ShowcaseView homeReportGuideSv, homeExitSv, homeNextSv;
     RelativeLayout.LayoutParams lps, nextLps;
 
+    @SuppressLint("ClickableViewAccessibility")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -145,6 +149,37 @@ public class HomeActivity extends AppCompatActivity {
             }
         });
 
+        infoPanel.setOnTouchListener(new View.OnTouchListener() {
+            int downX, upX;
+
+            @Override
+            public boolean onTouch(View v, MotionEvent event) {
+
+                if (event.getAction() == MotionEvent.ACTION_DOWN) {
+                    downX = (int) event.getX();
+                    Log.i("event.getX()", " downX " + downX);
+                    return true;
+                }
+
+                else if (event.getAction() == MotionEvent.ACTION_UP) {
+                    upX = (int) event.getX();
+                    Log.i("event.getX()", " upX " + upX);
+                    if (upX - downX > 100) {
+                        Toast.makeText(HomeActivity.this, "Swipe right", Toast.LENGTH_SHORT).show();
+                        animateNextMessage();
+                    }
+
+                    else if (downX - upX > -100) {
+                        Toast.makeText(HomeActivity.this, "Swipe left", Toast.LENGTH_SHORT).show();
+                        animateNextMessage();
+                    }
+                    return true;
+
+                }
+                return false;
+            }
+        });
+
         animateNextMessage();//show first message
         showDisclaimer();
 
@@ -211,10 +246,10 @@ public class HomeActivity extends AppCompatActivity {
 
     String TAG = HomeActivity.class.getSimpleName();
 
-    private void updateMessageText() {//// TODO: 13-Nov-16 dynamically set messages
+    private void updateMessageText() {
         //make adapter
         ArrayAdapter<CharSequence> messages = ArrayAdapter.createFromResource(this,
-                R.array.home_contact_info, R.layout.spinner_item);//// TODO: 14-Nov-16 Is this the correct Array???
+                R.array.home_contact_info, R.layout.spinner_item);
         Random random = new Random();
         int min = 0;
         int max = messages.getCount();
