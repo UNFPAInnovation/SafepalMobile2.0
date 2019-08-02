@@ -6,8 +6,7 @@
     android:layout_height="match_parent"
     android:fitsSystemWindows="true"
     android:background="@color/colorWhite"
-    tools:context=".home.HomeActivity"
- >
+    tools:context=".home.HomeActivity">
 
     <!-- AppBar of the Home -->
     <android.support.design.widget.AppBarLayout
@@ -29,29 +28,30 @@
     <!-- Contents of the Home Activity-->
     <include layout="@layout/content_home" />
 
-    <android.support.design.widget.FloatingActionButton
+    <Button
         android:id="@+id/fab_report_incident"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="bottom|end"
         android:layout_margin="@dimen/fab_margin"
-        android:src="@drawable/ic_border_color_white_24dp"
-         />
+        style="@style/materialButtonNormal"
+        android:text="@string/report"
+        />
 
     <Button
-
         android:id="@+id/home_next_message"
-        android:layout_margin="@dimen/fab_margin"
-        android:layout_gravity="bottom"
         style="@style/materialButtonNormal"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_gravity="bottom"
+        android:layout_margin="@dimen/fab_margin"
         android:text="@string/next_message" />
 
     <Button
         android:layout_margin="@dimen/fab_margin"
         android:layout_gravity="bottom|start"
         android:id="@+id/exit_app"
+        android:visibility="invisible"
         style="@style/materialButtonAttention"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"

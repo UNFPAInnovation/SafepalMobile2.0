@@ -1,14 +1,18 @@
 package com.unfpa.safepal.report;
 
+import android.Manifest;
 import android.app.Fragment;
 import android.content.ContentValues;
 import android.content.Context;
 import android.content.IntentFilter;
+import android.content.pm.PackageManager;
+import android.location.Location;
 import android.net.ConnectivityManager;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.design.widget.Snackbar;
 import android.support.design.widget.TextInputLayout;
+import android.support.v4.app.ActivityCompat;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -23,6 +27,14 @@ import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.google.android.gms.location.FusedLocationProviderClient;
+import com.google.android.gms.location.LocationServices;
+import com.google.android.gms.tasks.OnSuccessListener;
+import com.karumi.dexter.Dexter;
+import com.karumi.dexter.MultiplePermissionsReport;
+import com.karumi.dexter.PermissionToken;
+import com.karumi.dexter.listener.PermissionRequest;
+import com.karumi.dexter.listener.multi.MultiplePermissionsListener;
 import com.unfpa.safepal.Location.UserLocation;
 import com.unfpa.safepal.R;
 import com.unfpa.safepal.datepicker.DatePickerFragment;
@@ -31,6 +43,7 @@ import com.unfpa.safepal.network.NetworkChangeReceiver;
 import com.unfpa.safepal.store.ReportIncidentContentProvider;
 import com.unfpa.safepal.store.ReportIncidentTable;
 
+import java.util.List;
 import java.util.Random;
 
 import static com.unfpa.safepal.report.WhoSGettingHelpFragment.randMessageIndex;
@@ -47,9 +60,9 @@ public class SurvivorIncidentFormFragment extends Fragment {
 
 
     //user location
-    private  static UserLocation sifGPS;
-    private static  double userLatitude=0.0;
-    private static double userLongitude=0.0;
+    private static UserLocation sifGPS;
+    private static double userLatitude = 0.0;
+    private static double userLongitude = 0.0;
 
     /**
      * sif - Stands for "Survivor Incident Form"
@@ -74,6 +87,7 @@ public class SurvivorIncidentFormFragment extends Fragment {
     private static EditText sifIncidentLocationEt;
     private static EditText sifIncidentDetailsEt;
     private static Snackbar sifFeedbackSnackbar;
+    private FusedLocationProviderClient fusedLocationClient;
 
     //Data Layer
 
@@ -146,6 +160,7 @@ public class SurvivorIncidentFormFragment extends Fragment {
         // Inflate the layout for this fragment
         rootView = inflater.inflate(R.layout.fragment_survivor_incident_form, container, false);
         sifGPS = new UserLocation(getActivity());
+        fusedLocationClient = LocationServices.getFusedLocationProviderClient(getActivity().getApplicationContext());
 
 
         //Log.i(TAG, "taff is reaching in vreateView");
@@ -153,21 +168,21 @@ public class SurvivorIncidentFormFragment extends Fragment {
         //Abort fab of  sif activity
 
 
-        sifDateOfBirthButton = (Button)rootView.findViewById(R.id.date_of_birth_button);
+        sifDateOfBirthButton = (Button) rootView.findViewById(R.id.date_of_birth_button);
 
-        textViewChosenDate = (TextView)rootView.findViewById(R.id.sif_chosen_date);
-        sifQtnAgeTextView= (TextView)rootView.findViewById(R.id.sif_qtn_age_tv);
+        textViewChosenDate = (TextView) rootView.findViewById(R.id.sif_chosen_date);
+        sifQtnAgeTextView = (TextView) rootView.findViewById(R.id.sif_qtn_age_tv);
 
 
-        sifGenderRG=(RadioGroup)rootView.findViewById(R.id.sif_gender_rg);
+        sifGenderRG = (RadioGroup) rootView.findViewById(R.id.sif_gender_rg);
         sifIncidentTypeSpinner = (Spinner) rootView.findViewById(R.id.incident_type_spinner);
         sifIncidentLocationEt = (EditText) rootView.findViewById(R.id.incident_location_actv);
-        sifIncidentDetailsEt = (EditText)rootView.findViewById(R.id.sif_incident_details_et);
+        sifIncidentDetailsEt = (EditText) rootView.findViewById(R.id.sif_incident_details_et);
 
-        sifEncouragingMessagesTv= (TextView) rootView.findViewById(R.id.sif_encouraging_messages_tv);
+        sifEncouragingMessagesTv = (TextView) rootView.findViewById(R.id.sif_encouraging_messages_tv);
 
-        textInputLayoutStory = (TextInputLayout)rootView.findViewById(R.id.input_latout_story);
-        textInputLayoutWhereHappened = (TextInputLayout)rootView.findViewById(R.id.inpu_latout_where);
+        textInputLayoutStory = (TextInputLayout) rootView.findViewById(R.id.input_latout_story);
+        textInputLayoutWhereHappened = (TextInputLayout) rootView.findViewById(R.id.inpu_latout_where);
 
 
         //content provider
@@ -209,19 +224,67 @@ public class SurvivorIncidentFormFragment extends Fragment {
         });
 
 
+        getPermissions();
+
         //picks the location of the user
-        if(sifGPS.canGetLocation()){
-            if(sifGPS.getLatitude()!= 0.0 || sifGPS.getLongitude()!=0.0){
-                userLatitude= sifGPS.getLatitude();
+        if (sifGPS.canGetLocation()) {
+            if (sifGPS.getLatitude() != 0.0 || sifGPS.getLongitude() != 0.0) {
+                userLatitude = sifGPS.getLatitude();
                 userLongitude = sifGPS.getLongitude();
             }
 
-        }
-        else {
+        } else {
             sifGPS.showSettingsAlert();
         }
 
         return rootView;
+    }
+
+    private void getPermissions() {
+        Log.d(TAG, "getPermissions: get location permissions");
+        Dexter.withActivity(getActivity()).withPermissions(Manifest.permission.ACCESS_FINE_LOCATION, Manifest.permission.ACCESS_COARSE_LOCATION)
+                .withListener(new MultiplePermissionsListener() {
+                    @Override
+                    public void onPermissionsChecked(MultiplePermissionsReport report) {
+                        if (report.areAllPermissionsGranted()) {
+                            Log.d(TAG, "onPermissionsChecked: location permission granted");
+                            getUserLocation();
+
+                        } else if (report.isAnyPermissionPermanentlyDenied()) {
+                            getActivity().finish();
+                        }
+                    }
+
+                    @Override
+                    public void onPermissionRationaleShouldBeShown(List<PermissionRequest> permissions, PermissionToken token) {
+                        Toast.makeText(getActivity().getApplicationContext(), "Safepal needs your location to properly handle your case", Toast.LENGTH_LONG).show();
+                    }
+                }).check();
+    }
+
+    private void getUserLocation() {
+        Log.d(TAG, "getUserLocation: called");
+        if (ActivityCompat.checkSelfPermission(getActivity().getApplicationContext(), Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED
+                && ActivityCompat.checkSelfPermission(getActivity().getApplicationContext(), Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+            Log.d(TAG, "getUserLocation: permission not granted");
+            return;
+        }
+
+        try {
+            fusedLocationClient.getLastLocation()
+                    .addOnSuccessListener(getActivity(), new OnSuccessListener<Location>() {
+                        @Override
+                        public void onSuccess(Location location) {
+                            Log.d(TAG, "onSuccess: fused location client " + location.getLatitude() + location.getLongitude());
+                            if (location != null) {
+                                userLongitude = location.getLongitude();
+                                userLatitude = location.getLatitude();
+                            }
+                        }
+                    });
+        } catch (Exception e) {
+            Log.e(TAG, "getUserLocation: ", e);
+        }
     }
 
     @Override
@@ -270,6 +333,7 @@ public class SurvivorIncidentFormFragment extends Fragment {
     static TextInputLayout textInputLayoutStory;
 
     public static int submitForm(Context context) {
+        Log.d(TAG, "submitForm: called");
 
         if(sifGPS.canGetLocation()){
             if(sifGPS.getLatitude()!= 0.0 || sifGPS.getLongitude()!=0.0){
@@ -347,8 +411,8 @@ public class SurvivorIncidentFormFragment extends Fragment {
         values.put(ReportIncidentTable.COLUMN_INCIDENT_STORY, incidentStory);
         values.put(ReportIncidentTable.COLUMN_UNIQUE_IDENTIFIER, uniqueIdentifier);
 
-        values.put(ReportIncidentTable.COLUMN_REPORTER_LOCATION_LAT,userLatitude);
-        values.put(ReportIncidentTable.COLUMN_REPORTER_LOCATION_LNG,userLongitude );
+        values.put(ReportIncidentTable.COLUMN_REPORTER_LOCATION_LAT, userLatitude);
+        values.put(ReportIncidentTable.COLUMN_REPORTER_LOCATION_LNG, userLongitude );
         values.put(ReportIncidentTable.COLUMN_REPORTER_PHONE_NUMBER, "null");
         values.put(ReportIncidentTable.COLUMN_REPORTER_EMAIL, "null");
 

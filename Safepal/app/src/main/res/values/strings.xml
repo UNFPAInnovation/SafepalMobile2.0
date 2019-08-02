@@ -230,4 +230,5 @@
     <string name="home_guide_fab_exit_text"> If you are suspicious that perpetrator knows you are reporting him/her, use the left bottom \'Exit\' button to exit the safepal app or quickly uninstall it by long pressing on the \'Exit\' button.</string>
     <string name="home_guide_fab_next_title">Important Information </string>
     <string name="home_guide_fab_next_text"> \"Learning never ends\" - the saying goes, use the \'Next\' button in the middle bottom to get more information about sexual violence. Together, we can fight gender based violence </string>
+    <string name="report">REPORT</string>
 </resources>

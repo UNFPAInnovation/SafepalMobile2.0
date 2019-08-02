@@ -97,8 +97,6 @@ public class ContactFragment extends Fragment {
             mParam1 = getArguments().getString(ARG_PARAM1);
             mParam2 = getArguments().getString(ARG_PARAM2);
         }
-
-
     }
 
     @Override
@@ -120,6 +118,7 @@ public class ContactFragment extends Fragment {
         contactEncouragingMessagesTv = (TextView) view.findViewById(R.id.contact_ecouraging_messages_tv);
         contactSafepalNo = (TextView) view.findViewById(R.id.contact_safepal_no);
         contactPhonenumber = (EditText) view.findViewById(R.id.contact_phone_et);
+        displayPhoneNumberRemoveCheckbox();
 
         contactPhonenumber.addTextChangedListener(new TextWatcher() {
             int length_before = 0;
@@ -157,19 +156,20 @@ public class ContactFragment extends Fragment {
         //update unique number
         updateUIDTextView();
 
-        checkBoxContactMe.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
-            @Override
-            public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
-                if (b) {//user selcted contact me
-                    //shows phone number and email
-                    contactPhoneEmailLl.setVisibility(View.VISIBLE);
-                } else {//user doesnt want to be contacted
-                    //hides phonenumber and email on UI
-                    contactPhoneEmailLl.setVisibility(View.GONE);
-
-                }
-            }
-        });
+        //activates the checkbox and makes phone number optional
+//        checkBoxContactMe.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+//            @Override
+//            public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
+//                if (b) {//user selcted contact me
+//                    //shows phone number and email
+//                    contactPhoneEmailLl.setVisibility(View.VISIBLE);
+//                } else {//user doesnt want to be contacted
+//                    //hides phonenumber and email on UI
+//                    contactPhoneEmailLl.setVisibility(View.GONE);
+//
+//                }
+//            }
+//        });
 
         contactEncouragingMessagesTv.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -184,6 +184,11 @@ public class ContactFragment extends Fragment {
 
         return view;
 
+    }
+
+    private void displayPhoneNumberRemoveCheckbox() {
+        contactPhoneEmailLl.setVisibility(View.VISIBLE);
+        checkBoxContactMe.setVisibility(View.INVISIBLE);
     }
 
 

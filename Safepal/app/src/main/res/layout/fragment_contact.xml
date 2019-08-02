@@ -58,7 +58,7 @@ android:layout_marginBottom="20dp"
                 android:id="@+id/checkbox_contact_me"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:checked="false" />
+                android:checked="true" />
 
             <TextView
                 android:layout_width="match_parent"

@@ -40,7 +40,7 @@ public class HomeActivity extends AppCompatActivity {
     /**
      * Next and buttonExit button
      */
-    FloatingActionButton fabReportCase;
+    Button fabReportCase;
     Button buttonExit;
     Button buttonNext;
     RelativeLayout infoPanel;
@@ -65,7 +65,7 @@ public class HomeActivity extends AppCompatActivity {
         // Assignments of variables
         buttonExit = (Button) findViewById(R.id.exit_app);
         buttonNext = (Button) findViewById(R.id.home_next_message);
-        fabReportCase = (FloatingActionButton) findViewById(R.id.fab_report_incident);
+        fabReportCase = (Button) findViewById(R.id.fab_report_incident);
         infoPanel = (RelativeLayout) findViewById(R.id.home_info_panel);
         textViewMessage = (TextView) findViewById(R.id.message);
         checkBoxAutoScroll = (AppCompatCheckBox) findViewById(R.id.auto_scroll_CheckBox);
@@ -102,7 +102,6 @@ public class HomeActivity extends AppCompatActivity {
         fabReportCase.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                // TODO: 12-Nov-16 restore
                 startActivity(new Intent(getApplicationContext(), ReportingActivity.class));
 
             }
