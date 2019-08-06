@@ -6,7 +6,6 @@ import android.content.SharedPreferences;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
-import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.AppCompatCheckBox;
 import android.support.v7.widget.Toolbar;
@@ -30,6 +29,7 @@ import com.crashlytics.android.Crashlytics;
 import com.github.amlcurran.showcaseview.ShowcaseView;
 import com.github.amlcurran.showcaseview.targets.ViewTarget;
 import com.unfpa.safepal.R;
+import com.unfpa.safepal.Utils.Direction;
 import com.unfpa.safepal.Utils.General;
 import com.unfpa.safepal.messages.EMessageDialogFragment;
 import com.unfpa.safepal.report.ReportingActivity;
@@ -53,6 +53,8 @@ public class HomeActivity extends AppCompatActivity {
     //guide for safepal
     ShowcaseView homeReportGuideSv, homeExitSv, homeNextSv;
     RelativeLayout.LayoutParams lps, nextLps;
+    private int currentIndex = 2;
+    private Direction currentDirection;
 
     @SuppressLint("ClickableViewAccessibility")
     @Override
@@ -98,7 +100,7 @@ public class HomeActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
 
-                animateNextMessage();
+                animatePrevMessage();
                // getTokenFromServer();
             }
         });
@@ -127,28 +129,18 @@ public class HomeActivity extends AppCompatActivity {
 
 
         //animations about messages
-        animSlideIn = AnimationUtils.loadAnimation(getApplicationContext(),
-                R.anim.enter_from_right);
-        animExit = AnimationUtils.loadAnimation(getApplicationContext(),
-                R.anim.exit_to_left);
-        animExit.setAnimationListener(new Animation.AnimationListener() {
-            @Override
-            public void onAnimationStart(Animation animation) {
+        swipeRightAnimationSetUp();
 
-            }
+        swipeLeftAnimationSetUp();
 
-            @Override
-            public void onAnimationEnd(Animation animation) {
-                updateMessageText();
-                infoPanel.startAnimation(animSlideIn);
-            }
+        infoPanelAnimationSetUp();
 
-            @Override
-            public void onAnimationRepeat(Animation animation) {
+        animatePrevMessage();//show first message
+        showDisclaimer();
 
-            }
-        });
+    }
 
+    private void infoPanelAnimationSetUp() {
         infoPanel.setOnTouchListener(new View.OnTouchListener() {
             int downX, upX;
 
@@ -159,19 +151,17 @@ public class HomeActivity extends AppCompatActivity {
                     downX = (int) event.getX();
                     Log.i("event.getX()", " downX " + downX);
                     return true;
-                }
-
-                else if (event.getAction() == MotionEvent.ACTION_UP) {
+                } else if (event.getAction() == MotionEvent.ACTION_UP) {
                     upX = (int) event.getX();
                     Log.i("event.getX()", " upX " + upX);
                     if (upX - downX > 100) {
                         Toast.makeText(HomeActivity.this, "Swipe right", Toast.LENGTH_SHORT).show();
+                        currentDirection = Direction.RIGHT;
                         animateNextMessage();
-                    }
-
-                    else if (downX - upX > -100) {
+                    } else if (downX - upX > -100) {
                         Toast.makeText(HomeActivity.this, "Swipe left", Toast.LENGTH_SHORT).show();
-                        animateNextMessage();
+                        currentDirection = Direction.LEFT;
+                        animatePrevMessage();
                     }
                     return true;
 
@@ -179,10 +169,60 @@ public class HomeActivity extends AppCompatActivity {
                 return false;
             }
         });
+    }
 
-        animateNextMessage();//show first message
-        showDisclaimer();
+    private void swipeLeftAnimationSetUp() {
+        animSlideInFromLeft = AnimationUtils.loadAnimation(getApplicationContext(),
+                R.anim.enter_from_left);
+        animExitToRight = AnimationUtils.loadAnimation(getApplicationContext(),
+                R.anim.exit_to_right);
+        animExitToRight.setAnimationListener(new Animation.AnimationListener() {
+            @Override
+            public void onAnimationStart(Animation animation) {
 
+            }
+
+            @Override
+            public void onAnimationEnd(Animation animation) {
+                updateMessageText(currentDirection);
+                if (currentDirection == Direction.RIGHT)
+                    animSlideInFromLeft = AnimationUtils.loadAnimation(getApplicationContext(),
+                            R.anim.enter_from_left);
+                infoPanel.startAnimation(animSlideInFromLeft);
+            }
+
+            @Override
+            public void onAnimationRepeat(Animation animation) {
+
+            }
+        });
+    }
+
+    private void swipeRightAnimationSetUp() {
+        animSlideInFromRight = AnimationUtils.loadAnimation(getApplicationContext(),
+                R.anim.enter_from_right);
+        animExitToLeft = AnimationUtils.loadAnimation(getApplicationContext(),
+                R.anim.exit_to_left);
+        animExitToLeft.setAnimationListener(new Animation.AnimationListener() {
+            @Override
+            public void onAnimationStart(Animation animation) {
+
+            }
+
+            @Override
+            public void onAnimationEnd(Animation animation) {
+                updateMessageText(currentDirection);
+                if (currentDirection == Direction.LEFT)
+                    animSlideInFromRight = AnimationUtils.loadAnimation(getApplicationContext(),
+                            R.anim.enter_from_right);
+                infoPanel.startAnimation(animSlideInFromRight);
+            }
+
+            @Override
+            public void onAnimationRepeat(Animation animation) {
+
+            }
+        });
     }
 
     private void showDisclaimer() {
@@ -200,11 +240,17 @@ public class HomeActivity extends AppCompatActivity {
         }
     }
 
-    Animation animSlideIn;
-    Animation animExit;
+    Animation animSlideInFromRight;
+    Animation animSlideInFromLeft;
+    Animation animExitToLeft;
+    Animation animExitToRight;
+
+    void animatePrevMessage() {
+        infoPanel.startAnimation(animExitToLeft);
+    }
 
     void animateNextMessage() {
-        infoPanel.startAnimation(animExit);
+        infoPanel.startAnimation(animExitToRight);
     }
 
     boolean isAutoScrollOn = true;
@@ -224,7 +270,7 @@ public class HomeActivity extends AppCompatActivity {
                         runOnUiThread(new Runnable() {
                             @Override
                             public void run() {
-                                animateNextMessage();//change message
+                                animatePrevMessage();//change message
                             }
                         });
                     } catch (InterruptedException e) {
@@ -258,6 +304,33 @@ public class HomeActivity extends AppCompatActivity {
         Log.d(TAG, "randomIndex: " + randomIndex);
         String msg = messages.getItem(randomIndex).toString();
         Log.d(TAG, "textViewMessage: " + msg);
+        textViewMessage.setText(msg);
+
+    }
+
+    private void updateMessageText(Direction direction) {
+        //make adapter
+        ArrayAdapter<CharSequence> messages = ArrayAdapter.createFromResource(this,
+                R.array.home_contact_info, R.layout.spinner_item);
+        String msg;
+        int min = 0;
+        int max = messages.getCount();
+        Log.d(TAG, "max: " + max);
+
+        Log.d(TAG, "currentIndex: " + currentIndex);
+
+        if (direction == Direction.RIGHT) {
+            Log.d(TAG, "updateMessageText: direction right");
+            currentIndex = currentIndex < max - 1 ? currentIndex + 1 : min;
+            msg = messages.getItem(currentIndex).toString();
+        } else {
+            Log.d(TAG, "updateMessageText: direction left");
+            currentIndex = currentIndex <= 0 ? max - 1 : currentIndex - 1;
+            msg = messages.getItem(currentIndex).toString();
+        }
+
+        Log.d(TAG, "currentIndex: after processing" + currentIndex);
+        Log.d(TAG, "infopanel message : " + msg);
         textViewMessage.setText(msg);
 
     }
