@@ -38,20 +38,13 @@ import io.fabric.sdk.android.Fabric;
 import java.util.Random;
 
 public class HomeActivity extends AppCompatActivity {
-
-    //Global Variables 1234
-    /**
-     * Next and buttonExit button
-     */
     Button fabReportCase;
-    Button buttonExit;
-    Button buttonNext;
     RelativeLayout infoPanel;
     TextView textViewMessage;
     AppCompatCheckBox checkBoxAutoScroll;
 
     //guide for safepal
-    ShowcaseView homeReportGuideSv, homeExitSv, homeNextSv;
+    ShowcaseView homeReportGuideSv, homeNextSv;
     RelativeLayout.LayoutParams lps, nextLps;
     private int currentIndex = 2;
     private Direction currentDirection;
@@ -69,41 +62,11 @@ public class HomeActivity extends AppCompatActivity {
         getSupportActionBar().setLogo(R.mipmap.ic_launcher);
         getSupportActionBar().setDisplayUseLogoEnabled(true);
         // Assignments of variables
-        buttonExit = (Button) findViewById(R.id.exit_app);
-        buttonNext = (Button) findViewById(R.id.home_next_message);
         fabReportCase = (Button) findViewById(R.id.fab_report_incident);
         infoPanel = (RelativeLayout) findViewById(R.id.home_info_panel);
         textViewMessage = (TextView) findViewById(R.id.message);
         checkBoxAutoScroll = (AppCompatCheckBox) findViewById(R.id.auto_scroll_CheckBox);
 
-
-        buttonExit.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-
-                if (Build.VERSION.SDK_INT >= 21) finishAndRemoveTask();
-                else finish();
-            }
-        });
-        buttonExit.setOnLongClickListener(new View.OnLongClickListener() {
-            @Override
-            public boolean onLongClick(View view) {
-                Uri packageURI = Uri.parse("package:com.unfpa.safepal");
-                Intent uninstallIntent = new Intent(Intent.ACTION_DELETE, packageURI);
-                startActivity(uninstallIntent);
-
-                return true;
-            }
-        });
-
-        buttonNext.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-
-                animatePrevMessage();
-               // getTokenFromServer();
-            }
-        });
 
         fabReportCase.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -140,6 +103,7 @@ public class HomeActivity extends AppCompatActivity {
 
     }
 
+    @SuppressLint("ClickableViewAccessibility")
     private void infoPanelAnimationSetUp() {
         infoPanel.setOnTouchListener(new View.OnTouchListener() {
             int downX, upX;
@@ -154,12 +118,15 @@ public class HomeActivity extends AppCompatActivity {
                 } else if (event.getAction() == MotionEvent.ACTION_UP) {
                     upX = (int) event.getX();
                     Log.i("event.getX()", " upX " + upX);
+
+                    // deactivate the auto scroll when user activates the manual scroll
+                    checkBoxAutoScroll.setChecked(false);
+                    deactivateAutoScrollTimer();
+
                     if (upX - downX > 100) {
-                        Toast.makeText(HomeActivity.this, "Swipe right", Toast.LENGTH_SHORT).show();
                         currentDirection = Direction.RIGHT;
                         animateNextMessage();
                     } else if (downX - upX > -100) {
-                        Toast.makeText(HomeActivity.this, "Swipe left", Toast.LENGTH_SHORT).show();
                         currentDirection = Direction.LEFT;
                         animatePrevMessage();
                     }
@@ -389,43 +356,22 @@ public class HomeActivity extends AppCompatActivity {
                     @Override
                     public void onClick(View v) {
                         homeReportGuideSv.hide();
-                        homeExitGuide();
+                        homeSwipeGuide();
+
                     }
                 })
                 .build();
         homeReportGuideSv.setButtonPosition(lps);
     }
 
-    public void homeExitGuide() {
-
-
-        ViewTarget eTarget = new ViewTarget(R.id.exit_app, HomeActivity.this);
-        homeExitSv = new ShowcaseView.Builder(HomeActivity.this)
-                .withHoloShowcase()
-                .setTarget(eTarget)
-                .setContentTitle(R.string.home_guide_fab_exit_title)
-                .setContentText(R.string.home_guide_fab_exit_text)
-                .setStyle(R.style.ExitShowcaseTheme)
-                .setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        homeExitSv.hide();
-                        homeNextGuide();
-
-                    }
-                })
-                .build();
-
-    }
-
-    public void homeNextGuide() {
+    public void homeSwipeGuide() {
       //guide for the first time users
         nextLps = new RelativeLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
         nextLps.addRule(RelativeLayout.CENTER_IN_PARENT);
         int margin = ((Number) (getResources().getDisplayMetrics().density * 12)).intValue();
-        nextLps.setMargins(margin, margin, margin, margin);
+        nextLps.setMargins(margin, margin + 30, margin, margin);
 
-        ViewTarget nTarget = new ViewTarget(R.id.home_next_message, HomeActivity.this);
+        ViewTarget nTarget = new ViewTarget(R.id.home_info_panel, HomeActivity.this);
 
         homeNextSv = new ShowcaseView.Builder(HomeActivity.this)
                 .withHoloShowcase()

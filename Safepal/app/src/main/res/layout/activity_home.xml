@@ -38,23 +38,4 @@
         android:text="@string/report"
         />
 
-    <Button
-        android:id="@+id/home_next_message"
-        style="@style/materialButtonNormal"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="bottom"
-        android:layout_margin="@dimen/fab_margin"
-        android:text="@string/next_message" />
-
-    <Button
-        android:layout_margin="@dimen/fab_margin"
-        android:layout_gravity="bottom|start"
-        android:id="@+id/exit_app"
-        android:visibility="invisible"
-        style="@style/materialButtonAttention"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/exitApp" />
-
 </android.support.design.widget.CoordinatorLayout>

@@ -196,7 +196,7 @@
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="cannotLeaveBlank">Please kindly fill this field.</string>
     <string name="next_message">next</string>
-    <string name="intro_encouraging_messages">Get familiar with important information by viewing the quick help information below. Press \'Next\' to show other information</string>
+    <string name="intro_encouraging_messages">Get familiar with important information by viewing the quick help information below. Swipe left or right to show other information</string>
     <string name="home">Home</string>
     <string name="auto_scroll_messages">Auto scroll</string>
     <string name="shared_pref_name">safepal_prefs</string>
@@ -229,6 +229,6 @@
     <string name="home_guide_fab_exit_title">Quick Exit </string>
     <string name="home_guide_fab_exit_text"> If you are suspicious that perpetrator knows you are reporting him/her, use the left bottom \'Exit\' button to exit the safepal app or quickly uninstall it by long pressing on the \'Exit\' button.</string>
     <string name="home_guide_fab_next_title">Important Information </string>
-    <string name="home_guide_fab_next_text"> \"Learning never ends\" - the saying goes, use the \'Next\' button in the middle bottom to get more information about sexual violence. Together, we can fight gender based violence </string>
+    <string name="home_guide_fab_next_text"> \"Learning never ends\" - the saying goes, swipe left or right to get more information about sexual violence. Together, we can fight gender based violence </string>
     <string name="report">REPORT</string>
 </resources>
