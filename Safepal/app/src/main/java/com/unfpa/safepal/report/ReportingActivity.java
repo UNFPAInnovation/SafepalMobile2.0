@@ -37,11 +37,8 @@ public class ReportingActivity extends AppCompatActivity implements SurvivorInci
 ContactFragment.OnFragmentInteractionListener, AnotherPersonIncidentFormFragment.OnFragmentInteractionListener{
 
     String TAG = ReportingActivity.class.getSimpleName();
-    /**
-     * Next and buttonExit button
-     */
     Button buttonNext;
-    Button buttonExit;
+    Button buttonPrev;
 
 
     @Override
@@ -50,12 +47,7 @@ ContactFragment.OnFragmentInteractionListener, AnotherPersonIncidentFormFragment
         setContentView(R.layout.activity_reporting);
         Toolbar toolbar = (Toolbar) findViewById(R.id.reporting_toolbar);
         setSupportActionBar(toolbar);
-         //update contact service
-
-
-
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-
 
         manageUI();
 
@@ -73,11 +65,9 @@ ContactFragment.OnFragmentInteractionListener, AnotherPersonIncidentFormFragment
     public static final int STATUS_SUBMIT_REPORT_SUBMITED = 0;
     public static final int STATUS_SUBMIT_REPORT_ERROR = 1;
     public static final int STATUS_SUBMIT_REPORT_ALREADY_AVAILABLE = 2;
+
     private void manageUI() {
-        //look for vies
-        //Abort fab of  who's getting help activity
-        buttonExit = (Button) findViewById(R.id.exit_app);
-        //Next fab of  who's getting help activity
+        buttonPrev = (Button) findViewById(R.id.exit_app);
         buttonNext = (Button) findViewById(R.id.finish);
 
         //set listerns
@@ -152,7 +142,7 @@ ContactFragment.OnFragmentInteractionListener, AnotherPersonIncidentFormFragment
         });
 
         //exit the  application on click of exit
-        buttonExit.setOnClickListener(new View.OnClickListener() {
+        buttonPrev.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 moveTaskToBack(true);
@@ -160,19 +150,6 @@ ContactFragment.OnFragmentInteractionListener, AnotherPersonIncidentFormFragment
                 System.exit(2);
             }
         });
-
-        //unistall application on long press of exit
-        buttonExit.setOnLongClickListener(new View.OnLongClickListener() {
-            @Override
-            public boolean onLongClick(View view) {
-                Uri packageURI = Uri.parse("package:com.unfpa.safepal");
-                Intent uninstallIntent = new Intent(Intent.ACTION_DELETE, packageURI);
-                startActivity(uninstallIntent);
-
-                return true;
-            }
-        });
-
     }
 
     /**
@@ -195,6 +172,7 @@ ContactFragment.OnFragmentInteractionListener, AnotherPersonIncidentFormFragment
      * suffered violence
      */
     public  void loadReportingFormSomeOneElseFragment() {
+        Log.d(TAG, "loadReportingFormSomeOneElseFragment: relationship value " + WhoSGettingHelpFragment.wsghRelationshipSpinner.getSelectedItem().toString());
         FragmentManager fragmentManager = getFragmentManager();
         FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
 

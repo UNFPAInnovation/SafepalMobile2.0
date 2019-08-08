@@ -64,10 +64,10 @@ public class AnotherPersonIncidentFormFragment extends Fragment {
     //apif toolbar
     Toolbar apifToolbar;
     /**
-     * Next and buttonExit button
+     * Next and buttonPrev button
      */
 //    Button buttonNext;
-//    Button buttonExit;
+//    Button buttonPrev;
     ImageView imageWhereHappen;
     ImageView imageStory;
     ImageView imageGender;
@@ -100,7 +100,7 @@ public class AnotherPersonIncidentFormFragment extends Fragment {
 
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-    private static final String ARG_RELATIONSHIP_TO_SURVIVOR = "";
+    private static final String ARG_RELATIONSHIP_TO_SURVIVOR = "relationship";
     private static final String ARG_PARAM2 = "";
 
     // TODO: Rename and change types of parameters
@@ -136,6 +136,7 @@ public class AnotherPersonIncidentFormFragment extends Fragment {
         super.onCreate(bundle);
         if (getArguments() != null) {
             relationshipToSurvivor = getArguments().getString(ARG_RELATIONSHIP_TO_SURVIVOR);
+            Log.d(TAG, "onCreate: relationshipToSurvivor " + relationshipToSurvivor);
             mParam2 = getArguments().getString(ARG_PARAM2);
         }
 
@@ -155,7 +156,7 @@ public class AnotherPersonIncidentFormFragment extends Fragment {
 
         /** Declaration of user interface **/
         apifToolbar = (Toolbar) rootView.findViewById(R.id.reporting_toolbar);
-//        buttonExit = (Button) view.findViewById(R.id.exit_app);
+//        buttonPrev = (Button) view.findViewById(R.id.exit_app);
 //        buttonNext = (Button) view.findViewById(R.id.finish);
         imageWhereHappen = (ImageView) rootView.findViewById(R.id.image_where_take_place);
         imageStory = (ImageView) rootView.findViewById(R.id.image_story);

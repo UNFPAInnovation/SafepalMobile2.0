@@ -212,35 +212,40 @@ public class AddReportService extends IntentService {
     private void getTokenFromServer(final VolleyCallback tokenCallback) {
 
 
-        final String tokenUrl = " https://api-safepal.herokuapp.com/index.php/api/v1/auth/newtoken";
+        try {
+            String tokenUrl = " https://api-safepal.herokuapp.com/index.php/api/v1/auth/newtoken";
 
-        // This volley request gets a token from the server
-        StringRequest tokenRequest = new StringRequest(Request.Method.GET, tokenUrl,
-                new Response.Listener<String>() {
-                    @Override
-                    public void onResponse(String tokenResponse) {
-                        tokenCallback.onSuccessResponse(tokenResponse);
+            // This volley request gets a token from the server
+            StringRequest tokenRequest = new StringRequest(Request.Method.GET, tokenUrl,
+                    new Response.Listener<String>() {
+                        @Override
+                        public void onResponse(String tokenResponse) {
+                            tokenCallback.onSuccessResponse(tokenResponse);
 
 
-                    }
-                },
-                new Response.ErrorListener() {
-                    @Override
-                    public void onErrorResponse(VolleyError error) {
-                        Log.d("Failed to get token", error.getMessage());
-                    }
-                }){
-            @Override
-            public Map<String, String> getHeaders() throws AuthFailureError {
-                HashMap<String, String> headers = new HashMap<String, String>();
-                headers.put("userid", "C7rPaEAN9NpPGR8e9wz9bzw");
+                        }
+                    },
+                    new Response.ErrorListener() {
+                        @Override
+                        public void onErrorResponse(VolleyError error) {
+                            Log.d("Failed to get token", error.getMessage());
+                        }
+                    }){
+                @Override
+                public Map<String, String> getHeaders() throws AuthFailureError {
+                    HashMap<String, String> headers = new HashMap<String, String>();
+                    headers.put("userid", "C7rPaEAN9NpPGR8e9wz9bzw");
 
-                return headers;
-            }
-        };
-        //add request to queue
+                    return headers;
+                }
+            };
+            //add request to queue
 
-        MySingleton.getInstance(this).addToRequestQueue(tokenRequest);
+            MySingleton.getInstance(this).addToRequestQueue(tokenRequest);
+        } catch (Exception e) {
+            e.printStackTrace();
+            Log.e(LOG_TAG, "getTokenFromServer: ", e);
+        }
 
     }
 

@@ -32,10 +32,10 @@ public class WhoSGettingHelpFragment extends Fragment {
     Toolbar wsghToolbar;
 
 //    /**
-//     * Next and buttonExit button
+//     * Next and buttonPrev button
 //     */
 //    Button buttonNext;
-//    Button buttonExit;
+//    Button buttonPrev;
 
     static Spinner wsghRelationshipSpinner;
     static RadioButton wsghYesRB;
@@ -70,7 +70,7 @@ public class WhoSGettingHelpFragment extends Fragment {
         //Toolbar of the who's getting help activity
         wsghToolbar = (Toolbar) rootView.findViewById(R.id.reporting_toolbar);
 //        //Abort fab of  who's getting help activity
-//        buttonExit = (Button) rootView.findViewById(R.id.exit_app);
+//        buttonPrev = (Button) rootView.findViewById(R.id.exit_app);
 //        //Next fab of  who's getting help activity
 //        buttonNext = (Button) rootView.findViewById(R.id.finish);
         // choose someone else relationship spinner
