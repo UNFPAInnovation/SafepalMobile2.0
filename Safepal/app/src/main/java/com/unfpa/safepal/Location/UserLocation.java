@@ -72,6 +72,7 @@ public final class UserLocation extends Service implements LocationListener {
                 Log.d("Location","No Service Provider Available");
                 //Toast.makeText(mContext, "No Service Provider Available", Toast.LENGTH_SHORT).show();
             } else {
+                Log.d("Location", "getLocation: can get location true");
                 this.canGetLocation = true;
                 // First get location from Network Provider
                 if (checkNetwork) {

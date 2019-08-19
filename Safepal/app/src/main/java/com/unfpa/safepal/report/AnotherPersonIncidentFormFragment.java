@@ -296,10 +296,12 @@ public class AnotherPersonIncidentFormFragment extends Fragment {
                         imageQnMark.getDrawable(), getResources().getColor(R.color.colorImages)));
 
         //picks the location of the user
+        Log.d(TAG, "onCreateView: pick user location");
         if(apifGPS.canGetLocation()){
             if(apifGPS.getLatitude()!= 0.0 || apifGPS.getLongitude()!=0.0){
             userLatitude= apifGPS.getLatitude();
             userLongitude = apifGPS.getLongitude();
+                Log.d(TAG, "onCreateView: " + userLatitude + userLongitude);
             }
 
         }

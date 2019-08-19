@@ -7,7 +7,7 @@ android:layout_height="wrap_content"
 
 <Button
     style="@style/materialButtonAttention"
-    android:text="@string/exitApp"
+    android:text="@string/prev"
     android:layout_weight="1"
     android:id="@+id/exit_app"
     android:layout_width="0dp"

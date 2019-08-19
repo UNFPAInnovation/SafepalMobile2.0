@@ -182,7 +182,7 @@
 
     <!--cso and child help line -->
     <string name="reset_button">Reset</string>
-    <string name="exitApp">Exit</string>
+    <string name="prev">Prev</string>
     <string name="next">Next</string>
     <string name="report_sexual_abuse">Report Sexual Abuse</string>
     <string name="submit">Submit</string>

@@ -177,6 +177,7 @@ public class CsoActivity extends AppCompatActivity {
 
     // Method pushes the data to json server suing volley
     private void getNearestCSOs(String getLat, String getLong) {
+        Log.d(TAG, "getNearestCSOs: lat: " + getLat + " long " + getLong);
 
 
         beforeCsoList.add(new BeforeCsoInfo("Reproductive Health Uganda, Kamokya",0.3374639,32.58227210,"+256312207100"));

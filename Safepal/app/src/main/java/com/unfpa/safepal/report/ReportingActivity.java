@@ -23,6 +23,7 @@ import com.android.volley.toolbox.StringRequest;
 import com.unfpa.safepal.ProvideHelp.ContactFragment;
 import com.unfpa.safepal.ProvideHelp.CsoActivity;
 import com.unfpa.safepal.R;
+import com.unfpa.safepal.Utils.Utilities;
 import com.unfpa.safepal.network.MySingleton;
 import com.unfpa.safepal.network.VolleyCallback;
 import com.unfpa.safepal.store.ReportIncidentContentProvider;
@@ -49,7 +50,11 @@ ContactFragment.OnFragmentInteractionListener, AnotherPersonIncidentFormFragment
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
+//        Utilities.saveFormParameter(getApplicationContext(), "backButtonPressed", false);
+        Utilities.saveBackButtonPressed(getApplicationContext(), "backButtonPressed", false);
+
         manageUI();
+        removePreviousButton();
 
         loadWhoGetnHelpFragment();
 
@@ -77,10 +82,15 @@ ContactFragment.OnFragmentInteractionListener, AnotherPersonIncidentFormFragment
 //                Log.d(TAG, "button next clicked" );
                 if (isFragmentVisible(getFragmentManager().findFragmentByTag(
                         WhoSGettingHelpFragment.class.getSimpleName()))) {//cuurent frag WhoSGettingHelpFragment
+                    Utilities.saveFormParameter(getApplicationContext(),
+                            WhoSGettingHelpFragment.wsghSomeelseRb.isChecked(),
+                            WhoSGettingHelpFragment.wsghRelationshipSpinner.getSelectedItem().toString());
+
                     if (WhoSGettingHelpFragment.wsghYesRB.isChecked()) {//happened to me
                         //Log.d(TAG, "loading reporting fragment for self");
                         loadReportingFormSelfFragment();//used in the WHoIsGettingHelp Fragment
                         updateNextButtonToSubmit();
+                        buttonPrev.setVisibility(View.VISIBLE);
                     } else if (WhoSGettingHelpFragment.wsghSomeelseRb.isChecked()){//happened to someone else
                         if (WhoSGettingHelpFragment.wsghRelationshipSpinner.getSelectedItemPosition() <= 0) {
                             WhoSGettingHelpFragment.wsghFeedbackSnackbar = Snackbar.make(view, "what is your relationship to survivor?", Snackbar.LENGTH_LONG);
@@ -89,6 +99,7 @@ ContactFragment.OnFragmentInteractionListener, AnotherPersonIncidentFormFragment
                             Log.d(TAG, "loading reporting fragment for happeed to someone else");
                             loadReportingFormSomeOneElseFragment();
                             updateNextButtonToSubmit();
+                            buttonPrev.setVisibility(View.VISIBLE);
                         }
                     }else {
                         Toast.makeText(getBaseContext(), "Who did the incident happen to? Choose one of the options to proceed.", Toast.LENGTH_LONG).show();
@@ -104,6 +115,7 @@ ContactFragment.OnFragmentInteractionListener, AnotherPersonIncidentFormFragment
                         Log.d(TAG, "AnotherPersonIncidentFormFragment.submitForm successfull. Loading contact frag");
                         loadContactFragment();//ask whther to be contacted in next frag
                         updateSubmitButtonToNext();
+                        buttonPrev.setVisibility(View.GONE);
                     }else{
                         Log.d(TAG, "error in data????");
                     }
@@ -144,10 +156,36 @@ ContactFragment.OnFragmentInteractionListener, AnotherPersonIncidentFormFragment
         //exit the  application on click of exit
         buttonPrev.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View v) {
-                moveTaskToBack(true);
-                android.os.Process.killProcess(android.os.Process.myPid());
-                System.exit(2);
+            public void onClick(View view) {
+                Log.d(TAG, "onClick: prevbutton clicked");
+                Utilities.saveBackButtonPressed(getApplicationContext(), "backButtonPressed", true);
+
+                if (isFragmentVisible(getFragmentManager().findFragmentByTag(
+                        SurvivorIncidentFormFragment.class.getSimpleName())) ||
+                        isFragmentVisible(getFragmentManager().findFragmentByTag(
+                        AnotherPersonIncidentFormFragment.class.getSimpleName()))) {
+
+                    boolean isSomeOneElse = Utilities.getFormParameter(getApplicationContext(), "isSomeOneElse");
+                    Log.d(TAG, "onClick: isSomeOne shared pref " + isSomeOneElse);
+
+                    FragmentManager fragmentManager = getFragmentManager();
+                    FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+
+                    WhoSGettingHelpFragment fragment = new WhoSGettingHelpFragment();
+                    if (isFragmentVisible(fragment)) {
+                        Log.d(TAG, "WhoSGettingHelpFragment is already visible, not reforming another...");
+                    } else {
+                        fragmentTransaction.setCustomAnimations(R.animator.slide_in_left, R.animator.slide_out_right);
+                        fragmentTransaction.replace(R.id.fragment_container, fragment, WhoSGettingHelpFragment.class.getSimpleName());
+                        fragmentTransaction.commit();
+                        Log.d(TAG, "loaded 'Who-is-getting-help' fragment");
+                        updateSubmitButtonToNext();
+                        buttonPrev.setVisibility(View.GONE);
+                    }
+
+                    Log.d(TAG, "onClick: set is someone else checked");
+                    WhoSGettingHelpFragment.wsghYesRB.setChecked(true);
+                }
             }
         });
     }
@@ -165,6 +203,11 @@ ContactFragment.OnFragmentInteractionListener, AnotherPersonIncidentFormFragment
      */
     protected void updateSubmitButtonToNext() {
         buttonNext.setText(getString(R.string.next));
+    }
+
+    protected void removePreviousButton() {
+        Log.d(TAG, "removePreviousButton: called");
+        buttonPrev.setVisibility(View.GONE);
     }
 
     /**

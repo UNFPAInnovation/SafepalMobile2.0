@@ -18,6 +18,7 @@ import com.unfpa.safepal.store.ReportIncidentTable;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.io.UnsupportedEncodingException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.HashMap;
@@ -155,12 +156,14 @@ public class AddReportService extends IntentService {
                             new Response.Listener<String>() {
                                 @Override
                                 public void onResponse(String addReportReponse) {
+                                    Log.d("Submitted", "onResponse: Success " + addReportReponse);
                                     reportCallback.onSuccessResponse(addReportReponse);
                                 }
                             },
                             new Response.ErrorListener() {
                                 @Override
                                 public void onErrorResponse(VolleyError error) {
+                                    Log.e("Not Submitted", "onErrorResponse: ", error);
                                     Log.d("Not Submitted", error.getMessage());
                                 }
                             }){
@@ -228,6 +231,21 @@ public class AddReportService extends IntentService {
                     new Response.ErrorListener() {
                         @Override
                         public void onErrorResponse(VolleyError error) {
+                            if (error == null || error.networkResponse == null) {
+                                Log.e(LOG_TAG, "onErrorResponse: erro is null");
+                                return;
+                            }
+
+                            try {
+                                String body;
+                                final String statusCode = String.valueOf(error.networkResponse.statusCode);
+                                Log.d(LOG_TAG, "onErrorResponse: " + statusCode);
+                                body = new String(error.networkResponse.data,"UTF-8");
+                                Log.d(LOG_TAG, "onErrorResponse: " + body);
+                            } catch (UnsupportedEncodingException e) {
+                                Log.e(LOG_TAG, "onErrorResponse: ", e);
+                            }
+
                             Log.d("Failed to get token", error.getMessage());
                         }
                     }){

@@ -3,6 +3,7 @@ package com.unfpa.safepal.report;
 import android.app.Fragment;
 import android.app.FragmentManager;
 import android.app.FragmentTransaction;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.design.widget.Snackbar;
 import android.support.v7.widget.Toolbar;
@@ -18,10 +19,12 @@ import android.widget.Spinner;
 import android.widget.TextView;
 
 import com.unfpa.safepal.R;
+import com.unfpa.safepal.Utils.Utilities;
 import com.unfpa.safepal.messages.EMessageDialogFragment;
 
 import java.util.Random;
 
+import static android.content.Context.MODE_PRIVATE;
 import static com.unfpa.safepal.report.SurvivorIncidentFormFragment.TAG;
 
 /**
@@ -102,6 +105,8 @@ public class WhoSGettingHelpFragment extends Fragment {
             }
         });
 
+        // displayed previous input data when user presses previous
+        displayPreviousInputData(wsghRSadapter);
 
         wsghYesRB.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -161,6 +166,21 @@ public class WhoSGettingHelpFragment extends Fragment {
             }
         });
         return rootView;
+    }
+
+    private void displayPreviousInputData(ArrayAdapter<CharSequence> wsghRSadapter) {
+        if (Utilities.getFormParameter(getActivity().getApplicationContext(), "backButtonPressed")) {
+            if (Utilities.getFormParameter(getActivity().getApplicationContext(), "isSomeOneElse")) {
+                wsghSomeelseRb.setChecked(true);
+                wsghSpinnerRl.setVisibility(View.VISIBLE);
+
+                String formParameterPref = "FORM_PARAMETER_PREF";
+                SharedPreferences prefs = getActivity().getSharedPreferences(formParameterPref, MODE_PRIVATE);
+                wsghRelationshipSpinner.setSelection(wsghRSadapter.getPosition(prefs.getString("wsghRelationshipSpinner", "")));
+            } else {
+                wsghYesRB.setChecked(true);
+            }
+        }
     }
 
     public void  loadFeedbackMessages(){
