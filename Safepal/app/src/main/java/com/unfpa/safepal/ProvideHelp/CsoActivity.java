@@ -5,9 +5,11 @@ import android.content.ActivityNotFoundException;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.database.Cursor;
+import android.location.Location;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Handler;
+import android.os.StrictMode;
 import android.support.v4.app.ActivityCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.DefaultItemAnimator;
@@ -36,10 +38,21 @@ import com.unfpa.safepal.store.RIContentObserver;
 import com.unfpa.safepal.store.ReportIncidentContentProvider;
 import com.unfpa.safepal.store.ReportIncidentTable;
 
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.io.IOException;
+import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
+import java.util.Locale;
+
+import okhttp3.OkHttpClient;
+import okhttp3.Request;
+import okhttp3.Response;
 
 import static com.unfpa.safepal.report.WhoSGettingHelpFragment.randMessageIndex;
 
@@ -72,9 +85,10 @@ public class CsoActivity extends AppCompatActivity {
     // TheCSOs json url
     private static final String URL_CSO_API = "http://52.43.152.73/api/location.php";
      //This is a temporary list of cso's hard coded here
+     OkHttpClient client = new OkHttpClient();
 
 
-     /**
+    /**
      * Represents a geographical location.
      */
 
@@ -191,14 +205,14 @@ public class CsoActivity extends AppCompatActivity {
                csosList.add(new TheCSO(beforeCsoList.get(i).getBefore_cso_name(), "We failed to locate you", beforeCsoList.get(i).getBefore_cso_phonenumber()));
            }
             else{
-               String disBetweenCso = String.format("%.2f", geographicalDistance(
+               String disBetweenCso = String.format("%.1f", geographicalDistance(
                        Double.parseDouble(getLat),
                        Double.parseDouble(getLong),
                        beforeCsoList.get(i).getBefore_cso_lat(),
                        beforeCsoList.get(i).getBefore_cso_long()));
 
                Log.d("location from db", getLat +":" + getLong);
-               csosList.add(new TheCSO(beforeCsoList.get(i).getBefore_cso_name(), disBetweenCso + "Km away from you", beforeCsoList.get(i).getBefore_cso_phonenumber()));
+               csosList.add(new TheCSO(beforeCsoList.get(i).getBefore_cso_name(), disBetweenCso + " Km away from you", beforeCsoList.get(i).getBefore_cso_phonenumber()));
            }
             Collections.sort(csosList, new Comparator<TheCSO>() {
                 @Override
@@ -329,16 +343,43 @@ public class CsoActivity extends AppCompatActivity {
 
 
     private double geographicalDistance(double lat1, double lon1, double lat2, double lon2) {
-        double theta = lon1 - lon2;
-        double dist = Math.sin(deg2rad(lat1))
-                * Math.sin(deg2rad(lat2))
-                + Math.cos(deg2rad(lat1))
-                * Math.cos(deg2rad(lat2))
-                * Math.cos(deg2rad(theta));
-        dist = Math.acos(dist);
-        dist = rad2deg(dist);
-        dist = dist * 60 * 1.1515;
-        return (dist);
+        //todo move this into background service and store the values in shared pref
+        if (android.os.Build.VERSION.SDK_INT > 9) {
+            StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
+            StrictMode.setThreadPolicy(policy);
+        }
+
+        String directionUrl = String.format(Locale.getDefault(), "https://maps.googleapis.com/maps/api/directions/json?origin=%f,%f&destination=%f,%f&key=%s", lat1, lon1, lat2, lon2, getString(R.string.direction_api_key));
+        Log.d(TAG, "geographicalDistance: started " + directionUrl);
+
+        try {
+            String jsonData = getDirectionFromGoogle(directionUrl);
+            Log.d(TAG, "geographicalDistance: server response " + jsonData);
+            JSONObject Jobject = new JSONObject(jsonData);
+            JSONArray routesJsonArray = Jobject.getJSONArray("routes");
+
+            JSONObject legsJsonObject = routesJsonArray.getJSONObject(0).getJSONArray("legs").getJSONObject(0);
+            JSONObject distanceJsonObject = legsJsonObject.getJSONObject("distance");
+            String distanceText = distanceJsonObject.getString("text");
+            int distanceValue = distanceJsonObject.getInt("value");
+            Log.d(TAG, "geographicalDistance: distance between " + distanceText + distanceValue);
+            return distanceValue/1000.0;
+        } catch (IOException e) {
+            e.printStackTrace();
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+        return 0.0;
+    }
+
+    public String getDirectionFromGoogle(String url) throws IOException {
+        Request request = new Request.Builder()
+                .url(url)
+                .build();
+
+        try (Response response = client.newCall(request).execute()) {
+            return response.body().string();
+        }
     }
 
     private double deg2rad(double deg) {

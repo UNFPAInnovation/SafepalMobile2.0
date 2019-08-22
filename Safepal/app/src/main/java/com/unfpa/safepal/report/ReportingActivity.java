@@ -127,6 +127,7 @@ ContactFragment.OnFragmentInteractionListener, AnotherPersonIncidentFormFragment
                     if((status == ReportingActivity.STATUS_SUBMIT_REPORT_SUBMITED) || (status == ReportingActivity.STATUS_SUBMIT_REPORT_ALREADY_AVAILABLE)){
                         loadContactFragment();//ask whther to be contacted in next frag
                         updateSubmitButtonToNext();
+                        buttonPrev.setVisibility(View.GONE);
                         Log.d(TAG, "SurvivorIncidentFormFragment.submitForm successfull. Loading contact frag");
                     }else {
                         Log.d(TAG, "errpr on data????");

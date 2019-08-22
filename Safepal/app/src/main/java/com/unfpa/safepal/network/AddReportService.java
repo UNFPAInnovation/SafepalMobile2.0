@@ -32,6 +32,7 @@ public class AddReportService extends IntentService {
 
     // Used to write to the system log from this class.
     public static final String LOG_TAG = "AddReportService";
+    private static final String TAG = AddReportService.class.getSimpleName();
 
 
     /**
@@ -56,6 +57,7 @@ public class AddReportService extends IntentService {
 
         // Gets a URL to read from the incoming Intent's "data" value
         String localUrlString = workIntent.getDataString();
+        Log.d(TAG, "onHandleIntent: localUrlString" + localUrlString);
 
         // A cursor that's local to this method.
 
@@ -163,8 +165,9 @@ public class AddReportService extends IntentService {
                             new Response.ErrorListener() {
                                 @Override
                                 public void onErrorResponse(VolleyError error) {
+                                    //todo check this error with server
                                     Log.e("Not Submitted", "onErrorResponse: ", error);
-                                    Log.d("Not Submitted", error.getMessage());
+//                                    Log.d("Not Submitted", error.getMessage());
                                 }
                             }){
 
