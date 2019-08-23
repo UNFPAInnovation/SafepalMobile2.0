@@ -8,6 +8,7 @@ import android.util.Log;
 import android.widget.Toast;
 
 import com.android.volley.AuthFailureError;
+import com.android.volley.DefaultRetryPolicy;
 import com.android.volley.Request;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
@@ -25,6 +26,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 import static com.unfpa.safepal.Utils.Constants.BASE_API_URL;
+import static com.unfpa.safepal.Utils.Constants.SOCKET_TIMEOUT;
 
 /**
  * Created by Kisa on 10/8/2016.
@@ -177,20 +179,26 @@ public class AddReportService extends IntentService {
                         protected Map<String, String> getParams() throws AuthFailureError {
                             HashMap<String, String> addReport = new HashMap<String, String>();
 
+                            String age = toServerSDOB.split(" ")[0];
+                            Log.d(TAG, "getParams: age value " + age);
+
                             addReport.put("token", serverReceivedToken);
                             addReport.put("type",toServerIType);
                             addReport.put("gender",toServerSGender);
                             addReport.put("reporter",toServerReportedBy);
                             addReport.put("incident_date","null");
                             addReport.put("perpetuator","Unknown");
-                            addReport.put("age",toServerSDOB);
+                            addReport.put("age", age);
                             addReport.put("contact",toServerReporterPhonenumber);
                             addReport.put("latitude",toServerReporterLat);
                             addReport.put("longitude",toServerReportedLng);
                             addReport.put("details",toServerIDescription);
                             addReport.put("report_source","android user");
                             addReport.put("reportDate",currentDate);
-                            return addReport;                        }
+
+                            Log.d(TAG, "getParams: param values " + addReport.toString());
+                            return addReport;
+                        }
 
                         @Override
                         public Map<String, String> getHeaders() throws AuthFailureError {
@@ -200,6 +208,12 @@ public class AddReportService extends IntentService {
                         }
 
                     };
+
+                    // increases the connection timeout
+                    addReportRequest.setRetryPolicy(new DefaultRetryPolicy(
+                            SOCKET_TIMEOUT,
+                            DefaultRetryPolicy.DEFAULT_MAX_RETRIES,
+                            DefaultRetryPolicy.DEFAULT_BACKOFF_MULT));
 
 
                     MySingleton.getInstance(getApplicationContext()).addToRequestQueue(addReportRequest);
