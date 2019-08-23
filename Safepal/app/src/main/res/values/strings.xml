@@ -202,7 +202,7 @@
     <string name="auto_scroll_messages">Auto scroll</string>
     <string name="shared_pref_name">safepal_prefs</string>
     <string name="first_time">first_time_to_run_app</string>
-    <string name="disclaimer_detail">Safepal services shall only be restricted within the area divisions of Kampala district in Uganda and shall therefore not be held accountable for the incident cases that are not responded to in areas other than above specified.</string>
+    <string name="disclaimer_detail">Safepal services shall only be restricted within the area divisions of Kampala and Arua district. Safepal shall not be in position to respond to incident cases in areas other than the above specified.</string>
     <string name="disclaimer">Disclaimer</string>
 
     <string-array name="auto_complete_report_places">

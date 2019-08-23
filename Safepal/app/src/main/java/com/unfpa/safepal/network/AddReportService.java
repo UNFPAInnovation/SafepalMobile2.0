@@ -24,6 +24,8 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 
+import static com.unfpa.safepal.Utils.Constants.BASE_API_URL;
+
 /**
  * Created by Kisa on 10/8/2016.
  */
@@ -219,7 +221,7 @@ public class AddReportService extends IntentService {
 
 
         try {
-            String tokenUrl = " https://api-safepal.herokuapp.com/index.php/api/v1/auth/newtoken";
+            String tokenUrl = BASE_API_URL + "/auth/newtoken";
 
             // This volley request gets a token from the server
             StringRequest tokenRequest = new StringRequest(Request.Method.GET, tokenUrl,

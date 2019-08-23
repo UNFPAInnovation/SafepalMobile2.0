@@ -11,10 +11,12 @@ import android.content.Intent;
 import android.net.Uri;
 import android.widget.Toast;
 
+import static com.unfpa.safepal.Utils.Constants.BASE_API_URL;
+
 public class NetworkChangeReceiver extends BroadcastReceiver{
 
     //Volley requests
-    final String URL_SAFEPAL_API = "https://api-safepal.herokuapp.com/index.php/api/v1/reports/addreport";
+    final String URL_SAFEPAL_API = BASE_API_URL + "/reports/addreport";
     // Intent for starting the IntentService for submitting a survivor case
     private Intent mServiceIntent;
 

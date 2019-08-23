@@ -34,6 +34,8 @@ import org.json.JSONObject;
 import java.util.HashMap;
 import java.util.Map;
 
+import static com.unfpa.safepal.Utils.Constants.BASE_API_URL;
+
 public class ReportingActivity extends AppCompatActivity implements SurvivorIncidentFormFragment.OnFragmentInteractionListener,
 ContactFragment.OnFragmentInteractionListener, AnotherPersonIncidentFormFragment.OnFragmentInteractionListener{
 
@@ -308,7 +310,7 @@ ContactFragment.OnFragmentInteractionListener, AnotherPersonIncidentFormFragment
 
     public void updateNetworkContat(){
 
-        String updateContactUrl = "https://api-safepal.herokuapp.com/index.php/api/v1/reports/addcontact";
+        String updateContactUrl = BASE_API_URL + "/reports/addcontact";
 
         Log.d("UpdateContact ","Service Started");
 
@@ -390,7 +392,7 @@ ContactFragment.OnFragmentInteractionListener, AnotherPersonIncidentFormFragment
     public void getUpdateTokenFromServer(final VolleyCallback tokenCallback) {
 
 
-        final String tokenUrl = " https://api-safepal.herokuapp.com/index.php/api/v1/auth/newtoken";
+        final String tokenUrl = BASE_API_URL + "/auth/newtoken";
 
         // This volley request gets a token from the server
         StringRequest tokenRequest = new StringRequest(Request.Method.GET, tokenUrl,
