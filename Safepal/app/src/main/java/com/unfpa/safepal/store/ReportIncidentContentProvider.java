@@ -1,4 +1,5 @@
 package com.unfpa.safepal.store;
+
 import java.util.Arrays;
 import java.util.HashSet;
 
@@ -12,6 +13,7 @@ import android.database.sqlite.SQLiteQueryBuilder;
 import android.net.Uri;
 import android.support.annotation.Nullable;
 import android.text.TextUtils;
+
 /**
  * Created by Kisa on 9/2/2016.
  */
@@ -30,17 +32,14 @@ public class ReportIncidentContentProvider extends ContentProvider {
     public static final Uri CONTENT_URI = Uri.parse("content://" + AUTHORITY + "/" + BASE_PATH);
 
 
-    public static final String CONTENT_TYPE = ContentResolver.CURSOR_DIR_BASE_TYPE  + "/store";
-    public static final String CONTENT_ITEM_TYPE = ContentResolver.CURSOR_ITEM_BASE_TYPE  + "/reportincident";
+    public static final String CONTENT_TYPE = ContentResolver.CURSOR_DIR_BASE_TYPE + "/store";
+    public static final String CONTENT_ITEM_TYPE = ContentResolver.CURSOR_ITEM_BASE_TYPE + "/reportincident";
     private static final UriMatcher sURIMatcher = new UriMatcher(UriMatcher.NO_MATCH);
+
     static {
         sURIMatcher.addURI(AUTHORITY, BASE_PATH, INCIDENTREPORTS);
         sURIMatcher.addURI(AUTHORITY, BASE_PATH + "/#", INCIDENTREPORTS_ID);
     }
-
-
-
-
 
     @Override
     public boolean onCreate() {
@@ -50,7 +49,7 @@ public class ReportIncidentContentProvider extends ContentProvider {
 
     @Nullable
     @Override
-    public Cursor query(Uri uri, String[] projection, String selection,String[] selectionArgs, String sortOrder) {
+    public Cursor query(Uri uri, String[] projection, String selection, String[] selectionArgs, String sortOrder) {
         // Uisng SQLiteQueryBuilder instead of query() method
         SQLiteQueryBuilder queryBuilder = new SQLiteQueryBuilder();
 
@@ -142,7 +141,7 @@ public class ReportIncidentContentProvider extends ContentProvider {
         int rowsUpdated = 0;
         switch (uriType) {
             case INCIDENTREPORTS:
-                rowsUpdated = sqlDB.update(ReportIncidentTable.TABLE_REPORT_INCIDENT,values,selection,selectionArgs);
+                rowsUpdated = sqlDB.update(ReportIncidentTable.TABLE_REPORT_INCIDENT, values, selection, selectionArgs);
                 break;
             case INCIDENTREPORTS_ID:
                 String id = uri.getLastPathSegment();
@@ -169,7 +168,7 @@ public class ReportIncidentContentProvider extends ContentProvider {
 
 
     private void checkColumns(String[] projection) {
-        String[] available = { ReportIncidentTable.COLUMN_REPORTED_BY,
+        String[] available = {ReportIncidentTable.COLUMN_REPORTED_BY,
                 ReportIncidentTable.COLUMN_SURVIVOR_DATE_OF_BIRTH,
                 ReportIncidentTable.COLUMN_SURVIVOR_GENDER,
 
@@ -186,8 +185,9 @@ public class ReportIncidentContentProvider extends ContentProvider {
                 ReportIncidentTable.COLUMN_REPORTER_EMAIL,
 
                 ReportIncidentTable.COLUMN_FLAG,
+                ReportIncidentTable.COLUMN_DISABILITY,
 
-                ReportIncidentTable.COLUMN_ID };
+                ReportIncidentTable.COLUMN_ID};
 
         if (projection != null) {
             HashSet<String> requestedColumns = new HashSet<String>(
@@ -201,7 +201,4 @@ public class ReportIncidentContentProvider extends ContentProvider {
             }
         }
     }
-
-
-
 }

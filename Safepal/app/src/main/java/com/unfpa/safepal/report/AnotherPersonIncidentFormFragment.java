@@ -4,12 +4,14 @@ import android.app.Fragment;
 import android.content.ContentValues;
 import android.content.Context;
 import android.content.IntentFilter;
+import android.database.Cursor;
 import android.net.ConnectivityManager;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.design.widget.Snackbar;
 import android.support.design.widget.TextInputLayout;
 import android.support.v7.widget.Toolbar;
+import android.text.TextUtils;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -21,6 +23,7 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
+import android.widget.RelativeLayout;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -38,14 +41,6 @@ import java.util.Random;
 
 import static com.unfpa.safepal.report.WhoSGettingHelpFragment.randMessageIndex;
 
-/**
- * A simple {@link Fragment} subclass.
- * Activities that contain this fragment must implement the
- * {@link AnotherPersonIncidentFormFragment.OnFragmentInteractionListener} interface
- * to handle interaction events.
- * Use the {@link AnotherPersonIncidentFormFragment#newInstance} factory method to
- * create an instance of this fragment.
- */
 public class AnotherPersonIncidentFormFragment extends Fragment {
 
     //Data and Network Layers
@@ -54,48 +49,35 @@ public class AnotherPersonIncidentFormFragment extends Fragment {
     private static Uri apifReportIncidentUri;
     /**
      * apif - Stands for "Another Person Incident Form"
-     * */
-
-    /**
-     * Global Variables*/
-
-    /* User Interface*/
-
-    //apif toolbar
-    Toolbar apifToolbar;
-    /**
-     * Next and buttonPrev button
      */
-//    Button buttonNext;
-//    Button buttonPrev;
+
+    Toolbar apifToolbar;
     ImageView imageWhereHappen;
     ImageView imageStory;
     ImageView imageGender;
     ImageView imageAge;
     ImageView imageQnMark;
 
-    //Logging purposes
     static final String TAG = AnotherPersonIncidentFormFragment.class.getSimpleName();
 
-    //Encouraging messages
     TextView apifEncouragingMessagesTv;
 
     //Form variables
-//    private Button apifDateOfBirthButton;
-//    static TextView textViewChosenDate;
     private static RadioGroup apifGenderRG;
     private static RadioButton apifGenderRB;
+    private static RadioButton disabilityRBYes;
+    private static RadioButton disabilityRBNo;
     private static Spinner apifIncidentTypeSpinner;
     private static Spinner spinnerAgeRange;
     private static AutoCompleteTextView apifIncidentLocationEt;
     private static EditText apifIncidentDetailsEt;
+    private static EditText disabilityEditText;
+    private static RelativeLayout disabilityRelativeLayout;
 
     //user location
-    private  static UserLocation apifGPS;
-    private static  double userLatitude=0.334307;
-    private static double userLongitude=32.600917;
-
-
+    private static UserLocation apifGPS;
+    private static double userLatitude = 0.334307;
+    private static double userLongitude = 32.600917;
 
 
     // TODO: Rename parameter arguments, choose names that match
@@ -118,7 +100,7 @@ public class AnotherPersonIncidentFormFragment extends Fragment {
      * this fragment using the provided parameters.
      *
      * @param relationshipToSurvivor Parameter 1.
-     * @param param2 Parameter 2.
+     * @param param2                 Parameter 2.
      * @return A new instance of fragment AnotherPersonIncidentFormFragment.
      */
     // TODO: Rename and change types and number of parameters
@@ -147,59 +129,67 @@ public class AnotherPersonIncidentFormFragment extends Fragment {
     }
 
     static View rootView;
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        rootView =  inflater.inflate(R.layout.fragment_another_person_incident_form, container, false);
+        rootView = inflater.inflate(R.layout.fragment_another_person_incident_form, container, false);
 
 
         /** Declaration of user interface **/
         apifToolbar = (Toolbar) rootView.findViewById(R.id.reporting_toolbar);
-//        buttonPrev = (Button) view.findViewById(R.id.exit_app);
-//        buttonNext = (Button) view.findViewById(R.id.finish);
         imageWhereHappen = (ImageView) rootView.findViewById(R.id.image_where_take_place);
         imageStory = (ImageView) rootView.findViewById(R.id.image_story);
         imageGender = (ImageView) rootView.findViewById(R.id.image_gender);
-        imageAge= (ImageView) rootView.findViewById(R.id.image_age);
-        imageQnMark= (ImageView) rootView.findViewById(R.id.image_spinner_what_happed);
-        textInputLayoutWhereHappened = (TextInputLayout)rootView.findViewById(R.id.inpu_latout_where);
+        imageAge = (ImageView) rootView.findViewById(R.id.image_age);
+        imageQnMark = (ImageView) rootView.findViewById(R.id.image_spinner_what_happed);
+        textInputLayoutWhereHappened = (TextInputLayout) rootView.findViewById(R.id.inpu_latout_where);
+        disabilityRelativeLayout = rootView.findViewById(R.id.disability_parent_layout);
 
         apifGPS = new UserLocation(getActivity());
 
 
         //encouraging messages
-        apifEncouragingMessagesTv = (TextView)rootView.findViewById(R.id.apif_encouraging_messages_tv);
+        apifEncouragingMessagesTv = (TextView) rootView.findViewById(R.id.apif_encouraging_messages_tv);
 
-        /** Form initialization **/
-//        apifDateOfBirthButton = (Button)rootView.findViewById(R.id.date_of_birth_button);
-//        textViewChosenDate = (TextView)rootView.findViewById(R.id.chosen_date);
-
-        apifGenderRG=(RadioGroup)rootView.findViewById(R.id.sif_gender_rg);
+        apifGenderRG = (RadioGroup) rootView.findViewById(R.id.sif_gender_rg);
         apifIncidentTypeSpinner = (Spinner) rootView.findViewById(R.id.incident_type_spinner);
         //age range spinner
         spinnerAgeRange = (Spinner) rootView.findViewById(R.id.age_range_spinner);
 
         apifIncidentLocationEt = (AutoCompleteTextView) rootView.findViewById(R.id.incident_location_actv);
-        apifIncidentDetailsEt = (EditText)rootView.findViewById(R.id.sif_incident_details_et);
+        apifIncidentDetailsEt = (EditText) rootView.findViewById(R.id.sif_incident_details_et);
+        disabilityEditText = (EditText) rootView.findViewById(R.id.sif_disability_input);
 
 
-        textInputLayoutStory = (TextInputLayout)rootView.findViewById(R.id.input_latout_story);
+        textInputLayoutStory = (TextInputLayout) rootView.findViewById(R.id.input_latout_story);
+        textInputLayoutDisability = (TextInputLayout) rootView.findViewById(R.id.disability_text_input_layout);
 
-//        //setting up apif toolbar with logo
-//        setSupportActionBar(apifToolbar);
-//        getSupportActionBar().setDisplayShowHomeEnabled(true);
-//        getSupportActionBar().setLogo(R.mipmap.ic_launcher);
-//        getSupportActionBar().setDisplayUseLogoEnabled(true);
+        disabilityRBYes = (RadioButton) rootView.findViewById(R.id.yes_rb);
+        disabilityRBNo = (RadioButton) rootView.findViewById(R.id.no_rb);
+
+        disabilityRBYes.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                disabilityRelativeLayout.setVisibility(View.VISIBLE);
+            }
+        });
+
+        disabilityRBNo.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                disabilityRelativeLayout.setVisibility(View.GONE);
+            }
+        });
+
+        disabilityRelativeLayout.setVisibility(View.GONE);
 
         //load messages
         apifLoadMessages();
 
         //click actions
 
-          //loads autocomplete places
-        //ArrayAdapter<String> apifReportPlacesAdapter = new ArrayAdapter<String>(getActivity(),
-          //      android.R.layout.simple_dropdown_item_1line, getResources().getStringArray(R.array.auto_complete_report_places));
         apifIncidentLocationEt.setAdapter(new GooglePlacesAutocompleteAdapter(rootView.getContext(), R.layout.location_list_item));
         apifIncidentLocationEt.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
@@ -209,51 +199,45 @@ public class AnotherPersonIncidentFormFragment extends Fragment {
             }
         });
 
-
-
-
-
-
         //prepare adapter for age range spinner
         ArrayAdapter<CharSequence> ageRangeAdapter = ArrayAdapter.createFromResource(getActivity(),
                 R.array.survivor_age_range, R.layout.spinner_item);
         // Specify the layout to use when the list of choices appears
-        ageRangeAdapter.setDropDownViewResource( R.layout.spinner_dropdown);
+        ageRangeAdapter.setDropDownViewResource(R.layout.spinner_dropdown);
         // Apply the apifIncidentTypeAdapter to the spinner
         spinnerAgeRange.setAdapter(ageRangeAdapter);
-
 
         //Calculations for the age range and where incident happened spinners
         spinnerAgeRange.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                if(position>8){
-                   ArrayAdapter<CharSequence> apifIncidentTypeAdapter = ArrayAdapter.createFromResource(getActivity(),
+                if (position > 8) {
+                    ArrayAdapter<CharSequence> apifIncidentTypeAdapter = ArrayAdapter.createFromResource(getActivity(),
                             R.array.apif_incident_type_above, R.layout.spinner_item);
                     // Specify the layout to use when the list of choices appears
-                    apifIncidentTypeAdapter.setDropDownViewResource( R.layout.spinner_dropdown);
+                    apifIncidentTypeAdapter.setDropDownViewResource(R.layout.spinner_dropdown);
                     // Apply the apifIncidentTypeAdapter to the spinner
                     apifIncidentTypeSpinner.setAdapter(apifIncidentTypeAdapter);
 
                 }
-                if(position<=8 && position>0){
+                if (position <= 8 && position > 0) {
                     ArrayAdapter<CharSequence> apifIncidentTypeAdapter = ArrayAdapter.createFromResource(getActivity(),
                             R.array.apif_incident_type_below, R.layout.spinner_item);
                     // Specify the layout to use when the list of choices appears
-                    apifIncidentTypeAdapter.setDropDownViewResource( R.layout.spinner_dropdown);
+                    apifIncidentTypeAdapter.setDropDownViewResource(R.layout.spinner_dropdown);
                     // Apply the apifIncidentTypeAdapter to the spinner
                     apifIncidentTypeSpinner.setAdapter(apifIncidentTypeAdapter);
 
                 }
-                if(position==0){
+                if (position == 0) {
                     ArrayAdapter<CharSequence> apifIncidentTypeAdapter = ArrayAdapter.createFromResource(getActivity(),
                             R.array.apif_incident_type_above, R.layout.spinner_item);
                     // Specify the layout to use when the list of choices appears
-                    apifIncidentTypeAdapter.setDropDownViewResource( R.layout.spinner_dropdown);
+                    apifIncidentTypeAdapter.setDropDownViewResource(R.layout.spinner_dropdown);
                     // Apply the apifIncidentTypeAdapter to the spinner
                     apifIncidentTypeSpinner.setAdapter(apifIncidentTypeAdapter);
                     //Generates random feed back to the user
-                    String [] randFeedback = {"What is his/her age?", "Please select his/her age.", "How old is He/She?"};
+                    String[] randFeedback = {"What is his/her age?", "Please select his/her age.", "How old is He/She?"};
                     Random rn = new Random();
                     Toast.makeText(rootView.getContext(), randFeedback[rn.nextInt(randFeedback.length)], Toast.LENGTH_LONG).show();
                 }
@@ -297,15 +281,14 @@ public class AnotherPersonIncidentFormFragment extends Fragment {
 
         //picks the location of the user
         Log.d(TAG, "onCreateView: pick user location");
-        if(apifGPS.canGetLocation()){
-            if(apifGPS.getLatitude()!= 0.0 || apifGPS.getLongitude()!=0.0){
-            userLatitude= apifGPS.getLatitude();
-            userLongitude = apifGPS.getLongitude();
+        if (apifGPS.canGetLocation()) {
+            if (apifGPS.getLatitude() != 0.0 || apifGPS.getLongitude() != 0.0) {
+                userLatitude = apifGPS.getLatitude();
+                userLongitude = apifGPS.getLongitude();
                 Log.d(TAG, "onCreateView: " + userLatitude + userLongitude);
             }
 
-        }
-        else {
+        } else {
             apifGPS.showSettingsAlert();
         }
 
@@ -353,33 +336,33 @@ public class AnotherPersonIncidentFormFragment extends Fragment {
 
     static TextInputLayout textInputLayoutWhereHappened;
     static TextInputLayout textInputLayoutStory;
+    static TextInputLayout textInputLayoutDisability;
     static Snackbar sifFeedbackSnackbar;
+
     /**
      * true = successfull
-     *
+     * <p>
      * 0=succesfull
      * 1=error in data or invalid data
      * 2=report already available
-     *
-     * @param context
-     * @return
      */
     public static int submitForm(Context context) {
         int genderRBApifId = apifGenderRG.getCheckedRadioButtonId();
+        String disabilityValue = "";
 
-        if(genderRBApifId==-1){
-            Toast.makeText(context, "Select the survivors gender?",Toast.LENGTH_LONG).show();
+        if (genderRBApifId == -1) {
+            Toast.makeText(context, "Select the survivors gender?", Toast.LENGTH_LONG).show();
             return ReportingActivity.STATUS_SUBMIT_REPORT_ERROR;
         }
 
         View genderApifRBView = apifGenderRG.findViewById(genderRBApifId);
         int idx = apifGenderRG.indexOfChild(genderApifRBView);
-        apifGenderRB =(RadioButton)apifGenderRG.getChildAt(idx);
+        apifGenderRB = (RadioButton) apifGenderRG.getChildAt(idx);
 
         //checks if the location of the incident is filled by the user
-        if (apifIncidentLocationEt.length() == 0 ) {
+        if (apifIncidentLocationEt.length() == 0) {
 
-            sifFeedbackSnackbar = Snackbar.make(rootView ,"In what location did the incident happen him/her?",
+            sifFeedbackSnackbar = Snackbar.make(rootView, "In what location did the incident happen him/her?",
                     Snackbar.LENGTH_LONG);
             sifFeedbackSnackbar.show();
             textInputLayoutWhereHappened.setError(context.getString(R.string.cannotLeaveBlank));
@@ -387,9 +370,7 @@ public class AnotherPersonIncidentFormFragment extends Fragment {
         }
 
         if (apifIncidentTypeSpinner.getSelectedItemPosition() <= 0) {
-//            if(idx==0) Toast.makeText(context, "Select the type of incident that happened to her.",Toast.LENGTH_LONG).show();
-//            else       Toast.makeText(context, "Select the type of incident happened to him.",Toast.LENGTH_LONG).show();
-            sifFeedbackSnackbar = Snackbar.make(rootView ,"Select the type of incident happened to him/her.",
+            sifFeedbackSnackbar = Snackbar.make(rootView, "Select the type of incident happened to him/her.",
                     Snackbar.LENGTH_LONG);
             sifFeedbackSnackbar.show();
             return ReportingActivity.STATUS_SUBMIT_REPORT_ERROR;
@@ -397,32 +378,40 @@ public class AnotherPersonIncidentFormFragment extends Fragment {
         //age range check out
 
         if (spinnerAgeRange.getSelectedItemPosition() <= 0) {
-//            if(idx==0) Toast.makeText(context, "Select the type of incident that happened to her.",Toast.LENGTH_LONG).show();
-//            else       Toast.makeText(context, "Select the type of incident happened to him.",Toast.LENGTH_LONG).show();
-            sifFeedbackSnackbar = Snackbar.make(rootView ,"Please select his/her age.",
+            sifFeedbackSnackbar = Snackbar.make(rootView, "Please select his/her age.",
                     Snackbar.LENGTH_LONG);
             sifFeedbackSnackbar.show();
             return ReportingActivity.STATUS_SUBMIT_REPORT_ERROR;
         }
 
         //checks if the a proper story is told by the survivor
-        if ( apifIncidentDetailsEt.length() == 0) {
-            sifFeedbackSnackbar = Snackbar.make(rootView ,"Kindly narrate the story of the incident that happened him/her",
+        if (apifIncidentDetailsEt.length() == 0) {
+            sifFeedbackSnackbar = Snackbar.make(rootView, "Kindly narrate the story of the incident that happened him/her",
                     Snackbar.LENGTH_LONG);
             sifFeedbackSnackbar.show();
             textInputLayoutStory.setError(context.getString(R.string.cannotLeaveBlank));
             return ReportingActivity.STATUS_SUBMIT_REPORT_ERROR;
         }
 
+        if (disabilityRBYes.isChecked()) {
+            disabilityValue = disabilityEditText.getText().toString();
+            if (TextUtils.isEmpty(disabilityValue)) {
+                textInputLayoutDisability.setError(context.getString(R.string.cannotLeaveBlank));
+                return ReportingActivity.STATUS_SUBMIT_REPORT_ERROR;
+            }
+        }
+
+        Log.d(TAG, "submitForm: disability Value " + disabilityValue);
 
         String apifReportedBy = relationshipToSurvivor;
-        Log.d(TAG, "Relation shiop to..: " + apifReportedBy );
-        String apifSurvivorAge = (String)spinnerAgeRange.getSelectedItem();
-        String apifSurvivorGender = (String)apifGenderRB.getText();
-        String apifIncidentType =(String)apifIncidentTypeSpinner.getSelectedItem();
+        Log.d(TAG, "Relation shiop to..: " + apifReportedBy);
+        String apifSurvivorAge = (String) spinnerAgeRange.getSelectedItem();
+        String apifSurvivorGender = (String) apifGenderRB.getText();
+        String apifIncidentType = (String) apifIncidentTypeSpinner.getSelectedItem();
         String apifIncidentLocation = apifIncidentLocationEt.getText().toString();
-        String apifIncidentStory = apifIncidentDetailsEt.getText().toString();;
-        String apifUniqueIdentifier = SurvivorIncidentFormFragment.generateTempSafePalNumber(10000,99999);
+        String apifIncidentStory = apifIncidentDetailsEt.getText().toString();
+        ;
+        String apifUniqueIdentifier = SurvivorIncidentFormFragment.generateTempSafePalNumber(10000, 99999);
 
         /**
          * inserts incident report in to the mysql db through a content provider
@@ -435,16 +424,11 @@ public class AnotherPersonIncidentFormFragment extends Fragment {
         values.put(ReportIncidentTable.COLUMN_INCIDENT_LOCATION, apifIncidentLocation);
         values.put(ReportIncidentTable.COLUMN_INCIDENT_STORY, apifIncidentStory);
         values.put(ReportIncidentTable.COLUMN_UNIQUE_IDENTIFIER, apifUniqueIdentifier);
-
-
         values.put(ReportIncidentTable.COLUMN_REPORTER_LOCATION_LAT, Double.toString(userLatitude));
-       //Log.d("lat", Double.toString(apifGPS.getLatitude()));
-       // Log.d("lat", Double.toString(apifGPS.getLongitude()));
-       //  Toast.makeText(context, Double.toString(userLongitude)+ ":"+ Double.toString(userLatitude),Toast.LENGTH_LONG).show();
         values.put(ReportIncidentTable.COLUMN_REPORTER_LOCATION_LNG, Double.toString(userLongitude));
         values.put(ReportIncidentTable.COLUMN_REPORTER_PHONE_NUMBER, "null");
         values.put(ReportIncidentTable.COLUMN_REPORTER_EMAIL, "null");
-
+        values.put(ReportIncidentTable.COLUMN_DISABILITY, disabilityValue);
 
 
         Log.d("Last", "executed");
@@ -458,11 +442,9 @@ public class AnotherPersonIncidentFormFragment extends Fragment {
             apifReportIncidentUri = context.getContentResolver().insert(ReportIncidentContentProvider.CONTENT_URI, values);
 
             //Broadcast receiver that checks for the network status
-            IntentFilter apifNetMainFilter =  new IntentFilter(ConnectivityManager.CONNECTIVITY_ACTION);
+            IntentFilter apifNetMainFilter = new IntentFilter(ConnectivityManager.CONNECTIVITY_ACTION);
             apifNetReceiver = new NetworkChangeReceiver();
             context.registerReceiver(apifNetReceiver, apifNetMainFilter);
-
-
             Log.d(TAG, "part one executed");
 
             return ReportingActivity.STATUS_SUBMIT_REPORT_SUBMITED;
@@ -472,7 +454,7 @@ public class AnotherPersonIncidentFormFragment extends Fragment {
             Log.e(TAG, "is this normal???");
             Log.e(TAG, "The  case was not submitted");
 
-             context.getContentResolver().update(apifReportIncidentUri, values, null, null);
+            context.getContentResolver().update(apifReportIncidentUri, values, null, null);
 
             Log.d(TAG, "part two executed");
             return ReportingActivity.STATUS_SUBMIT_REPORT_ALREADY_AVAILABLE;
@@ -481,35 +463,18 @@ public class AnotherPersonIncidentFormFragment extends Fragment {
 
     }
 
-    /**
-     * This interface must be implemented by activities that contain this
-     * fragment to allow an interaction in this fragment to be communicated
-     * to the activity and potentially other fragments contained in that
-     * activity.
-     * <p>
-     * See the Android Training lesson <a href=
-     * "http://developer.android.com/training/basics/fragments/communicating.html"
-     * >Communicating with Other Fragments</a> for more information.
-     */
     public interface OnFragmentInteractionListener {
         // TODO: Update argument type and name
         void onFragmentInteraction(Uri uri);
     }
 
-    public void apifLoadMessages(){
-        String [] apifMessagesArray = getResources().getStringArray(R.array.seek_medical_care_messages);
+    public void apifLoadMessages() {
+        String[] apifMessagesArray = getResources().getStringArray(R.array.seek_medical_care_messages);
         apifEncouragingMessagesTv.setText(apifMessagesArray[randMessageIndex(0, apifMessagesArray.length)].toString());
     }
 
-
-
-
     //shows spinner dropdown for apif incident types
-    public void onClickApifIVSpinner(View view){
+    public void onClickApifIVSpinner(View view) {
         apifIncidentTypeSpinner.performClick();
     }
-
-
-
-
 }

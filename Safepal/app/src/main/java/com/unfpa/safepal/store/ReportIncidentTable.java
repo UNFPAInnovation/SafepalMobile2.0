@@ -1,4 +1,5 @@
 package com.unfpa.safepal.store;
+
 import android.database.sqlite.SQLiteDatabase;
 import android.util.Log;
 
@@ -17,7 +18,7 @@ public class ReportIncidentTable {
     public static final String COLUMN_SURVIVOR_GENDER = "survivor_gender";
 
     public static final String COLUMN_INCIDENT_TYPE = "incident_type";
-    public static final String COLUMN_INCIDENT_LOCATION= "incident_location";
+    public static final String COLUMN_INCIDENT_LOCATION = "incident_location";
     public static final String COLUMN_INCIDENT_STORY = "incident_story";
 
     public static final String COLUMN_UNIQUE_IDENTIFIER = "unique_identifier";
@@ -29,8 +30,7 @@ public class ReportIncidentTable {
     public static final String COLUMN_REPORTER_EMAIL = "reporter_email";
 
     public static final String COLUMN_FLAG = "flag";
-
-
+    public static final String COLUMN_DISABILITY = "disability";
 
 
     // Database creation SQL statement
@@ -43,8 +43,6 @@ public class ReportIncidentTable {
 
             + COLUMN_SURVIVOR_DATE_OF_BIRTH + " text not null, "
             + COLUMN_SURVIVOR_GENDER + " text not null, "
-
-
             + COLUMN_INCIDENT_TYPE + " text, "
             + COLUMN_INCIDENT_LOCATION + " text not null, "
             + COLUMN_INCIDENT_STORY + " text not null, "
@@ -58,14 +56,15 @@ public class ReportIncidentTable {
             + COLUMN_REPORTER_EMAIL + " text, "
 
 
-            + COLUMN_FLAG + " text "
+            + COLUMN_FLAG + " text, "
+            + COLUMN_DISABILITY + " text"
             + ");";
 
     public static void onCreate(SQLiteDatabase database) {
         database.execSQL(DATABASE_CREATE);
     }
 
-    public static void onUpgrade(SQLiteDatabase database, int oldVersion,int newVersion) {
+    public static void onUpgrade(SQLiteDatabase database, int oldVersion, int newVersion) {
         Log.w(ReportIncidentTable.class.getName(), "Upgrading database from version "
                 + oldVersion + " to " + newVersion
                 + ", which will destroy all old data");

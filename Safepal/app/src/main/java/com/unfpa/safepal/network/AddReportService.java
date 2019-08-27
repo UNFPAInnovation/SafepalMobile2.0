@@ -87,6 +87,7 @@ public class AddReportService extends IntentService {
                     cursor.getString(cursor.getColumnIndex(ReportIncidentTable.COLUMN_REPORTER_LOCATION_LAT)),
                     cursor.getString(cursor.getColumnIndex(ReportIncidentTable.COLUMN_REPORTER_LOCATION_LNG)),
                     cursor.getString(cursor.getColumnIndex(ReportIncidentTable.COLUMN_REPORTER_PHONE_NUMBER)),
+                    cursor.getString(cursor.getColumnIndex(ReportIncidentTable.COLUMN_DISABILITY)),
                     localUrlString,
 
                     new VolleyCallback() {
@@ -143,6 +144,7 @@ public class AddReportService extends IntentService {
                                    final String toServerReporterLat,
                                    final String toServerReportedLng,
                                    final String toServerReporterPhonenumber,
+                                   final String toServerDisability,
                                    final String addReportUrl, final VolleyCallback reportCallback ){
 
 
@@ -195,6 +197,7 @@ public class AddReportService extends IntentService {
                             addReport.put("details",toServerIDescription);
                             addReport.put("report_source","android user");
                             addReport.put("reportDate",currentDate);
+                            addReport.put("disability",toServerDisability);
 
                             Log.d(TAG, "getParams: param values " + addReport.toString());
                             return addReport;

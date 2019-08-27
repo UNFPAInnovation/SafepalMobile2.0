@@ -232,4 +232,8 @@
     <string name="home_guide_fab_next_title">Important Information </string>
     <string name="home_guide_fab_next_text"> \"Learning never ends\" - the saying goes, swipe left or right to get more information about sexual violence. Together, we can fight gender based violence </string>
     <string name="report">REPORT</string>
+    <string name="yes">Yes</string>
+    <string name="no">No</string>
+    <string name="apif_disability">Does the victim have any disability</string>
+    <string name="enter_disability">What disability do you have</string>
 </resources>
