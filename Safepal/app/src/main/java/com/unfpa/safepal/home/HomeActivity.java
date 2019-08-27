@@ -77,18 +77,20 @@ public class HomeActivity extends AppCompatActivity {
         });
 
         //for internal support
-        checkBoxAutoScroll.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
-            @Override
-            public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
-                if (b) {
-                    activateAutoScrollTimer();
-                    Log.d(TAG, "activated timer");
-                } else {
-                    Log.d(TAG, "deactivated timer");
-                    deactivateAutoScrollTimer();
-                }
-            }
-        });
+        checkBoxAutoScroll.setVisibility(View.GONE);
+        deactivateAutoScrollTimer();
+//        checkBoxAutoScroll.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+//            @Override
+//            public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
+//                if (b) {
+//                    activateAutoScrollTimer();
+//                    Log.d(TAG, "activated timer");
+//                } else {
+//                    Log.d(TAG, "deactivated timer");
+//                    deactivateAutoScrollTimer();
+//                }
+//            }
+//        });
 
 
         //animations about messages

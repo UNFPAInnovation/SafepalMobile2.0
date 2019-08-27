@@ -67,6 +67,7 @@
                 android:layout_height="wrap_content"
                 android:ellipsize="end"
                 android:gravity="center"
+                android:visibility="gone"
                 android:text="@string/auto_scroll_messages"
                 android:maxLines="7"
                 android:layout_alignBaseline="@+id/auto_scroll_CheckBox"
