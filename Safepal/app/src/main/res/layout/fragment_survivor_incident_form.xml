@@ -103,6 +103,99 @@
             </RelativeLayout>
             <!-- Age Textbox and Button-->
 
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginTop="20dp">
+                <ImageView
+                    android:id="@+id/disability"
+                    android:layout_width="30dp"
+                    android:layout_height="30dp"
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginRight="10dp"
+                    android:src="@drawable/baseline_accessible_forward_black_48dp"
+                    android:layout_marginTop="10dp" />
+
+                <LinearLayout
+                    android:id="@+id/disability_linear_layout"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="5dp"
+                    android:layout_toEndOf="@id/disability"
+                    android:layout_toRightOf="@id/disability"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="@dimen/subtitle_margin_bottom"
+                        android:text="@string/apif_disability"
+                        android:textStyle="bold" />
+
+                    <RadioGroup
+                        android:id="@+id/sif_disability_rg"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:checkedButton="@+id/no_rb"
+                        android:orientation="horizontal">
+
+                        <RadioButton
+                            android:id="@+id/yes_rb"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:paddingBottom="10dp"
+                            android:paddingTop="10dp"
+                            android:text="@string/yes" />
+
+                        <RadioButton
+                            android:id="@+id/no_rb"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:paddingBottom="10dp"
+                            android:paddingTop="10dp"
+                            android:text="@string/no" />
+                    </RadioGroup>
+                </LinearLayout>
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:id="@+id/disability_parent_layout"
+                android:visibility="visible">
+
+                <ImageView
+                    android:id="@+id/disability2"
+                    android:visibility="invisible"
+                    android:layout_width="30dp"
+                    android:layout_height="30dp"
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginRight="10dp"
+                    android:src="@drawable/baseline_accessible_forward_black_48dp" />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_toEndOf="@id/disability2"
+                    android:layout_toRightOf="@id/disability2"
+                    android:orientation="vertical">
+
+                    <android.support.design.widget.TextInputLayout
+                        android:id="@+id/disability_text_input_layout"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_toEndOf="@id/image_story"
+                        android:layout_toRightOf="@id/image_story">
+                        <EditText
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:hint="@string/enter_disability"
+                            android:id="@+id/sif_disability_input" />
+                    </android.support.design.widget.TextInputLayout>
+                </LinearLayout>
+            </RelativeLayout>
+
             <RelativeLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
