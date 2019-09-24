@@ -115,7 +115,7 @@ ContactFragment.OnFragmentInteractionListener, AnotherPersonIncidentFormFragment
 
                     if((status == ReportingActivity.STATUS_SUBMIT_REPORT_SUBMITED) || (status == ReportingActivity.STATUS_SUBMIT_REPORT_ALREADY_AVAILABLE)){
                         Log.d(TAG, "AnotherPersonIncidentFormFragment.submitForm successfull. Loading contact frag");
-                        loadContactFragment();//ask whther to be contacted in next frag
+//                        loadContactFragment();//ask whther to be contacted in next frag
                         updateSubmitButtonToNext();
                         buttonPrev.setVisibility(View.GONE);
                     }else{
@@ -127,7 +127,7 @@ ContactFragment.OnFragmentInteractionListener, AnotherPersonIncidentFormFragment
                     Log.d(TAG, "submitting self-form");
                     int status = SurvivorIncidentFormFragment.submitForm(getBaseContext());//submit the form
                     if((status == ReportingActivity.STATUS_SUBMIT_REPORT_SUBMITED) || (status == ReportingActivity.STATUS_SUBMIT_REPORT_ALREADY_AVAILABLE)){
-                        loadContactFragment();//ask whther to be contacted in next frag
+//                        loadContactFragment();//ask whther to be contacted in next frag
                         updateSubmitButtonToNext();
                         buttonPrev.setVisibility(View.GONE);
                         Log.d(TAG, "SurvivorIncidentFormFragment.submitForm successfull. Loading contact frag");

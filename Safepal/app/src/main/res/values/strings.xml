@@ -196,6 +196,7 @@
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="cannotLeaveBlank">Please kindly fill this field.</string>
+    <string name="enter_correct_number">Please enter a correct phone number</string>
     <string name="next_message">next</string>
     <string name="intro_encouraging_messages">Get familiar with important information by viewing the quick help information below. Swipe left or right to show other information</string>
     <string name="home">Home</string>

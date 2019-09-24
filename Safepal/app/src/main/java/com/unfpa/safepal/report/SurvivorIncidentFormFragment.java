@@ -200,16 +200,16 @@ public class SurvivorIncidentFormFragment extends Fragment {
 
         getPermissions();
 
-        //picks the location of the user
-        if (sifGPS.canGetLocation()) {
-            if (sifGPS.getLatitude() != 0.0 || sifGPS.getLongitude() != 0.0) {
-                userLatitude = sifGPS.getLatitude();
-                userLongitude = sifGPS.getLongitude();
-            }
-
-        } else {
-            sifGPS.showSettingsAlert();
-        }
+//        //picks the location of the user
+//        if (sifGPS.canGetLocation()) {
+//            if (sifGPS.getLatitude() != 0.0 || sifGPS.getLongitude() != 0.0) {
+//                userLatitude = sifGPS.getLatitude();
+//                userLongitude = sifGPS.getLongitude();
+//            }
+//
+//        } else {
+//            sifGPS.showSettingsAlert();
+//        }
 
         disabilityEditText = (EditText) rootView.findViewById(R.id.sif_disability_input);
         disabilityRBYes = (RadioButton) rootView.findViewById(R.id.yes_rb);
@@ -337,7 +337,7 @@ public class SurvivorIncidentFormFragment extends Fragment {
 
         }
 
-        Toast.makeText(context, "Lat: " + Double.toString(userLatitude) + "Long: " + Double.toString(userLongitude), Toast.LENGTH_LONG).show();
+//        Toast.makeText(context, "Lat: " + Double.toString(userLatitude) + "Long: " + Double.toString(userLongitude), Toast.LENGTH_LONG).show();
         int genderRBId = sifGenderRG.getCheckedRadioButtonId();
 
         //checks if gender radio group isn't selected;

@@ -1,17 +1,22 @@
 package com.unfpa.safepal.report;
 
+import android.Manifest;
 import android.app.Fragment;
 import android.content.ContentValues;
 import android.content.Context;
 import android.content.IntentFilter;
-import android.database.Cursor;
+import android.content.pm.PackageManager;
+import android.location.Location;
 import android.net.ConnectivityManager;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.design.widget.Snackbar;
 import android.support.design.widget.TextInputLayout;
+import android.support.v4.app.ActivityCompat;
 import android.support.v7.widget.Toolbar;
+import android.text.Editable;
 import android.text.TextUtils;
+import android.text.TextWatcher;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -28,6 +33,14 @@ import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.google.android.gms.location.FusedLocationProviderClient;
+import com.google.android.gms.location.LocationServices;
+import com.google.android.gms.tasks.OnSuccessListener;
+import com.karumi.dexter.Dexter;
+import com.karumi.dexter.MultiplePermissionsReport;
+import com.karumi.dexter.PermissionToken;
+import com.karumi.dexter.listener.PermissionRequest;
+import com.karumi.dexter.listener.multi.MultiplePermissionsListener;
 import com.unfpa.safepal.Location.UserLocation;
 import com.unfpa.safepal.Places.GooglePlacesAutocompleteAdapter;
 import com.unfpa.safepal.R;
@@ -37,6 +50,7 @@ import com.unfpa.safepal.network.NetworkChangeReceiver;
 import com.unfpa.safepal.store.ReportIncidentContentProvider;
 import com.unfpa.safepal.store.ReportIncidentTable;
 
+import java.util.List;
 import java.util.Random;
 
 import static com.unfpa.safepal.report.WhoSGettingHelpFragment.randMessageIndex;
@@ -72,8 +86,9 @@ public class AnotherPersonIncidentFormFragment extends Fragment {
     private static AutoCompleteTextView apifIncidentLocationEt;
     private static EditText apifIncidentDetailsEt;
     private static EditText disabilityEditText;
+    private static EditText apifContactPhonenumber;
     private static RelativeLayout disabilityRelativeLayout;
-
+    private FusedLocationProviderClient fusedLocationClient;
     //user location
     private static UserLocation apifGPS;
     private static double userLatitude = 0.334307;
@@ -135,6 +150,7 @@ public class AnotherPersonIncidentFormFragment extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         rootView = inflater.inflate(R.layout.fragment_another_person_incident_form, container, false);
+        fusedLocationClient = LocationServices.getFusedLocationProviderClient(getActivity().getApplicationContext());
 
 
         /** Declaration of user interface **/
@@ -161,10 +177,12 @@ public class AnotherPersonIncidentFormFragment extends Fragment {
         apifIncidentLocationEt = (AutoCompleteTextView) rootView.findViewById(R.id.incident_location_actv);
         apifIncidentDetailsEt = (EditText) rootView.findViewById(R.id.sif_incident_details_et);
         disabilityEditText = (EditText) rootView.findViewById(R.id.sif_disability_input);
+        apifContactPhonenumber = (EditText) rootView.findViewById(R.id.contact_phone_et);
 
 
         textInputLayoutStory = (TextInputLayout) rootView.findViewById(R.id.input_latout_story);
         textInputLayoutDisability = (TextInputLayout) rootView.findViewById(R.id.disability_text_input_layout);
+        textInputLayoutPhoneNumber = (TextInputLayout) rootView.findViewById(R.id.input_latout_phone_number);
 
         disabilityRBYes = (RadioButton) rootView.findViewById(R.id.yes_rb);
         disabilityRBNo = (RadioButton) rootView.findViewById(R.id.no_rb);
@@ -279,22 +297,102 @@ public class AnotherPersonIncidentFormFragment extends Fragment {
                 Layout.changeImageColor(getActivity(),
                         imageQnMark.getDrawable(), getResources().getColor(R.color.colorImages)));
 
-        //picks the location of the user
-        Log.d(TAG, "onCreateView: pick user location");
-        if (apifGPS.canGetLocation()) {
-            if (apifGPS.getLatitude() != 0.0 || apifGPS.getLongitude() != 0.0) {
-                userLatitude = apifGPS.getLatitude();
-                userLongitude = apifGPS.getLongitude();
-                Log.d(TAG, "onCreateView: " + userLatitude + userLongitude);
+
+        apifContactPhonenumber.addTextChangedListener(new TextWatcher() {
+            int length_before = 0;
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+                length_before = s.length();
             }
 
-        } else {
-            apifGPS.showSettingsAlert();
-        }
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+                if (length_before < s.length()) {
+
+                    if (s.length() == 3 || s.length() == 7)
+                        s.append("-");
+                    if (s.length() > 3) {
+                        if (Character.isDigit(s.charAt(3)))
+                            s.insert(3, "-");
+                    }
+                    if (s.length() > 7) {
+                        if (Character.isDigit(s.charAt(7)))
+                            s.insert(7, "-");
+
+                    }
+                }
+
+            }
+        });
+        //picks the location of the user
+        getPermissions();
+//        Log.d(TAG, "onCreateView: pick user location");
+//        if (apifGPS.canGetLocation()) {
+//            if (apifGPS.getLatitude() != 0.0 || apifGPS.getLongitude() != 0.0) {
+//                userLatitude = apifGPS.getLatitude();
+//                userLongitude = apifGPS.getLongitude();
+//                Log.d(TAG, "onCreateView: " + userLatitude + userLongitude);
+//            }
+//
+//        } else {
+//            apifGPS.showSettingsAlert();
+//        }
 
 
         return rootView;
 
+    }
+
+    private void getPermissions() {
+        Log.d(TAG, "getPermissions: get location permissions");
+        Dexter.withActivity(getActivity()).withPermissions(Manifest.permission.ACCESS_FINE_LOCATION, Manifest.permission.ACCESS_COARSE_LOCATION)
+                .withListener(new MultiplePermissionsListener() {
+                    @Override
+                    public void onPermissionsChecked(MultiplePermissionsReport report) {
+                        if (report.areAllPermissionsGranted()) {
+                            Log.d(TAG, "onPermissionsChecked: location permission granted");
+                            getUserLocation();
+
+                        } else if (report.isAnyPermissionPermanentlyDenied()) {
+                            getActivity().finish();
+                        }
+                    }
+
+                    @Override
+                    public void onPermissionRationaleShouldBeShown(List<PermissionRequest> permissions, PermissionToken token) {
+                        Toast.makeText(getActivity().getApplicationContext(), "Safepal needs your location to properly handle your case", Toast.LENGTH_LONG).show();
+                    }
+                }).check();
+    }
+
+    private void getUserLocation() {
+        Log.d(TAG, "getUserLocation: called");
+        if (ActivityCompat.checkSelfPermission(getActivity().getApplicationContext(), Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED
+                && ActivityCompat.checkSelfPermission(getActivity().getApplicationContext(), Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+            Log.d(TAG, "getUserLocation: permission not granted");
+            return;
+        }
+
+        try {
+            fusedLocationClient.getLastLocation()
+                    .addOnSuccessListener(getActivity(), new OnSuccessListener<Location>() {
+                        @Override
+                        public void onSuccess(Location location) {
+                            Log.d(TAG, "onSuccess: fused location client " + location.getLatitude() + location.getLongitude());
+                            if (location != null) {
+                                userLongitude = location.getLongitude();
+                                userLatitude = location.getLatitude();
+                            }
+                        }
+                    });
+        } catch (Exception e) {
+            Log.e(TAG, "getUserLocation: ", e);
+        }
     }
 
 
@@ -337,6 +435,7 @@ public class AnotherPersonIncidentFormFragment extends Fragment {
     static TextInputLayout textInputLayoutWhereHappened;
     static TextInputLayout textInputLayoutStory;
     static TextInputLayout textInputLayoutDisability;
+    static TextInputLayout textInputLayoutPhoneNumber;
     static Snackbar sifFeedbackSnackbar;
 
     /**
@@ -401,6 +500,11 @@ public class AnotherPersonIncidentFormFragment extends Fragment {
             }
         }
 
+        if (apifContactPhonenumber.getText().length() <= 8) {
+            textInputLayoutPhoneNumber.setError(context.getString(R.string.enter_correct_number));
+            return ReportingActivity.STATUS_SUBMIT_REPORT_ERROR;
+        }
+
         Log.d(TAG, "submitForm: disability Value " + disabilityValue);
 
         String apifReportedBy = relationshipToSurvivor;
@@ -410,8 +514,9 @@ public class AnotherPersonIncidentFormFragment extends Fragment {
         String apifIncidentType = (String) apifIncidentTypeSpinner.getSelectedItem();
         String apifIncidentLocation = apifIncidentLocationEt.getText().toString();
         String apifIncidentStory = apifIncidentDetailsEt.getText().toString();
-        ;
+        String apifPhoneNumber = apifContactPhonenumber.getText().toString();
         String apifUniqueIdentifier = SurvivorIncidentFormFragment.generateTempSafePalNumber(10000, 99999);
+        Log.d(TAG, "submitForm: phone number " + apifPhoneNumber);
 
         /**
          * inserts incident report in to the mysql db through a content provider
@@ -426,7 +531,7 @@ public class AnotherPersonIncidentFormFragment extends Fragment {
         values.put(ReportIncidentTable.COLUMN_UNIQUE_IDENTIFIER, apifUniqueIdentifier);
         values.put(ReportIncidentTable.COLUMN_REPORTER_LOCATION_LAT, Double.toString(userLatitude));
         values.put(ReportIncidentTable.COLUMN_REPORTER_LOCATION_LNG, Double.toString(userLongitude));
-        values.put(ReportIncidentTable.COLUMN_REPORTER_PHONE_NUMBER, "null");
+        values.put(ReportIncidentTable.COLUMN_REPORTER_PHONE_NUMBER, apifPhoneNumber);
         values.put(ReportIncidentTable.COLUMN_REPORTER_EMAIL, "null");
         values.put(ReportIncidentTable.COLUMN_DISABILITY, disabilityValue);
 
