@@ -5,72 +5,67 @@
     android:id="@+id/content_cso"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:paddingBottom="@dimen/activity_vertical_margin"
     android:paddingLeft="@dimen/activity_horizontal_margin"
-    android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
+    android:paddingRight="@dimen/activity_horizontal_margin"
+    android:paddingBottom="@dimen/activity_vertical_margin"
     app:layout_behavior="@string/appbar_scrolling_view_behavior"
     tools:context="com.unfpa.safepal.ProvideHelp.CsoActivity"
     tools:showIn="@layout/activity_cso">
-    <LinearLayout
-        android:orientation="vertical"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent">
 
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
 
         <TextView
             android:id="@+id/cso_ecouraging_messages_tv"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:gravity="center"
             android:ellipsize="end"
+            android:gravity="center"
             android:maxLines="3"
-            android:text="@string/wsgh_msgs_to_ecourage_survivor"
-            android:onClick="onClickCsoEncouragingMessages"/>
+            android:onClick="onClickCsoEncouragingMessages"
+            android:text="@string/wsgh_msgs_to_ecourage_survivor" />
 
         <include layout="@layout/divider" />
 
         <TextView
-
             android:id="@+id/cso_safepal_number"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_below="@+id/cso_horizotal_line"
-            android:textStyle="bold|italic"
+            android:layout_marginTop="20dp"
             android:text="Your Safepal Number: "
             android:textColor="@color/colorAccent"
-            android:layout_marginTop="20dp"
-            />
+            android:textStyle="bold|italic" />
+
         <TextView
             android:id="@+id/cso_contact_info"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_below="@+id/cso_safepal_number"
-            android:textStyle="bold"
-            android:textColor="@color/colorGreyDarker"
-            android:text="You have no contacts "
             android:layout_marginTop="10dp"
-            />
+            android:text="You have no contacts "
+            android:textColor="@color/colorGreyDarker"
+            android:textStyle="bold" />
+
         <TextView
             android:id="@+id/cso_assurance_help"
-            android:layout_marginBottom="14dp"
-            android:layout_marginTop="14dp"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_below="@+id/cso_contact_info"
-            android:text="The available help will contact you using above info."/>
-
+            android:layout_marginTop="14dp"
+            android:layout_marginBottom="14dp"
+            android:text="The available help will contact you using above info." />
 
 
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Below is the Closest Help to You"
             android:gravity="center"
-            android:textColor="#000000"
-            android:textStyle="bold"
             android:maxLines="1"
-            android:textSize="18dp"/>
+            android:text="Below is the Closest Help to You"
+            android:textColor="#000000"
+            android:textSize="18dp"
+            android:textStyle="bold" />
 
         <include layout="@layout/divider" />
 
@@ -78,86 +73,66 @@
         <RelativeLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content">
+
             <android.support.v7.widget.RecyclerView
                 android:id="@+id/cso_recycler_view"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:layout_marginBottom="14dp"
                 android:layout_marginTop="14dp"
-                android:scrollbars="vertical"/>
+                android:layout_marginBottom="14dp"
+                android:scrollbars="vertical" />
 
             <LinearLayout
                 android:id="@+id/cso_no_internet_ll"
-                android:layout_centerInParent="true"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_centerInParent="true"
                 android:orientation="vertical"
                 android:visibility="gone">
+
                 <TextView
                     android:id="@+id/cso_no_internet_text"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:text="@string/cso_no_internet_text"
-                    android:textAlignment="center"/>
+                    android:textAlignment="center" />
+
                 <Button
                     android:id="@+id/cso_no_internet_button"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:layout_gravity="center"
                     android:text="@string/cso_no_internet_retry"
-                    android:textSize="22sp"
-                    android:layout_gravity="center"/>
+                    android:textSize="22sp" />
             </LinearLayout>
         </RelativeLayout>
 
-
-        <!--<include layout="@layout/divider" />-->
-
-
-        <!-- i removed this
-        style="@style/NiceButton"-->
         <Button
-            style="@style/NiceButton"
             android:id="@+id/cso_childhelpline_btn"
+            style="@style/NiceButton"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_below="@+id/cso_horizotal_line_two"
-            android:text="Call Toll Free"
-            android:layout_marginBottom="14dp"
             android:layout_marginTop="14dp"
-            android:textStyle="bold"
+            android:layout_marginBottom="14dp"
             android:maxLines="1"
             android:onClick="onClickCsoCall"
+            android:text="Call Toll Free"
+            android:textStyle="bold" />
 
-            />
-
-
-
-
-    <!--</RelativeLayout>-->
-        <!--<include layout="@layout/footer_buttons" />-->
         <LinearLayout
-            android:layout_marginTop="20dp"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            >
+            android:layout_marginTop="20dp"
+            android:orientation="horizontal">
 
             <Button
-                android:layout_weight="1"
-                android:id="@+id/exit_app"
-                style="@style/materialButtonAttention"
+                android:id="@+id/finish"
+                style="@style/materialButtonNormal"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:text="@string/prev" />
-
-            <Button
-
-                style="@style/materialButtonNormal"
-                android:text="@string/home"
                 android:layout_weight="1"
-                android:id="@+id/finish"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content" />-->
+                android:text="@string/home" />
 
         </LinearLayout>
     </LinearLayout>
