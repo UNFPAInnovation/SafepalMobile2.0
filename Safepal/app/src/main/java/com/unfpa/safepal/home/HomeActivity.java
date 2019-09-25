@@ -23,8 +23,6 @@ import android.widget.Button;
 import android.widget.CompoundButton;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
-import android.widget.Toast;
-
 import com.crashlytics.android.Crashlytics;
 import com.github.amlcurran.showcaseview.ShowcaseView;
 import com.github.amlcurran.showcaseview.targets.ViewTarget;
@@ -79,19 +77,6 @@ public class HomeActivity extends AppCompatActivity {
         //for internal support
         checkBoxAutoScroll.setVisibility(View.GONE);
         deactivateAutoScrollTimer();
-//        checkBoxAutoScroll.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
-//            @Override
-//            public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
-//                if (b) {
-//                    activateAutoScrollTimer();
-//                    Log.d(TAG, "activated timer");
-//                } else {
-//                    Log.d(TAG, "deactivated timer");
-//                    deactivateAutoScrollTimer();
-//                }
-//            }
-//        });
-
 
         //animations about messages
         swipeRightAnimationSetUp();
@@ -168,6 +153,7 @@ public class HomeActivity extends AppCompatActivity {
     }
 
     private void swipeRightAnimationSetUp() {
+        Log.d(TAG, "swipeRightAnimationSetUp: started");
         animSlideInFromRight = AnimationUtils.loadAnimation(getApplicationContext(),
                 R.anim.enter_from_right);
         animExitToLeft = AnimationUtils.loadAnimation(getApplicationContext(),

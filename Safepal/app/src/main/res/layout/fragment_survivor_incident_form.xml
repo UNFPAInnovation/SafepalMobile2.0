@@ -375,6 +375,39 @@
                     </android.support.design.widget.TextInputLayout>
                 </RelativeLayout>
 
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent">
+                    <ImageView
+                        android:id="@+id/phone_number_image"
+                        android:layout_width="30dp"
+                        android:layout_height="30dp"
+                        android:layout_marginLeft="10dp"
+                        android:layout_marginRight="10dp"
+                        android:layout_alignBottom="@+id/input_latout_phone_number"
+                        android:layout_alignTop="@+id/input_latout_phone_number"
+                        android:src="@drawable/baseline_call_black_24" />
+
+                    <android.support.design.widget.TextInputLayout
+                        android:id="@+id/input_latout_phone_number"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="10dp"
+                        android:layout_toEndOf="@id/phone_number_image"
+                        android:layout_toRightOf="@id/phone_number_image">
+
+                        <EditText
+                            android:id="@+id/contact_phone_et"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginBottom="@dimen/overall_et_margin_bottom"
+                            android:layout_marginTop="@dimen/overall_et_margin_top"
+                            android:hint="Enter Phone Number"
+                            android:inputType="phone"
+                            android:maxLength="12" />
+                    </android.support.design.widget.TextInputLayout>
+                </RelativeLayout>
+
             </LinearLayout>
 
             <include layout="@layout/divider" />

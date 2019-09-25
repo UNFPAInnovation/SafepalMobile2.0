@@ -4,17 +4,23 @@ import android.Manifest;
 import android.app.Fragment;
 import android.content.ContentValues;
 import android.content.Context;
+import android.content.DialogInterface;
+import android.content.Intent;
 import android.content.IntentFilter;
 import android.content.pm.PackageManager;
 import android.location.Location;
 import android.net.ConnectivityManager;
 import android.net.Uri;
 import android.os.Bundle;
+import android.provider.Settings;
 import android.support.design.widget.Snackbar;
 import android.support.design.widget.TextInputLayout;
 import android.support.v4.app.ActivityCompat;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.Toolbar;
+import android.text.Editable;
 import android.text.TextUtils;
+import android.text.TextWatcher;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -81,6 +87,7 @@ public class SurvivorIncidentFormFragment extends Fragment {
     private static Spinner sifIncidentTypeSpinner;
     private static EditText sifIncidentLocationEt;
     private static EditText sifIncidentDetailsEt;
+    private static EditText sifContactPhonenumber;
     private static Snackbar sifFeedbackSnackbar;
     private static RadioButton disabilityRBYes;
     private static RadioButton disabilityRBNo;
@@ -152,12 +159,13 @@ public class SurvivorIncidentFormFragment extends Fragment {
         sifIncidentTypeSpinner = (Spinner) rootView.findViewById(R.id.incident_type_spinner);
         sifIncidentLocationEt = (EditText) rootView.findViewById(R.id.incident_location_actv);
         sifIncidentDetailsEt = (EditText) rootView.findViewById(R.id.sif_incident_details_et);
-
+        sifContactPhonenumber = (EditText) rootView.findViewById(R.id.contact_phone_et);
         sifEncouragingMessagesTv = (TextView) rootView.findViewById(R.id.sif_encouraging_messages_tv);
 
         textInputLayoutStory = (TextInputLayout) rootView.findViewById(R.id.input_latout_story);
         textInputLayoutWhereHappened = (TextInputLayout) rootView.findViewById(R.id.inpu_latout_where);
         textInputLayoutDisability = (TextInputLayout) rootView.findViewById(R.id.disability_text_input_layout);
+        textInputLayoutPhoneNumber = (TextInputLayout) rootView.findViewById(R.id.input_latout_phone_number);
         disabilityRelativeLayout = rootView.findViewById(R.id.disability_parent_layout);
 
 
@@ -197,19 +205,40 @@ public class SurvivorIncidentFormFragment extends Fragment {
             }
         });
 
+        sifContactPhonenumber.addTextChangedListener(new TextWatcher() {
+            int length_before = 0;
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+                length_before = s.length();
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+                if (length_before < s.length()) {
+
+                    if (s.length() == 3 || s.length() == 7)
+                        s.append("-");
+                    if (s.length() > 3) {
+                        if (Character.isDigit(s.charAt(3)))
+                            s.insert(3, "-");
+                    }
+                    if (s.length() > 7) {
+                        if (Character.isDigit(s.charAt(7)))
+                            s.insert(7, "-");
+
+                    }
+                }
+
+            }
+        });
+
 
         getPermissions();
-
-//        //picks the location of the user
-//        if (sifGPS.canGetLocation()) {
-//            if (sifGPS.getLatitude() != 0.0 || sifGPS.getLongitude() != 0.0) {
-//                userLatitude = sifGPS.getLatitude();
-//                userLongitude = sifGPS.getLongitude();
-//            }
-//
-//        } else {
-//            sifGPS.showSettingsAlert();
-//        }
 
         disabilityEditText = (EditText) rootView.findViewById(R.id.sif_disability_input);
         disabilityRBYes = (RadioButton) rootView.findViewById(R.id.yes_rb);
@@ -245,7 +274,7 @@ public class SurvivorIncidentFormFragment extends Fragment {
                             getUserLocation();
 
                         } else if (report.isAnyPermissionPermanentlyDenied()) {
-                            getActivity().finish();
+                            showSettingsDialog();
                         }
                     }
 
@@ -279,6 +308,34 @@ public class SurvivorIncidentFormFragment extends Fragment {
         } catch (Exception e) {
             Log.e(TAG, "getUserLocation: ", e);
         }
+    }
+
+    private void showSettingsDialog() {
+        AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
+        builder.setTitle(R.string.needs_permission);
+        builder.setMessage(R.string.settings_permission_message);
+        builder.setPositiveButton("GOTO SETTINGS", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                dialog.cancel();
+                openSettings();
+            }
+        });
+        builder.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                dialog.cancel();
+            }
+        });
+        builder.show();
+
+    }
+
+    private void openSettings() {
+        Intent intent = new Intent(Settings.ACTION_APPLICATION_DETAILS_SETTINGS);
+        Uri uri = Uri.fromParts("package", getActivity().getPackageName(), null);
+        intent.setData(uri);
+        startActivityForResult(intent, 101);
     }
 
     @Override
@@ -324,6 +381,7 @@ public class SurvivorIncidentFormFragment extends Fragment {
     static TextInputLayout textInputLayoutWhereHappened;
     static TextInputLayout textInputLayoutStory;
     static TextInputLayout textInputLayoutDisability;
+    static TextInputLayout textInputLayoutPhoneNumber;
 
     public static int submitForm(Context context) {
         Log.d(TAG, "submitForm: called");
@@ -360,6 +418,7 @@ public class SurvivorIncidentFormFragment extends Fragment {
         String incidentType = (String) sifIncidentTypeSpinner.getSelectedItem();
         String incidentLocation = sifIncidentLocationEt.getText().toString();
         String incidentStory = sifIncidentDetailsEt.getText().toString();
+        String incidentPhoneNumber = sifContactPhonenumber.getText().toString();
         String uniqueIdentifier = generateTempSafePalNumber(1000, 9999);
 
 //
@@ -402,6 +461,11 @@ public class SurvivorIncidentFormFragment extends Fragment {
             }
         }
 
+        if (sifContactPhonenumber.getText().length() <= 8) {
+            textInputLayoutPhoneNumber.setError(context.getString(R.string.enter_correct_number));
+            return ReportingActivity.STATUS_SUBMIT_REPORT_ERROR;
+        }
+
         Log.d(TAG, "submitForm: disability Value " + disabilityValue);
 
         /**
@@ -418,7 +482,7 @@ public class SurvivorIncidentFormFragment extends Fragment {
 
         values.put(ReportIncidentTable.COLUMN_REPORTER_LOCATION_LAT, userLatitude);
         values.put(ReportIncidentTable.COLUMN_REPORTER_LOCATION_LNG, userLongitude);
-        values.put(ReportIncidentTable.COLUMN_REPORTER_PHONE_NUMBER, "null");
+        values.put(ReportIncidentTable.COLUMN_REPORTER_PHONE_NUMBER, incidentPhoneNumber);
         values.put(ReportIncidentTable.COLUMN_REPORTER_EMAIL, "null");
         values.put(ReportIncidentTable.COLUMN_DISABILITY, disabilityValue);
 

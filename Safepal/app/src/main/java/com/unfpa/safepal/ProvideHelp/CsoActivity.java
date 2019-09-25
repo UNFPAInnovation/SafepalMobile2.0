@@ -1,6 +1,7 @@
 package com.unfpa.safepal.ProvideHelp;
 
 import android.Manifest;
+import android.app.ProgressDialog;
 import android.content.ActivityNotFoundException;
 import android.content.Intent;
 import android.content.pm.PackageManager;
@@ -34,10 +35,12 @@ import com.unfpa.safepal.ProvideHelp.RVCsoModel.CsoRvAdapter;
 import com.unfpa.safepal.ProvideHelp.RVCsoModel.TheCSO;
 import com.unfpa.safepal.R;
 import com.unfpa.safepal.messages.EMessageDialogFragment;
+import com.unfpa.safepal.report.ReportingActivity;
 import com.unfpa.safepal.store.RIContentObserver;
 import com.unfpa.safepal.store.ReportIncidentContentProvider;
 import com.unfpa.safepal.store.ReportIncidentTable;
 
+import org.jetbrains.annotations.Contract;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -58,6 +61,7 @@ import static com.unfpa.safepal.report.WhoSGettingHelpFragment.randMessageIndex;
 
 public class CsoActivity extends AppCompatActivity {
 
+    private static final int REQUEST_PHONE_CALL = 325;
     Toolbar csoToolbar;
 
     /**
@@ -173,18 +177,13 @@ public class CsoActivity extends AppCompatActivity {
 
         try {
             if (ActivityCompat.checkSelfPermission(this, Manifest.permission.CALL_PHONE) != PackageManager.PERMISSION_GRANTED) {
-                // TODO: Consider calling
-                //    ActivityCompat#requestPermissions
-                // here to request the missing permissions, and then overriding
-                //   public void onRequestPermissionsResult(int requestCode, String[] permissions,
-                //                                          int[] grantResults)
-                // to handle the case where the user grants the permission. See the documentation
-                // for ActivityCompat#requestPermissions for more details.
-                return;
+                ActivityCompat.requestPermissions(CsoActivity.this, new String[]{Manifest.permission.CALL_PHONE},REQUEST_PHONE_CALL);
+            } else {
+                startActivity(new Intent(Intent.ACTION_CALL, Uri.parse("tel:116")));
             }
-            startActivity(new Intent(Intent.ACTION_CALL, Uri.parse("tel:116")));
         } catch (ActivityNotFoundException ex) {
-            Toast.makeText(getApplicationContext(), "SafePal can't make call now", Toast.LENGTH_SHORT).show();
+            Log.e(TAG, "onClickCsoCall: ", ex);
+            startActivity(new Intent(Intent.ACTION_DIAL, Uri.parse("tel:116")));
         }
     }
 
@@ -221,11 +220,7 @@ public class CsoActivity extends AppCompatActivity {
                 }
             });
            }
-
-
-
         csosAdapter.notifyDataSetChanged();
-
     }
 
 
@@ -242,8 +237,6 @@ public class CsoActivity extends AppCompatActivity {
             StringBuilder offline = new StringBuilder();
             cursor.moveToLast();
             offline.append("Your SafePal Number is: " + cursor.getString(cursor.getColumnIndex(ReportIncidentTable.COLUMN_UNIQUE_IDENTIFIER)));
-
-
             csoSafepalNo.setText(offline);
         }
         cursor.close();
@@ -260,7 +253,7 @@ public class CsoActivity extends AppCompatActivity {
 
                         break;
                 }
-            };
+            }
         };
 
         RIContentObserver rICsoContentObserver = new RIContentObserver(this, riHandler);
@@ -355,8 +348,8 @@ public class CsoActivity extends AppCompatActivity {
         try {
             String jsonData = getDirectionFromGoogle(directionUrl);
             Log.d(TAG, "geographicalDistance: server response " + jsonData);
-            JSONObject Jobject = new JSONObject(jsonData);
-            JSONArray routesJsonArray = Jobject.getJSONArray("routes");
+            JSONObject directionJsonObject = new JSONObject(jsonData);
+            JSONArray routesJsonArray = directionJsonObject.getJSONArray("routes");
 
             JSONObject legsJsonObject = routesJsonArray.getJSONObject(0).getJSONArray("legs").getJSONObject(0);
             JSONObject distanceJsonObject = legsJsonObject.getJSONObject("distance");
@@ -382,14 +375,18 @@ public class CsoActivity extends AppCompatActivity {
         }
     }
 
-    private double deg2rad(double deg) {
-        return (deg * Math.PI / 180.0);
+    @Override
+    public void onRequestPermissionsResult(int requestCode,
+                                           String permissions[], int[] grantResults) {
+        switch (requestCode) {
+            case REQUEST_PHONE_CALL: {
+                if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                    startActivity(new Intent(Intent.ACTION_CALL, Uri.parse("tel:116")));
+                }
+                return;
+            }
+        }
     }
-
-    private double rad2deg(double rad) {
-        return (rad * 180.0 / Math.PI);
-    }
-
 
 
 }

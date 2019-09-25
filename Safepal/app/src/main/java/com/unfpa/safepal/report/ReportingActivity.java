@@ -3,6 +3,7 @@ package com.unfpa.safepal.report;
 import android.app.Fragment;
 import android.app.FragmentManager;
 import android.app.FragmentTransaction;
+import android.app.ProgressDialog;
 import android.content.Intent;
 import android.database.Cursor;
 import android.net.Uri;
@@ -42,6 +43,7 @@ ContactFragment.OnFragmentInteractionListener, AnotherPersonIncidentFormFragment
     String TAG = ReportingActivity.class.getSimpleName();
     Button buttonNext;
     Button buttonPrev;
+    private ProgressDialog progressDialog;
 
 
     @Override
@@ -108,35 +110,37 @@ ContactFragment.OnFragmentInteractionListener, AnotherPersonIncidentFormFragment
                     }
 
                 } else if (isFragmentVisible(getFragmentManager().findFragmentByTag(
-                        AnotherPersonIncidentFormFragment.class.getSimpleName()))) {//cuurent frag AnotherPersonIncidentFormFragment
-
+                        AnotherPersonIncidentFormFragment.class.getSimpleName()))) {
                     Log.d(TAG, "submitting another-person form");
-                    int status = AnotherPersonIncidentFormFragment.submitForm(getBaseContext());//submit the form
+
+                    showProgressDialog();
+
+                    int status = AnotherPersonIncidentFormFragment.submitForm(getBaseContext());
+                    Log.d(TAG, "onClick: status bar showing");
 
                     if((status == ReportingActivity.STATUS_SUBMIT_REPORT_SUBMITED) || (status == ReportingActivity.STATUS_SUBMIT_REPORT_ALREADY_AVAILABLE)){
                         Log.d(TAG, "AnotherPersonIncidentFormFragment.submitForm successfull. Loading contact frag");
-//                        loadContactFragment();//ask whther to be contacted in next frag
-                        updateSubmitButtonToNext();
+                        cancelProgressDialog();
+                        Intent csoIntent = new Intent(getBaseContext(), CsoActivity.class);
+                        startActivity(csoIntent);
+                        finish();
                         buttonPrev.setVisibility(View.GONE);
-                    }else{
-                        Log.d(TAG, "error in data????");
                     }
-
                 } else if (isFragmentVisible(getFragmentManager().findFragmentByTag(
-                        SurvivorIncidentFormFragment.class.getSimpleName()))) {//cuurent frag SurvivorIncidentFormFragment
+                        SurvivorIncidentFormFragment.class.getSimpleName()))) {
                     Log.d(TAG, "submitting self-form");
-                    int status = SurvivorIncidentFormFragment.submitForm(getBaseContext());//submit the form
-                    if((status == ReportingActivity.STATUS_SUBMIT_REPORT_SUBMITED) || (status == ReportingActivity.STATUS_SUBMIT_REPORT_ALREADY_AVAILABLE)){
-//                        loadContactFragment();//ask whther to be contacted in next frag
-                        updateSubmitButtonToNext();
-                        buttonPrev.setVisibility(View.GONE);
-                        Log.d(TAG, "SurvivorIncidentFormFragment.submitForm successfull. Loading contact frag");
-                    }else {
-                        Log.d(TAG, "errpr on data????");
-                    }
+                    showProgressDialog();
 
+                    int status = SurvivorIncidentFormFragment.submitForm(getBaseContext());
+                    if((status == ReportingActivity.STATUS_SUBMIT_REPORT_SUBMITED) || (status == ReportingActivity.STATUS_SUBMIT_REPORT_ALREADY_AVAILABLE)){
+                        cancelProgressDialog();
+                        Intent csoIntent = new Intent(getBaseContext(), CsoActivity.class);
+                        startActivity(csoIntent);
+                        finish();
+                        Log.d(TAG, "SurvivorIncidentFormFragment.submitForm successfull. Loading contact frag");
+                    }
                 }else if (isFragmentVisible(getFragmentManager().findFragmentByTag(
-                        ContactFragment.class.getSimpleName()))) {//cuurent frag ContactFragment
+                        ContactFragment.class.getSimpleName()))) {
 
                     if(ContactFragment.areFieldsSet(getBaseContext())){//if all foed are set
                         Log.d("Code", "reached");
@@ -145,13 +149,8 @@ ContactFragment.OnFragmentInteractionListener, AnotherPersonIncidentFormFragment
                         Intent csoIntent = new Intent(getBaseContext(), CsoActivity.class);
                         csoIntent.putExtra("safepalUniqueNumber",ContactFragment.contactSafepalNo.getText().toString());
                         startActivity(csoIntent);
-                        finish();//close this activity after opening another.
-                    }else{
-                        Log.w(TAG, "some fields empty");
+                        finish();
                     }
-
-                }else {
-                    Log.e(TAG, "Dont know what to do!!!!");
                 }
             }
         });
@@ -191,6 +190,24 @@ ContactFragment.OnFragmentInteractionListener, AnotherPersonIncidentFormFragment
                 }
             }
         });
+    }
+
+    private void showProgressDialog() {
+        progressDialog = new ProgressDialog(ReportingActivity.this);
+        progressDialog.setMessage("Please wait...");
+        progressDialog.setTitle("Submitting your case");
+        progressDialog.setProgressStyle(ProgressDialog.STYLE_SPINNER);
+        progressDialog.show();
+        // enforce progress dialog to prevent user from clicking the submit button twice
+        progressDialog.setCancelable(false);
+    }
+
+    private void cancelProgressDialog() {
+        try {
+            progressDialog.dismiss();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 
     /**

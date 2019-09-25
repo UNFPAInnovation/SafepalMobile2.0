@@ -79,6 +79,8 @@
     <string name="wsgh_happened_to_who">Did the incident happen to you?</string>
     <string name="wsgh_yes">Yes, it was me.</string>
     <string name="wsgh_someone_else">No, to somebody I know</string>
+    <string name="settings_permission_message">Safepal needs permission to use this feature. You can grant them in app settings.</string>
+    <string name="needs_permission">Need Permissions</string>
     <string-array name="wsgh_someone_else_array">
         <item>How are you related to her/him?</item>
         <item>Relative</item>

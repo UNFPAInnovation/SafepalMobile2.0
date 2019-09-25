@@ -367,7 +367,9 @@
                     android:layout_height="30dp"
                     android:layout_marginLeft="10dp"
                     android:layout_marginRight="10dp"
-                    android:src="@mipmap/ic_action_view_as_list" />
+                    android:layout_alignBottom="@+id/input_latout_phone_number"
+                    android:layout_alignTop="@+id/input_latout_phone_number"
+                    android:src="@drawable/baseline_call_black_24" />
 
                 <android.support.design.widget.TextInputLayout
                     android:id="@+id/input_latout_phone_number"
@@ -382,13 +384,10 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginBottom="@dimen/overall_et_margin_bottom"
-                        android:layout_marginRight="@dimen/activity_horizontal_margin"
                         android:layout_marginTop="@dimen/overall_et_margin_top"
-                        android:layout_weight="1"
                         android:hint="Enter Phone Number"
                         android:inputType="phone"
-                        android:maxLength="12"
-                        android:padding="@dimen/overall_et_padding_top" />
+                        android:maxLength="12" />
                 </android.support.design.widget.TextInputLayout>
             </RelativeLayout>
 
