@@ -2,9 +2,6 @@ package com.unfpa.safepal.home;
 
 import android.annotation.SuppressLint;
 import android.content.Intent;
-import android.content.SharedPreferences;
-import android.net.Uri;
-import android.os.Build;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.AppCompatCheckBox;
@@ -20,19 +17,19 @@ import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
-import android.widget.CompoundButton;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
+
 import com.crashlytics.android.Crashlytics;
 import com.github.amlcurran.showcaseview.ShowcaseView;
 import com.github.amlcurran.showcaseview.targets.ViewTarget;
 import com.unfpa.safepal.R;
 import com.unfpa.safepal.Utils.Direction;
 import com.unfpa.safepal.Utils.General;
-import com.unfpa.safepal.messages.EMessageDialogFragment;
 import com.unfpa.safepal.report.ReportingActivity;
 
 import io.fabric.sdk.android.Fabric;
+
 import java.util.Random;
 
 public class HomeActivity extends AppCompatActivity {
@@ -46,6 +43,7 @@ public class HomeActivity extends AppCompatActivity {
     RelativeLayout.LayoutParams lps, nextLps;
     private int currentIndex = 2;
     private Direction currentDirection;
+    private final String TAG = HomeActivity.class.getSimpleName();
 
     @SuppressLint("ClickableViewAccessibility")
     @Override
@@ -85,9 +83,8 @@ public class HomeActivity extends AppCompatActivity {
 
         infoPanelAnimationSetUp();
 
-        animatePrevMessage();//show first message
-        showDisclaimer();
-
+        //show first message
+        animatePrevMessage();
     }
 
     @SuppressLint("ClickableViewAccessibility")
@@ -180,21 +177,6 @@ public class HomeActivity extends AppCompatActivity {
         });
     }
 
-    private void showDisclaimer() {
-        SharedPreferences prefs = getSharedPreferences(getString(R.string.shared_pref_name), MODE_PRIVATE);
-        boolean isFirstTime = prefs.getBoolean(getString(R.string.first_time), true);
-        if (isFirstTime) {
-            homeReportGuide();
-            General.showDisclaimerDialog(this);
-
-            SharedPreferences.Editor editor = prefs.edit();
-            editor.putBoolean(getString(R.string.first_time), false);
-            editor.apply();//indicate that app has ever been opened
-        } else {
-            //General.showDisclaimerDialog(this);
-        }
-    }
-
     Animation animSlideInFromRight;
     Animation animSlideInFromLeft;
     Animation animExitToLeft;
@@ -209,62 +191,12 @@ public class HomeActivity extends AppCompatActivity {
     }
 
     boolean isAutoScrollOn = true;
-    Thread threadScrolling;
-
-    private void activateAutoScrollTimer() {
-        isAutoScrollOn = true;
-        threadScrolling = new Thread(new Runnable() {
-            @Override
-            public void run() {
-                while (isAutoScrollOn) {
-                    try {
-                        Log.d(TAG, "loop!");
-                        int timeOut = getResources().getInteger(R.integer.message_timeout);
-                        Log.d(TAG, "timeout: " + timeOut);
-                        Thread.sleep(timeOut);//wait a bit
-                        runOnUiThread(new Runnable() {
-                            @Override
-                            public void run() {
-                                animatePrevMessage();//change message
-                            }
-                        });
-                    } catch (InterruptedException e) {
-                        e.printStackTrace();
-                        Log.e(TAG, "error: " + e.toString());
-                    }
-                }
-                Log.d(TAG, "done n thread");
-            }
-        });
-        threadScrolling.start();
-
-    }
 
     private void deactivateAutoScrollTimer() {
         isAutoScrollOn = false;
-
-    }
-
-    String TAG = HomeActivity.class.getSimpleName();
-
-    private void updateMessageText() {
-        //make adapter
-        ArrayAdapter<CharSequence> messages = ArrayAdapter.createFromResource(this,
-                R.array.home_contact_info, R.layout.spinner_item);
-        Random random = new Random();
-        int min = 0;
-        int max = messages.getCount();
-        Log.d(TAG, "max: " + max);
-        int randomIndex = random.nextInt(max - min) + min;
-        Log.d(TAG, "randomIndex: " + randomIndex);
-        String msg = messages.getItem(randomIndex).toString();
-        Log.d(TAG, "textViewMessage: " + msg);
-        textViewMessage.setText(msg);
-
     }
 
     private void updateMessageText(Direction direction) {
-        //make adapter
         ArrayAdapter<CharSequence> messages = ArrayAdapter.createFromResource(this,
                 R.array.home_contact_info, R.layout.spinner_item);
         String msg;
@@ -290,16 +222,6 @@ public class HomeActivity extends AppCompatActivity {
 
     }
 
-
-    //expand encouraging messages
-    public void onClickInfoPopUp(View view) {
-        EMessageDialogFragment emDialog = EMessageDialogFragment.newInstance(
-                "Safepal",
-                textViewMessage.getText().toString(),
-                getString(R.string.close_dialog));
-        emDialog.show(getFragmentManager(), "encouraging message");
-    }
-
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         MenuInflater inflater = getMenuInflater();
@@ -309,24 +231,19 @@ public class HomeActivity extends AppCompatActivity {
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        // Handle item selection
         switch (item.getItemId()) {
             case R.id.menu_disclaimer:
-
                 General.showDisclaimerDialog(this);
                 return true;
             case R.id.menu_guide:
-                homeReportGuide();
+                reportTutorialGuide();
                 return true;
             default:
                 return super.onOptionsItemSelected(item);
         }
     }
 
-    //This is a tutorial for the first  time reporters
-    public void homeReportGuide() {
-
-        //guide for the first time users
+    public void reportTutorialGuide() {
         lps = new RelativeLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
         lps.addRule(RelativeLayout.ALIGN_PARENT_BOTTOM);
         lps.addRule(RelativeLayout.ALIGN_PARENT_LEFT);
@@ -344,16 +261,14 @@ public class HomeActivity extends AppCompatActivity {
                     @Override
                     public void onClick(View v) {
                         homeReportGuideSv.hide();
-                        homeSwipeGuide();
-
+                        cardMessagesTutorialGuide();
                     }
                 })
                 .build();
         homeReportGuideSv.setButtonPosition(lps);
     }
 
-    public void homeSwipeGuide() {
-      //guide for the first time users
+    public void cardMessagesTutorialGuide() {
         nextLps = new RelativeLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
         nextLps.addRule(RelativeLayout.CENTER_IN_PARENT);
         int margin = ((Number) (getResources().getDisplayMetrics().density * 12)).intValue();
@@ -376,9 +291,5 @@ public class HomeActivity extends AppCompatActivity {
                 homeNextSv.hide();
             }
         });
-
-
     }
-
-
 }
