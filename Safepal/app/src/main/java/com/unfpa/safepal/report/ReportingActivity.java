@@ -113,27 +113,21 @@ ContactFragment.OnFragmentInteractionListener, AnotherPersonIncidentFormFragment
                         AnotherPersonIncidentFormFragment.class.getSimpleName()))) {
                     Log.d(TAG, "submitting another-person form");
 
-                    showProgressDialog();
-
                     int status = AnotherPersonIncidentFormFragment.submitForm(getBaseContext());
                     Log.d(TAG, "onClick: status bar showing");
 
                     if((status == ReportingActivity.STATUS_SUBMIT_REPORT_SUBMITED) || (status == ReportingActivity.STATUS_SUBMIT_REPORT_ALREADY_AVAILABLE)){
                         Log.d(TAG, "AnotherPersonIncidentFormFragment.submitForm successfull. Loading contact frag");
-                        cancelProgressDialog();
                         Intent csoIntent = new Intent(getBaseContext(), CsoActivity.class);
                         startActivity(csoIntent);
-                        finish();
                         buttonPrev.setVisibility(View.GONE);
                     }
                 } else if (isFragmentVisible(getFragmentManager().findFragmentByTag(
                         SurvivorIncidentFormFragment.class.getSimpleName()))) {
                     Log.d(TAG, "submitting self-form");
-                    showProgressDialog();
 
                     int status = SurvivorIncidentFormFragment.submitForm(getBaseContext());
                     if((status == ReportingActivity.STATUS_SUBMIT_REPORT_SUBMITED) || (status == ReportingActivity.STATUS_SUBMIT_REPORT_ALREADY_AVAILABLE)){
-                        cancelProgressDialog();
                         Intent csoIntent = new Intent(getBaseContext(), CsoActivity.class);
                         startActivity(csoIntent);
                         finish();
@@ -190,24 +184,6 @@ ContactFragment.OnFragmentInteractionListener, AnotherPersonIncidentFormFragment
                 }
             }
         });
-    }
-
-    private void showProgressDialog() {
-        progressDialog = new ProgressDialog(ReportingActivity.this);
-        progressDialog.setMessage("Please wait...");
-        progressDialog.setTitle("Submitting your case");
-        progressDialog.setProgressStyle(ProgressDialog.STYLE_SPINNER);
-        progressDialog.show();
-        // enforce progress dialog to prevent user from clicking the submit button twice
-        progressDialog.setCancelable(false);
-    }
-
-    private void cancelProgressDialog() {
-        try {
-            progressDialog.dismiss();
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
     }
 
     /**

@@ -15,7 +15,6 @@ import static com.unfpa.safepal.Utils.Constants.BASE_API_URL;
 
 public class NetworkChangeReceiver extends BroadcastReceiver{
 
-    //Volley requests
     final String URL_SAFEPAL_API = BASE_API_URL + "/reports/addreport";
     // Intent for starting the IntentService for submitting a survivor case
     private Intent mServiceIntent;
@@ -32,7 +31,7 @@ public class NetworkChangeReceiver extends BroadcastReceiver{
                 context.startService(mServiceIntent);
 
 
-                Toast.makeText(context, "You have submitted you incident .", Toast.LENGTH_SHORT).show();
+                Toast.makeText(context, "You have submitted your incident .", Toast.LENGTH_SHORT).show();
 
         }
         else {

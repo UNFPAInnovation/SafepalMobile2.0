@@ -1,8 +1,16 @@
 package com.unfpa.safepal.home;
 
 import android.annotation.SuppressLint;
+import android.app.Activity;
+import android.app.ProgressDialog;
+import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
+import android.location.LocationManager;
 import android.os.Bundle;
+import android.provider.Settings;
+import android.support.annotation.NonNull;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.AppCompatCheckBox;
 import android.support.v7.widget.Toolbar;
@@ -25,12 +33,9 @@ import com.github.amlcurran.showcaseview.ShowcaseView;
 import com.github.amlcurran.showcaseview.targets.ViewTarget;
 import com.unfpa.safepal.R;
 import com.unfpa.safepal.Utils.Direction;
-import com.unfpa.safepal.Utils.General;
 import com.unfpa.safepal.report.ReportingActivity;
 
 import io.fabric.sdk.android.Fabric;
-
-import java.util.Random;
 
 public class HomeActivity extends AppCompatActivity {
     Button fabReportCase;
@@ -85,6 +90,8 @@ public class HomeActivity extends AppCompatActivity {
 
         //show first message
         animatePrevMessage();
+
+        showLocationSettingsDialog();
     }
 
     @SuppressLint("ClickableViewAccessibility")
@@ -232,9 +239,6 @@ public class HomeActivity extends AppCompatActivity {
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
-            case R.id.menu_disclaimer:
-                General.showDisclaimerDialog(this);
-                return true;
             case R.id.menu_guide:
                 reportTutorialGuide();
                 return true;
@@ -291,5 +295,39 @@ public class HomeActivity extends AppCompatActivity {
                 homeNextSv.hide();
             }
         });
+    }
+
+    private void showLocationSettingsDialog() {
+        LocationManager locationManager;
+        locationManager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
+        boolean isGPSEnabled = locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER);
+        Log.d(TAG, "showLocationSettingsDialog: GPS enabled " + isGPSEnabled);
+
+        if (!isGPSEnabled) {
+            AlertDialog.Builder builder = new AlertDialog.Builder(this);
+            builder.setTitle("Needs Location");
+            builder.setMessage("Please turn on your GPS to properly report the case");
+
+            builder.setPositiveButton("TURN ON GPS", new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface dialog, int which) {
+                    dialog.cancel();
+                    openLocationSettings();
+                }
+            });
+
+            builder.setNegativeButton("CANCEL", new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface dialog, int which) {
+                    dialog.cancel();
+                }
+            });
+            builder.show();
+        }
+    }
+
+    private void openLocationSettings() {
+        Intent intent = new Intent(Settings.ACTION_LOCATION_SOURCE_SETTINGS);
+        startActivity(intent);
     }
 }

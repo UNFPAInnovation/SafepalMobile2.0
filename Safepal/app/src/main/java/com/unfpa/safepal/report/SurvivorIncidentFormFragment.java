@@ -238,7 +238,7 @@ public class SurvivorIncidentFormFragment extends Fragment {
         });
 
 
-        getPermissions();
+        getUserLocationFromGPS();
 
         disabilityEditText = (EditText) rootView.findViewById(R.id.sif_disability_input);
         disabilityRBYes = (RadioButton) rootView.findViewById(R.id.yes_rb);
@@ -263,8 +263,8 @@ public class SurvivorIncidentFormFragment extends Fragment {
         return rootView;
     }
 
-    private void getPermissions() {
-        Log.d(TAG, "getPermissions: get location permissions");
+    private void getUserLocationFromGPS() {
+        Log.d(TAG, "getUserLocationFromGPS: get location permissions");
         Dexter.withActivity(getActivity()).withPermissions(Manifest.permission.ACCESS_FINE_LOCATION, Manifest.permission.ACCESS_COARSE_LOCATION)
                 .withListener(new MultiplePermissionsListener() {
                     @Override
@@ -298,8 +298,8 @@ public class SurvivorIncidentFormFragment extends Fragment {
                     .addOnSuccessListener(getActivity(), new OnSuccessListener<Location>() {
                         @Override
                         public void onSuccess(Location location) {
-                            Log.d(TAG, "onSuccess: fused location client " + location.getLatitude() + location.getLongitude());
                             if (location != null) {
+                                Log.d(TAG, "onSuccess: fused location client " + location.getLatitude() + location.getLongitude());
                                 userLongitude = location.getLongitude();
                                 userLatitude = location.getLatitude();
                             }

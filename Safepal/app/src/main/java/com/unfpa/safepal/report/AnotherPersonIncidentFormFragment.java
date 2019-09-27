@@ -335,26 +335,15 @@ public class AnotherPersonIncidentFormFragment extends Fragment {
             }
         });
         //picks the location of the user
-        getPermissions();
-//        Log.d(TAG, "onCreateView: pick user location");
-//        if (apifGPS.canGetLocation()) {
-//            if (apifGPS.getLatitude() != 0.0 || apifGPS.getLongitude() != 0.0) {
-//                userLatitude = apifGPS.getLatitude();
-//                userLongitude = apifGPS.getLongitude();
-//                Log.d(TAG, "onCreateView: " + userLatitude + userLongitude);
-//            }
-//
-//        } else {
-//            apifGPS.showSettingsAlert();
-//        }
+        getUserLocationFromGPS();
 
 
         return rootView;
 
     }
 
-    private void getPermissions() {
-        Log.d(TAG, "getPermissions: get location permissions");
+    private void getUserLocationFromGPS() {
+        Log.d(TAG, "getUserLocationFromGPS: get location permissions");
         Dexter.withActivity(getActivity()).withPermissions(Manifest.permission.ACCESS_FINE_LOCATION, Manifest.permission.ACCESS_COARSE_LOCATION)
                 .withListener(new MultiplePermissionsListener() {
                     @Override
@@ -480,6 +469,7 @@ public class AnotherPersonIncidentFormFragment extends Fragment {
      * 2=report already available
      */
     public static int submitForm(Context context) {
+        Log.d(TAG, "submitForm: started");
         int genderRBApifId = apifGenderRG.getCheckedRadioButtonId();
         String disabilityValue = "";
 
