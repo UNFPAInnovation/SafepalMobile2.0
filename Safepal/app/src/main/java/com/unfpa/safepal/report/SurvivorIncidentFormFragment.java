@@ -45,8 +45,11 @@ import com.karumi.dexter.listener.PermissionRequest;
 import com.karumi.dexter.listener.multi.MultiplePermissionsListener;
 import com.unfpa.safepal.Location.UserLocation;
 import com.unfpa.safepal.R;
+import com.unfpa.safepal.Utils.Constants;
+import com.unfpa.safepal.Utils.Utilities;
 import com.unfpa.safepal.datepicker.DatePickerFragment;
 import com.unfpa.safepal.messages.EMessageDialogFragment;
+import com.unfpa.safepal.network.AddReportService;
 import com.unfpa.safepal.network.NetworkChangeReceiver;
 import com.unfpa.safepal.store.ReportIncidentContentProvider;
 import com.unfpa.safepal.store.ReportIncidentTable;
@@ -54,6 +57,7 @@ import com.unfpa.safepal.store.ReportIncidentTable;
 import java.util.List;
 import java.util.Random;
 
+import static com.unfpa.safepal.Utils.Constants.BASE_API_URL;
 import static com.unfpa.safepal.report.WhoSGettingHelpFragment.randMessageIndex;
 
 /**
@@ -207,6 +211,7 @@ public class SurvivorIncidentFormFragment extends Fragment {
 
         sifContactPhonenumber.addTextChangedListener(new TextWatcher() {
             int length_before = 0;
+
             @Override
             public void beforeTextChanged(CharSequence s, int start, int count, int after) {
                 length_before = s.length();
@@ -387,12 +392,12 @@ public class SurvivorIncidentFormFragment extends Fragment {
         Log.d(TAG, "submitForm: called");
         String disabilityValue = "";
 
-        if (sifGPS.canGetLocation()) {
-            if (sifGPS.getLatitude() != 0.0 || sifGPS.getLongitude() != 0.0) {
-                userLatitude = sifGPS.getLatitude();
-                userLongitude = sifGPS.getLongitude();
-            }
-        }
+//        if (sifGPS.canGetLocation()) {
+//            if (sifGPS.getLatitude() != 0.0 || sifGPS.getLongitude() != 0.0) {
+//                userLatitude = sifGPS.getLatitude();
+//                userLongitude = sifGPS.getLongitude();
+//            }
+//        }
 
 //        Toast.makeText(context, "Lat: " + Double.toString(userLatitude) + "Long: " + Double.toString(userLongitude), Toast.LENGTH_LONG).show();
         int genderRBId = sifGenderRG.getCheckedRadioButtonId();
@@ -459,7 +464,7 @@ public class SurvivorIncidentFormFragment extends Fragment {
             }
         }
 
-        if (sifContactPhonenumber.getText().length() <= 8) {
+        if (!Utilities.validateValue(incidentPhoneNumber, Constants.phoneNumberDashRegex)) {
             textInputLayoutPhoneNumber.setError(context.getString(R.string.enter_correct_number));
             return ReportingActivity.STATUS_SUBMIT_REPORT_ERROR;
         }
@@ -491,8 +496,11 @@ public class SurvivorIncidentFormFragment extends Fragment {
                 sifReportIncidentUri = context.getContentResolver().insert(ReportIncidentContentProvider.CONTENT_URI, values);
 
                 //Broadcast receiver that checks for the network status
-                IntentFilter netMainFilter = new IntentFilter(ConnectivityManager.CONNECTIVITY_ACTION);
-                context.registerReceiver(sifNetReceiver, netMainFilter);
+//                IntentFilter netMainFilter = new IntentFilter(ConnectivityManager.CONNECTIVITY_ACTION);
+//                context.registerReceiver(sifNetReceiver, netMainFilter);
+                final String URL_SAFEPAL_API = BASE_API_URL + "/reports/addreport";
+                Intent mServiceIntent = new Intent(context, AddReportService.class).setData(Uri.parse(URL_SAFEPAL_API));
+                context.startService(mServiceIntent);
                 return ReportingActivity.STATUS_SUBMIT_REPORT_SUBMITED;
             } else {
                 //updates the report if its already available
@@ -527,7 +535,6 @@ public class SurvivorIncidentFormFragment extends Fragment {
         } else {
             sifEncouragingMessagesTv.setText(sifMessagesArray[randMessageIndex(0, sifMessagesArray.length)].toString());
         }
-
     }
 
 

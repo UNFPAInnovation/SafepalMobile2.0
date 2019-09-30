@@ -5,6 +5,9 @@ import android.content.SharedPreferences;
 
 import com.unfpa.safepal.R;
 
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+
 import static android.content.Context.MODE_PRIVATE;
 
 public class Utilities {
@@ -31,5 +34,11 @@ public class Utilities {
         SharedPreferences.Editor editor = prefs.edit();
         editor.putBoolean(formParameterName, formParameterValue);
         editor.apply();
+    }
+
+    public static boolean validateValue(String value, String regex) {
+        Pattern pattern = Pattern.compile(regex);
+        Matcher matcher = pattern.matcher(value);
+        return matcher.matches();
     }
 }

@@ -47,7 +47,9 @@ import com.karumi.dexter.listener.multi.MultiplePermissionsListener;
 import com.unfpa.safepal.Location.UserLocation;
 import com.unfpa.safepal.Places.GooglePlacesAutocompleteAdapter;
 import com.unfpa.safepal.R;
+import com.unfpa.safepal.Utils.Constants;
 import com.unfpa.safepal.Utils.Layout;
+import com.unfpa.safepal.Utils.Utilities;
 import com.unfpa.safepal.messages.EMessageDialogFragment;
 import com.unfpa.safepal.network.NetworkChangeReceiver;
 import com.unfpa.safepal.store.ReportIncidentContentProvider;
@@ -57,6 +59,8 @@ import android.support.v7.app.AlertDialog;
 
 import java.util.List;
 import java.util.Random;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import static com.unfpa.safepal.report.WhoSGettingHelpFragment.randMessageIndex;
 
@@ -115,15 +119,6 @@ public class AnotherPersonIncidentFormFragment extends Fragment {
         // Required empty public constructor
     }
 
-    /**
-     * Use this factory method to create a new instance of
-     * this fragment using the provided parameters.
-     *
-     * @param relationshipToSurvivor Parameter 1.
-     * @param param2                 Parameter 2.
-     * @return A new instance of fragment AnotherPersonIncidentFormFragment.
-     */
-    // TODO: Rename and change types and number of parameters
     public static AnotherPersonIncidentFormFragment newInstance(String relationshipToSurvivor, String param2) {
         AnotherPersonIncidentFormFragment fragment = new AnotherPersonIncidentFormFragment();
         Bundle args = new Bundle();
@@ -305,6 +300,7 @@ public class AnotherPersonIncidentFormFragment extends Fragment {
 
         apifContactPhonenumber.addTextChangedListener(new TextWatcher() {
             int length_before = 0;
+
             @Override
             public void beforeTextChanged(CharSequence s, int start, int count, int after) {
                 length_before = s.length();
@@ -334,12 +330,8 @@ public class AnotherPersonIncidentFormFragment extends Fragment {
 
             }
         });
-        //picks the location of the user
         getUserLocationFromGPS();
-
-
         return rootView;
-
     }
 
     private void getUserLocationFromGPS() {
@@ -524,7 +516,9 @@ public class AnotherPersonIncidentFormFragment extends Fragment {
             }
         }
 
-        if (apifContactPhonenumber.getText().length() <= 8) {
+        String apifPhoneNumber = apifContactPhonenumber.getText().toString();
+
+        if (!Utilities.validateValue(apifPhoneNumber, Constants.phoneNumberDashRegex)) {
             textInputLayoutPhoneNumber.setError(context.getString(R.string.enter_correct_number));
             return ReportingActivity.STATUS_SUBMIT_REPORT_ERROR;
         }
@@ -538,9 +532,7 @@ public class AnotherPersonIncidentFormFragment extends Fragment {
         String apifIncidentType = (String) apifIncidentTypeSpinner.getSelectedItem();
         String apifIncidentLocation = apifIncidentLocationEt.getText().toString();
         String apifIncidentStory = apifIncidentDetailsEt.getText().toString();
-        String apifPhoneNumber = apifContactPhonenumber.getText().toString();
         String apifUniqueIdentifier = SurvivorIncidentFormFragment.generateTempSafePalNumber(10000, 99999);
-        Log.d(TAG, "submitForm: phone number " + apifPhoneNumber);
 
         /**
          * inserts incident report in to the mysql db through a content provider
@@ -573,7 +565,6 @@ public class AnotherPersonIncidentFormFragment extends Fragment {
 
                 //Broadcast receiver that checks for the network status
                 IntentFilter apifNetMainFilter = new IntentFilter(ConnectivityManager.CONNECTIVITY_ACTION);
-                apifNetReceiver = new NetworkChangeReceiver();
                 context.registerReceiver(apifNetReceiver, apifNetMainFilter);
                 Log.d(TAG, "part one executed");
 
@@ -596,7 +587,6 @@ public class AnotherPersonIncidentFormFragment extends Fragment {
     }
 
     public interface OnFragmentInteractionListener {
-        // TODO: Update argument type and name
         void onFragmentInteraction(Uri uri);
     }
 

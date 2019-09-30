@@ -83,7 +83,7 @@ public class ReportingActivity extends AppCompatActivity implements SurvivorInci
         buttonNext.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-//                Log.d(TAG, "button next clicked" );
+                Log.d(TAG, "button next clicked" );
                 if (isFragmentVisible(getFragmentManager().findFragmentByTag(
                         WhoSGettingHelpFragment.class.getSimpleName()))) {//cuurent frag WhoSGettingHelpFragment
                     Utilities.saveFormParameter(getApplicationContext(),

@@ -13,7 +13,7 @@ import android.widget.Toast;
 
 import static com.unfpa.safepal.Utils.Constants.BASE_API_URL;
 
-public class NetworkChangeReceiver extends BroadcastReceiver{
+public class NetworkChangeReceiver extends BroadcastReceiver {
 
     final String URL_SAFEPAL_API = BASE_API_URL + "/reports/addreport";
     // Intent for starting the IntentService for submitting a survivor case
@@ -24,18 +24,11 @@ public class NetworkChangeReceiver extends BroadcastReceiver{
 
         String status = NetworkUtil.getConnectivityStatusString(context);
 
-        if(status=="Wifi enabled"||status=="Mobile data enabled"){
-
-
-                mServiceIntent = new Intent(context, AddReportService.class).setData(Uri.parse(URL_SAFEPAL_API));
-                context.startService(mServiceIntent);
-
-
-                Toast.makeText(context, "You have submitted your incident .", Toast.LENGTH_SHORT).show();
-
-        }
-        else {
-
+        if (status == "Wifi enabled" || status == "Mobile data enabled") {
+            mServiceIntent = new Intent(context, AddReportService.class).setData(Uri.parse(URL_SAFEPAL_API));
+            context.startService(mServiceIntent);
+            Toast.makeText(context, "You have submitted your incident .", Toast.LENGTH_SHORT).show();
+        } else {
             Toast.makeText(context, "No Internet Connection. Your report will be submitted when your device is connected to the internet.", Toast.LENGTH_LONG).show();
         }
     }

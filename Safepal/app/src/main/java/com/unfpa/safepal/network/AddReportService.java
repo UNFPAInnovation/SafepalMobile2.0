@@ -191,7 +191,7 @@ public class AddReportService extends IntentService {
                     // increases the connection timeout
                     addReportRequest.setRetryPolicy(new DefaultRetryPolicy(
                             SOCKET_TIMEOUT,
-                            DefaultRetryPolicy.DEFAULT_MAX_RETRIES,
+                            0,
                             DefaultRetryPolicy.DEFAULT_BACKOFF_MULT));
 
                     MySingleton.getInstance(getApplicationContext()).addToRequestQueue(addReportRequest);
