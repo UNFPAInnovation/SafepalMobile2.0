@@ -1,11 +1,13 @@
 package com.unfpa.safepal.ProvideHelp;
 
 import android.Manifest;
+import android.app.ProgressDialog;
 import android.content.ActivityNotFoundException;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.database.Cursor;
 import android.net.Uri;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.StrictMode;
@@ -16,6 +18,7 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
+import android.view.KeyEvent;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
@@ -27,6 +30,7 @@ import android.widget.TextView;
 
 import com.github.amlcurran.showcaseview.ShowcaseView;
 import com.github.amlcurran.showcaseview.targets.ViewTarget;
+import com.google.android.gms.maps.model.LatLng;
 import com.unfpa.safepal.ProvideHelp.RVCsoModel.BeforeCsoInfo;
 import com.unfpa.safepal.ProvideHelp.RVCsoModel.CsoRvAdapter;
 import com.unfpa.safepal.ProvideHelp.RVCsoModel.TheCSO;
@@ -227,8 +231,8 @@ public class CsoActivity extends AppCompatActivity {
 
         if (cursorRetrieveLatLng != null) {
             cursorRetrieveLatLng.moveToLast();
-            String dbLatString = cursorRetrieveLatLng.getString(cursorRetrieveLatLng.getColumnIndex(ReportIncidentTable.COLUMN_REPORTER_LOCATION_LAT));
-            String dbLngString = cursorRetrieveLatLng.getString(cursorRetrieveLatLng.getColumnIndex(ReportIncidentTable.COLUMN_REPORTER_LOCATION_LNG));
+            String currentLatString = cursorRetrieveLatLng.getString(cursorRetrieveLatLng.getColumnIndex(ReportIncidentTable.COLUMN_REPORTER_LOCATION_LAT));
+            String currentLngString = cursorRetrieveLatLng.getString(cursorRetrieveLatLng.getColumnIndex(ReportIncidentTable.COLUMN_REPORTER_LOCATION_LNG));
             String dbPhoneString = cursorRetrieveLatLng.getString(cursorRetrieveLatLng.getColumnIndex(ReportIncidentTable.COLUMN_REPORTER_PHONE_NUMBER));
             String dbEmailString = cursorRetrieveLatLng.getString(cursorRetrieveLatLng.getColumnIndex(ReportIncidentTable.COLUMN_REPORTER_EMAIL));
 
@@ -244,10 +248,71 @@ public class CsoActivity extends AppCompatActivity {
                 csoAssuranceHelp.setText("Since you did not provide a contact number, safepal service providers will not be able to contact you directly. But you can still walk in to any of the service providers below with your safepal number and they will attend to you. ");
             }
 
-            getNearestCSOs(dbLatString, dbLngString);
-            Log.d("cso lat and long", dbLatString + "- : -" + dbLngString);
+            CSODistanceTask csoDistanceTask = new CSODistanceTask();
+            csoDistanceTask.execute(currentLatString, currentLngString);
+            Log.d("cso lat and long", currentLatString + "- : -" + currentLngString);
         }
         cursorRetrieveLatLng.close();
+    }
+
+    private class CSODistanceTask extends AsyncTask<String, Void, Void> {
+        private ProgressDialog progressDialog;
+
+        @Override
+        protected void onPreExecute() {
+            super.onPreExecute();
+            Log.d(TAG, "onPreExecute: started");
+            progressDialog = new ProgressDialog(CsoActivity.this);
+            progressDialog.setMessage("Locating CSOs near you");
+            progressDialog.setTitle("Loading...");
+            progressDialog.setProgressStyle(ProgressDialog.STYLE_SPINNER);
+            progressDialog.setCancelable(false);
+            progressDialog.show();
+        }
+
+        @Override
+        protected Void doInBackground(String... params) {
+            Log.d(TAG, "doInBackground: started");
+            String currentLat = params[0];
+            String currentLong = params[1];
+
+            Log.d(TAG, "getNearestCSOs: lat: " + currentLat + " long " + currentLong);
+            beforeCsoList.add(new BeforeCsoInfo("Reproductive Health Uganda, Kamokya", 0.3374639, 32.58227210, "+256312207100"));
+            beforeCsoList.add(new BeforeCsoInfo("Naguru Teenage Center , Bugolobi", 0.3209888, 32.6172358, "0800112222"));
+            beforeCsoList.add(new BeforeCsoInfo("Fida, Kira Road", 0.348204, 32.596336, "+256414530848"));
+            beforeCsoList.add(new BeforeCsoInfo("Action Aid , Sir Apollo Rd", 0.34204130858355, 32.5625579059124, "00000000000"));
+
+            for (int i = 0; i < beforeCsoList.size(); i++) {
+                if (currentLat.equalsIgnoreCase("0.0") || currentLong == "0.0") {
+                    csosList.add(new TheCSO(beforeCsoList.get(i).getBefore_cso_name(), "We failed to locate you", beforeCsoList.get(i).getBefore_cso_phonenumber()));
+                } else {
+                    String disBetweenCso = String.format("%.1f", geographicalDistance(
+                            Double.parseDouble(currentLat),
+                            Double.parseDouble(currentLong),
+                            beforeCsoList.get(i).getBefore_cso_lat(),
+                            beforeCsoList.get(i).getBefore_cso_long()));
+
+                    Log.d("location from db", currentLat + ":" + currentLong);
+                    Log.d(TAG, "doInBackground: distance Between CSO " + disBetweenCso);
+                    csosList.add(new TheCSO(beforeCsoList.get(i).getBefore_cso_name(), disBetweenCso + " Km away from you", beforeCsoList.get(i).getBefore_cso_phonenumber()));
+                }
+                Collections.sort(csosList, new Comparator<TheCSO>() {
+                    @Override
+                    public int compare(TheCSO o1, TheCSO o2) {
+                        return o1.getCso_distance().compareTo(o2.getCso_distance());
+                    }
+                });
+            }
+            return null;
+        }
+
+        @Override
+        protected void onPostExecute(Void aVoid) {
+            Log.d(TAG, "onPostExecute: started");
+            csosAdapter.notifyDataSetChanged();
+            progressDialog.dismiss();
+            super.onPostExecute(aVoid);
+        }
     }
 
 
@@ -284,12 +349,6 @@ public class CsoActivity extends AppCompatActivity {
 
 
     private double geographicalDistance(double lat1, double lon1, double lat2, double lon2) {
-        //todo move this into background service and store the values in shared pref
-        if (android.os.Build.VERSION.SDK_INT > 9) {
-            StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
-            StrictMode.setThreadPolicy(policy);
-        }
-
         String directionUrl = String.format(Locale.getDefault(), "https://maps.googleapis.com/maps/api/directions/json?origin=%f,%f&destination=%f,%f&key=%s", lat1, lon1, lat2, lon2, getString(R.string.direction_api_key));
         Log.d(TAG, "geographicalDistance: started " + directionUrl);
 

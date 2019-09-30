@@ -38,7 +38,7 @@ import java.util.Map;
 import static com.unfpa.safepal.Utils.Constants.BASE_API_URL;
 
 public class ReportingActivity extends AppCompatActivity implements SurvivorIncidentFormFragment.OnFragmentInteractionListener,
-ContactFragment.OnFragmentInteractionListener, AnotherPersonIncidentFormFragment.OnFragmentInteractionListener{
+        ContactFragment.OnFragmentInteractionListener, AnotherPersonIncidentFormFragment.OnFragmentInteractionListener {
 
     String TAG = ReportingActivity.class.getSimpleName();
     Button buttonNext;
@@ -95,17 +95,17 @@ ContactFragment.OnFragmentInteractionListener, AnotherPersonIncidentFormFragment
                         loadReportingFormSelfFragment();//used in the WHoIsGettingHelp Fragment
                         updateNextButtonToSubmit();
                         buttonPrev.setVisibility(View.VISIBLE);
-                    } else if (WhoSGettingHelpFragment.wsghSomeelseRb.isChecked()){//happened to someone else
+                    } else if (WhoSGettingHelpFragment.wsghSomeelseRb.isChecked()) {//happened to someone else
                         if (WhoSGettingHelpFragment.wsghRelationshipSpinner.getSelectedItemPosition() <= 0) {
                             WhoSGettingHelpFragment.wsghFeedbackSnackbar = Snackbar.make(view, "what is your relationship to survivor?", Snackbar.LENGTH_LONG);
                             WhoSGettingHelpFragment.wsghFeedbackSnackbar.show();
-                        }else {
+                        } else {
                             Log.d(TAG, "loading reporting fragment for happeed to someone else");
                             loadReportingFormSomeOneElseFragment();
                             updateNextButtonToSubmit();
                             buttonPrev.setVisibility(View.VISIBLE);
                         }
-                    }else {
+                    } else {
                         Toast.makeText(getBaseContext(), "Who did the incident happen to? Choose one of the options to proceed.", Toast.LENGTH_LONG).show();
                     }
 
@@ -116,7 +116,7 @@ ContactFragment.OnFragmentInteractionListener, AnotherPersonIncidentFormFragment
                     int status = AnotherPersonIncidentFormFragment.submitForm(getBaseContext());
                     Log.d(TAG, "onClick: status bar showing");
 
-                    if((status == ReportingActivity.STATUS_SUBMIT_REPORT_SUBMITED) || (status == ReportingActivity.STATUS_SUBMIT_REPORT_ALREADY_AVAILABLE)){
+                    if ((status == ReportingActivity.STATUS_SUBMIT_REPORT_SUBMITED) || (status == ReportingActivity.STATUS_SUBMIT_REPORT_ALREADY_AVAILABLE)) {
                         Log.d(TAG, "AnotherPersonIncidentFormFragment.submitForm successfull. Loading contact frag");
                         Intent csoIntent = new Intent(getBaseContext(), CsoActivity.class);
                         startActivity(csoIntent);
@@ -128,21 +128,19 @@ ContactFragment.OnFragmentInteractionListener, AnotherPersonIncidentFormFragment
                     Log.d(TAG, "submitting self-form");
 
                     int status = SurvivorIncidentFormFragment.submitForm(getBaseContext());
-                    if((status == ReportingActivity.STATUS_SUBMIT_REPORT_SUBMITED) || (status == ReportingActivity.STATUS_SUBMIT_REPORT_ALREADY_AVAILABLE)){
+                    if ((status == ReportingActivity.STATUS_SUBMIT_REPORT_SUBMITED) || (status == ReportingActivity.STATUS_SUBMIT_REPORT_ALREADY_AVAILABLE)) {
                         Intent csoIntent = new Intent(getBaseContext(), CsoActivity.class);
                         startActivity(csoIntent);
                         finish();
                         Log.d(TAG, "SurvivorIncidentFormFragment.submitForm successfull. Loading contact frag");
                     }
-                }else if (isFragmentVisible(getFragmentManager().findFragmentByTag(
+                } else if (isFragmentVisible(getFragmentManager().findFragmentByTag(
                         ContactFragment.class.getSimpleName()))) {
 
-                    if(ContactFragment.areFieldsSet(getBaseContext())){//if all foed are set
+                    if (ContactFragment.areFieldsSet(getBaseContext())) {//if all foed are set
                         Log.d("Code", "reached");
-                        updateNetworkContat();
-
                         Intent csoIntent = new Intent(getBaseContext(), CsoActivity.class);
-                        csoIntent.putExtra("safepalUniqueNumber",ContactFragment.contactSafepalNo.getText().toString());
+                        csoIntent.putExtra("safepalUniqueNumber", ContactFragment.contactSafepalNo.getText().toString());
                         startActivity(csoIntent);
                         finish();
                     }
@@ -160,7 +158,7 @@ ContactFragment.OnFragmentInteractionListener, AnotherPersonIncidentFormFragment
                 if (isFragmentVisible(getFragmentManager().findFragmentByTag(
                         SurvivorIncidentFormFragment.class.getSimpleName())) ||
                         isFragmentVisible(getFragmentManager().findFragmentByTag(
-                        AnotherPersonIncidentFormFragment.class.getSimpleName()))) {
+                                AnotherPersonIncidentFormFragment.class.getSimpleName()))) {
 
                     boolean isSomeOneElse = Utilities.getFormParameter(getApplicationContext(), "isSomeOneElse");
                     Log.d(TAG, "onClick: isSomeOne shared pref " + isSomeOneElse);
@@ -211,7 +209,7 @@ ContactFragment.OnFragmentInteractionListener, AnotherPersonIncidentFormFragment
      * Loads fragment with form for submitting details about someone else who has
      * suffered violence
      */
-    public  void loadReportingFormSomeOneElseFragment() {
+    public void loadReportingFormSomeOneElseFragment() {
         Log.d(TAG, "loadReportingFormSomeOneElseFragment: relationship value " + WhoSGettingHelpFragment.wsghRelationshipSpinner.getSelectedItem().toString());
         FragmentManager fragmentManager = getFragmentManager();
         FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
@@ -238,7 +236,7 @@ ContactFragment.OnFragmentInteractionListener, AnotherPersonIncidentFormFragment
 
         //SurvivorIncidentFormFragment fragment = new SurvivorIncidentFormFragment();
         SurvivorIncidentFormFragment fragment = SurvivorIncidentFormFragment
-                .newInstance( "UNUSED", "UNUSED");
+                .newInstance("UNUSED", "UNUSED");
         if (isFragmentVisible(fragment)) {
             Log.d(TAG, "SurvivorIncidentFormFragment is already visible, not reforming another...");
         } else {
@@ -302,14 +300,14 @@ ContactFragment.OnFragmentInteractionListener, AnotherPersonIncidentFormFragment
     }
 
 
-    public void updateNetworkContat(){
+    public void updateNetworkContact() {
 
         String updateContactUrl = BASE_API_URL + "/reports/addcontact";
 
-        Log.d("UpdateContact ","Service Started");
+        Log.d("UpdateContact ", "Service Started");
 
 
-        Cursor cursor =  getContentResolver().query(
+        Cursor cursor = getContentResolver().query(
                 ReportIncidentContentProvider.CONTENT_URI,
                 null,
                 null,
@@ -330,15 +328,15 @@ ContactFragment.OnFragmentInteractionListener, AnotherPersonIncidentFormFragment
     }
 
 
-    public  void updateContactToServer(final String toServerCasenumber, final String toServerContact, final String updateContactUrl){
+    public void updateContactToServer(final String toServerCasenumber, final String toServerContact, final String updateContactUrl) {
 
         getUpdateTokenFromServer(new VolleyCallback() {
             @Override
-            public void onSuccessResponse(String tokenResponse)  {
+            public void onSuccessResponse(String tokenResponse) {
 
-                try{
+                try {
                     JSONObject tokenObject = new JSONObject(tokenResponse);
-                    final  String  serverReceivedToken = tokenObject.getString("token");
+                    final String serverReceivedToken = tokenObject.getString("token");
                     // This volley request sends a report to the server with the received token
                     StringRequest updateContactRequest = new StringRequest(Request.Method.POST, updateContactUrl,
                             new Response.Listener<String>() {
@@ -352,7 +350,7 @@ ContactFragment.OnFragmentInteractionListener, AnotherPersonIncidentFormFragment
                                 public void onErrorResponse(VolleyError error) {
                                     Log.d("Not Submitted", error.getMessage());
                                 }
-                            }){
+                            }) {
 
                         @Override
                         protected Map<String, String> getParams() throws AuthFailureError {
@@ -360,14 +358,15 @@ ContactFragment.OnFragmentInteractionListener, AnotherPersonIncidentFormFragment
 
                             updateContact.put("token", serverReceivedToken);
                             updateContact.put("caseNumber", toServerCasenumber);
-                            updateContact.put("contact",toServerContact);
-                            return updateContact;                        }
+                            updateContact.put("contact", toServerContact);
+                            return updateContact;
+                        }
 
                         @Override
                         public Map<String, String> getHeaders() throws AuthFailureError {
                             HashMap<String, String> updateContactHeaders = new HashMap<String, String>();
                             updateContactHeaders.put("userid", "C7rPaEAN9NpPGR8e9wz9bzw");
-                            return  updateContactHeaders;
+                            return updateContactHeaders;
                         }
 
                     };
@@ -376,8 +375,9 @@ ContactFragment.OnFragmentInteractionListener, AnotherPersonIncidentFormFragment
                     MySingleton.getInstance(getApplicationContext()).addToRequestQueue(updateContactRequest);
 
 
-
-                }catch (Exception e){e.printStackTrace();}
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
             }
         });
     }
@@ -403,7 +403,7 @@ ContactFragment.OnFragmentInteractionListener, AnotherPersonIncidentFormFragment
                     public void onErrorResponse(VolleyError error) {
                         Log.d("Failed to get token", error.getMessage());
                     }
-                }){
+                }) {
             @Override
             public Map<String, String> getHeaders() throws AuthFailureError {
                 HashMap<String, String> headers = new HashMap<String, String>();
@@ -417,8 +417,6 @@ ContactFragment.OnFragmentInteractionListener, AnotherPersonIncidentFormFragment
         MySingleton.getInstance(this).addToRequestQueue(tokenRequest);
 
     }
-
-
 
 
 }

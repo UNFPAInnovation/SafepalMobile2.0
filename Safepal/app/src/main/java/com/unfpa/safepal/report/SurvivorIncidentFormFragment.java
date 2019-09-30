@@ -392,7 +392,6 @@ public class SurvivorIncidentFormFragment extends Fragment {
                 userLatitude = sifGPS.getLatitude();
                 userLongitude = sifGPS.getLongitude();
             }
-
         }
 
 //        Toast.makeText(context, "Lat: " + Double.toString(userLatitude) + "Long: " + Double.toString(userLongitude), Toast.LENGTH_LONG).show();
@@ -421,7 +420,6 @@ public class SurvivorIncidentFormFragment extends Fragment {
         String incidentPhoneNumber = sifContactPhonenumber.getText().toString();
         String uniqueIdentifier = generateTempSafePalNumber(1000, 9999);
 
-//
         /**
          *  Checks if the important fields are filled
          *  **/
@@ -488,24 +486,24 @@ public class SurvivorIncidentFormFragment extends Fragment {
 
 
         //this inserts a new report in to the mysql db
-        if (sifReportIncidentUri == null) {
-            sifReportIncidentUri = context.getContentResolver().insert(ReportIncidentContentProvider.CONTENT_URI, values);
+        try {
+            if (sifReportIncidentUri == null) {
+                sifReportIncidentUri = context.getContentResolver().insert(ReportIncidentContentProvider.CONTENT_URI, values);
 
-            //Broadcast receiver that checks for the network status
-            IntentFilter netMainFilter = new IntentFilter(ConnectivityManager.CONNECTIVITY_ACTION);
+                //Broadcast receiver that checks for the network status
+                IntentFilter netMainFilter = new IntentFilter(ConnectivityManager.CONNECTIVITY_ACTION);
+                context.registerReceiver(sifNetReceiver, netMainFilter);
+                return ReportingActivity.STATUS_SUBMIT_REPORT_SUBMITED;
+            } else {
+                //updates the report if its already available
 
-            context.registerReceiver(sifNetReceiver, netMainFilter);
-
-
-            return ReportingActivity.STATUS_SUBMIT_REPORT_SUBMITED;
+                context.getContentResolver().update(sifReportIncidentUri, values, null, null);
+                return ReportingActivity.STATUS_SUBMIT_REPORT_ALREADY_AVAILABLE;
+            }
+        } catch (Exception e) {
+            Log.e(TAG, "submitForm: ", e);
         }
-        //updates the report if its already available
-        else {
-            context.getContentResolver().update(sifReportIncidentUri, values, null, null);
-            return ReportingActivity.STATUS_SUBMIT_REPORT_ALREADY_AVAILABLE;
-        }
-
-
+        return ReportingActivity.STATUS_SUBMIT_REPORT_SUBMITED;
     }
 
     public interface OnFragmentInteractionListener {

@@ -567,29 +567,32 @@ public class AnotherPersonIncidentFormFragment extends Fragment {
 
         //checks if the incident type is selected
         //this inserts a new report in to the mysql db
-        if (apifReportIncidentUri == null) {
-            apifReportIncidentUri = context.getContentResolver().insert(ReportIncidentContentProvider.CONTENT_URI, values);
+        try {
+            if (apifReportIncidentUri == null) {
+                apifReportIncidentUri = context.getContentResolver().insert(ReportIncidentContentProvider.CONTENT_URI, values);
 
-            //Broadcast receiver that checks for the network status
-            IntentFilter apifNetMainFilter = new IntentFilter(ConnectivityManager.CONNECTIVITY_ACTION);
-            apifNetReceiver = new NetworkChangeReceiver();
-            context.registerReceiver(apifNetReceiver, apifNetMainFilter);
-            Log.d(TAG, "part one executed");
+                //Broadcast receiver that checks for the network status
+                IntentFilter apifNetMainFilter = new IntentFilter(ConnectivityManager.CONNECTIVITY_ACTION);
+                apifNetReceiver = new NetworkChangeReceiver();
+                context.registerReceiver(apifNetReceiver, apifNetMainFilter);
+                Log.d(TAG, "part one executed");
 
-            return ReportingActivity.STATUS_SUBMIT_REPORT_SUBMITED;
+                return ReportingActivity.STATUS_SUBMIT_REPORT_SUBMITED;
+            }
+            //updates the report if its already available // TODO: 13-Nov-16 look 4 try catches... is this difference okay
+            else {
+                Log.e(TAG, "is this normal???");
+                Log.e(TAG, "The  case was not submitted");
+
+                context.getContentResolver().update(apifReportIncidentUri, values, null, null);
+
+                Log.d(TAG, "part two executed");
+                return ReportingActivity.STATUS_SUBMIT_REPORT_ALREADY_AVAILABLE;
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
         }
-        //updates the report if its already available // TODO: 13-Nov-16 look 4 try catches... is this difference okay
-        else {
-            Log.e(TAG, "is this normal???");
-            Log.e(TAG, "The  case was not submitted");
-
-            context.getContentResolver().update(apifReportIncidentUri, values, null, null);
-
-            Log.d(TAG, "part two executed");
-            return ReportingActivity.STATUS_SUBMIT_REPORT_ALREADY_AVAILABLE;
-        }
-
-
+        return ReportingActivity.STATUS_SUBMIT_REPORT_SUBMITED;
     }
 
     public interface OnFragmentInteractionListener {
