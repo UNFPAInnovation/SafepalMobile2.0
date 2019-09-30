@@ -406,8 +406,8 @@ public class AnotherPersonIncidentFormFragment extends Fragment {
                     .addOnSuccessListener(getActivity(), new OnSuccessListener<Location>() {
                         @Override
                         public void onSuccess(Location location) {
-                            Log.d(TAG, "onSuccess: fused location client " + location.getLatitude() + location.getLongitude());
                             if (location != null) {
+                                Log.d(TAG, "onSuccess: fused location client " + location.getLatitude() + location.getLongitude());
                                 userLongitude = location.getLongitude();
                                 userLatitude = location.getLatitude();
                             }

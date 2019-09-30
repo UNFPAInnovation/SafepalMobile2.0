@@ -121,6 +121,7 @@ ContactFragment.OnFragmentInteractionListener, AnotherPersonIncidentFormFragment
                         Intent csoIntent = new Intent(getBaseContext(), CsoActivity.class);
                         startActivity(csoIntent);
                         buttonPrev.setVisibility(View.GONE);
+                        finish();
                     }
                 } else if (isFragmentVisible(getFragmentManager().findFragmentByTag(
                         SurvivorIncidentFormFragment.class.getSimpleName()))) {
