@@ -10,7 +10,6 @@ import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.Handler;
-import android.os.StrictMode;
 import android.support.v4.app.ActivityCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.DefaultItemAnimator;
@@ -18,7 +17,6 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
-import android.view.KeyEvent;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
@@ -30,7 +28,6 @@ import android.widget.TextView;
 
 import com.github.amlcurran.showcaseview.ShowcaseView;
 import com.github.amlcurran.showcaseview.targets.ViewTarget;
-import com.google.android.gms.maps.model.LatLng;
 import com.unfpa.safepal.ProvideHelp.RVCsoModel.BeforeCsoInfo;
 import com.unfpa.safepal.ProvideHelp.RVCsoModel.CsoRvAdapter;
 import com.unfpa.safepal.ProvideHelp.RVCsoModel.TheCSO;
@@ -147,38 +144,6 @@ public class CsoActivity extends AppCompatActivity {
             Log.e(TAG, "onClickCsoCall: ", ex);
             startActivity(new Intent(Intent.ACTION_DIAL, Uri.parse("tel:116")));
         }
-    }
-
-
-    // Method pushes the data to json server suing volley
-    private void getNearestCSOs(String getLat, String getLong) {
-        Log.d(TAG, "getNearestCSOs: lat: " + getLat + " long " + getLong);
-        beforeCsoList.add(new BeforeCsoInfo("Reproductive Health Uganda, Kamokya", 0.3374639, 32.58227210, "+256312207100"));
-        beforeCsoList.add(new BeforeCsoInfo("Naguru Teenage Center , Bugolobi", 0.3209888, 32.6172358, "0800112222"));
-        beforeCsoList.add(new BeforeCsoInfo("Fida, Kira Road", 0.348204, 32.596336, "+256414530848"));
-        beforeCsoList.add(new BeforeCsoInfo("Action Aid , Sir Apollo Rd", 0.34204130858355, 32.5625579059124, "00000000000"));
-
-        for (int i = 0; i < beforeCsoList.size(); i++) {
-            if (getLat.equalsIgnoreCase("0.0") || getLong == "0.0") {
-                csosList.add(new TheCSO(beforeCsoList.get(i).getBefore_cso_name(), "We failed to locate you", beforeCsoList.get(i).getBefore_cso_phonenumber()));
-            } else {
-                String disBetweenCso = String.format("%.1f", geographicalDistance(
-                        Double.parseDouble(getLat),
-                        Double.parseDouble(getLong),
-                        beforeCsoList.get(i).getBefore_cso_lat(),
-                        beforeCsoList.get(i).getBefore_cso_long()));
-
-                Log.d("location from db", getLat + ":" + getLong);
-                csosList.add(new TheCSO(beforeCsoList.get(i).getBefore_cso_name(), disBetweenCso + " Km away from you", beforeCsoList.get(i).getBefore_cso_phonenumber()));
-            }
-            Collections.sort(csosList, new Comparator<TheCSO>() {
-                @Override
-                public int compare(TheCSO o1, TheCSO o2) {
-                    return o1.getCso_distance().compareTo(o2.getCso_distance());
-                }
-            });
-        }
-        csosAdapter.notifyDataSetChanged();
     }
 
     //updates safepal number

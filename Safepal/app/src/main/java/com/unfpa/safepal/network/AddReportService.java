@@ -39,22 +39,9 @@ public class AddReportService extends IntentService {
     private static final String TAG = AddReportService.class.getSimpleName();
 
 
-    /**
-    /**
-     * An IntentService must always have a constructor that calls the super constructor. The
-     * string supplied to the super constructor is used to give a name to the IntentService's
-     * background thread.
-     */
     public AddReportService() {
         super("AddReportService");
     }
-
-    /**
-     * In an IntentService, onHandleIntent is run on a background thread.  As it
-     * runs, it broadcasts its current status using the LocalBroadcastManager.
-     * @param workIntent The Intent that starts the IntentService. This Intent contains the
-     * URL of the web site from which the RSS parser gets data.
-     */
 
     @Override
     protected void onHandleIntent(Intent workIntent) {
@@ -63,13 +50,11 @@ public class AddReportService extends IntentService {
         String localUrlString = workIntent.getDataString();
         Log.d(TAG, "onHandleIntent: localUrlString" + localUrlString);
 
-        // A cursor that's local to this method.
-
         /*
          * A block that tries to connect to the Picasa featured picture URL passed as the "data"
          * value in the incoming Intent. The block throws exceptions (see the end of the block).
          */
-        Cursor cursor =  getContentResolver().query(
+        Cursor cursor = getContentResolver().query(
                 ReportIncidentContentProvider.CONTENT_URI,
                 null,
                 null,
@@ -79,6 +64,7 @@ public class AddReportService extends IntentService {
             cursor.moveToLast();
 
             sendReportToServer(
+                    cursor.getString(cursor.getColumnIndex(ReportIncidentTable.COLUMN_INCIDENT_LOCATION)),
                     cursor.getString(cursor.getColumnIndex(ReportIncidentTable.COLUMN_SURVIVOR_GENDER)),
                     cursor.getString(cursor.getColumnIndex(ReportIncidentTable.COLUMN_SURVIVOR_DATE_OF_BIRTH)),
                     cursor.getString(cursor.getColumnIndex(ReportIncidentTable.COLUMN_INCIDENT_TYPE)),
@@ -94,13 +80,9 @@ public class AddReportService extends IntentService {
 
                         @Override
                         public void onSuccessResponse(String result) {
-
-                          //  Log.d("result", result);
-
                             try {
                                 JSONObject response = new JSONObject(result);
-                               // Log.d("",response.toString());
-                                Cursor cursorUpdate =  getContentResolver().query(
+                                Cursor cursorUpdate = getContentResolver().query(
                                         ReportIncidentContentProvider.CONTENT_URI,
                                         null,
                                         null,
@@ -108,7 +90,7 @@ public class AddReportService extends IntentService {
                                         null);
                                 ContentValues dataValues = new ContentValues();
                                 dataValues.put(ReportIncidentTable.COLUMN_UNIQUE_IDENTIFIER, response.getString("casenumber"));
-                                Toast.makeText(getBaseContext(), " The SafePal No." + response.getString("casenumber"),Toast.LENGTH_SHORT).show();
+                                Toast.makeText(getBaseContext(), " The SafePal No." + response.getString("casenumber"), Toast.LENGTH_SHORT).show();
 
                                 if (cursorUpdate != null) {
                                     cursorUpdate.moveToLast();
@@ -122,32 +104,25 @@ public class AddReportService extends IntentService {
                             } catch (JSONException e) {
                                 e.printStackTrace();
                             }
-
-
-
                         }
-
                     }
-
             );
             cursor.close();
         }
-
     }
+
     public void sendReportToServer(
-                                   final String toServerSGender,
-                                   final String toServerSDOB,
-                                   final String toServerIType,
-                                   final String toServerIDescription,
-                                   final String toServerReportedBy,
-
-                                   final String toServerReporterLat,
-                                   final String toServerReportedLng,
-                                   final String toServerReporterPhonenumber,
-                                   final String toServerDisability,
-                                   final String addReportUrl, final VolleyCallback reportCallback ){
-
-
+            final String toServerIncidentLocation,
+            final String toServerSGender,
+            final String toServerSDOB,
+            final String toServerIType,
+            final String toServerIDescription,
+            final String toServerReportedBy,
+            final String toServerReporterLat,
+            final String toServerReportedLng,
+            final String toServerReporterPhonenumber,
+            final String toServerDisability,
+            final String addReportUrl, final VolleyCallback reportCallback) {
 
         final String currentDate = new SimpleDateFormat("yyyy-MM-dd").format(new Date());
 
@@ -157,7 +132,7 @@ public class AddReportService extends IntentService {
             public void onSuccessResponse(String tokenResponse) {
                 try {
                     JSONObject tokenObject = new JSONObject(tokenResponse);
-                    final  String  serverReceivedToken = tokenObject.getString("token");
+                    final String serverReceivedToken = tokenObject.getString("token");
 
                     // This volley request sends a report to the server with the received token
                     StringRequest addReportRequest = new StringRequest(Request.Method.POST, addReportUrl,
@@ -175,7 +150,7 @@ public class AddReportService extends IntentService {
                                     Log.e("Not Submitted", "onErrorResponse: ", error);
 //                                    Log.d("Not Submitted", error.getMessage());
                                 }
-                            }){
+                            }) {
 
                         @Override
                         protected Map<String, String> getParams() throws AuthFailureError {
@@ -185,19 +160,20 @@ public class AddReportService extends IntentService {
                             Log.d(TAG, "getParams: age value " + age);
 
                             addReport.put("token", serverReceivedToken);
-                            addReport.put("type",toServerIType);
-                            addReport.put("gender",toServerSGender);
-                            addReport.put("reporter",toServerReportedBy);
-                            addReport.put("incident_date","null");
-                            addReport.put("perpetuator","Unknown");
+                            addReport.put("type", toServerIType);
+                            addReport.put("gender", toServerSGender);
+                            addReport.put("reporter", toServerReportedBy);
+                            addReport.put("incident_date", "null");
+                            addReport.put("perpetuator", "Unknown");
                             addReport.put("age", age);
-                            addReport.put("contact",toServerReporterPhonenumber);
-                            addReport.put("latitude",toServerReporterLat);
-                            addReport.put("longitude",toServerReportedLng);
-                            addReport.put("details",toServerIDescription);
-                            addReport.put("report_source","android user");
-                            addReport.put("reportDate",currentDate);
-                            addReport.put("disability",toServerDisability);
+                            addReport.put("contact", toServerReporterPhonenumber);
+                            addReport.put("latitude", toServerReporterLat);
+                            addReport.put("longitude", toServerReportedLng);
+                            addReport.put("location", toServerIncidentLocation);
+                            addReport.put("details", toServerIDescription);
+                            addReport.put("report_source", "android user");
+                            addReport.put("reportDate", currentDate);
+                            addReport.put("disability", toServerDisability);
 
                             Log.d(TAG, "getParams: param values " + addReport.toString());
                             return addReport;
@@ -207,7 +183,7 @@ public class AddReportService extends IntentService {
                         public Map<String, String> getHeaders() throws AuthFailureError {
                             HashMap<String, String> addReportHeaders = new HashMap<String, String>();
                             addReportHeaders.put("userid", "C7rPaEAN9NpPGR8e9wz9bzw");
-                            return  addReportHeaders;
+                            return addReportHeaders;
                         }
 
                     };
@@ -218,11 +194,7 @@ public class AddReportService extends IntentService {
                             DefaultRetryPolicy.DEFAULT_MAX_RETRIES,
                             DefaultRetryPolicy.DEFAULT_BACKOFF_MULT));
 
-
                     MySingleton.getInstance(getApplicationContext()).addToRequestQueue(addReportRequest);
-
-
-
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }
@@ -231,7 +203,6 @@ public class AddReportService extends IntentService {
             }
         });
     }
-
 
 
     private void getTokenFromServer(final VolleyCallback tokenCallback) {
@@ -262,7 +233,7 @@ public class AddReportService extends IntentService {
                                 String body;
                                 final String statusCode = String.valueOf(error.networkResponse.statusCode);
                                 Log.d(LOG_TAG, "onErrorResponse: " + statusCode);
-                                body = new String(error.networkResponse.data,"UTF-8");
+                                body = new String(error.networkResponse.data, "UTF-8");
                                 Log.d(LOG_TAG, "onErrorResponse: " + body);
                             } catch (UnsupportedEncodingException e) {
                                 Log.e(LOG_TAG, "onErrorResponse: ", e);
@@ -270,7 +241,7 @@ public class AddReportService extends IntentService {
 
                             Log.d("Failed to get token", error.getMessage());
                         }
-                    }){
+                    }) {
                 @Override
                 public Map<String, String> getHeaders() throws AuthFailureError {
                     HashMap<String, String> headers = new HashMap<String, String>();
