@@ -89,6 +89,11 @@
         <meta-data
             android:name="io.fabric.ApiKey"
             android:value="ce2a98765613a05fab5da52a5597e554b815136d" />
+
+        <provider
+            android:name="com.unfpa.safepal.provider.SafepalProvider"
+            android:authorities="com.unfpa.safepal.authority"
+            android:exported="false" />
     </application>
 
 </manifest>
