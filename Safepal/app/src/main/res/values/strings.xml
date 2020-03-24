@@ -237,4 +237,7 @@
     <string name="enter_disability">What disability do you have</string>
     <string name="reachout_message">Talk to us if you or someone you know has been sexually assaulted</string>
     <string name="reachout_title">We are here for you . .</string>
+    <string name="title_activity_discover_more">DiscoverMoreActivity</string>
+    <string name="tab_text_1">Tab 1</string>
+    <string name="tab_text_2">Tab 2</string>
 </resources>

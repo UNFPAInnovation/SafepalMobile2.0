@@ -22,7 +22,7 @@
         android:layout_marginTop="10dp"
         android:layout_marginBottom="161dp"
         android:src="@drawable/ic_coat_of_arms_of_uganda"
-        app:layout_constraintBottom_toTopOf="@+id/fab_report_incident"
+        app:layout_constraintBottom_toTopOf="@+id/report_incident_button"
         app:layout_constraintEnd_toStartOf="@+id/imageView"
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
@@ -75,7 +75,7 @@
 
 
     <Button
-        android:id="@+id/fab_report_incident"
+        android:id="@+id/report_incident_button"
         style="@style/materialButtonNormal"
         android:layout_width="198dp"
         android:layout_height="192dp"
@@ -88,14 +88,14 @@
         android:text="@string/report"
         android:textAppearance="@style/TextAppearance.AppCompat.Large"
         android:textColor="@color/colorWhite"
-        app:layout_constraintBottom_toTopOf="@+id/discover_more"
+        app:layout_constraintBottom_toTopOf="@+id/discover_more_card"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.497"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/imageView2" />
 
     <android.support.v7.widget.CardView
-        android:id="@+id/discover_more"
+        android:id="@+id/discover_more_card"
         android:layout_width="0dp"
         android:layout_height="0dp"
         android:layout_marginStart="8dp"
@@ -105,7 +105,7 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/fab_report_incident">
+        app:layout_constraintTop_toBottomOf="@+id/report_incident_button">
 
         <android.support.constraint.ConstraintLayout
             android:layout_width="match_parent"

@@ -9,18 +9,14 @@ import android.os.Bundle;
 import android.provider.Settings;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.AppCompatCheckBox;
+import android.support.v7.widget.CardView;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
-import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.animation.Animation;
-import android.view.animation.AnimationUtils;
-import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
@@ -28,16 +24,17 @@ import android.widget.TextView;
 import com.crashlytics.android.Crashlytics;
 import com.github.amlcurran.showcaseview.ShowcaseView;
 import com.github.amlcurran.showcaseview.targets.ViewTarget;
+import com.unfpa.safepal.DiscoverMoreActivity;
 import com.unfpa.safepal.R;
-import com.unfpa.safepal.Utils.Direction;
 import com.unfpa.safepal.report.ReportingActivity;
 
 import io.fabric.sdk.android.Fabric;
 
 public class HomeActivity extends AppCompatActivity {
-    Button fabReportCase;
+    Button reportCaseButton;
     RelativeLayout infoPanel;
     TextView textViewMessage;
+    CardView discoverMoreCard;
 
     //guide for safepal
     ShowcaseView homeReportGuideSv, homeNextSv;
@@ -51,20 +48,27 @@ public class HomeActivity extends AppCompatActivity {
         Fabric.with(this, new Crashlytics());
         setContentView(R.layout.activity_home);
 
-        Toolbar toolbar = (Toolbar) findViewById(R.id.home_toolbar);
+        Toolbar toolbar = findViewById(R.id.home_toolbar);
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayShowHomeEnabled(true);
         getSupportActionBar().setLogo(R.mipmap.ic_launcher);
         getSupportActionBar().setDisplayUseLogoEnabled(true);
         // Assignments of variables
-        fabReportCase = (Button) findViewById(R.id.fab_report_incident);
-        textViewMessage = (TextView) findViewById(R.id.message);
+        reportCaseButton = findViewById(R.id.report_incident_button);
+        discoverMoreCard = findViewById(R.id.discover_more_card);
+        textViewMessage = findViewById(R.id.message);
 
-        fabReportCase.setOnClickListener(new View.OnClickListener() {
+        reportCaseButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 startActivity(new Intent(getApplicationContext(), ReportingActivity.class));
+            }
+        });
 
+        discoverMoreCard.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(getApplicationContext(), DiscoverMoreActivity.class));
             }
         });
 
@@ -96,7 +100,7 @@ public class HomeActivity extends AppCompatActivity {
         int margin = ((Number) (getResources().getDisplayMetrics().density * 12)).intValue();
         lps.setMargins(margin, margin, margin, margin);
 
-        ViewTarget target = new ViewTarget(R.id.fab_report_incident, this);
+        ViewTarget target = new ViewTarget(R.id.report_incident_button, this);
         homeReportGuideSv = new ShowcaseView.Builder(this)
                 .withHoloShowcase()
                 .setTarget(target)

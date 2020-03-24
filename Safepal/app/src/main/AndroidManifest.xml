@@ -16,6 +16,15 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         tools:ignore="UnusedAttribute">
+        <activity
+            android:name=".DiscoverMoreActivity"
+            android:label="@string/title_activity_discover_more"
+            android:parentActivityName=".home.HomeActivity"
+            android:theme="@style/AppTheme.NoActionBar">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.unfpa.safepal.home.HomeActivity" />
+        </activity>
 
         <meta-data
             android:name="com.google.android.geo.API_KEY"
@@ -38,7 +47,7 @@
             android:name=".ProvideHelp.CsoActivity"
             android:autoRemoveFromRecents="true"
             android:label="@string/title_activity_contact"
-            android:theme="@style/AppTheme.NoActionBar"></activity>
+            android:theme="@style/AppTheme.NoActionBar" />
 
         <provider
             android:name=".store.ReportIncidentContentProvider"
@@ -67,6 +76,7 @@
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="com.unfpa.safepal.home.HomeActivity" />
         </activity>
+
         <meta-data
             android:name="io.fabric.ApiKey"
             android:value="ce2a98765613a05fab5da52a5597e554b815136d" />
