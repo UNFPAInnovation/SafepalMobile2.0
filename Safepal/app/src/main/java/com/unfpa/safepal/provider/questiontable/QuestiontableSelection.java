@@ -198,46 +198,6 @@ public class QuestiontableSelection extends AbstractSelection<QuestiontableSelec
         return this;
     }
 
-    public QuestiontableSelection score(String... value) {
-        addEquals(QuestiontableColumns.SCORE, value);
-        return this;
-    }
-
-    public QuestiontableSelection scoreNot(String... value) {
-        addNotEquals(QuestiontableColumns.SCORE, value);
-        return this;
-    }
-
-    public QuestiontableSelection scoreLike(String... value) {
-        addLike(QuestiontableColumns.SCORE, value);
-        return this;
-    }
-
-    public QuestiontableSelection scoreContains(String... value) {
-        addContains(QuestiontableColumns.SCORE, value);
-        return this;
-    }
-
-    public QuestiontableSelection scoreStartsWith(String... value) {
-        addStartsWith(QuestiontableColumns.SCORE, value);
-        return this;
-    }
-
-    public QuestiontableSelection scoreEndsWith(String... value) {
-        addEndsWith(QuestiontableColumns.SCORE, value);
-        return this;
-    }
-
-    public QuestiontableSelection orderByScore(boolean desc) {
-        orderBy(QuestiontableColumns.SCORE, desc);
-        return this;
-    }
-
-    public QuestiontableSelection orderByScore() {
-        orderBy(QuestiontableColumns.SCORE, false);
-        return this;
-    }
-
     public QuestiontableSelection difficulty(Integer... value) {
         addEquals(QuestiontableColumns.DIFFICULTY, value);
         return this;

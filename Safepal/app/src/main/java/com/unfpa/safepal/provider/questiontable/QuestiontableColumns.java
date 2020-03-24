@@ -27,8 +27,6 @@ public class QuestiontableColumns implements BaseColumns {
 
     public static final String CONTENT = "content";
 
-    public static final String SCORE = "score";
-
     public static final String DIFFICULTY = "difficulty";
 
     public static final String CORRECT_ANSWER = "correct_answer";
@@ -46,7 +44,6 @@ public class QuestiontableColumns implements BaseColumns {
             SERVERID,
             QUIZ,
             CONTENT,
-            SCORE,
             DIFFICULTY,
             CORRECT_ANSWER,
             POSITION,
@@ -60,7 +57,6 @@ public class QuestiontableColumns implements BaseColumns {
             if (c.equals(SERVERID) || c.contains("." + SERVERID)) return true;
             if (c.equals(QUIZ) || c.contains("." + QUIZ)) return true;
             if (c.equals(CONTENT) || c.contains("." + CONTENT)) return true;
-            if (c.equals(SCORE) || c.contains("." + SCORE)) return true;
             if (c.equals(DIFFICULTY) || c.contains("." + DIFFICULTY)) return true;
             if (c.equals(CORRECT_ANSWER) || c.contains("." + CORRECT_ANSWER)) return true;
             if (c.equals(POSITION) || c.contains("." + POSITION)) return true;

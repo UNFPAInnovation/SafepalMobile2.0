@@ -71,8 +71,8 @@ public class QuiztableCursor extends AbstractCursor implements QuiztableModel {
      * Can be {@code null}.
      */
     @Nullable
-    public String getScore() {
-        String res = getStringOrNull(QuiztableColumns.SCORE);
+    public Integer getScore() {
+        Integer res = getIntegerOrNull(QuiztableColumns.SCORE);
         return res;
     }
 

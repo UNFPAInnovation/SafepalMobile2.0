@@ -238,33 +238,33 @@ public class QuiztableSelection extends AbstractSelection<QuiztableSelection> {
         return this;
     }
 
-    public QuiztableSelection score(String... value) {
+    public QuiztableSelection score(Integer... value) {
         addEquals(QuiztableColumns.SCORE, value);
         return this;
     }
 
-    public QuiztableSelection scoreNot(String... value) {
+    public QuiztableSelection scoreNot(Integer... value) {
         addNotEquals(QuiztableColumns.SCORE, value);
         return this;
     }
 
-    public QuiztableSelection scoreLike(String... value) {
-        addLike(QuiztableColumns.SCORE, value);
+    public QuiztableSelection scoreGt(int value) {
+        addGreaterThan(QuiztableColumns.SCORE, value);
         return this;
     }
 
-    public QuiztableSelection scoreContains(String... value) {
-        addContains(QuiztableColumns.SCORE, value);
+    public QuiztableSelection scoreGtEq(int value) {
+        addGreaterThanOrEquals(QuiztableColumns.SCORE, value);
         return this;
     }
 
-    public QuiztableSelection scoreStartsWith(String... value) {
-        addStartsWith(QuiztableColumns.SCORE, value);
+    public QuiztableSelection scoreLt(int value) {
+        addLessThan(QuiztableColumns.SCORE, value);
         return this;
     }
 
-    public QuiztableSelection scoreEndsWith(String... value) {
-        addEndsWith(QuiztableColumns.SCORE, value);
+    public QuiztableSelection scoreLtEq(int value) {
+        addLessThanOrEquals(QuiztableColumns.SCORE, value);
         return this;
     }
 

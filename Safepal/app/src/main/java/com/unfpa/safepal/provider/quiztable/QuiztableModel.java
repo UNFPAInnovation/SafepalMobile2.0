@@ -45,7 +45,7 @@ public interface QuiztableModel extends BaseModel {
      * Can be {@code null}.
      */
     @Nullable
-    String getScore();
+    Integer getScore();
 
     /**
      * Get the {@code thumbnail} value.

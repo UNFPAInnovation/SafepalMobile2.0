@@ -34,13 +34,6 @@ public interface QuestiontableModel extends BaseModel {
     String getContent();
 
     /**
-     * Get the {@code score} value.
-     * Can be {@code null}.
-     */
-    @Nullable
-    String getScore();
-
-    /**
      * Get the {@code difficulty} value.
      * Can be {@code null}.
      */

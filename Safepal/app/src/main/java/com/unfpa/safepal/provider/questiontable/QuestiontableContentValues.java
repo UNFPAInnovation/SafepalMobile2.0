@@ -69,16 +69,6 @@ public class QuestiontableContentValues extends AbstractContentValues {
         return this;
     }
 
-    public QuestiontableContentValues putScore(@Nullable String value) {
-        mContentValues.put(QuestiontableColumns.SCORE, value);
-        return this;
-    }
-
-    public QuestiontableContentValues putScoreNull() {
-        mContentValues.putNull(QuestiontableColumns.SCORE);
-        return this;
-    }
-
     public QuestiontableContentValues putDifficulty(@Nullable Integer value) {
         mContentValues.put(QuestiontableColumns.DIFFICULTY, value);
         return this;

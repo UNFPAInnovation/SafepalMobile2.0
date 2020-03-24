@@ -79,7 +79,7 @@ public class QuiztableContentValues extends AbstractContentValues {
         return this;
     }
 
-    public QuiztableContentValues putScore(@Nullable String value) {
+    public QuiztableContentValues putScore(@Nullable Integer value) {
         mContentValues.put(QuiztableColumns.SCORE, value);
         return this;
     }

@@ -57,16 +57,6 @@ public class QuestiontableCursor extends AbstractCursor implements Questiontable
     }
 
     /**
-     * Get the {@code score} value.
-     * Can be {@code null}.
-     */
-    @Nullable
-    public String getScore() {
-        String res = getStringOrNull(QuestiontableColumns.SCORE);
-        return res;
-    }
-
-    /**
      * Get the {@code difficulty} value.
      * Can be {@code null}.
      */
