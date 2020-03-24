@@ -6,8 +6,12 @@
 .DS_Store
 /build
 /captures
+/.idea
 /.idea/caches/
 /.idea/encodings.xml
 /.idea/inspectionProfiles/Project_Default.xml
 /.idea/inspectionProfiles/profiles_settings.xml
 /.idea/misc.xml
+.idea/assetWizardSettings.xml
+.idea/render.experimental.xml
+

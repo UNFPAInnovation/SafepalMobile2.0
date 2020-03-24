@@ -144,8 +144,6 @@
     </string-array>
 
 
-
-
     <string-array name="survivor_age_range">
         <item>How old is he/she?</item>
         <item>Below 10 years</item>
@@ -237,4 +235,6 @@
     <string name="no">No</string>
     <string name="apif_disability">Does the victim have any disability</string>
     <string name="enter_disability">What disability do you have</string>
+    <string name="reachout_message">Talk to us if you or someone you know has been sexually assaulted</string>
+    <string name="reachout_title">We are here for you . .</string>
 </resources>

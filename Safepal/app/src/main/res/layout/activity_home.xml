@@ -28,14 +28,4 @@
     <!-- Contents of the Home Activity-->
     <include layout="@layout/content_home" />
 
-    <Button
-        android:id="@+id/fab_report_incident"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="bottom|end"
-        android:layout_margin="@dimen/fab_margin"
-        style="@style/materialButtonNormal"
-        android:text="@string/report"
-        />
-
 </android.support.design.widget.CoordinatorLayout>

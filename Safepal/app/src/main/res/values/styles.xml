@@ -76,7 +76,7 @@
 
     <dimen name="spinner_dropdown_vert_offset">40dp</dimen>
 
-  <!-- Styles for the show case view guide -->
+    <!-- Styles for the show case view guide -->
 
     <style name="ReportTitle" parent="TextAppearance.ShowcaseView.Title.Light">
         <item name="android:textColor">#fffdfd</item>
@@ -90,6 +90,7 @@
     <style name="GuideText2" parent="TextAppearance.ShowcaseView.Detail.Light">
         <item name="android:textColor">#eceffc</item>
     </style>
+
     <style name="ReportShowcaseTheme" parent="ShowcaseView">
         <item name="sv_backgroundColor">#eb01a89e</item>
         <item name="sv_showcaseColor">#002d30</item>

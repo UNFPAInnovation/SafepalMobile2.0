@@ -3,12 +3,9 @@
     xmlns:tools="http://schemas.android.com/tools"
     package="com.unfpa.safepal">
 
-    <uses-permission android:name="android.permission.INTERNET" />
-    <!-- acquire the user location -->
+    <uses-permission android:name="android.permission.INTERNET" /> <!-- acquire the user location -->
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
-    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
-
-    <!-- Calling through the application -->
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" /> <!-- Calling through the application -->
     <uses-permission android:name="android.permission.CALL_PHONE" />
     <uses-permission android:name="android.permission.READ_PHONE_STATE" />
 
@@ -19,36 +16,33 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         tools:ignore="UnusedAttribute">
-        <meta-data android:name="com.google.android.geo.API_KEY" android:value="AIzaSyCLxxb7QcBWzeSr8KaUhHTjZmoCxJ35SXc"/>
-        <meta-data android:name="android.max_aspect"
-            android:value="2.1"/>
-        <!-- Google places meta data -->
 
+        <meta-data
+            android:name="com.google.android.geo.API_KEY"
+            android:value="AIzaSyCLxxb7QcBWzeSr8KaUhHTjZmoCxJ35SXc" />
+        <meta-data
+            android:name="android.max_aspect"
+            android:value="2.1" /> <!-- Google places meta data -->
         <activity
             android:name=".home.HomeActivity"
             android:autoRemoveFromRecents="true"
             android:label="@string/home_activity_title"
-            android:theme="@style/AppTheme.NoActionBar" >
+            android:theme="@style/AppTheme.NoActionBar">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-
         <activity
             android:name=".ProvideHelp.CsoActivity"
             android:autoRemoveFromRecents="true"
             android:label="@string/title_activity_contact"
-            android:theme="@style/AppTheme.NoActionBar">
-        </activity>
-
+            android:theme="@style/AppTheme.NoActionBar"></activity>
 
         <provider
             android:name=".store.ReportIncidentContentProvider"
-            android:authorities="com.unfpa.safepal.store.contentprovider" />
-
-        <!-- waits network and inserts a unique id to content provider and user -->
+            android:authorities="com.unfpa.safepal.store.contentprovider" /> <!-- waits network and inserts a unique id to content provider and user -->
         <!--
         No intent filters are specified, so android:exported defaults to "false". The
         service is only available to this app.

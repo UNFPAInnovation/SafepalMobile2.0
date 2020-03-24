@@ -38,13 +38,10 @@ public class HomeActivity extends AppCompatActivity {
     Button fabReportCase;
     RelativeLayout infoPanel;
     TextView textViewMessage;
-    AppCompatCheckBox checkBoxAutoScroll;
 
     //guide for safepal
     ShowcaseView homeReportGuideSv, homeNextSv;
     RelativeLayout.LayoutParams lps, nextLps;
-    private int currentIndex = 2;
-    private Direction currentDirection;
     private final String TAG = HomeActivity.class.getSimpleName();
 
     @SuppressLint("ClickableViewAccessibility")
@@ -61,10 +58,7 @@ public class HomeActivity extends AppCompatActivity {
         getSupportActionBar().setDisplayUseLogoEnabled(true);
         // Assignments of variables
         fabReportCase = (Button) findViewById(R.id.fab_report_incident);
-        infoPanel = (RelativeLayout) findViewById(R.id.home_info_panel);
         textViewMessage = (TextView) findViewById(R.id.message);
-        checkBoxAutoScroll = (AppCompatCheckBox) findViewById(R.id.auto_scroll_CheckBox);
-
 
         fabReportCase.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -74,156 +68,7 @@ public class HomeActivity extends AppCompatActivity {
             }
         });
 
-        //for internal support
-        checkBoxAutoScroll.setVisibility(View.GONE);
-        deactivateAutoScrollTimer();
-
-        //animations about messages
-        swipeRightAnimationSetUp();
-
-        swipeLeftAnimationSetUp();
-
-        infoPanelAnimationSetUp();
-
-        //show first message
-        animatePrevMessage();
-
         showLocationSettingsDialog();
-    }
-
-    @SuppressLint("ClickableViewAccessibility")
-    private void infoPanelAnimationSetUp() {
-        infoPanel.setOnTouchListener(new View.OnTouchListener() {
-            int downX, upX;
-
-            @Override
-            public boolean onTouch(View v, MotionEvent event) {
-
-                if (event.getAction() == MotionEvent.ACTION_DOWN) {
-                    downX = (int) event.getX();
-                    Log.i("event.getX()", " downX " + downX);
-                    return true;
-                } else if (event.getAction() == MotionEvent.ACTION_UP) {
-                    upX = (int) event.getX();
-                    Log.i("event.getX()", " upX " + upX);
-
-                    // deactivate the auto scroll when user activates the manual scroll
-                    checkBoxAutoScroll.setChecked(false);
-                    deactivateAutoScrollTimer();
-
-                    if (upX - downX > 100) {
-                        currentDirection = Direction.RIGHT;
-                        animateNextMessage();
-                    } else if (downX - upX > -100) {
-                        currentDirection = Direction.LEFT;
-                        animatePrevMessage();
-                    }
-                    return true;
-
-                }
-                return false;
-            }
-        });
-    }
-
-    private void swipeLeftAnimationSetUp() {
-        animSlideInFromLeft = AnimationUtils.loadAnimation(getApplicationContext(),
-                R.anim.enter_from_left);
-        animExitToRight = AnimationUtils.loadAnimation(getApplicationContext(),
-                R.anim.exit_to_right);
-        animExitToRight.setAnimationListener(new Animation.AnimationListener() {
-            @Override
-            public void onAnimationStart(Animation animation) {
-
-            }
-
-            @Override
-            public void onAnimationEnd(Animation animation) {
-                updateMessageText(currentDirection);
-                if (currentDirection == Direction.RIGHT)
-                    animSlideInFromLeft = AnimationUtils.loadAnimation(getApplicationContext(),
-                            R.anim.enter_from_left);
-                infoPanel.startAnimation(animSlideInFromLeft);
-            }
-
-            @Override
-            public void onAnimationRepeat(Animation animation) {
-
-            }
-        });
-    }
-
-    private void swipeRightAnimationSetUp() {
-        Log.d(TAG, "swipeRightAnimationSetUp: started");
-        animSlideInFromRight = AnimationUtils.loadAnimation(getApplicationContext(),
-                R.anim.enter_from_right);
-        animExitToLeft = AnimationUtils.loadAnimation(getApplicationContext(),
-                R.anim.exit_to_left);
-        animExitToLeft.setAnimationListener(new Animation.AnimationListener() {
-            @Override
-            public void onAnimationStart(Animation animation) {
-
-            }
-
-            @Override
-            public void onAnimationEnd(Animation animation) {
-                updateMessageText(currentDirection);
-                if (currentDirection == Direction.LEFT)
-                    animSlideInFromRight = AnimationUtils.loadAnimation(getApplicationContext(),
-                            R.anim.enter_from_right);
-                infoPanel.startAnimation(animSlideInFromRight);
-            }
-
-            @Override
-            public void onAnimationRepeat(Animation animation) {
-
-            }
-        });
-    }
-
-    Animation animSlideInFromRight;
-    Animation animSlideInFromLeft;
-    Animation animExitToLeft;
-    Animation animExitToRight;
-
-    void animatePrevMessage() {
-        infoPanel.startAnimation(animExitToLeft);
-    }
-
-    void animateNextMessage() {
-        infoPanel.startAnimation(animExitToRight);
-    }
-
-    boolean isAutoScrollOn = true;
-
-    private void deactivateAutoScrollTimer() {
-        isAutoScrollOn = false;
-    }
-
-    private void updateMessageText(Direction direction) {
-        ArrayAdapter<CharSequence> messages = ArrayAdapter.createFromResource(this,
-                R.array.home_contact_info, R.layout.spinner_item);
-        String msg;
-        int min = 0;
-        int max = messages.getCount();
-        Log.d(TAG, "max: " + max);
-
-        Log.d(TAG, "currentIndex: " + currentIndex);
-
-        if (direction == Direction.RIGHT) {
-            Log.d(TAG, "updateMessageText: direction right");
-            currentIndex = currentIndex < max - 1 ? currentIndex + 1 : min;
-            msg = messages.getItem(currentIndex).toString();
-        } else {
-            Log.d(TAG, "updateMessageText: direction left");
-            currentIndex = currentIndex <= 0 ? max - 1 : currentIndex - 1;
-            msg = messages.getItem(currentIndex).toString();
-        }
-
-        Log.d(TAG, "currentIndex: after processing" + currentIndex);
-        Log.d(TAG, "infopanel message : " + msg);
-        textViewMessage.setText(msg);
-
     }
 
     @Override
@@ -262,7 +107,7 @@ public class HomeActivity extends AppCompatActivity {
                     @Override
                     public void onClick(View v) {
                         homeReportGuideSv.hide();
-                        cardMessagesTutorialGuide();
+//                        cardMessagesTutorialGuide();
                     }
                 })
                 .build();
