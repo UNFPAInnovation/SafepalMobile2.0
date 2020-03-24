@@ -238,6 +238,7 @@
     <string name="reachout_message">Talk to us if you or someone you know has been sexually assaulted</string>
     <string name="reachout_title">We are here for you . .</string>
     <string name="title_activity_discover_more">DiscoverMoreActivity</string>
-    <string name="tab_text_1">Tab 1</string>
-    <string name="tab_text_2">Tab 2</string>
+    <string name="videos_tab">Videos</string>
+    <string name="topics_tab">Topics</string>
+    <string name="directory_tab">Directory</string>
 </resources>

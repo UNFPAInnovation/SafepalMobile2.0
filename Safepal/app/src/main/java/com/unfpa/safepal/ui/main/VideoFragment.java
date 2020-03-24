@@ -2,28 +2,31 @@ package com.unfpa.safepal.ui.main;
 
 import android.arch.lifecycle.ViewModelProviders;
 import android.os.Bundle;
+import android.support.v7.widget.GridLayoutManager;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.TextView;
-import android.support.annotation.Nullable;
 import android.support.annotation.NonNull;
 import android.support.v4.app.Fragment;
-import android.arch.lifecycle.Observer;
 
 import com.unfpa.safepal.R;
+import com.unfpa.safepal.adapters.VideoAdapter;
 
 /**
- * A placeholder fragment containing a simple view.
+ * Loads the adapter views for the tabs in VideoFragment
  */
-public class PlaceholderFragment extends Fragment {
+public class VideoFragment extends Fragment {
 
     private static final String ARG_SECTION_NUMBER = "section_number";
 
     private PageViewModel pageViewModel;
+    private VideoAdapter videoAdapter;
+    private RecyclerView recyclerView;
 
-    public static PlaceholderFragment newInstance(int index) {
-        PlaceholderFragment fragment = new PlaceholderFragment();
+    public static VideoFragment newInstance(int index) {
+        VideoFragment fragment = new VideoFragment();
         Bundle bundle = new Bundle();
         bundle.putInt(ARG_SECTION_NUMBER, index);
         fragment.setArguments(bundle);
@@ -45,14 +48,14 @@ public class PlaceholderFragment extends Fragment {
     public View onCreateView(
             @NonNull LayoutInflater inflater, ViewGroup container,
             Bundle savedInstanceState) {
-        View root = inflater.inflate(R.layout.fragment_discover_more, container, false);
-        final TextView textView = root.findViewById(R.id.section_label);
-        pageViewModel.getText().observe(this, new Observer<String>() {
-            @Override
-            public void onChanged(@Nullable String s) {
-                textView.setText(s);
-            }
-        });
-        return root;
+        View rootView = inflater.inflate(R.layout.fragment_discover_more, container, false);
+
+        videoAdapter = new VideoAdapter(getActivity());
+        recyclerView = rootView.findViewById(R.id.media_recycler_view);
+
+        RecyclerView.LayoutManager mLayoutManager = new GridLayoutManager(getContext(), 3);
+        recyclerView.setLayoutManager(mLayoutManager);
+        recyclerView.setAdapter(videoAdapter);
+        return rootView;
     }
 }
