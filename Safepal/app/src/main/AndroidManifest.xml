@@ -17,6 +17,15 @@
         android:theme="@style/AppTheme"
         tools:ignore="UnusedAttribute">
         <activity
+            android:name=".WatchVideoActivity"
+            android:label="@string/title_activity_watch_video"
+            android:parentActivityName=".DiscoverMoreActivity"
+            android:theme="@style/AppTheme.NoActionBar">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.unfpa.safepal.DiscoverMoreActivity" />
+        </activity>
+        <activity
             android:name=".DiscoverMoreActivity"
             android:label="@string/title_activity_discover_more"
             android:parentActivityName=".home.HomeActivity"
