@@ -51,11 +51,11 @@ public class SetupIntentService extends IntentService {
         Timber.d("is connected %s", isConnectedToInternet);
 
         if (isConnectedToInternet) {
-//            try {
+            try {
                 loadVideos();
-//            } catch (Exception e) {
-//                e.printStackTrace();
-//            }
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
         }
     }
 
@@ -67,15 +67,15 @@ public class SetupIntentService extends IntentService {
             @Override
             public void onResponse(Call<Videos> call, Response<Videos> response) {
                 Timber.d("onResponse() -> %s", response.code());
-//                try {
+                try {
                     if (response.code() == 200) {
                         saveVideos(response.body());
                     } else {
                         Timber.e("Failed to get videos");
                     }
-//                } catch (Exception e) {
-//                    e.printStackTrace();
-//                }
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
             }
 
             @Override
