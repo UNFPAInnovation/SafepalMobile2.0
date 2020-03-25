@@ -11,7 +11,6 @@ import android.util.Log;
 
 import com.unfpa.safepal.BuildConfig;
 import com.unfpa.safepal.provider.articletable.ArticletableColumns;
-import com.unfpa.safepal.provider.questiontable.QuestiontableColumns;
 import com.unfpa.safepal.provider.quiztable.QuiztableColumns;
 import com.unfpa.safepal.provider.videotable.VideotableColumns;
 
@@ -28,33 +27,21 @@ public class SafepalDatabaseHelper extends SQLiteOpenHelper {
     public static final String SQL_CREATE_TABLE_ARTICLETABLE = "CREATE TABLE IF NOT EXISTS "
             + ArticletableColumns.TABLE_NAME + " ( "
             + ArticletableColumns._ID + " INTEGER PRIMARY KEY AUTOINCREMENT, "
-            + ArticletableColumns.SERVERID + " TEXT, "
+            + ArticletableColumns.SERVERID + " INTEGER, "
             + ArticletableColumns.TITLE + " TEXT, "
             + ArticletableColumns.CONTENT + " TEXT, "
             + ArticletableColumns.CATEGORY + " TEXT, "
             + ArticletableColumns.QUESTIONS + " TEXT, "
-            + ArticletableColumns.THUMBNAIL + " INTEGER, "
+            + ArticletableColumns.THUMBNAIL + " TEXT, "
             + ArticletableColumns.COMPLETION_RATE + " INTEGER DEFAULT 0, "
             + ArticletableColumns.CREATED_AT + " INTEGER, "
             + ArticletableColumns.RATING + " INTEGER DEFAULT 0 "
             + " );";
 
-    public static final String SQL_CREATE_TABLE_QUESTIONTABLE = "CREATE TABLE IF NOT EXISTS "
-            + QuestiontableColumns.TABLE_NAME + " ( "
-            + QuestiontableColumns._ID + " INTEGER PRIMARY KEY AUTOINCREMENT, "
-            + QuestiontableColumns.SERVERID + " TEXT, "
-            + QuestiontableColumns.QUIZ + " INTEGER, "
-            + QuestiontableColumns.CONTENT + " TEXT, "
-            + QuestiontableColumns.DIFFICULTY + " INTEGER DEFAULT 1, "
-            + QuestiontableColumns.CORRECT_ANSWER + " INTEGER DEFAULT 1, "
-            + QuestiontableColumns.POSITION + " INTEGER, "
-            + QuestiontableColumns.CREATED_AT + " INTEGER "
-            + " );";
-
     public static final String SQL_CREATE_TABLE_QUIZTABLE = "CREATE TABLE IF NOT EXISTS "
             + QuiztableColumns.TABLE_NAME + " ( "
             + QuiztableColumns._ID + " INTEGER PRIMARY KEY AUTOINCREMENT, "
-            + QuiztableColumns.SERVERID + " TEXT, "
+            + QuiztableColumns.SERVERID + " INTEGER, "
             + QuiztableColumns.TITLE + " TEXT, "
             + QuiztableColumns.DESCRIPTION + " TEXT, "
             + QuiztableColumns.CATEGORY + " TEXT, "
@@ -67,11 +54,12 @@ public class SafepalDatabaseHelper extends SQLiteOpenHelper {
     public static final String SQL_CREATE_TABLE_VIDEOTABLE = "CREATE TABLE IF NOT EXISTS "
             + VideotableColumns.TABLE_NAME + " ( "
             + VideotableColumns._ID + " INTEGER PRIMARY KEY AUTOINCREMENT, "
-            + VideotableColumns.SERVERID + " TEXT, "
+            + VideotableColumns.SERVERID + " INTEGER, "
             + VideotableColumns.TITLE + " TEXT, "
             + VideotableColumns.DESCRIPTION + " TEXT, "
             + VideotableColumns.CATEGORY + " TEXT, "
-            + VideotableColumns.THUMBNAIL + " INTEGER, "
+            + VideotableColumns.THUMBNAIL + " TEXT, "
+            + VideotableColumns.URL + " TEXT, "
             + VideotableColumns.COMPLETION_RATE + " INTEGER DEFAULT 0, "
             + VideotableColumns.CREATED_AT + " INTEGER, "
             + VideotableColumns.RATING + " INTEGER DEFAULT 0 "
@@ -132,7 +120,6 @@ public class SafepalDatabaseHelper extends SQLiteOpenHelper {
         if (BuildConfig.DEBUG) Log.d(TAG, "onCreate");
         mOpenHelperCallbacks.onPreCreate(mContext, db);
         db.execSQL(SQL_CREATE_TABLE_ARTICLETABLE);
-        db.execSQL(SQL_CREATE_TABLE_QUESTIONTABLE);
         db.execSQL(SQL_CREATE_TABLE_QUIZTABLE);
         db.execSQL(SQL_CREATE_TABLE_VIDEOTABLE);
         mOpenHelperCallbacks.onPostCreate(mContext, db);

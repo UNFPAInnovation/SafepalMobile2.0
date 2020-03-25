@@ -78,33 +78,33 @@ public class VideotableSelection extends AbstractSelection<VideotableSelection> 
         return orderById(false);
     }
 
-    public VideotableSelection serverid(String... value) {
+    public VideotableSelection serverid(Integer... value) {
         addEquals(VideotableColumns.SERVERID, value);
         return this;
     }
 
-    public VideotableSelection serveridNot(String... value) {
+    public VideotableSelection serveridNot(Integer... value) {
         addNotEquals(VideotableColumns.SERVERID, value);
         return this;
     }
 
-    public VideotableSelection serveridLike(String... value) {
-        addLike(VideotableColumns.SERVERID, value);
+    public VideotableSelection serveridGt(int value) {
+        addGreaterThan(VideotableColumns.SERVERID, value);
         return this;
     }
 
-    public VideotableSelection serveridContains(String... value) {
-        addContains(VideotableColumns.SERVERID, value);
+    public VideotableSelection serveridGtEq(int value) {
+        addGreaterThanOrEquals(VideotableColumns.SERVERID, value);
         return this;
     }
 
-    public VideotableSelection serveridStartsWith(String... value) {
-        addStartsWith(VideotableColumns.SERVERID, value);
+    public VideotableSelection serveridLt(int value) {
+        addLessThan(VideotableColumns.SERVERID, value);
         return this;
     }
 
-    public VideotableSelection serveridEndsWith(String... value) {
-        addEndsWith(VideotableColumns.SERVERID, value);
+    public VideotableSelection serveridLtEq(int value) {
+        addLessThanOrEquals(VideotableColumns.SERVERID, value);
         return this;
     }
 
@@ -238,33 +238,33 @@ public class VideotableSelection extends AbstractSelection<VideotableSelection> 
         return this;
     }
 
-    public VideotableSelection thumbnail(Integer... value) {
+    public VideotableSelection thumbnail(String... value) {
         addEquals(VideotableColumns.THUMBNAIL, value);
         return this;
     }
 
-    public VideotableSelection thumbnailNot(Integer... value) {
+    public VideotableSelection thumbnailNot(String... value) {
         addNotEquals(VideotableColumns.THUMBNAIL, value);
         return this;
     }
 
-    public VideotableSelection thumbnailGt(int value) {
-        addGreaterThan(VideotableColumns.THUMBNAIL, value);
+    public VideotableSelection thumbnailLike(String... value) {
+        addLike(VideotableColumns.THUMBNAIL, value);
         return this;
     }
 
-    public VideotableSelection thumbnailGtEq(int value) {
-        addGreaterThanOrEquals(VideotableColumns.THUMBNAIL, value);
+    public VideotableSelection thumbnailContains(String... value) {
+        addContains(VideotableColumns.THUMBNAIL, value);
         return this;
     }
 
-    public VideotableSelection thumbnailLt(int value) {
-        addLessThan(VideotableColumns.THUMBNAIL, value);
+    public VideotableSelection thumbnailStartsWith(String... value) {
+        addStartsWith(VideotableColumns.THUMBNAIL, value);
         return this;
     }
 
-    public VideotableSelection thumbnailLtEq(int value) {
-        addLessThanOrEquals(VideotableColumns.THUMBNAIL, value);
+    public VideotableSelection thumbnailEndsWith(String... value) {
+        addEndsWith(VideotableColumns.THUMBNAIL, value);
         return this;
     }
 
@@ -275,6 +275,46 @@ public class VideotableSelection extends AbstractSelection<VideotableSelection> 
 
     public VideotableSelection orderByThumbnail() {
         orderBy(VideotableColumns.THUMBNAIL, false);
+        return this;
+    }
+
+    public VideotableSelection url(String... value) {
+        addEquals(VideotableColumns.URL, value);
+        return this;
+    }
+
+    public VideotableSelection urlNot(String... value) {
+        addNotEquals(VideotableColumns.URL, value);
+        return this;
+    }
+
+    public VideotableSelection urlLike(String... value) {
+        addLike(VideotableColumns.URL, value);
+        return this;
+    }
+
+    public VideotableSelection urlContains(String... value) {
+        addContains(VideotableColumns.URL, value);
+        return this;
+    }
+
+    public VideotableSelection urlStartsWith(String... value) {
+        addStartsWith(VideotableColumns.URL, value);
+        return this;
+    }
+
+    public VideotableSelection urlEndsWith(String... value) {
+        addEndsWith(VideotableColumns.URL, value);
+        return this;
+    }
+
+    public VideotableSelection orderByUrl(boolean desc) {
+        orderBy(VideotableColumns.URL, desc);
+        return this;
+    }
+
+    public VideotableSelection orderByUrl() {
+        orderBy(VideotableColumns.URL, false);
         return this;
     }
 

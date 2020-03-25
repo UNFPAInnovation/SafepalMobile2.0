@@ -78,33 +78,33 @@ public class QuiztableSelection extends AbstractSelection<QuiztableSelection> {
         return orderById(false);
     }
 
-    public QuiztableSelection serverid(String... value) {
+    public QuiztableSelection serverid(Integer... value) {
         addEquals(QuiztableColumns.SERVERID, value);
         return this;
     }
 
-    public QuiztableSelection serveridNot(String... value) {
+    public QuiztableSelection serveridNot(Integer... value) {
         addNotEquals(QuiztableColumns.SERVERID, value);
         return this;
     }
 
-    public QuiztableSelection serveridLike(String... value) {
-        addLike(QuiztableColumns.SERVERID, value);
+    public QuiztableSelection serveridGt(int value) {
+        addGreaterThan(QuiztableColumns.SERVERID, value);
         return this;
     }
 
-    public QuiztableSelection serveridContains(String... value) {
-        addContains(QuiztableColumns.SERVERID, value);
+    public QuiztableSelection serveridGtEq(int value) {
+        addGreaterThanOrEquals(QuiztableColumns.SERVERID, value);
         return this;
     }
 
-    public QuiztableSelection serveridStartsWith(String... value) {
-        addStartsWith(QuiztableColumns.SERVERID, value);
+    public QuiztableSelection serveridLt(int value) {
+        addLessThan(QuiztableColumns.SERVERID, value);
         return this;
     }
 
-    public QuiztableSelection serveridEndsWith(String... value) {
-        addEndsWith(QuiztableColumns.SERVERID, value);
+    public QuiztableSelection serveridLtEq(int value) {
+        addLessThanOrEquals(QuiztableColumns.SERVERID, value);
         return this;
     }
 

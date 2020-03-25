@@ -3,12 +3,6 @@
     xmlns:tools="http://schemas.android.com/tools"
     package="com.unfpa.safepal">
 
-    <uses-permission android:name="android.permission.INTERNET" /> <!-- acquire the user location -->
-    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
-    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" /> <!-- Calling through the application -->
-    <uses-permission android:name="android.permission.CALL_PHONE" />
-    <uses-permission android:name="android.permission.READ_PHONE_STATE" />
-
     <application
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
@@ -34,13 +28,6 @@
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="com.unfpa.safepal.home.HomeActivity" />
         </activity>
-
-        <meta-data
-            android:name="com.google.android.geo.API_KEY"
-            android:value="AIzaSyCLxxb7QcBWzeSr8KaUhHTjZmoCxJ35SXc" />
-        <meta-data
-            android:name="android.max_aspect"
-            android:value="2.1" /> <!-- Google places meta data -->
         <activity
             android:name=".home.HomeActivity"
             android:autoRemoveFromRecents="true"
@@ -52,30 +39,12 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+
         <activity
             android:name=".ProvideHelp.CsoActivity"
             android:autoRemoveFromRecents="true"
             android:label="@string/title_activity_contact"
             android:theme="@style/AppTheme.NoActionBar" />
-
-        <provider
-            android:name=".store.ReportIncidentContentProvider"
-            android:authorities="com.unfpa.safepal.store.contentprovider" /> <!-- waits network and inserts a unique id to content provider and user -->
-        <!--
-        No intent filters are specified, so android:exported defaults to "false". The
-        service is only available to this app.
-        -->
-        <service
-            android:name=".network.AddReportService"
-            android:exported="false" />
-        <!--
- ATTENTION: This was auto-generated to add Google Play services to your project for
-     App Indexing.  See https://g.co/AppIndexing/AndroidStudio for more information.
-        -->
-        <meta-data
-            android:name="com.google.android.gms.version"
-            android:value="@integer/google_play_services_version" />
-
         <activity
             android:name=".report.ReportingActivity"
             android:label="@string/wsgh_activity_title"
@@ -84,16 +53,53 @@
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="com.unfpa.safepal.home.HomeActivity" />
-        </activity>
+        </activity> <!-- Google places meta data -->
+        <meta-data
+            android:name="com.google.android.geo.API_KEY"
+            android:value="AIzaSyCLxxb7QcBWzeSr8KaUhHTjZmoCxJ35SXc" />
+        <meta-data
+            android:name="android.max_aspect"
+            android:value="2.1" />
 
+        <meta-data
+            android:name="com.google.android.gms.version"
+            android:value="@integer/google_play_services_version" /> <!-- waits network and inserts a unique id to content provider and user -->
+        <!--
+        No intent filters are specified, so android:exported defaults to "false". The
+        service is only available to this app.
+        -->
         <meta-data
             android:name="io.fabric.ApiKey"
             android:value="ce2a98765613a05fab5da52a5597e554b815136d" />
+        <!--
+ ATTENTION: This was auto-generated to add Google Play services to your project for
+     App Indexing.  See https://g.co/AppIndexing/AndroidStudio for more information.
+        -->
+        <provider
+            android:name=".store.ReportIncidentContentProvider"
+            android:authorities="com.unfpa.safepal.store.contentprovider" />
+
+        <provider
+            android:name=".provider.SafepalProvider"
+            android:authorities="com.unfpa.safepal.authority"
+            android:exported="false" />
 
         <provider
             android:name="com.unfpa.safepal.provider.SafepalProvider"
             android:authorities="com.unfpa.safepal.authority"
             android:exported="false" />
-    </application>
+
+        <service
+            android:name=".network.SetupIntentService"
+            android:exported="false" />
+        <service
+            android:name=".network.AddReportService"
+            android:exported="false" />
+    </application> <!-- acquire the user location -->
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" /> <!-- Calling through the application -->
+    <uses-permission android:name="android.permission.CALL_PHONE" />
+    <uses-permission android:name="android.permission.READ_PHONE_STATE" />
+    <uses-permission android:name="android.permission.INTERNET" />
 
 </manifest>

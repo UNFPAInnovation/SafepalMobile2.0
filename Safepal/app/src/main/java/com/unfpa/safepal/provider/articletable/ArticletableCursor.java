@@ -31,8 +31,8 @@ public class ArticletableCursor extends AbstractCursor implements ArticletableMo
      * Can be {@code null}.
      */
     @Nullable
-    public String getServerid() {
-        String res = getStringOrNull(ArticletableColumns.SERVERID);
+    public Integer getServerid() {
+        Integer res = getIntegerOrNull(ArticletableColumns.SERVERID);
         return res;
     }
 
@@ -81,8 +81,8 @@ public class ArticletableCursor extends AbstractCursor implements ArticletableMo
      * Can be {@code null}.
      */
     @Nullable
-    public Integer getThumbnail() {
-        Integer res = getIntegerOrNull(ArticletableColumns.THUMBNAIL);
+    public String getThumbnail() {
+        String res = getStringOrNull(ArticletableColumns.THUMBNAIL);
         return res;
     }
 

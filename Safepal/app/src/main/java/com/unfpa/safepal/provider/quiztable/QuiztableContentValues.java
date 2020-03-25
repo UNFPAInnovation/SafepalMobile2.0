@@ -39,7 +39,7 @@ public class QuiztableContentValues extends AbstractContentValues {
         return context.getContentResolver().update(uri(), values(), where == null ? null : where.sel(), where == null ? null : where.args());
     }
 
-    public QuiztableContentValues putServerid(@Nullable String value) {
+    public QuiztableContentValues putServerid(@Nullable Integer value) {
         mContentValues.put(QuiztableColumns.SERVERID, value);
         return this;
     }

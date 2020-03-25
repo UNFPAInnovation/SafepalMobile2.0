@@ -26,9 +26,11 @@ import com.github.amlcurran.showcaseview.ShowcaseView;
 import com.github.amlcurran.showcaseview.targets.ViewTarget;
 import com.unfpa.safepal.DiscoverMoreActivity;
 import com.unfpa.safepal.R;
+import com.unfpa.safepal.network.SetupIntentService;
 import com.unfpa.safepal.report.ReportingActivity;
 
 import io.fabric.sdk.android.Fabric;
+import timber.log.Timber;
 
 public class HomeActivity extends AppCompatActivity {
     Button reportCaseButton;
@@ -48,6 +50,8 @@ public class HomeActivity extends AppCompatActivity {
         Fabric.with(this, new Crashlytics());
         setContentView(R.layout.activity_home);
 
+        Timber.plant(new Timber.DebugTree());
+
         Toolbar toolbar = findViewById(R.id.home_toolbar);
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayShowHomeEnabled(true);
@@ -57,6 +61,8 @@ public class HomeActivity extends AppCompatActivity {
         reportCaseButton = findViewById(R.id.report_incident_button);
         discoverMoreCard = findViewById(R.id.discover_more_card);
         textViewMessage = findViewById(R.id.message);
+
+        startService(new Intent(this, SetupIntentService.class));
 
         reportCaseButton.setOnClickListener(new View.OnClickListener() {
             @Override

@@ -5,7 +5,6 @@ import android.provider.BaseColumns;
 
 import com.unfpa.safepal.provider.SafepalProvider;
 import com.unfpa.safepal.provider.articletable.ArticletableColumns;
-import com.unfpa.safepal.provider.questiontable.QuestiontableColumns;
 import com.unfpa.safepal.provider.quiztable.QuiztableColumns;
 import com.unfpa.safepal.provider.videotable.VideotableColumns;
 
@@ -31,6 +30,8 @@ public class VideotableColumns implements BaseColumns {
 
     public static final String THUMBNAIL = "thumbnail";
 
+    public static final String URL = "url";
+
     public static final String COMPLETION_RATE = "completion_rate";
 
     public static final String CREATED_AT = "created_at";
@@ -48,6 +49,7 @@ public class VideotableColumns implements BaseColumns {
             DESCRIPTION,
             CATEGORY,
             THUMBNAIL,
+            URL,
             COMPLETION_RATE,
             CREATED_AT,
             RATING
@@ -62,6 +64,7 @@ public class VideotableColumns implements BaseColumns {
             if (c.equals(DESCRIPTION) || c.contains("." + DESCRIPTION)) return true;
             if (c.equals(CATEGORY) || c.contains("." + CATEGORY)) return true;
             if (c.equals(THUMBNAIL) || c.contains("." + THUMBNAIL)) return true;
+            if (c.equals(URL) || c.contains("." + URL)) return true;
             if (c.equals(COMPLETION_RATE) || c.contains("." + COMPLETION_RATE)) return true;
             if (c.equals(CREATED_AT) || c.contains("." + CREATED_AT)) return true;
             if (c.equals(RATING) || c.contains("." + RATING)) return true;

@@ -78,33 +78,33 @@ public class ArticletableSelection extends AbstractSelection<ArticletableSelecti
         return orderById(false);
     }
 
-    public ArticletableSelection serverid(String... value) {
+    public ArticletableSelection serverid(Integer... value) {
         addEquals(ArticletableColumns.SERVERID, value);
         return this;
     }
 
-    public ArticletableSelection serveridNot(String... value) {
+    public ArticletableSelection serveridNot(Integer... value) {
         addNotEquals(ArticletableColumns.SERVERID, value);
         return this;
     }
 
-    public ArticletableSelection serveridLike(String... value) {
-        addLike(ArticletableColumns.SERVERID, value);
+    public ArticletableSelection serveridGt(int value) {
+        addGreaterThan(ArticletableColumns.SERVERID, value);
         return this;
     }
 
-    public ArticletableSelection serveridContains(String... value) {
-        addContains(ArticletableColumns.SERVERID, value);
+    public ArticletableSelection serveridGtEq(int value) {
+        addGreaterThanOrEquals(ArticletableColumns.SERVERID, value);
         return this;
     }
 
-    public ArticletableSelection serveridStartsWith(String... value) {
-        addStartsWith(ArticletableColumns.SERVERID, value);
+    public ArticletableSelection serveridLt(int value) {
+        addLessThan(ArticletableColumns.SERVERID, value);
         return this;
     }
 
-    public ArticletableSelection serveridEndsWith(String... value) {
-        addEndsWith(ArticletableColumns.SERVERID, value);
+    public ArticletableSelection serveridLtEq(int value) {
+        addLessThanOrEquals(ArticletableColumns.SERVERID, value);
         return this;
     }
 
@@ -278,33 +278,33 @@ public class ArticletableSelection extends AbstractSelection<ArticletableSelecti
         return this;
     }
 
-    public ArticletableSelection thumbnail(Integer... value) {
+    public ArticletableSelection thumbnail(String... value) {
         addEquals(ArticletableColumns.THUMBNAIL, value);
         return this;
     }
 
-    public ArticletableSelection thumbnailNot(Integer... value) {
+    public ArticletableSelection thumbnailNot(String... value) {
         addNotEquals(ArticletableColumns.THUMBNAIL, value);
         return this;
     }
 
-    public ArticletableSelection thumbnailGt(int value) {
-        addGreaterThan(ArticletableColumns.THUMBNAIL, value);
+    public ArticletableSelection thumbnailLike(String... value) {
+        addLike(ArticletableColumns.THUMBNAIL, value);
         return this;
     }
 
-    public ArticletableSelection thumbnailGtEq(int value) {
-        addGreaterThanOrEquals(ArticletableColumns.THUMBNAIL, value);
+    public ArticletableSelection thumbnailContains(String... value) {
+        addContains(ArticletableColumns.THUMBNAIL, value);
         return this;
     }
 
-    public ArticletableSelection thumbnailLt(int value) {
-        addLessThan(ArticletableColumns.THUMBNAIL, value);
+    public ArticletableSelection thumbnailStartsWith(String... value) {
+        addStartsWith(ArticletableColumns.THUMBNAIL, value);
         return this;
     }
 
-    public ArticletableSelection thumbnailLtEq(int value) {
-        addLessThanOrEquals(ArticletableColumns.THUMBNAIL, value);
+    public ArticletableSelection thumbnailEndsWith(String... value) {
+        addEndsWith(ArticletableColumns.THUMBNAIL, value);
         return this;
     }
 

@@ -17,7 +17,7 @@ public interface ArticletableModel extends BaseModel {
      * Can be {@code null}.
      */
     @Nullable
-    String getServerid();
+    Integer getServerid();
 
     /**
      * Get the {@code title} value.
@@ -52,7 +52,7 @@ public interface ArticletableModel extends BaseModel {
      * Can be {@code null}.
      */
     @Nullable
-    Integer getThumbnail();
+    String getThumbnail();
 
     /**
      * Get the {@code completion_rate} value.

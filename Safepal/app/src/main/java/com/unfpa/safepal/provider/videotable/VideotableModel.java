@@ -17,7 +17,7 @@ public interface VideotableModel extends BaseModel {
      * Can be {@code null}.
      */
     @Nullable
-    String getServerid();
+    Integer getServerid();
 
     /**
      * Get the {@code title} value.
@@ -45,7 +45,14 @@ public interface VideotableModel extends BaseModel {
      * Can be {@code null}.
      */
     @Nullable
-    Integer getThumbnail();
+    String getThumbnail();
+
+    /**
+     * Get the {@code url} value.
+     * Can be {@code null}.
+     */
+    @Nullable
+    String getUrl();
 
     /**
      * Get the {@code completion_rate} value.

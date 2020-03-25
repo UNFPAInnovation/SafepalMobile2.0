@@ -9,4 +9,6 @@ public class Constants {
     final public static String TITLE = "title";
     final public static String CATEGORY = "video";
     final public static String DESCRIPTION = "description";
+    final public static String DJANGO_BACKEND_URL = "http://54.213.147.100:8000/";
+    final public static String SERVER_TOKEN = "servertoken";
 }

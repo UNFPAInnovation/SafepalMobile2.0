@@ -39,7 +39,7 @@ public class VideotableContentValues extends AbstractContentValues {
         return context.getContentResolver().update(uri(), values(), where == null ? null : where.sel(), where == null ? null : where.args());
     }
 
-    public VideotableContentValues putServerid(@Nullable String value) {
+    public VideotableContentValues putServerid(@Nullable Integer value) {
         mContentValues.put(VideotableColumns.SERVERID, value);
         return this;
     }
@@ -79,13 +79,23 @@ public class VideotableContentValues extends AbstractContentValues {
         return this;
     }
 
-    public VideotableContentValues putThumbnail(@Nullable Integer value) {
+    public VideotableContentValues putThumbnail(@Nullable String value) {
         mContentValues.put(VideotableColumns.THUMBNAIL, value);
         return this;
     }
 
     public VideotableContentValues putThumbnailNull() {
         mContentValues.putNull(VideotableColumns.THUMBNAIL);
+        return this;
+    }
+
+    public VideotableContentValues putUrl(@Nullable String value) {
+        mContentValues.put(VideotableColumns.URL, value);
+        return this;
+    }
+
+    public VideotableContentValues putUrlNull() {
+        mContentValues.putNull(VideotableColumns.URL);
         return this;
     }
 

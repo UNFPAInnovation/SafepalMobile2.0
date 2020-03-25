@@ -31,8 +31,8 @@ public class VideotableCursor extends AbstractCursor implements VideotableModel 
      * Can be {@code null}.
      */
     @Nullable
-    public String getServerid() {
-        String res = getStringOrNull(VideotableColumns.SERVERID);
+    public Integer getServerid() {
+        Integer res = getIntegerOrNull(VideotableColumns.SERVERID);
         return res;
     }
 
@@ -71,8 +71,18 @@ public class VideotableCursor extends AbstractCursor implements VideotableModel 
      * Can be {@code null}.
      */
     @Nullable
-    public Integer getThumbnail() {
-        Integer res = getIntegerOrNull(VideotableColumns.THUMBNAIL);
+    public String getThumbnail() {
+        String res = getStringOrNull(VideotableColumns.THUMBNAIL);
+        return res;
+    }
+
+    /**
+     * Get the {@code url} value.
+     * Can be {@code null}.
+     */
+    @Nullable
+    public String getUrl() {
+        String res = getStringOrNull(VideotableColumns.URL);
         return res;
     }
 

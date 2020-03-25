@@ -39,7 +39,7 @@ public class ArticletableContentValues extends AbstractContentValues {
         return context.getContentResolver().update(uri(), values(), where == null ? null : where.sel(), where == null ? null : where.args());
     }
 
-    public ArticletableContentValues putServerid(@Nullable String value) {
+    public ArticletableContentValues putServerid(@Nullable Integer value) {
         mContentValues.put(ArticletableColumns.SERVERID, value);
         return this;
     }
@@ -89,7 +89,7 @@ public class ArticletableContentValues extends AbstractContentValues {
         return this;
     }
 
-    public ArticletableContentValues putThumbnail(@Nullable Integer value) {
+    public ArticletableContentValues putThumbnail(@Nullable String value) {
         mContentValues.put(ArticletableColumns.THUMBNAIL, value);
         return this;
     }

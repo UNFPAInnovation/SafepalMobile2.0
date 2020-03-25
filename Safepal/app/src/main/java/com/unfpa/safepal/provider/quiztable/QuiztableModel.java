@@ -17,7 +17,7 @@ public interface QuiztableModel extends BaseModel {
      * Can be {@code null}.
      */
     @Nullable
-    String getServerid();
+    Integer getServerid();
 
     /**
      * Get the {@code title} value.
