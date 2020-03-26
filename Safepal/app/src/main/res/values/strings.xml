@@ -125,7 +125,7 @@
     <string name="topics_tab">Topics</string>
     <string name="directory_tab">Directory</string>
     <string name="title_activity_watch_video">WatchVideoActivity</string>
-    <string name="title_activity_read_article">ReadArticleActivity</string>
+    <string name="title_activity_read_article">Article</string>
     <string name="large_text">
         "Material is the metaphor.\n\n"
 

@@ -10,6 +10,8 @@
     <color name="colorWhite">#FFFDFDFE</color>
     <!--FAB colors-->
     <color name="colorGreyDarker">#808080</color>
+    <color name="colorDarkGray">#212121</color>
+    <color name="colorTextGray">#424242</color>
     <!--image color-->
     <color name="colorImages">#01a89e </color>
 

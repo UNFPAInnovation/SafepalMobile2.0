@@ -72,6 +72,7 @@
 
     <dimen name="select_item_border">4dp</dimen>
     <dimen name="app_bar_height">180dp</dimen>
+    <dimen name="app_bar_image_height">279dp</dimen>
     <dimen name="network_status_height">150dp</dimen>
     <dimen name="app_bar_height_choose_user">350dp</dimen>
     <dimen name="text_margin">16dp</dimen>
