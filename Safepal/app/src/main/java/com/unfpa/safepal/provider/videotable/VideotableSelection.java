@@ -318,6 +318,46 @@ public class VideotableSelection extends AbstractSelection<VideotableSelection> 
         return this;
     }
 
+    public VideotableSelection duration(Integer... value) {
+        addEquals(VideotableColumns.DURATION, value);
+        return this;
+    }
+
+    public VideotableSelection durationNot(Integer... value) {
+        addNotEquals(VideotableColumns.DURATION, value);
+        return this;
+    }
+
+    public VideotableSelection durationGt(int value) {
+        addGreaterThan(VideotableColumns.DURATION, value);
+        return this;
+    }
+
+    public VideotableSelection durationGtEq(int value) {
+        addGreaterThanOrEquals(VideotableColumns.DURATION, value);
+        return this;
+    }
+
+    public VideotableSelection durationLt(int value) {
+        addLessThan(VideotableColumns.DURATION, value);
+        return this;
+    }
+
+    public VideotableSelection durationLtEq(int value) {
+        addLessThanOrEquals(VideotableColumns.DURATION, value);
+        return this;
+    }
+
+    public VideotableSelection orderByDuration(boolean desc) {
+        orderBy(VideotableColumns.DURATION, desc);
+        return this;
+    }
+
+    public VideotableSelection orderByDuration() {
+        orderBy(VideotableColumns.DURATION, false);
+        return this;
+    }
+
     public VideotableSelection completionRate(Integer... value) {
         addEquals(VideotableColumns.COMPLETION_RATE, value);
         return this;

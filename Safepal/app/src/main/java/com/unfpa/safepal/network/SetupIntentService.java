@@ -107,6 +107,7 @@ public class SetupIntentService extends IntentService {
             values.putCategory(video.getCategory().getName());
             values.putServerid(video.getId());
             values.putDescription(video.getDescription());
+            values.putUrl(video.getUrl());
             values.putThumbnail(video.getThumbnail());
             values.putCreatedAt(video.getCreatedAt());
             values.putRating(video.getRating());

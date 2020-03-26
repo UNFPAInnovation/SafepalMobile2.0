@@ -55,6 +55,13 @@ public interface VideotableModel extends BaseModel {
     String getUrl();
 
     /**
+     * Get the {@code duration} value.
+     * Can be {@code null}.
+     */
+    @Nullable
+    Integer getDuration();
+
+    /**
      * Get the {@code completion_rate} value.
      * Can be {@code null}.
      */

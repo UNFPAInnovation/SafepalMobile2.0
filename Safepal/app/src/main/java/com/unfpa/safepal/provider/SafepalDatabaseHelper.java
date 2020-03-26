@@ -60,6 +60,7 @@ public class SafepalDatabaseHelper extends SQLiteOpenHelper {
             + VideotableColumns.CATEGORY + " TEXT, "
             + VideotableColumns.THUMBNAIL + " TEXT, "
             + VideotableColumns.URL + " TEXT, "
+            + VideotableColumns.DURATION + " INTEGER, "
             + VideotableColumns.COMPLETION_RATE + " INTEGER DEFAULT 0, "
             + VideotableColumns.CREATED_AT + " INTEGER, "
             + VideotableColumns.RATING + " INTEGER DEFAULT 0 "

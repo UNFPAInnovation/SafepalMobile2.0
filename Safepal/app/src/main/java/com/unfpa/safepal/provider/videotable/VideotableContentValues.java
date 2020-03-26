@@ -99,6 +99,16 @@ public class VideotableContentValues extends AbstractContentValues {
         return this;
     }
 
+    public VideotableContentValues putDuration(@Nullable Integer value) {
+        mContentValues.put(VideotableColumns.DURATION, value);
+        return this;
+    }
+
+    public VideotableContentValues putDurationNull() {
+        mContentValues.putNull(VideotableColumns.DURATION);
+        return this;
+    }
+
     public VideotableContentValues putCompletionRate(@Nullable Integer value) {
         mContentValues.put(VideotableColumns.COMPLETION_RATE, value);
         return this;

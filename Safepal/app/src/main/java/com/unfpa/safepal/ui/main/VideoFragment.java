@@ -12,6 +12,8 @@ import android.support.v4.app.Fragment;
 
 import com.unfpa.safepal.R;
 import com.unfpa.safepal.adapters.VideoAdapter;
+import com.unfpa.safepal.provider.videotable.VideotableCursor;
+import com.unfpa.safepal.provider.videotable.VideotableSelection;
 
 /**
  * Loads the adapter views for the tabs in VideoFragment
@@ -49,12 +51,16 @@ public class VideoFragment extends Fragment {
             Bundle savedInstanceState) {
         View rootView = inflater.inflate(R.layout.fragment_discover_more, container, false);
 
-        videoAdapter = new VideoAdapter(getActivity());
+        videoAdapter = new VideoAdapter(getActivity(), getVideosFromTable());
         recyclerView = rootView.findViewById(R.id.media_recycler_view);
 
-        RecyclerView.LayoutManager mLayoutManager = new GridLayoutManager(getContext(), 3);
+        RecyclerView.LayoutManager mLayoutManager = new GridLayoutManager(getContext(), 2);
         recyclerView.setLayoutManager(mLayoutManager);
         recyclerView.setAdapter(videoAdapter);
         return rootView;
+    }
+
+    private VideotableCursor getVideosFromTable() {
+        return new VideotableSelection().orderByCreatedAt(true).query(getContext().getContentResolver());
     }
 }

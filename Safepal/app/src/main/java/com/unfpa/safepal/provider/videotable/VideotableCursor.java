@@ -87,6 +87,16 @@ public class VideotableCursor extends AbstractCursor implements VideotableModel 
     }
 
     /**
+     * Get the {@code duration} value.
+     * Can be {@code null}.
+     */
+    @Nullable
+    public Integer getDuration() {
+        Integer res = getIntegerOrNull(VideotableColumns.DURATION);
+        return res;
+    }
+
+    /**
      * Get the {@code completion_rate} value.
      * Can be {@code null}.
      */

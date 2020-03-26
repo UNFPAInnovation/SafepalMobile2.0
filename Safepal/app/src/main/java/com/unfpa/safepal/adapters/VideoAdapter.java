@@ -3,6 +3,7 @@ package com.unfpa.safepal.adapters;
 import android.app.Activity;
 import android.content.Intent;
 import android.support.annotation.NonNull;
+import android.support.v4.app.FragmentActivity;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -10,15 +11,29 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.pixplicity.easyprefs.library.Prefs;
+import com.squareup.picasso.Picasso;
 import com.unfpa.safepal.R;
 import com.unfpa.safepal.WatchVideoActivity;
+import com.unfpa.safepal.provider.videotable.VideotableCursor;
+
+import static com.unfpa.safepal.Utils.Constants.VIDEO_URL;
+import static com.unfpa.safepal.provider.videotable.VideotableColumns.CATEGORY;
+import static com.unfpa.safepal.provider.videotable.VideotableColumns.DESCRIPTION;
+import static com.unfpa.safepal.provider.videotable.VideotableColumns.TITLE;
 
 public class VideoAdapter extends RecyclerView.Adapter<VideoAdapter.ViewHolder> {
 
+    private VideotableCursor cursor;
     Activity activity;
 
     public VideoAdapter(Activity activity) {
         this.activity = activity;
+    }
+
+    public VideoAdapter(FragmentActivity activity, VideotableCursor cursor) {
+        this.activity = activity;
+        this.cursor = cursor;
     }
 
     public static class ViewHolder extends RecyclerView.ViewHolder {
@@ -42,17 +57,41 @@ public class VideoAdapter extends RecyclerView.Adapter<VideoAdapter.ViewHolder> 
     }
 
     @Override
-    public void onBindViewHolder(@NonNull ViewHolder viewHolder, int i) {
-        viewHolder.itemView.setOnClickListener(new View.OnClickListener() {
+    public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
+        cursor.moveToPosition(position);
+
+        holder.title.setText(cursor.getTitle());
+
+        Picasso.get()
+                .load(cursor.getThumbnail())
+                .placeholder(R.mipmap.ic_launcher)
+                .error(R.mipmap.ic_launcher)
+                .into(holder.thumbnail);
+
+        try {
+            holder.duration.setText(String.valueOf(cursor.getDuration()) + " mins");
+        } catch (Exception e) {
+            e.printStackTrace();
+            holder.duration.setText("1 mins");
+        }
+
+        holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                activity.startActivity(new Intent(activity, WatchVideoActivity.class));
+                Prefs.putString(VIDEO_URL, cursor.getUrl());
+                Prefs.putString(TITLE, cursor.getTitle());
+                Prefs.putString(CATEGORY, cursor.getCategory());
+                Prefs.putString(DESCRIPTION, cursor.getDescription());
+//                Prefs.putInt(DURATION, cursor.getDuration());
+                Intent intent = new Intent(activity, WatchVideoActivity.class)
+                        .putExtra(TITLE, holder.title.getText().toString());
+                activity.startActivity(intent);
             }
         });
     }
 
     @Override
     public int getItemCount() {
-        return 10;
+        return (cursor == null) ? 0 : cursor.getCount();
     }
 }

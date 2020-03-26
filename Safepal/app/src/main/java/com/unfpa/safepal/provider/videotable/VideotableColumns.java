@@ -32,6 +32,8 @@ public class VideotableColumns implements BaseColumns {
 
     public static final String URL = "url";
 
+    public static final String DURATION = "duration";
+
     public static final String COMPLETION_RATE = "completion_rate";
 
     public static final String CREATED_AT = "created_at";
@@ -50,6 +52,7 @@ public class VideotableColumns implements BaseColumns {
             CATEGORY,
             THUMBNAIL,
             URL,
+            DURATION,
             COMPLETION_RATE,
             CREATED_AT,
             RATING
@@ -65,6 +68,7 @@ public class VideotableColumns implements BaseColumns {
             if (c.equals(CATEGORY) || c.contains("." + CATEGORY)) return true;
             if (c.equals(THUMBNAIL) || c.contains("." + THUMBNAIL)) return true;
             if (c.equals(URL) || c.contains("." + URL)) return true;
+            if (c.equals(DURATION) || c.contains("." + DURATION)) return true;
             if (c.equals(COMPLETION_RATE) || c.contains("." + COMPLETION_RATE)) return true;
             if (c.equals(CREATED_AT) || c.contains("." + CREATED_AT)) return true;
             if (c.equals(RATING) || c.contains("." + RATING)) return true;

@@ -1,5 +1,6 @@
 package com.unfpa.safepal;
 
+import android.media.MediaPlayer;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
@@ -11,14 +12,15 @@ import android.widget.TextView;
 import android.widget.VideoView;
 
 import com.pixplicity.easyprefs.library.Prefs;
-import com.unfpa.safepal.Utils.Constants;
+import com.unfpa.safepal.provider.videotable.VideotableCursor;
+import com.unfpa.safepal.provider.videotable.VideotableSelection;
 
-import static com.unfpa.safepal.Utils.Constants.CATEGORY;
-import static com.unfpa.safepal.Utils.Constants.DESCRIPTION;
 import static com.unfpa.safepal.Utils.Constants.VIDEO_URL;
+import static com.unfpa.safepal.provider.videotable.VideotableColumns.CATEGORY;
+import static com.unfpa.safepal.provider.videotable.VideotableColumns.DESCRIPTION;
+import static com.unfpa.safepal.provider.videotable.VideotableColumns.TITLE;
 
 public class WatchVideoActivity extends AppCompatActivity {
-
     private VideoView video;
     private TextView title;
     private TextView category;
@@ -39,15 +41,23 @@ public class WatchVideoActivity extends AppCompatActivity {
         description = findViewById(R.id.description);
         relatedVideos = findViewById(R.id.related_videos_recycler);
 
-        String videoUrl = Prefs.getString(VIDEO_URL, "");
-        title.setText(Prefs.getString(Constants.TITLE, ""));
-        category.setText(Prefs.getString(CATEGORY, ""));
-        description.setText(Prefs.getString(DESCRIPTION, ""));
+        // Get the title passed to use from the VideoAdapter and query for the video
+        VideotableCursor videotableCursor = new VideotableSelection().orderByCreatedAt(true)
+                .title(getIntent().getStringExtra(TITLE)).query(getContentResolver());
 
-        Uri uri = Uri.parse("https://www.sample-videos.com/video123/mp4/480/big_buck_bunny_480p_5mb.mp4"); //Declare your url here.
+        videotableCursor.moveToFirst();
+        title.setText(videotableCursor.getTitle());
+        category.setText(videotableCursor.getCategory());
+        description.setText(videotableCursor.getDescription());
+
         video.setMediaController(new MediaController(this));
-        video.setVideoURI(uri);
+        video.setVideoURI(Uri.parse(videotableCursor.getUrl()));
         video.requestFocus();
-        video.start();
+        video.setOnPreparedListener(new MediaPlayer.OnPreparedListener() {
+            @Override
+            public void onPrepared(MediaPlayer mp) {
+                video.start();
+            }
+        });
     }
 }
