@@ -8,12 +8,11 @@
     tools:context=".WatchVideoActivity"
     tools:showIn="@layout/activity_watch_video">
 
-    <ImageView
+    <VideoView
         android:id="@+id/video"
         android:layout_width="0dp"
         android:layout_height="0dp"
         android:layout_marginBottom="58dp"
-        android:background="@color/colorAccent"
         app:layout_constraintBottom_toTopOf="@+id/category"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
