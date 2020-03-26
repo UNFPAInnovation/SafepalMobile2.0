@@ -9,10 +9,13 @@ import android.net.Uri;
 import android.telephony.TelephonyManager;
 import android.util.Log;
 
+import com.unfpa.safepal.provider.articletable.ArticletableColumns;
+import com.unfpa.safepal.provider.articletable.ArticletableContentValues;
 import com.unfpa.safepal.provider.videotable.VideotableColumns;
 import com.unfpa.safepal.provider.videotable.VideotableContentValues;
 import com.unfpa.safepal.retrofit.APIClient;
 import com.unfpa.safepal.retrofit.APIInterface;
+import com.unfpa.safepal.retrofitmodels.articles.Articles;
 import com.unfpa.safepal.retrofitmodels.videos.Result;
 import com.unfpa.safepal.retrofitmodels.videos.Videos;
 
@@ -27,7 +30,8 @@ import retrofit2.Response;
 import timber.log.Timber;
 
 /**
- * Downloads videos, articles and quiz
+ * Downloads videos, articles and quiz data
+ * @author Phillip Kigenyi (codephillip@gmail.com)
  */
 public class SetupIntentService extends IntentService {
     private static final String TAG = SetupIntentService.class.getSimpleName();
@@ -53,6 +57,12 @@ public class SetupIntentService extends IntentService {
         if (isConnectedToInternet) {
             try {
                 loadVideos();
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+
+            try {
+                loadArticles();
             } catch (Exception e) {
                 e.printStackTrace();
             }
@@ -117,6 +127,66 @@ public class SetupIntentService extends IntentService {
             Timber.d("saved video %s", uri);
         }
     }
+
+    private void loadArticles() {
+        Timber.d("get articles list started");
+        Call<Articles> call = apiInterface.getArticles();
+
+        call.enqueue(new Callback<Articles>() {
+            @Override
+            public void onResponse(Call<Articles> call, Response<Articles> response) {
+                Timber.d("onResponse() -> %s", response.code());
+                try {
+                    if (response.code() == 200) {
+                        saveArticles(response.body());
+                    } else {
+                        Timber.e("Failed to get videos");
+                    }
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+            }
+
+            @Override
+            public void onFailure(Call<Articles> call, Throwable t) {
+                Timber.e("onFailure() -> %s", t.getMessage());
+            }
+        });
+    }
+
+    private void saveArticles(Articles articles) {
+        Timber.d("INSERT: articles starting");
+        if (articles == null)
+            throw new NullPointerException("Articles not found");
+        List<com.unfpa.safepal.retrofitmodels.articles.Result> articlesList = articles.getResults();
+
+        long deleted = 0;
+        try {
+            if (articlesList.size() > 1)
+                deleted = getContentResolver().delete(ArticletableColumns.CONTENT_URI, null, null);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        Timber.d("deleted data count %s", deleted);
+
+        for (com.unfpa.safepal.retrofitmodels.articles.Result article : articlesList) {
+            ArticletableContentValues values = new ArticletableContentValues();
+            Timber.d("Article data " + article.getTitle() + article.getCreatedAt());
+            values.putTitle(article.getTitle());
+            values.putCategory(article.getCategory().getName());
+            values.putContent(article.getContent());
+            values.putQuestions(article.getQuestions());
+            values.putServerid(article.getId());
+            values.putThumbnail(article.getThumbnail());
+            values.putCreatedAt(article.getCreatedAt());
+            values.putRating(article.getRating());
+            // insert 0 completion since user has not yet read the article
+            values.putCompletionRate(0);
+            final Uri uri = values.insert(getContentResolver());
+            Timber.d("saved article %s", uri);
+        }
+    }
+
 
     public static boolean isConnectedToInternet(Context context) {
         ConnectivityManager connectivity = (ConnectivityManager) context.getSystemService(Context.CONNECTIVITY_SERVICE);

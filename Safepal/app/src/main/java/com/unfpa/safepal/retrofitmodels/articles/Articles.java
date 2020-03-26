@@ -1,10 +1,10 @@
-package com.unfpa.safepal.retrofitmodels.videos;
+package com.unfpa.safepal.retrofitmodels.articles;
 
 import java.util.List;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
-public class Videos {
+public class Articles {
 
     @SerializedName("count")
     @Expose

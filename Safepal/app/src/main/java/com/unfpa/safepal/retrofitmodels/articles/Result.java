@@ -1,4 +1,4 @@
-package com.unfpa.safepal.retrofitmodels.videos;
+package com.unfpa.safepal.retrofitmodels.articles;
 
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
@@ -16,15 +16,15 @@ public class Result {
     @SerializedName("title")
     @Expose
     private String title;
-    @SerializedName("description")
+    @SerializedName("content")
     @Expose
-    private String description;
+    private String content;
+    @SerializedName("questions")
+    @Expose
+    private String questions;
     @SerializedName("thumbnail")
     @Expose
     private String thumbnail;
-    @SerializedName("url")
-    @Expose
-    private String url;
     @SerializedName("rating")
     @Expose
     private Integer rating;
@@ -56,12 +56,20 @@ public class Result {
         this.title = title;
     }
 
-    public String getDescription() {
-        return description;
+    public String getContent() {
+        return content;
     }
 
-    public void setDescription(String description) {
-        this.description = description;
+    public void setContent(String content) {
+        this.content = content;
+    }
+
+    public String getQuestions() {
+        return questions;
+    }
+
+    public void setQuestions(String questions) {
+        this.questions = questions;
     }
 
     public String getThumbnail() {
@@ -70,14 +78,6 @@ public class Result {
 
     public void setThumbnail(String thumbnail) {
         this.thumbnail = thumbnail;
-    }
-
-    public String getUrl() {
-        return url;
-    }
-
-    public void setUrl(String url) {
-        this.url = url;
     }
 
     public Integer getRating() {

@@ -1,4 +1,4 @@
-package com.unfpa.safepal.retrofitmodels.videos;
+package com.unfpa.safepal.retrofitmodels.articles;
 
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
