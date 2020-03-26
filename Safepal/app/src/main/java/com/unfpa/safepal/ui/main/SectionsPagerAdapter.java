@@ -31,7 +31,7 @@ public class SectionsPagerAdapter extends FragmentPagerAdapter {
     public Fragment getItem(int position) {
         // getItem is called to instantiate the fragment for the given page.
         // Return a VideoFragment (defined as a static inner class below).
-        return VideoFragment.newInstance(position + 1);
+        return DiscoveryFragment.newInstance(position + 1);
     }
 
     @Nullable

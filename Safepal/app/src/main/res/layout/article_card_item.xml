@@ -33,10 +33,10 @@
                 android:paddingRight="@dimen/media_title_padding"
                 android:paddingTop="@dimen/media_title_padding"
                 android:textAppearance="@style/TextAppearance.AppCompat.Medium"
-                android:text="Video one" />
+                android:text="How to say No!" />
 
             <TextView
-                android:id="@+id/duration"
+                android:id="@+id/completion_rate"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_below="@id/title"
@@ -44,7 +44,7 @@
                 android:paddingLeft="@dimen/media_title_padding"
                 android:paddingRight="@dimen/media_title_padding"
                 android:textColor="@color/colorPrimary"
-                android:text="3 mins"/>
+                android:text="Start reading"/>
         </RelativeLayout>
 
     </android.support.v7.widget.CardView>

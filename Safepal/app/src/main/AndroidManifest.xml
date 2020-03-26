@@ -2,7 +2,7 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     package="com.unfpa.safepal">
-
+    <!-- acquire the user location -->
     <application
         android:name=".SafepalApplication"
         android:allowBackup="true"
@@ -12,16 +12,20 @@
         android:theme="@style/AppTheme"
         tools:ignore="UnusedAttribute">
         <activity
+            android:name=".ReadArticleActivity"
+            android:label="@string/title_activity_read_article"
+            android:theme="@style/AppTheme.NoActionBar"></activity>
+        <activity
             android:name=".WatchVideoActivity"
             android:label="@string/title_activity_watch_video"
-            android:parentActivityName=".DiscoverMoreActivity"
+            android:parentActivityName=".DiscoveryActivity"
             android:theme="@style/AppTheme.NoActionBar">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value="com.unfpa.safepal.DiscoverMoreActivity" />
+                android:value="com.unfpa.safepal.DiscoveryActivity" />
         </activity>
         <activity
-            android:name=".DiscoverMoreActivity"
+            android:name=".DiscoveryActivity"
             android:label="@string/title_activity_discover_more"
             android:parentActivityName=".home.HomeActivity"
             android:theme="@style/AppTheme.NoActionBar">
@@ -40,7 +44,6 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-
         <activity
             android:name=".ProvideHelp.CsoActivity"
             android:autoRemoveFromRecents="true"
@@ -61,7 +64,6 @@
         <meta-data
             android:name="android.max_aspect"
             android:value="2.1" />
-
         <meta-data
             android:name="com.google.android.gms.version"
             android:value="@integer/google_play_services_version" /> <!-- waits network and inserts a unique id to content provider and user -->
@@ -79,14 +81,12 @@
         <provider
             android:name=".store.ReportIncidentContentProvider"
             android:authorities="com.unfpa.safepal.store.contentprovider" />
-
         <provider
             android:name=".provider.SafepalProvider"
             android:authorities="com.unfpa.safepal.authority"
             android:exported="false" />
-
         <provider
-            android:name="com.unfpa.safepal.provider.SafepalProvider"
+            android:name=".provider.SafepalProvider"
             android:authorities="com.unfpa.safepal.authority"
             android:exported="false" />
 
@@ -96,11 +96,12 @@
         <service
             android:name=".network.AddReportService"
             android:exported="false" />
-    </application> <!-- acquire the user location -->
-    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+    </application>
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" /> <!-- Calling through the application -->
     <uses-permission android:name="android.permission.CALL_PHONE" />
     <uses-permission android:name="android.permission.READ_PHONE_STATE" />
     <uses-permission android:name="android.permission.INTERNET" />
+
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
 
 </manifest>

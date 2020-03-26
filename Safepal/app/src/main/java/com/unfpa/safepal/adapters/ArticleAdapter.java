@@ -13,34 +13,35 @@ import android.widget.TextView;
 
 import com.squareup.picasso.Picasso;
 import com.unfpa.safepal.R;
-import com.unfpa.safepal.WatchVideoActivity;
-import com.unfpa.safepal.provider.videotable.VideotableCursor;
+import com.unfpa.safepal.ReadArticleActivity;
+import com.unfpa.safepal.provider.articletable.ArticletableCursor;
 import static com.unfpa.safepal.provider.videotable.VideotableColumns.TITLE;
 
-public class VideoAdapter extends RecyclerView.Adapter<VideoAdapter.ViewHolder> {
+public class ArticleAdapter extends RecyclerView.Adapter<ArticleAdapter.ViewHolder> {
 
-    private VideotableCursor cursor;
+    private ArticletableCursor cursor;
     Activity activity;
 
-    public VideoAdapter(Activity activity) {
+    public ArticleAdapter(Activity activity) {
         this.activity = activity;
     }
 
-    public VideoAdapter(FragmentActivity activity, VideotableCursor cursor) {
+    public ArticleAdapter(FragmentActivity activity, ArticletableCursor cursor) {
         this.activity = activity;
         this.cursor = cursor;
     }
 
     public static class ViewHolder extends RecyclerView.ViewHolder {
         public TextView title;
-        public TextView duration;
         public ImageView thumbnail;
+        // can be in two states; start reading or x% completed
+        public TextView completionRate;
 
         public ViewHolder(View v) {
             super(v);
             title = v.findViewById(R.id.title);
             thumbnail = v.findViewById(R.id.thumbnail);
-            duration = v.findViewById(R.id.duration);
+            completionRate = v.findViewById(R.id.completion_rate);
         }
     }
 
@@ -48,7 +49,7 @@ public class VideoAdapter extends RecyclerView.Adapter<VideoAdapter.ViewHolder> 
     @Override
     public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int i) {
         return new ViewHolder(LayoutInflater.from(parent.getContext())
-                .inflate(R.layout.video_card_item, parent, false));
+                .inflate(R.layout.article_card_item, parent, false));
     }
 
     @Override
@@ -64,14 +65,19 @@ public class VideoAdapter extends RecyclerView.Adapter<VideoAdapter.ViewHolder> 
                 .into(holder.thumbnail);
 
         try {
-            holder.duration.setText(String.valueOf(cursor.getDuration()) + " mins");
+            int completionRateValue = cursor.getCompletionRate();
+            if (completionRateValue <= 0 || completionRateValue == 100) {
+                holder.completionRate.setText("Start reading");
+            } else {
+                holder.completionRate.setText(String.valueOf(cursor.getCompletionRate()) + "% completed");
+            }
         } catch (Exception e) {
             e.printStackTrace();
-            holder.duration.setText("1 mins");
+            holder.completionRate.setText("Start reading");
         }
 
         holder.itemView.setOnClickListener(v -> {
-            Intent intent = new Intent(activity, WatchVideoActivity.class)
+            Intent intent = new Intent(activity, ReadArticleActivity.class)
                     .putExtra(TITLE, holder.title.getText().toString());
             activity.startActivity(intent);
         });

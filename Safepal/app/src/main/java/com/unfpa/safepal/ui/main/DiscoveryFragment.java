@@ -11,23 +11,25 @@ import android.support.annotation.NonNull;
 import android.support.v4.app.Fragment;
 
 import com.unfpa.safepal.R;
+import com.unfpa.safepal.adapters.ArticleAdapter;
 import com.unfpa.safepal.adapters.VideoAdapter;
+import com.unfpa.safepal.provider.articletable.ArticletableCursor;
+import com.unfpa.safepal.provider.articletable.ArticletableSelection;
 import com.unfpa.safepal.provider.videotable.VideotableCursor;
 import com.unfpa.safepal.provider.videotable.VideotableSelection;
 
 /**
- * Loads the adapter views for the tabs in VideoFragment
+ * Loads the adapter views for the Video, Article and Quiz
  */
-public class VideoFragment extends Fragment {
+public class DiscoveryFragment extends Fragment {
 
     private static final String ARG_SECTION_NUMBER = "section_number";
 
     private PageViewModel pageViewModel;
-    private VideoAdapter videoAdapter;
     private RecyclerView recyclerView;
 
-    public static VideoFragment newInstance(int index) {
-        VideoFragment fragment = new VideoFragment();
+    public static DiscoveryFragment newInstance(int index) {
+        DiscoveryFragment fragment = new DiscoveryFragment();
         Bundle bundle = new Bundle();
         bundle.putInt(ARG_SECTION_NUMBER, index);
         fragment.setArguments(bundle);
@@ -50,17 +52,24 @@ public class VideoFragment extends Fragment {
             @NonNull LayoutInflater inflater, ViewGroup container,
             Bundle savedInstanceState) {
         View rootView = inflater.inflate(R.layout.fragment_discover_more, container, false);
-
-        videoAdapter = new VideoAdapter(getActivity(), getVideosFromTable());
         recyclerView = rootView.findViewById(R.id.media_recycler_view);
-
         RecyclerView.LayoutManager mLayoutManager = new GridLayoutManager(getContext(), 2);
         recyclerView.setLayoutManager(mLayoutManager);
-        recyclerView.setAdapter(videoAdapter);
+
+        int index = getArguments().getInt(ARG_SECTION_NUMBER);
+        if (index == 1) {
+            recyclerView.setAdapter(new VideoAdapter(getActivity(), getVideosFromTable()));
+        } else if (index == 2) {
+            recyclerView.setAdapter(new ArticleAdapter(getActivity(), getArticlesFromTable()));
+        }
         return rootView;
     }
 
     private VideotableCursor getVideosFromTable() {
         return new VideotableSelection().orderByCreatedAt(true).query(getContext().getContentResolver());
+    }
+
+    private ArticletableCursor getArticlesFromTable() {
+        return new ArticletableSelection().orderByCreatedAt(true).query(getContext().getContentResolver());
     }
 }

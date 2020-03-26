@@ -24,13 +24,12 @@ import android.widget.TextView;
 import com.crashlytics.android.Crashlytics;
 import com.github.amlcurran.showcaseview.ShowcaseView;
 import com.github.amlcurran.showcaseview.targets.ViewTarget;
-import com.unfpa.safepal.DiscoverMoreActivity;
+import com.unfpa.safepal.DiscoveryActivity;
 import com.unfpa.safepal.R;
 import com.unfpa.safepal.network.SetupIntentService;
 import com.unfpa.safepal.report.ReportingActivity;
 
 import io.fabric.sdk.android.Fabric;
-import timber.log.Timber;
 
 public class HomeActivity extends AppCompatActivity {
     Button reportCaseButton;
@@ -72,7 +71,7 @@ public class HomeActivity extends AppCompatActivity {
         discoverMoreCard.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                startActivity(new Intent(getApplicationContext(), DiscoverMoreActivity.class));
+                startActivity(new Intent(getApplicationContext(), DiscoveryActivity.class));
             }
         });
 

@@ -10,6 +10,211 @@
 
     <!-- messages-->
     <string name="not_your_fault_alert_header">It is not your fault</string>
+    <string name="seek_medical_alert_head">Seek medical Care</string>
+    <string name="signs_of_sgbv_header">Beware.. </string>
+    <string name="action_home_disclaimer">Disclaimer</string>
+    <string name="action_home_guide">Guide</string>
+    <string name="home_fab_report">Report Sexual Violence</string>
+    <!-- Home card view-->
+    <string name="home_activity_title">SafePal</string>
+
+    <!-- menu strings-->
+    <string name="wsgh_activity_title"> Getting Help</string>
+    <string name="wsgh_msgs_to_ecourage_survivor"> Messages to encourage the survivor or friend to report an incident - Programme team</string>
+
+    <!-- Home Activity strings-->
+
+
+    <!-- Floationg Action Button-->
+    <string name="wsgh_happened_to_who">Did the incident happen to you?</string>
+    <string name="wsgh_yes">Yes, it was me.</string>
+    <!-- Who is getting help strings -->
+    <string name="wsgh_someone_else">No, to somebody I know</string>
+    <string name="settings_permission_message">Safepal needs permission to use this feature. You can grant them in app settings.</string>
+    <string name="needs_permission">Need Permissions</string>
+    <string name="sif_activity_title">Getting Help </string>
+    <string name="sif_survivor_age">When were you born ?</string>
+    <string name="sif_survivor_pick_age">choose a date </string>
+    <string name="sif_survivor_gender">Are you female or male ?</string>
+    <string name="sif_survivor_gender_above_18">Are you a Man or Woman?</string>
+
+    <!-- survivor incident form strings -->
+    <string name="sif_incident_location">Where did it happen?</string>
+    <string name="sif_incident_details">Tell the story of the incident.</string>
+    <string name="sif_male">Boy </string>
+    <string name="sif_female">Girl </string>
+    <string name="apif_activity_title">Getting Help </string>
+    <string name="survivor_age">How old is she/he? </string>
+    <string name="apif_survivor_gender">Is this person female or male?</string>
+    <string name="apif_survivor_gender_above_18">Is she/he a Man or Woman?</string>
+    <string name="incident_location">Where did it happen?</string>
+    <string name="incident_details">Tell the story of the incident.</string>
+
+    <string name="apif_male">Boy </string>
+
+    <!-- another person incident form strings -->
+    <string name="apif_female">Girl </string>
+    <string name="title_activity_main_activitysdas">MainActivitysdas</string>
+    <string name="title_activity_referral">Contact Info…</string>
+    <string name="after_submit_msg">Thank you for submitting the Incident. The incident was successfully delivered to SafePal. \nSafePal will in a short while provide you with a person to assist you.</string>
+    <string name="title_activity_eferral2">Nearest CSO</string>
+    <string name="refferal_two_intro">We have located the nearest ... (CSO) to you.\nThe people at this CSO have already gotten information about this incident and they will be contacting you soon.\nBelow are the details of this CSO.</string>
+    <string name="close_dialog">Close</string>
+    <string name="em_not_fault">It\'s not your fault</string>
+
+    <string name="title_activity_contact">Nearest Help</string>
+
+    <string name="contact_u_or_not">Would you like to contact you?</string>
+
+
+    <string name="contact_yes">Yes</string>
+    <string name="contact_no">No</string>
+    <string name="direction_api_key">AIzaSyCs4MLCwOm37kZn2kB1M2YQwSVSQv-oJ74</string>
+    <string name="title_activity_cso">Help</string>
+    <string name="reset_button">Reset</string>
+    <string name="prev">Prev</string>
+
+    <!-- contact activity-->
+    <string name="next">Next</string>
+    <string name="report_sexual_abuse">Report Sexual Abuse</string>
+    <string name="submit">Submit</string>
+    <string name="finish">Finish</string>
+    <string name="female">Female</string>
+    <string name="male">Male</string>
+    <string name="gender">Gender</string>
+
+    <string name="title_activity_reporting">Report</string>
+
+    <!--cso and child help line -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="cannotLeaveBlank">Please kindly fill this field.</string>
+    <string name="enter_correct_number">Please enter a correct phone number</string>
+    <string name="next_message">next</string>
+    <string name="intro_encouraging_messages">Get familiar with important information by viewing the quick help information below. Swipe left or right to show other information</string>
+    <string name="home">Home</string>
+    <string name="auto_scroll_messages">Auto scroll</string>
+    <string name="shared_pref_name">safepal_prefs</string>
+    <string name="first_time">first_time_to_run_app</string>
+    <string name="cso_no_internet_text">No internet connection. Make sure Wi-Fi or cellular data is turned on, then try again </string>
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="cso_no_internet_retry">Retry</string>
+    <string name="home_guide_fab_report_title">Report an incident </string>
+    <string name="home_guide_fab_report_text">Click on the right bottom button to report a sexual violence incident directly to safepal
+    and get linked to the nearest service provider for help. </string>
+    <string name="home_guide_fab_exit_title">Quick Exit </string>
+    <string name="home_guide_fab_exit_text"> If you are suspicious that perpetrator knows you are reporting him/her, use the left bottom \'Exit\' button to exit the safepal app or quickly uninstall it by long pressing on the \'Exit\' button.</string>
+    <string name="home_guide_fab_next_title">Important Information </string>
+    <string name="home_guide_fab_next_text"> \"Learning never ends\" - the saying goes, swipe left or right to get more information about sexual violence. Together, we can fight gender based violence </string>
+    <string name="report">REPORT</string>
+    <string name="yes">Yes</string>
+
+    <string name="no">No</string>
+
+    <!-- 2017 Changes -->
+    <!-- No internet feedback-->
+    <string name="apif_disability">Does the victim have any disability</string>
+    <string name="enter_disability">What disability do you have</string>
+
+
+    <!--- Guide -->
+    <string name="reachout_message">Talk to us if you or someone you know has been sexually assaulted</string>
+    <string name="reachout_title">We are here for you . .</string>
+    <string name="title_activity_discover_more">Videos</string>
+    <string name="videos_tab">Videos</string>
+    <string name="topics_tab">Topics</string>
+    <string name="directory_tab">Directory</string>
+    <string name="title_activity_watch_video">WatchVideoActivity</string>
+    <string name="title_activity_read_article">ReadArticleActivity</string>
+    <string name="large_text">
+        "Material is the metaphor.\n\n"
+
+        "A material metaphor is the unifying theory of a rationalized space and a system of motion."
+        "The material is grounded in tactile reality, inspired by the study of paper and ink, yet "
+        "technologically advanced and open to imagination and magic.\n"
+        "Surfaces and edges of the material provide visual cues that are grounded in reality. The "
+        "use of familiar tactile attributes helps users quickly understand affordances. Yet the "
+        "flexibility of the material creates new affordances that supercede those in the physical "
+        "world, without breaking the rules of physics.\n"
+        "The fundamentals of light, surface, and movement are key to conveying how objects move, "
+        "interact, and exist in space and in relation to each other. Realistic lighting shows "
+        "seams, divides space, and indicates moving parts.\n\n"
+
+        "Bold, graphic, intentional.\n\n"
+
+        "The foundational elements of print based design typography, grids, space, scale, color, "
+        "and use of imagery guide visual treatments. These elements do far more than please the "
+        "eye. They create hierarchy, meaning, and focus. Deliberate color choices, edge to edge "
+        "imagery, large scale typography, and intentional white space create a bold and graphic "
+        "interface that immerse the user in the experience.\n"
+        "An emphasis on user actions makes core functionality immediately apparent and provides "
+        "waypoints for the user.\n\n"
+
+        "Motion provides meaning.\n\n"
+
+        "Motion respects and reinforces the user as the prime mover. Primary user actions are "
+        "inflection points that initiate motion, transforming the whole design.\n"
+        "All action takes place in a single environment. Objects are presented to the user without "
+        "breaking the continuity of experience even as they transform and reorganize.\n"
+        "Motion is meaningful and appropriate, serving to focus attention and maintain continuity. "
+        "Feedback is subtle yet clear. Transitions are efﬁcient yet coherent.\n\n"
+
+        "3D world.\n\n"
+
+        "The material environment is a 3D space, which means all objects have x, y, and z "
+        "dimensions. The z-axis is perpendicularly aligned to the plane of the display, with the "
+        "positive z-axis extending towards the viewer. Every sheet of material occupies a single "
+        "position along the z-axis and has a standard 1dp thickness.\n"
+        "On the web, the z-axis is used for layering and not for perspective. The 3D world is "
+        "emulated by manipulating the y-axis.\n\n"
+
+        "Light and shadow.\n\n"
+
+        "Within the material environment, virtual lights illuminate the scene. Key lights create "
+        "directional shadows, while ambient light creates soft shadows from all angles.\n"
+        "Shadows in the material environment are cast by these two light sources. In Android "
+        "development, shadows occur when light sources are blocked by sheets of material at "
+        "various positions along the z-axis. On the web, shadows are depicted by manipulating the "
+        "y-axis only. The following example shows the card with a height of 6dp.\n\n"
+
+        "Resting elevation.\n\n"
+
+        "All material objects, regardless of size, have a resting elevation, or default elevation "
+        "that does not change. If an object changes elevation, it should return to its resting "
+        "elevation as soon as possible.\n\n"
+
+        "Component elevations.\n\n"
+
+        "The resting elevation for a component type is consistent across apps (e.g., FAB elevation "
+        "does not vary from 6dp in one app to 16dp in another app).\n"
+        "Components may have different resting elevations across platforms, depending on the depth "
+        "of the environment (e.g., TV has a greater depth than mobile or desktop).\n\n"
+
+        "Responsive elevation and dynamic elevation offsets.\n\n"
+
+        "Some component types have responsive elevation, meaning they change elevation in response "
+        "to user input (e.g., normal, focused, and pressed) or system events. These elevation "
+        "changes are consistently implemented using dynamic elevation offsets.\n"
+        "Dynamic elevation offsets are the goal elevation that a component moves towards, relative "
+        "to the component’s resting state. They ensure that elevation changes are consistent "
+        "across actions and component types. For example, all components that lift on press have "
+        "the same elevation change relative to their resting elevation.\n"
+        "Once the input event is completed or cancelled, the component will return to its resting "
+        "elevation.\n\n"
+
+        "Avoiding elevation interference.\n\n"
+
+        "Components with responsive elevations may encounter other components as they move between "
+        "their resting elevations and dynamic elevation offsets. Because material cannot pass "
+        "through other material, components avoid interfering with one another any number of ways, "
+        "whether on a per component basis or using the entire app layout.\n"
+        "On a component level, components can move or be removed before they cause interference. "
+        "For example, a floating action button (FAB) can disappear or move off screen before a "
+        "user picks up a card, or it can move if a snackbar appears.\n"
+        "On the layout level, design your app layout to minimize opportunities for interference. "
+        "For example, position the FAB to one side of stream of a cards so the FAB won’t interfere "
+        "when a user tries to pick up one of cards.\n\n"
+    </string>
     <string-array name="not_your_fault_messages">
 <item>Whatever happened was not your fault. No one has the right to sexually violate you.  The rapist is solely to blame.
            What a person wears, what a person says, or how a person acts cannot justify sexual violence.</item>
@@ -19,7 +224,6 @@
         </item>
 
     </string-array>
-    <string name="seek_medical_alert_head">Seek medical Care</string>
     <string-array name="seek_medical_care_messages">
         <item>You should seek medication care as soon as possible. 40% of rape survivors develop sexually transmitted infections as a result of sexual assault. </item>
 
@@ -29,7 +233,6 @@
         <item>All doctors and nurses will deal with your medical needs confidentially, and they will not inform anyone without your consent</item>
 
     </string-array>
-    <string name="signs_of_sgbv_header">Beware.. </string>
     <string-array name="signs_of_sgbv">
         <item>Beware of torn, stained, or bloody underclothing as one of a physical sign of sexual violence   </item>
         <item>Beware of pain or itching in genital area as one of a physical sign of sexual violence</item>
@@ -46,7 +249,6 @@
         <item> Beware of Sexually transmitted diseases after sexual violence</item>
 
     </string-array>
-    <!-- Home card view-->
     <string-array name="home_contact_info">
         <item>Whatever happened was not your fault. No one has the right to sexually violate you.  The rapist is solely to blame.
            What a person wears, what a person says, or how a person acts cannot justify sexual violence.</item>
@@ -62,25 +264,6 @@
         <item>All doctors and nurses will deal with your medical needs confidentially, and they will not inform anyone without your consent</item>
 
     </string-array>
-
-    <!-- menu strings-->
-    <string name="action_home_disclaimer">Disclaimer</string>
-    <string name="action_home_guide">Guide</string>
-
-    <!-- Home Activity strings-->
-
-
-    <!-- Floationg Action Button-->
-    <string name="home_fab_report">Report Sexual Violence</string>
-    <string name="home_activity_title">SafePal</string>
-    <!-- Who is getting help strings -->
-    <string name="wsgh_activity_title"> Getting Help</string>
-    <string name="wsgh_msgs_to_ecourage_survivor"> Messages to encourage the survivor or friend to report an incident - Programme team</string>
-    <string name="wsgh_happened_to_who">Did the incident happen to you?</string>
-    <string name="wsgh_yes">Yes, it was me.</string>
-    <string name="wsgh_someone_else">No, to somebody I know</string>
-    <string name="settings_permission_message">Safepal needs permission to use this feature. You can grant them in app settings.</string>
-    <string name="needs_permission">Need Permissions</string>
     <string-array name="wsgh_someone_else_array">
         <item>How are you related to her/him?</item>
         <item>Relative</item>
@@ -89,17 +272,6 @@
         <item>Other</item>
 
     </string-array>
-
-    <!-- survivor incident form strings -->
-    <string name="sif_activity_title">Getting Help </string>
-    <string name="sif_survivor_age">When were you born ?</string>
-    <string name="sif_survivor_pick_age">choose a date </string>
-    <string name="sif_survivor_gender">Are you female or male ?</string>
-    <string name="sif_survivor_gender_above_18">Are you a Man or Woman?</string>
-    <string name="sif_incident_location">Where did it happen?</string>
-    <string name="sif_incident_details">Tell the story of the incident.</string>
-    <string name="sif_male">Boy </string>
-    <string name="sif_female">Girl </string>
     <string-array name="sif_incident_type_below">
         <item>What happened to you?</item>
         <item>Bad touches </item>
@@ -107,7 +279,6 @@
         <item>I was defiled</item>
         <item>other</item>
     </string-array>
-
     <string-array name="sif_incident_type_above">
         <item>What happened to you?</item>
         <item>Bad touches </item>
@@ -116,17 +287,6 @@
         <item>I was defiled</item>
         <item>other</item>
     </string-array>
-
-    <!-- another person incident form strings -->
-    <string name="apif_activity_title">Getting Help </string>
-    <string name="survivor_age">How old is she/he? </string>
-    <string name="apif_survivor_gender">Is this person female or male?</string>
-    <string name="apif_survivor_gender_above_18">Is she/he a Man or Woman?</string>
-    <string name="incident_location">Where did it happen?</string>
-    <string name="incident_details">Tell the story of the incident.</string>
-    <string name="apif_male">Boy </string>
-    <string name="apif_female">Girl </string>
-
     <string-array name="apif_incident_type_below">
         <item>What happened to him or her?</item>
         <item>Bad touches </item>
@@ -134,7 +294,6 @@
         <item>He/She was defiled</item>
         <item>other</item>
     </string-array>
-
     <string-array name="apif_incident_type_above">
         <item>What happened to him or her?</item>
         <item>Bad touches </item>
@@ -142,8 +301,6 @@
         <item>He/She was raped</item>
         <item>other</item>
     </string-array>
-
-
     <string-array name="survivor_age_range">
         <item>How old is he/she?</item>
         <item>Below 10 years</item>
@@ -164,46 +321,6 @@
         <item>Above 24 years</item>
 
     </string-array>
-    <string name="title_activity_main_activitysdas">MainActivitysdas</string>
-    <string name="title_activity_referral">Contact Info…</string>
-    <string name="after_submit_msg">Thank you for submitting the Incident. The incident was successfully delivered to SafePal. \nSafePal will in a short while provide you with a person to assist you.</string>
-    <string name="title_activity_eferral2">Nearest CSO</string>
-    <string name="refferal_two_intro">We have located the nearest ... (CSO) to you.\nThe people at this CSO have already gotten information about this incident and they will be contacting you soon.\nBelow are the details of this CSO.</string>
-
-    <!-- contact activity-->
-    <string name="close_dialog">Close</string>
-    <string name="em_not_fault">It\'s not your fault</string>
-    <string name="title_activity_contact">Nearest Help</string>
-    <string name="contact_u_or_not">Would you like to contact you?</string>
-    <string name="contact_yes">Yes</string>
-    <string name="contact_no">No</string>
-    <string name="direction_api_key">AIzaSyCs4MLCwOm37kZn2kB1M2YQwSVSQv-oJ74</string>
-
-    <string name="title_activity_cso">Help</string>
-
-    <!--cso and child help line -->
-    <string name="reset_button">Reset</string>
-    <string name="prev">Prev</string>
-    <string name="next">Next</string>
-    <string name="report_sexual_abuse">Report Sexual Abuse</string>
-    <string name="submit">Submit</string>
-    <string name="finish">Finish</string>
-    <string name="female">Female</string>
-    <string name="male">Male</string>
-    <string name="gender">Gender</string>
-    <string name="title_activity_reporting">Report</string>
-
-    <!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment">Hello blank fragment</string>
-    <string name="cannotLeaveBlank">Please kindly fill this field.</string>
-    <string name="enter_correct_number">Please enter a correct phone number</string>
-    <string name="next_message">next</string>
-    <string name="intro_encouraging_messages">Get familiar with important information by viewing the quick help information below. Swipe left or right to show other information</string>
-    <string name="home">Home</string>
-    <string name="auto_scroll_messages">Auto scroll</string>
-    <string name="shared_pref_name">safepal_prefs</string>
-    <string name="first_time">first_time_to_run_app</string>
-
     <string-array name="auto_complete_report_places">
         <item>Class room</item>
         <item>Friend\'s home</item>
@@ -215,31 +332,4 @@
         <item>School</item>
         <item>Street</item>
     </string-array>
-
-    <!-- 2017 Changes -->
-    <!-- No internet feedback-->
-    <string name="cso_no_internet_text">No internet connection. Make sure Wi-Fi or cellular data is turned on, then try again </string>
-    <string name="cso_no_internet_retry">Retry</string>
-
-
-    <!--- Guide -->
-    <string name="home_guide_fab_report_title">Report an incident </string>
-    <string name="home_guide_fab_report_text">Click on the right bottom button to report a sexual violence incident directly to safepal
-    and get linked to the nearest service provider for help. </string>
-    <string name="home_guide_fab_exit_title">Quick Exit </string>
-    <string name="home_guide_fab_exit_text"> If you are suspicious that perpetrator knows you are reporting him/her, use the left bottom \'Exit\' button to exit the safepal app or quickly uninstall it by long pressing on the \'Exit\' button.</string>
-    <string name="home_guide_fab_next_title">Important Information </string>
-    <string name="home_guide_fab_next_text"> \"Learning never ends\" - the saying goes, swipe left or right to get more information about sexual violence. Together, we can fight gender based violence </string>
-    <string name="report">REPORT</string>
-    <string name="yes">Yes</string>
-    <string name="no">No</string>
-    <string name="apif_disability">Does the victim have any disability</string>
-    <string name="enter_disability">What disability do you have</string>
-    <string name="reachout_message">Talk to us if you or someone you know has been sexually assaulted</string>
-    <string name="reachout_title">We are here for you . .</string>
-    <string name="title_activity_discover_more">Videos</string>
-    <string name="videos_tab">Videos</string>
-    <string name="topics_tab">Topics</string>
-    <string name="directory_tab">Directory</string>
-    <string name="title_activity_watch_video">WatchVideoActivity</string>
 </resources>
