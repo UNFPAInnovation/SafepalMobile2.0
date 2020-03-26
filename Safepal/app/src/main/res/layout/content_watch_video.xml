@@ -64,7 +64,7 @@
 
     <android.support.v7.widget.RecyclerView
         android:id="@+id/related_videos_recycler"
-        android:layout_width="395dp"
+        android:layout_width="0dp"
         android:layout_height="116dp"
         android:layout_marginStart="8dp"
         android:layout_marginTop="8dp"
