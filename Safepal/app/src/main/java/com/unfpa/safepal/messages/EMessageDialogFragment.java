@@ -16,7 +16,7 @@ import com.unfpa.safepal.R;
 public class EMessageDialogFragment extends DialogFragment {
 
     public static final EMessageDialogFragment newInstance(String title, String message, String buttonText) {
-        EMessageDialogFragment adf =  new EMessageDialogFragment();
+        EMessageDialogFragment adf = new EMessageDialogFragment();
         Bundle bundle = new Bundle(3);
         bundle.putString("title", title);
         bundle.putString("message", message);
@@ -34,15 +34,11 @@ public class EMessageDialogFragment extends DialogFragment {
 
         AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
 
-         builder.setMessage(eMessage)
-                .setTitle(Html.fromHtml("<center><font color='#01a89e'>"+emTitle+"</font></center>"))
+        builder.setMessage(eMessage)
+                .setTitle(Html.fromHtml("<center><font color='#01a89e'>" + emTitle + "</font></center>"))
                 .setIcon(R.mipmap.ic_launcher)
-                .setPositiveButton(emButtonText, new DialogInterface.OnClickListener() {
-                    public void onClick(DialogInterface dialog, int id) {
-                        // FIRE ZE MISSILES!
-                    }
+                .setPositiveButton(emButtonText, (dialog, id) -> {
                 });
-        // Create the AlertDialog object and return it
         return builder.create();
     }
 }

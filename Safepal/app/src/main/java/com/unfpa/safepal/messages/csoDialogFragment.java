@@ -32,7 +32,7 @@ public class csoDialogFragment extends DialogFragment {
     private static final String TAG = csoDialogFragment.class.getSimpleName();
 
     public static final csoDialogFragment newInstance(String sCsoTitle, String sCsoMessage, String sCsoPhoneNumber, String positiveButton, String negativeButton) {
-        csoDialogFragment adf =  new csoDialogFragment();
+        csoDialogFragment adf = new csoDialogFragment();
         Bundle bundle = new Bundle(5);
         bundle.putString("sCsoTitle", sCsoTitle);
         bundle.putString("sCsoMessage", sCsoMessage);
@@ -57,28 +57,18 @@ public class csoDialogFragment extends DialogFragment {
 
         AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
 
-         builder.setMessage("This service provider is "+sCsoMessage+"\nContacts : "+ sCsoPhonenumber)
-                .setTitle(Html.fromHtml("<center><font color='#01a89e'>"+sCsoTitle+"</font></center>"))
+        builder.setMessage("This service provider is " + sCsoMessage + "\nContacts : " + sCsoPhonenumber)
+                .setTitle(Html.fromHtml("<center><font color='#01a89e'>" + sCsoTitle + "</font></center>"))
                 .setIcon(R.mipmap.ic_launcher)
-                .setPositiveButton(positiveButtonText, new DialogInterface.OnClickListener() {
-                    public void onClick(DialogInterface dialog, int id) {
-                        // call the cso
-
-                        try {
-//                            startActivity(new Intent(Intent.ACTION_CALL, Uri.parse("tel:" + sCsoPhonenumber)));
-                            callCSO(sCsoPhonenumber);
-                        }
-                        catch (ActivityNotFoundException ex) {
-                            Toast.makeText(getActivity(), "SafePal can't make call now", Toast.LENGTH_SHORT).show();
-                        }
+                .setPositiveButton(positiveButtonText, (dialog, id) -> {
+                    try {
+                        callCSO(sCsoPhonenumber);
+                    } catch (ActivityNotFoundException ex) {
+                        Toast.makeText(getActivity(), "SafePal can't make call now", Toast.LENGTH_SHORT).show();
                     }
-                }).setNegativeButton(negativeButtonText, new DialogInterface.OnClickListener() {
-             @Override
-             public void onClick(DialogInterface dialogInterface, int i) {
+                }).setNegativeButton(negativeButtonText, (dialogInterface, i) -> {
 
-             }
-         });
-        // Create the AlertDialog object and return it
+        });
         return builder.create();
     }
 
@@ -114,12 +104,9 @@ public class csoDialogFragment extends DialogFragment {
         android.support.v7.app.AlertDialog.Builder builder = new android.support.v7.app.AlertDialog.Builder(getActivity());
         builder.setTitle(R.string.needs_permission);
         builder.setMessage(R.string.settings_permission_message);
-        builder.setPositiveButton("GOTO SETTINGS", new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialog, int which) {
-                dialog.cancel();
-                openSettings();
-            }
+        builder.setPositiveButton("GOTO SETTINGS", (dialog, which) -> {
+            dialog.cancel();
+            openSettings();
         });
         builder.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
             @Override

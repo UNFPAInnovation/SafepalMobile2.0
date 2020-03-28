@@ -43,8 +43,6 @@ public class ReportingActivity extends AppCompatActivity implements SurvivorInci
     String TAG = ReportingActivity.class.getSimpleName();
     Button buttonNext;
     Button buttonPrev;
-    private ProgressDialog progressDialog;
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -53,16 +51,11 @@ public class ReportingActivity extends AppCompatActivity implements SurvivorInci
         Toolbar toolbar = (Toolbar) findViewById(R.id.reporting_toolbar);
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-
-//        Utilities.saveFormParameter(getApplicationContext(), "backButtonPressed", false);
         Utilities.saveBackButtonPressed(getApplicationContext(), "backButtonPressed", false);
 
         manageUI();
         removePreviousButton();
-
         loadWhoGetnHelpFragment();
-
-
     }
 
     @Override
@@ -81,19 +74,19 @@ public class ReportingActivity extends AppCompatActivity implements SurvivorInci
 
         //set listerns
         buttonNext.setOnClickListener(view -> {
-            Log.d(TAG, "button next clicked" );
+            Log.d(TAG, "button next clicked");
             if (isFragmentVisible(getFragmentManager().findFragmentByTag(
-                    WhoSGettingHelpFragment.class.getSimpleName()))) {//cuurent frag WhoSGettingHelpFragment
+                    WhoSGettingHelpFragment.class.getSimpleName()))) {
                 Utilities.saveFormParameter(getApplicationContext(),
                         WhoSGettingHelpFragment.wsghSomeelseRb.isChecked(),
                         WhoSGettingHelpFragment.wsghRelationshipSpinner.getSelectedItem().toString());
 
-                if (WhoSGettingHelpFragment.wsghYesRB.isChecked()) {//happened to me
+                if (WhoSGettingHelpFragment.wsghYesRB.isChecked()) {
                     //Log.d(TAG, "loading reporting fragment for self");
-                    loadReportingFormSelfFragment();//used in the WHoIsGettingHelp Fragment
+                    loadReportingFormSelfFragment();
                     updateNextButtonToSubmit();
                     buttonPrev.setVisibility(View.VISIBLE);
-                } else if (WhoSGettingHelpFragment.wsghSomeelseRb.isChecked()) {//happened to someone else
+                } else if (WhoSGettingHelpFragment.wsghSomeelseRb.isChecked()) {
                     if (WhoSGettingHelpFragment.wsghRelationshipSpinner.getSelectedItemPosition() <= 0) {
                         WhoSGettingHelpFragment.wsghFeedbackSnackbar = Snackbar.make(view, "what is your relationship to survivor?", Snackbar.LENGTH_LONG);
                         WhoSGettingHelpFragment.wsghFeedbackSnackbar.show();
@@ -291,54 +284,37 @@ public class ReportingActivity extends AppCompatActivity implements SurvivorInci
     }
 
     public void updateContactToServer(final String toServerCasenumber, final String toServerContact, final String updateContactUrl) {
-        getUpdateTokenFromServer(new VolleyCallback() {
-            @Override
-            public void onSuccessResponse(String tokenResponse) {
+        getUpdateTokenFromServer(tokenResponse -> {
 
-                try {
-                    JSONObject tokenObject = new JSONObject(tokenResponse);
-                    final String serverReceivedToken = tokenObject.getString("token");
-                    // This volley request sends a report to the server with the received token
-                    StringRequest updateContactRequest = new StringRequest(Request.Method.POST, updateContactUrl,
-                            new Response.Listener<String>() {
-                                @Override
-                                public void onResponse(String updateContactReponse) {
-                                    Log.d("kkkkk", updateContactReponse);
-                                }
-                            },
-                            new Response.ErrorListener() {
-                                @Override
-                                public void onErrorResponse(VolleyError error) {
-                                    Log.d("Not Submitted", error.getMessage());
-                                }
-                            }) {
+            try {
+                JSONObject tokenObject = new JSONObject(tokenResponse);
+                final String serverReceivedToken = tokenObject.getString("token");
+                // This volley request sends a report to the server with the received token
+                StringRequest updateContactRequest = new StringRequest(Request.Method.POST, updateContactUrl,
+                        updateContactReponse -> Log.d("kkkkk", updateContactReponse),
+                        error -> Log.d("Not Submitted", error.getMessage())) {
 
-                        @Override
-                        protected Map<String, String> getParams() throws AuthFailureError {
-                            HashMap<String, String> updateContact = new HashMap<String, String>();
+                    @Override
+                    protected Map<String, String> getParams() throws AuthFailureError {
+                        HashMap<String, String> updateContact = new HashMap<String, String>();
 
-                            updateContact.put("token", serverReceivedToken);
-                            updateContact.put("caseNumber", toServerCasenumber);
-                            updateContact.put("contact", toServerContact);
-                            return updateContact;
-                        }
+                        updateContact.put("token", serverReceivedToken);
+                        updateContact.put("caseNumber", toServerCasenumber);
+                        updateContact.put("contact", toServerContact);
+                        return updateContact;
+                    }
 
-                        @Override
-                        public Map<String, String> getHeaders() throws AuthFailureError {
-                            HashMap<String, String> updateContactHeaders = new HashMap<String, String>();
-                            updateContactHeaders.put("userid", "C7rPaEAN9NpPGR8e9wz9bzw");
-                            return updateContactHeaders;
-                        }
+                    @Override
+                    public Map<String, String> getHeaders() throws AuthFailureError {
+                        HashMap<String, String> updateContactHeaders = new HashMap<String, String>();
+                        updateContactHeaders.put("userid", "C7rPaEAN9NpPGR8e9wz9bzw");
+                        return updateContactHeaders;
+                    }
 
-                    };
-
-
-                    MySingleton.getInstance(getApplicationContext()).addToRequestQueue(updateContactRequest);
-
-
-                } catch (Exception e) {
-                    e.printStackTrace();
-                }
+                };
+                MySingleton.getInstance(getApplicationContext()).addToRequestQueue(updateContactRequest);
+            } catch (Exception e) {
+                e.printStackTrace();
             }
         });
     }
@@ -349,20 +325,8 @@ public class ReportingActivity extends AppCompatActivity implements SurvivorInci
 
         // This volley request gets a token from the server
         StringRequest tokenRequest = new StringRequest(Request.Method.GET, tokenUrl,
-                new Response.Listener<String>() {
-                    @Override
-                    public void onResponse(String tokenResponse) {
-                        tokenCallback.onSuccessResponse(tokenResponse);
-
-
-                    }
-                },
-                new Response.ErrorListener() {
-                    @Override
-                    public void onErrorResponse(VolleyError error) {
-                        Log.d("Failed to get token", error.getMessage());
-                    }
-                }) {
+                tokenResponse -> tokenCallback.onSuccessResponse(tokenResponse),
+                error -> Log.d("Failed to get token", error.getMessage())) {
             @Override
             public Map<String, String> getHeaders() throws AuthFailureError {
                 HashMap<String, String> headers = new HashMap<String, String>();

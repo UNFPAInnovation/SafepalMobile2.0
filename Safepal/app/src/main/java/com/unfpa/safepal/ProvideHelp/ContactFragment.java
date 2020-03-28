@@ -29,91 +29,39 @@ import com.unfpa.safepal.store.ReportIncidentTable;
 import static com.unfpa.safepal.report.WhoSGettingHelpFragment.randMessageIndex;
 
 /**
- * A simple {@link Fragment} subclass.
- * Activities that contain this fragment must implement the
- * {@link ContactFragment.OnFragmentInteractionListener} interface
- * to handle interaction events.
- * Use the {@link ContactFragment#newInstance} factory method to
- * create an instance of this fragment.
+ * Provides list of CSO that user can contact for help
  */
 public class ContactFragment extends Fragment {
-
-
     private TextView contactEncouragingMessagesTv;
 
     public static TextView contactSafepalNo;
 
     RIContentObserver reportIncidentContentObserver;
-    /**
-     * Next and buttonExit button
-     */
     Button buttonFinish;
     Button buttonExit;
 
-    //private Toolbar contactToolbar;
     private LinearLayout contactPhoneEmailLl;
-    //    private RadioButton contactYesRB, contactNoRb;
     private static EditText contactPhonenumber;
     static CheckBox checkBoxContactMe;
-
-
-    // TODO: Rename parameter arguments, choose names that match
-    // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-    private static final String ARG_PARAM1 = "param1";
-    private static final String ARG_PARAM2 = "param2";
-
-    // TODO: Rename and change types of parameters
-    private String mParam1;
-    private String mParam2;
-
     private OnFragmentInteractionListener mListener;
 
     public ContactFragment() {
         // Required empty public constructor
     }
 
-    /**
-     * Use this factory method to create a new instance of
-     * this fragment using the provided parameters.
-     *
-     * @param param1 Parameter 1.
-     * @param param2 Parameter 2.
-     * @return A new instance of fragment ContactFragment.
-     */
-    // TODO: Rename and change types and number of parameters
-    public static ContactFragment newInstance(String param1, String param2) {
-        ContactFragment fragment = new ContactFragment();
-        Bundle args = new Bundle();
-        args.putString(ARG_PARAM1, param1);
-        args.putString(ARG_PARAM2, param2);
-        fragment.setArguments(args);
-        return fragment;
-    }
-
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        if (getArguments() != null) {
-            mParam1 = getArguments().getString(ARG_PARAM1);
-            mParam2 = getArguments().getString(ARG_PARAM2);
-        }
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_contact, container, false);
 
-        //Toolbar of contact activity
-        //   contactToolbar = (Toolbar) view.findViewById(R.id.contact_toolbar);
-        //assignment of UI in xml
         buttonExit = (Button) view.findViewById(R.id.exit_app);
         buttonFinish = (Button) view.findViewById(R.id.finish);
-
-//        contactYesRB = (RadioButton)view.findViewById(R.id.contact_me_yes_rb);
         checkBoxContactMe = (CheckBox) view.findViewById(R.id.checkbox_contact_me);
-//        contactNoRb = (RadioButton)view.findViewById(R.id.contact_me_not_rb);
         contactPhoneEmailLl = (LinearLayout) view.findViewById(R.id.contact_phone_email_ll);
         contactEncouragingMessagesTv = (TextView) view.findViewById(R.id.contact_ecouraging_messages_tv);
         contactSafepalNo = (TextView) view.findViewById(R.id.contact_safepal_no);
@@ -122,6 +70,7 @@ public class ContactFragment extends Fragment {
 
         contactPhonenumber.addTextChangedListener(new TextWatcher() {
             int length_before = 0;
+
             @Override
             public void beforeTextChanged(CharSequence s, int start, int count, int after) {
                 length_before = s.length();
@@ -136,40 +85,24 @@ public class ContactFragment extends Fragment {
             public void afterTextChanged(Editable s) {
                 if (length_before < s.length()) {
 
-                        if (s.length() == 3 || s.length() == 7)
-                            s.append("-");
-                        if (s.length() > 3) {
-                            if (Character.isDigit(s.charAt(3)))
-                                s.insert(3, "-");
-                        }
-                        if (s.length() > 7) {
-                            if (Character.isDigit(s.charAt(7)))
-                                s.insert(7, "-");
+                    if (s.length() == 3 || s.length() == 7)
+                        s.append("-");
+                    if (s.length() > 3) {
+                        if (Character.isDigit(s.charAt(3)))
+                            s.insert(3, "-");
+                    }
+                    if (s.length() > 7) {
+                        if (Character.isDigit(s.charAt(7)))
+                            s.insert(7, "-");
 
                     }
                 }
-
             }
         });
 
         loadContactFeedbackMessages();
         //update unique number
         updateUIDTextView();
-
-        //activates the checkbox and makes phone number optional
-//        checkBoxContactMe.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
-//            @Override
-//            public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
-//                if (b) {//user selcted contact me
-//                    //shows phone number and email
-//                    contactPhoneEmailLl.setVisibility(View.VISIBLE);
-//                } else {//user doesnt want to be contacted
-//                    //hides phonenumber and email on UI
-//                    contactPhoneEmailLl.setVisibility(View.GONE);
-//
-//                }
-//            }
-//        });
 
         contactEncouragingMessagesTv.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -183,7 +116,6 @@ public class ContactFragment extends Fragment {
         });
 
         return view;
-
     }
 
     private void displayPhoneNumberRemoveCheckbox() {
@@ -236,8 +168,6 @@ public class ContactFragment extends Fragment {
 
             dataValues.put(ReportIncidentTable.COLUMN_REPORTER_PHONE_NUMBER, contactPhonenumber.getText().toString());
 
-
-
             if (cursorUpdate != null) {
                 cursorUpdate.moveToLast();
 
@@ -247,9 +177,7 @@ public class ContactFragment extends Fragment {
                                 ReportIncidentTable.COLUMN_ID)), null);
 
             }
-
         }
-
         return true;
     }
 
@@ -297,17 +225,11 @@ public class ContactFragment extends Fragment {
         getActivity().getContentResolver().registerContentObserver(ReportIncidentContentProvider.CONTENT_URI,
                 true,
                 reportIncidentContentObserver);
-
-
     }
 
     private void loadContactFeedbackMessages() {
         String[] wsghMessagesArray = getResources().getStringArray(R.array.seek_medical_care_messages);
         contactEncouragingMessagesTv.setText(wsghMessagesArray[randMessageIndex(0, wsghMessagesArray.length)].toString());
     }
-
-
-
-
 }
 

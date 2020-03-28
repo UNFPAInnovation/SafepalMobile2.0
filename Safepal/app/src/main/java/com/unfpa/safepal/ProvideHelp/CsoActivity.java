@@ -98,7 +98,7 @@ public class CsoActivity extends AppCompatActivity {
 
         loadCsoMessages();
 
-        updateCsoUIDTV();
+        updateSafepalNumber();
 
         csosRecyclerView = (RecyclerView) findViewById(R.id.cso_recycler_view);
 
@@ -109,12 +109,7 @@ public class CsoActivity extends AppCompatActivity {
         csosRecyclerView.setAdapter(csosAdapter);
         retrieveCSOLocations();
 
-        buttonNext.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                finish();
-            }
-        });
+        buttonNext.setOnClickListener(view -> finish());
     }
 
     //Randomly load encouraging messages to the Text View
@@ -146,8 +141,7 @@ public class CsoActivity extends AppCompatActivity {
         }
     }
 
-    //updates safepal number
-    public void updateCsoUIDTV() {
+    public void updateSafepalNumber() {
         Cursor cursor = getContentResolver().query(
                 ReportIncidentContentProvider.CONTENT_URI,
                 null,
@@ -184,9 +178,8 @@ public class CsoActivity extends AppCompatActivity {
                 rICsoContentObserver);
     }
 
-    //retrieves lat and lng from db and inserts them into the remote method for retreiving the csos
+    //retrieves lat and lng from db and inserts them into the remote method for retrieving the csos
     public void retrieveCSOLocations() {
-
         Cursor cursorRetrieveLatLng = getContentResolver().query(
                 ReportIncidentContentProvider.CONTENT_URI,
                 null,
