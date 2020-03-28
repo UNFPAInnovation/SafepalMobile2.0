@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.v7.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:cardview="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginBottom="5dp"
+    cardview:cardCornerRadius="2dp"
+    cardview:cardElevation="3dp"
+    cardview:cardUseCompatPadding="true">
+
+    <android.support.constraint.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="21dp"
+            android:layout_marginEnd="26dp"
+            cardview:layout_constraintEnd_toEndOf="parent"
+            cardview:layout_constraintTop_toTopOf="parent"
+            cardview:srcCompat="@drawable/ic_call_48px" />
+
+        <TextView
+            android:id="@+id/cso_name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="15dp"
+            android:layout_marginTop="6dp"
+            android:maxLines="2"
+            android:text="Action Aid"
+            android:textAppearance="@style/TextAppearance.AppCompat.Headline"
+            android:textColor="@color/colorPrimaryDark"
+            android:textSize="18sp"
+            android:textStyle="bold"
+            cardview:layout_constraintStart_toStartOf="parent"
+            cardview:layout_constraintTop_toTopOf="parent" />
+
+
+        <TextView
+            android:id="@+id/address"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Bukoto"
+            cardview:layout_constraintStart_toStartOf="@+id/cso_name"
+            cardview:layout_constraintTop_toBottomOf="@+id/cso_name" />
+
+        <TextView
+            android:id="@+id/working_hours"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="9am - 9pm"
+            cardview:layout_constraintStart_toStartOf="@+id/address"
+            cardview:layout_constraintTop_toBottomOf="@+id/address" />
+
+        <TextView
+            android:id="@+id/website"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="5dp"
+            android:layout_marginBottom="8dp"
+            android:text="www.reproductivehealth.ug"
+            android:textStyle="bold"
+            cardview:layout_constraintBottom_toBottomOf="parent"
+            cardview:layout_constraintStart_toStartOf="@+id/working_hours"
+            cardview:layout_constraintTop_toBottomOf="@+id/working_hours" />
+    </android.support.constraint.ConstraintLayout>
+</android.support.v7.widget.CardView>

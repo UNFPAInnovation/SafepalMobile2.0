@@ -2,13 +2,17 @@ package com.unfpa.safepal.ui.main;
 
 import android.arch.lifecycle.ViewModelProviders;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
+import android.support.v4.app.Fragment;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.support.annotation.NonNull;
-import android.support.v4.app.Fragment;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
+import android.widget.Spinner;
+import android.widget.Toast;
 
 import com.unfpa.safepal.R;
 import com.unfpa.safepal.adapters.ArticleAdapter;
@@ -18,21 +22,26 @@ import com.unfpa.safepal.provider.articletable.ArticletableSelection;
 import com.unfpa.safepal.provider.videotable.VideotableCursor;
 import com.unfpa.safepal.provider.videotable.VideotableSelection;
 
+import java.util.ArrayList;
+import java.util.List;
+
 /**
- * Displays list of Video, Article and Quiz by loading adapters for either videos or articles
- * depending on what the tab that the user clicks
+ * Displays list CSO(Civil Society Organization) that a user can quickly contact
  *
  * @author Phillip Kigenyi (codephillip@gmail.com)
  */
-public class DiscoveryFragment extends Fragment {
-
+public class CSODirectoryFragment extends Fragment  implements
+        AdapterView.OnItemSelectedListener {
     private static final String ARG_SECTION_NUMBER = "section_number";
 
     private PageViewModel pageViewModel;
     private RecyclerView recyclerView;
+    private Spinner districtSpinner;
 
-    public static DiscoveryFragment newInstance(int index) {
-        DiscoveryFragment fragment = new DiscoveryFragment();
+    ArrayList<String> districts = new ArrayList<>();
+
+    public static CSODirectoryFragment newInstance(int index) {
+        CSODirectoryFragment fragment = new CSODirectoryFragment();
         Bundle bundle = new Bundle();
         bundle.putInt(ARG_SECTION_NUMBER, index);
         fragment.setArguments(bundle);
@@ -54,25 +63,32 @@ public class DiscoveryFragment extends Fragment {
     public View onCreateView(
             @NonNull LayoutInflater inflater, ViewGroup container,
             Bundle savedInstanceState) {
-        View rootView = inflater.inflate(R.layout.fragment_discover_more, container, false);
+        View rootView = inflater.inflate(R.layout.fragment_cso_directory, container, false);
         recyclerView = rootView.findViewById(R.id.media_recycler_view);
+        districtSpinner = rootView.findViewById(R.id.district_spinner);
+
+        districts.add("Kampala");
+        districts.add("Entebbe");
+        districts.add("Masaka");
+        districts.add("Jinja");
+
+        districtSpinner.setOnItemSelectedListener(this);
+        ArrayAdapter arrayAdapter = new ArrayAdapter(getContext(), android.R.layout.simple_spinner_item,districts.toArray());
+        arrayAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        districtSpinner.setAdapter(arrayAdapter);
+
         RecyclerView.LayoutManager mLayoutManager = new GridLayoutManager(getContext(), 2);
         recyclerView.setLayoutManager(mLayoutManager);
-
-        int index = getArguments().getInt(ARG_SECTION_NUMBER);
-        if (index == 1) {
-            recyclerView.setAdapter(new VideoAdapter(getActivity(), getVideosFromTable()));
-        } else if (index == 2) {
-            recyclerView.setAdapter(new ArticleAdapter(getActivity(), getArticlesFromTable()));
-        }
         return rootView;
     }
 
-    private VideotableCursor getVideosFromTable() {
-        return new VideotableSelection().orderByCreatedAt(true).query(getContext().getContentResolver());
+    @Override
+    public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+        Toast.makeText(getContext(), districts.get(position), Toast.LENGTH_LONG).show();
     }
 
-    private ArticletableCursor getArticlesFromTable() {
-        return new ArticletableSelection().orderByCreatedAt(true).query(getContext().getContentResolver());
+    @Override
+    public void onNothingSelected(AdapterView<?> parent) {
+
     }
 }
