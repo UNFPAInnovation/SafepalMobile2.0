@@ -34,7 +34,6 @@ import io.fabric.sdk.android.Fabric;
 public class HomeActivity extends AppCompatActivity {
     Button reportCaseButton;
     RelativeLayout infoPanel;
-    TextView textViewMessage;
     CardView discoverMoreCard;
 
     //guide for safepal
@@ -57,23 +56,11 @@ public class HomeActivity extends AppCompatActivity {
         // Assignments of variables
         reportCaseButton = findViewById(R.id.report_incident_button);
         discoverMoreCard = findViewById(R.id.discover_more_card);
-        textViewMessage = findViewById(R.id.message);
 
         startService(new Intent(this, SetupIntentService.class));
 
-        reportCaseButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                startActivity(new Intent(getApplicationContext(), ReportingActivity.class));
-            }
-        });
-
-        discoverMoreCard.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                startActivity(new Intent(getApplicationContext(), DiscoveryActivity.class));
-            }
-        });
+        reportCaseButton.setOnClickListener(v -> startActivity(new Intent(getApplicationContext(), ReportingActivity.class)));
+        discoverMoreCard.setOnClickListener(v -> startActivity(new Intent(getApplicationContext(), DiscoveryActivity.class)));
 
         showLocationSettingsDialog();
     }

@@ -60,14 +60,6 @@ import java.util.Random;
 import static com.unfpa.safepal.Utils.Constants.BASE_API_URL;
 import static com.unfpa.safepal.report.WhoSGettingHelpFragment.randMessageIndex;
 
-/**
- * A fragment with a Google +1 button.
- * Activities that contain this fragment must implement the
- * {@link SurvivorIncidentFormFragment.OnFragmentInteractionListener} interface
- * to handle interaction events.
- * Use the {@link SurvivorIncidentFormFragment#newInstance} factory method to
- * create an instance of this fragment.
- */
 public class SurvivorIncidentFormFragment extends Fragment {
     //user location
     private static UserLocation sifGPS;
@@ -242,26 +234,15 @@ public class SurvivorIncidentFormFragment extends Fragment {
             }
         });
 
-
         getUserLocationFromGPS();
 
         disabilityEditText = (EditText) rootView.findViewById(R.id.sif_disability_input);
         disabilityRBYes = (RadioButton) rootView.findViewById(R.id.yes_rb);
         disabilityRBNo = (RadioButton) rootView.findViewById(R.id.no_rb);
 
-        disabilityRBYes.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                disabilityRelativeLayout.setVisibility(View.VISIBLE);
-            }
-        });
+        disabilityRBYes.setOnClickListener(v -> disabilityRelativeLayout.setVisibility(View.VISIBLE));
 
-        disabilityRBNo.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                disabilityRelativeLayout.setVisibility(View.GONE);
-            }
-        });
+        disabilityRBNo.setOnClickListener(v -> disabilityRelativeLayout.setVisibility(View.GONE));
 
         disabilityRelativeLayout.setVisibility(View.GONE);
 
@@ -326,12 +307,7 @@ public class SurvivorIncidentFormFragment extends Fragment {
                 openSettings();
             }
         });
-        builder.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialog, int which) {
-                dialog.cancel();
-            }
-        });
+        builder.setNegativeButton("Cancel", (dialog, which) -> dialog.cancel());
         builder.show();
 
     }
@@ -391,15 +367,6 @@ public class SurvivorIncidentFormFragment extends Fragment {
     public static int submitForm(Context context) {
         Log.d(TAG, "submitForm: called");
         String disabilityValue = "";
-
-//        if (sifGPS.canGetLocation()) {
-//            if (sifGPS.getLatitude() != 0.0 || sifGPS.getLongitude() != 0.0) {
-//                userLatitude = sifGPS.getLatitude();
-//                userLongitude = sifGPS.getLongitude();
-//            }
-//        }
-
-//        Toast.makeText(context, "Lat: " + Double.toString(userLatitude) + "Long: " + Double.toString(userLongitude), Toast.LENGTH_LONG).show();
         int genderRBId = sifGenderRG.getCheckedRadioButtonId();
 
         //checks if gender radio group isn't selected;
@@ -489,22 +456,18 @@ public class SurvivorIncidentFormFragment extends Fragment {
         values.put(ReportIncidentTable.COLUMN_REPORTER_EMAIL, "null");
         values.put(ReportIncidentTable.COLUMN_DISABILITY, disabilityValue);
 
-
         //this inserts a new report in to the mysql db
         try {
             if (sifReportIncidentUri == null) {
                 sifReportIncidentUri = context.getContentResolver().insert(ReportIncidentContentProvider.CONTENT_URI, values);
 
                 //Broadcast receiver that checks for the network status
-//                IntentFilter netMainFilter = new IntentFilter(ConnectivityManager.CONNECTIVITY_ACTION);
-//                context.registerReceiver(sifNetReceiver, netMainFilter);
                 final String URL_SAFEPAL_API = BASE_API_URL + "/reports/addreport";
                 Intent mServiceIntent = new Intent(context, AddReportService.class).setData(Uri.parse(URL_SAFEPAL_API));
                 context.startService(mServiceIntent);
                 return ReportingActivity.STATUS_SUBMIT_REPORT_SUBMITED;
             } else {
                 //updates the report if its already available
-
                 context.getContentResolver().update(sifReportIncidentUri, values, null, null);
                 return ReportingActivity.STATUS_SUBMIT_REPORT_ALREADY_AVAILABLE;
             }
@@ -536,7 +499,6 @@ public class SurvivorIncidentFormFragment extends Fragment {
             sifEncouragingMessagesTv.setText(sifMessagesArray[randMessageIndex(0, sifMessagesArray.length)].toString());
         }
     }
-
 
     //shows spinner drop down for sif incident types
     public void onClickSifIVSpinner(View view) {

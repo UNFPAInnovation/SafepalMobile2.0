@@ -80,121 +80,115 @@ public class ReportingActivity extends AppCompatActivity implements SurvivorInci
         buttonNext = (Button) findViewById(R.id.finish);
 
         //set listerns
-        buttonNext.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Log.d(TAG, "button next clicked" );
-                if (isFragmentVisible(getFragmentManager().findFragmentByTag(
-                        WhoSGettingHelpFragment.class.getSimpleName()))) {//cuurent frag WhoSGettingHelpFragment
-                    Utilities.saveFormParameter(getApplicationContext(),
-                            WhoSGettingHelpFragment.wsghSomeelseRb.isChecked(),
-                            WhoSGettingHelpFragment.wsghRelationshipSpinner.getSelectedItem().toString());
+        buttonNext.setOnClickListener(view -> {
+            Log.d(TAG, "button next clicked" );
+            if (isFragmentVisible(getFragmentManager().findFragmentByTag(
+                    WhoSGettingHelpFragment.class.getSimpleName()))) {//cuurent frag WhoSGettingHelpFragment
+                Utilities.saveFormParameter(getApplicationContext(),
+                        WhoSGettingHelpFragment.wsghSomeelseRb.isChecked(),
+                        WhoSGettingHelpFragment.wsghRelationshipSpinner.getSelectedItem().toString());
 
-                    if (WhoSGettingHelpFragment.wsghYesRB.isChecked()) {//happened to me
-                        //Log.d(TAG, "loading reporting fragment for self");
-                        loadReportingFormSelfFragment();//used in the WHoIsGettingHelp Fragment
+                if (WhoSGettingHelpFragment.wsghYesRB.isChecked()) {//happened to me
+                    //Log.d(TAG, "loading reporting fragment for self");
+                    loadReportingFormSelfFragment();//used in the WHoIsGettingHelp Fragment
+                    updateNextButtonToSubmit();
+                    buttonPrev.setVisibility(View.VISIBLE);
+                } else if (WhoSGettingHelpFragment.wsghSomeelseRb.isChecked()) {//happened to someone else
+                    if (WhoSGettingHelpFragment.wsghRelationshipSpinner.getSelectedItemPosition() <= 0) {
+                        WhoSGettingHelpFragment.wsghFeedbackSnackbar = Snackbar.make(view, "what is your relationship to survivor?", Snackbar.LENGTH_LONG);
+                        WhoSGettingHelpFragment.wsghFeedbackSnackbar.show();
+                    } else {
+                        Log.d(TAG, "loading reporting fragment for happeed to someone else");
+                        loadReportingFormSomeOneElseFragment();
                         updateNextButtonToSubmit();
                         buttonPrev.setVisibility(View.VISIBLE);
-                    } else if (WhoSGettingHelpFragment.wsghSomeelseRb.isChecked()) {//happened to someone else
-                        if (WhoSGettingHelpFragment.wsghRelationshipSpinner.getSelectedItemPosition() <= 0) {
-                            WhoSGettingHelpFragment.wsghFeedbackSnackbar = Snackbar.make(view, "what is your relationship to survivor?", Snackbar.LENGTH_LONG);
-                            WhoSGettingHelpFragment.wsghFeedbackSnackbar.show();
-                        } else {
-                            Log.d(TAG, "loading reporting fragment for happeed to someone else");
-                            loadReportingFormSomeOneElseFragment();
-                            updateNextButtonToSubmit();
-                            buttonPrev.setVisibility(View.VISIBLE);
-                        }
-                    } else {
-                        Toast.makeText(getBaseContext(), "Who did the incident happen to? Choose one of the options to proceed.", Toast.LENGTH_LONG).show();
                     }
+                } else {
+                    Toast.makeText(getBaseContext(), "Who did the incident happen to? Choose one of the options to proceed.", Toast.LENGTH_LONG).show();
+                }
 
-                } else if (isFragmentVisible(getFragmentManager().findFragmentByTag(
-                        AnotherPersonIncidentFormFragment.class.getSimpleName()))) {
-                    Log.d(TAG, "submitting another-person form");
+            } else if (isFragmentVisible(getFragmentManager().findFragmentByTag(
+                    AnotherPersonIncidentFormFragment.class.getSimpleName()))) {
+                Log.d(TAG, "submitting another-person form");
 
-                    int status = AnotherPersonIncidentFormFragment.submitForm(getBaseContext());
-                    Log.d(TAG, "onClick: status bar showing");
+                int status = AnotherPersonIncidentFormFragment.submitForm(getBaseContext());
+                Log.d(TAG, "onClick: status bar showing");
 
-                    if ((status == ReportingActivity.STATUS_SUBMIT_REPORT_SUBMITED) || (status == ReportingActivity.STATUS_SUBMIT_REPORT_ALREADY_AVAILABLE)) {
-                        Log.d(TAG, "AnotherPersonIncidentFormFragment.submitForm successfull. Loading contact frag");
-                        Intent csoIntent = new Intent(getBaseContext(), CsoActivity.class);
-                        startActivity(csoIntent);
-                        buttonPrev.setVisibility(View.GONE);
-                        finish();
-                    }
-                } else if (isFragmentVisible(getFragmentManager().findFragmentByTag(
-                        SurvivorIncidentFormFragment.class.getSimpleName()))) {
-                    Log.d(TAG, "submitting self-form");
+                if ((status == ReportingActivity.STATUS_SUBMIT_REPORT_SUBMITED) || (status == ReportingActivity.STATUS_SUBMIT_REPORT_ALREADY_AVAILABLE)) {
+                    Log.d(TAG, "AnotherPersonIncidentFormFragment.submitForm successfull. Loading contact frag");
+                    Intent csoIntent = new Intent(getBaseContext(), CsoActivity.class);
+                    startActivity(csoIntent);
+                    buttonPrev.setVisibility(View.GONE);
+                    finish();
+                }
+            } else if (isFragmentVisible(getFragmentManager().findFragmentByTag(
+                    SurvivorIncidentFormFragment.class.getSimpleName()))) {
+                Log.d(TAG, "submitting self-form");
 
-                    int status = SurvivorIncidentFormFragment.submitForm(getBaseContext());
-                    if ((status == ReportingActivity.STATUS_SUBMIT_REPORT_SUBMITED) || (status == ReportingActivity.STATUS_SUBMIT_REPORT_ALREADY_AVAILABLE)) {
-                        Intent csoIntent = new Intent(getBaseContext(), CsoActivity.class);
-                        startActivity(csoIntent);
-                        finish();
-                        Log.d(TAG, "SurvivorIncidentFormFragment.submitForm successfull. Loading contact frag");
-                    }
-                } else if (isFragmentVisible(getFragmentManager().findFragmentByTag(
-                        ContactFragment.class.getSimpleName()))) {
+                int status = SurvivorIncidentFormFragment.submitForm(getBaseContext());
+                if ((status == ReportingActivity.STATUS_SUBMIT_REPORT_SUBMITED) || (status == ReportingActivity.STATUS_SUBMIT_REPORT_ALREADY_AVAILABLE)) {
+                    Intent csoIntent = new Intent(getBaseContext(), CsoActivity.class);
+                    startActivity(csoIntent);
+                    finish();
+                    Log.d(TAG, "SurvivorIncidentFormFragment.submitForm successfull. Loading contact frag");
+                }
+            } else if (isFragmentVisible(getFragmentManager().findFragmentByTag(
+                    ContactFragment.class.getSimpleName()))) {
 
-                    if (ContactFragment.areFieldsSet(getBaseContext())) {//if all foed are set
-                        Log.d("Code", "reached");
-                        Intent csoIntent = new Intent(getBaseContext(), CsoActivity.class);
-                        csoIntent.putExtra("safepalUniqueNumber", ContactFragment.contactSafepalNo.getText().toString());
-                        startActivity(csoIntent);
-                        finish();
-                    }
+                if (ContactFragment.areFieldsSet(getBaseContext())) {//if all foed are set
+                    Log.d("Code", "reached");
+                    Intent csoIntent = new Intent(getBaseContext(), CsoActivity.class);
+                    csoIntent.putExtra("safepalUniqueNumber", ContactFragment.contactSafepalNo.getText().toString());
+                    startActivity(csoIntent);
+                    finish();
                 }
             }
         });
 
         //exit the  application on click of exit
-        buttonPrev.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Log.d(TAG, "onClick: prevbutton clicked");
-                Utilities.saveBackButtonPressed(getApplicationContext(), "backButtonPressed", true);
+        buttonPrev.setOnClickListener(view -> {
+            Log.d(TAG, "onClick: prevbutton clicked");
+            Utilities.saveBackButtonPressed(getApplicationContext(), "backButtonPressed", true);
 
-                if (isFragmentVisible(getFragmentManager().findFragmentByTag(
-                        SurvivorIncidentFormFragment.class.getSimpleName())) ||
-                        isFragmentVisible(getFragmentManager().findFragmentByTag(
-                                AnotherPersonIncidentFormFragment.class.getSimpleName()))) {
+            if (isFragmentVisible(getFragmentManager().findFragmentByTag(
+                    SurvivorIncidentFormFragment.class.getSimpleName())) ||
+                    isFragmentVisible(getFragmentManager().findFragmentByTag(
+                            AnotherPersonIncidentFormFragment.class.getSimpleName()))) {
 
-                    boolean isSomeOneElse = Utilities.getFormParameter(getApplicationContext(), "isSomeOneElse");
-                    Log.d(TAG, "onClick: isSomeOne shared pref " + isSomeOneElse);
+                boolean isSomeOneElse = Utilities.getFormParameter(getApplicationContext(), "isSomeOneElse");
+                Log.d(TAG, "onClick: isSomeOne shared pref " + isSomeOneElse);
 
-                    FragmentManager fragmentManager = getFragmentManager();
-                    FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+                FragmentManager fragmentManager = getFragmentManager();
+                FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
 
-                    WhoSGettingHelpFragment fragment = new WhoSGettingHelpFragment();
-                    if (isFragmentVisible(fragment)) {
-                        Log.d(TAG, "WhoSGettingHelpFragment is already visible, not reforming another...");
-                    } else {
-                        fragmentTransaction.setCustomAnimations(R.animator.slide_in_left, R.animator.slide_out_right);
-                        fragmentTransaction.replace(R.id.fragment_container, fragment, WhoSGettingHelpFragment.class.getSimpleName());
-                        fragmentTransaction.commit();
-                        Log.d(TAG, "loaded 'Who-is-getting-help' fragment");
-                        updateSubmitButtonToNext();
-                        buttonPrev.setVisibility(View.GONE);
-                    }
-
-                    Log.d(TAG, "onClick: set is someone else checked");
-                    WhoSGettingHelpFragment.wsghYesRB.setChecked(true);
+                WhoSGettingHelpFragment fragment = new WhoSGettingHelpFragment();
+                if (isFragmentVisible(fragment)) {
+                    Log.d(TAG, "WhoSGettingHelpFragment is already visible, not reforming another...");
+                } else {
+                    fragmentTransaction.setCustomAnimations(R.animator.slide_in_left, R.animator.slide_out_right);
+                    fragmentTransaction.replace(R.id.fragment_container, fragment, WhoSGettingHelpFragment.class.getSimpleName());
+                    fragmentTransaction.commit();
+                    Log.d(TAG, "loaded 'Who-is-getting-help' fragment");
+                    updateSubmitButtonToNext();
+                    buttonPrev.setVisibility(View.GONE);
                 }
+
+                Log.d(TAG, "onClick: set is someone else checked");
+                WhoSGettingHelpFragment.wsghYesRB.setChecked(true);
             }
         });
     }
 
     /**
-     * changes text fron 'NEXT' to 'SUBMIT'
-     * while on the last frgamnet of reporting an incident
+     * changes text from 'NEXT' to 'SUBMIT'
+     * while on the last fragment of reporting an incident
      */
     protected void updateNextButtonToSubmit() {
         buttonNext.setText(getString(R.string.submit));
     }
 
     /**
-     * changes text fron 'SUBMIT' to 'NEXT'
+     * changes text from 'SUBMIT' to 'NEXT'
      */
     protected void updateSubmitButtonToNext() {
         buttonNext.setText(getString(R.string.next));
@@ -227,14 +221,13 @@ public class ReportingActivity extends AppCompatActivity implements SurvivorInci
     }
 
     /**
-     * loads reporting for for the survivir him self
+     * loads reporting for the survivor
      */
     private void loadReportingFormSelfFragment() {
 
         FragmentManager fragmentManager = getFragmentManager();
         FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
 
-        //SurvivorIncidentFormFragment fragment = new SurvivorIncidentFormFragment();
         SurvivorIncidentFormFragment fragment = SurvivorIncidentFormFragment
                 .newInstance("UNUSED", "UNUSED");
         if (isFragmentVisible(fragment)) {
@@ -249,7 +242,6 @@ public class ReportingActivity extends AppCompatActivity implements SurvivorInci
 
     /**
      * loads fragment for choosing who survived the incodent.
-     * The survir gim self or someone else
      */
     private void loadWhoGetnHelpFragment() {
         FragmentManager fragmentManager = getFragmentManager();
@@ -269,10 +261,9 @@ public class ReportingActivity extends AppCompatActivity implements SurvivorInci
     }
 
     /**
-     * loads reporting for for the survivir him self
+     * loads reporting for the survivor him self
      */
     private void loadContactFragment() {
-
         FragmentManager fragmentManager = getFragmentManager();
         FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
 
@@ -299,37 +290,7 @@ public class ReportingActivity extends AppCompatActivity implements SurvivorInci
 
     }
 
-
-    public void updateNetworkContact() {
-
-        String updateContactUrl = BASE_API_URL + "/reports/addcontact";
-
-        Log.d("UpdateContact ", "Service Started");
-
-
-        Cursor cursor = getContentResolver().query(
-                ReportIncidentContentProvider.CONTENT_URI,
-                null,
-                null,
-                null,
-                null);
-        if (cursor != null) {
-            cursor.moveToLast();
-
-            updateContactToServer(
-                    cursor.getString(cursor.getColumnIndex(ReportIncidentTable.COLUMN_UNIQUE_IDENTIFIER)),
-                    cursor.getString(cursor.getColumnIndex(ReportIncidentTable.COLUMN_REPORTER_PHONE_NUMBER)),
-                    updateContactUrl);
-
-        }
-        cursor.close();
-
-
-    }
-
-
     public void updateContactToServer(final String toServerCasenumber, final String toServerContact, final String updateContactUrl) {
-
         getUpdateTokenFromServer(new VolleyCallback() {
             @Override
             public void onSuccessResponse(String tokenResponse) {
@@ -384,8 +345,6 @@ public class ReportingActivity extends AppCompatActivity implements SurvivorInci
 
     //gets a new token from server
     public void getUpdateTokenFromServer(final VolleyCallback tokenCallback) {
-
-
         final String tokenUrl = BASE_API_URL + "/auth/newtoken";
 
         // This volley request gets a token from the server
@@ -413,10 +372,6 @@ public class ReportingActivity extends AppCompatActivity implements SurvivorInci
             }
         };
         //add request to queue
-
         MySingleton.getInstance(this).addToRequestQueue(tokenRequest);
-
     }
-
-
 }
