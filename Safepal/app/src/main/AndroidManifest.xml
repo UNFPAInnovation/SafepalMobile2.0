@@ -85,10 +85,6 @@
             android:name=".provider.SafepalProvider"
             android:authorities="com.unfpa.safepal.authority"
             android:exported="false" />
-        <provider
-            android:name=".provider.SafepalProvider"
-            android:authorities="com.unfpa.safepal.authority"
-            android:exported="false" />
 
         <service
             android:name=".network.SetupIntentService"

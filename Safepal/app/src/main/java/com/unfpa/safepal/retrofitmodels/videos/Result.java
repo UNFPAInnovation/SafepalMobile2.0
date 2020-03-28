@@ -28,7 +28,7 @@ public class Result {
     @SerializedName("rating")
     @Expose
     private Integer rating;
-    @SerializedName("createdAt")
+    @SerializedName("created_at")
     @Expose
     private Date createdAt;
 

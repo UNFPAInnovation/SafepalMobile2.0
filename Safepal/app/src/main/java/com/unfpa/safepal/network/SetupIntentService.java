@@ -11,11 +11,14 @@ import android.util.Log;
 
 import com.unfpa.safepal.provider.articletable.ArticletableColumns;
 import com.unfpa.safepal.provider.articletable.ArticletableContentValues;
+import com.unfpa.safepal.provider.organizationtable.OrganizationtableColumns;
+import com.unfpa.safepal.provider.organizationtable.OrganizationtableContentValues;
 import com.unfpa.safepal.provider.videotable.VideotableColumns;
 import com.unfpa.safepal.provider.videotable.VideotableContentValues;
 import com.unfpa.safepal.retrofit.APIClient;
 import com.unfpa.safepal.retrofit.APIInterface;
 import com.unfpa.safepal.retrofitmodels.articles.Articles;
+import com.unfpa.safepal.retrofitmodels.organizations.Organizations;
 import com.unfpa.safepal.retrofitmodels.videos.Result;
 import com.unfpa.safepal.retrofitmodels.videos.Videos;
 
@@ -66,6 +69,12 @@ public class SetupIntentService extends IntentService {
             } catch (Exception e) {
                 e.printStackTrace();
             }
+
+//            try {
+                loadOrganizations();
+//            } catch (Exception e) {
+//                e.printStackTrace();
+//            }
         }
     }
 
@@ -187,6 +196,65 @@ public class SetupIntentService extends IntentService {
         }
     }
 
+    private void loadOrganizations() {
+        Timber.d("get organizations list started");
+        Call<Organizations> call = apiInterface.getOrganizations();
+
+        call.enqueue(new Callback<Organizations>() {
+            @Override
+            public void onResponse(Call<Organizations> call, Response<Organizations> response) {
+                Timber.d("onResponse() -> %s", response.code());
+                try {
+                    if (response.code() == 200) {
+                        saveOrganizations(response.body());
+                    } else {
+                        Timber.e("Failed to get videos");
+                    }
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+            }
+
+            @Override
+            public void onFailure(Call<Organizations> call, Throwable t) {
+                Timber.e("onFailure() -> %s", t.getMessage());
+            }
+        });
+    }
+
+    private void saveOrganizations(Organizations organizations) {
+        Timber.d("INSERT: organizations starting");
+        if (organizations == null)
+            throw new NullPointerException("Organizations not found");
+        List<com.unfpa.safepal.retrofitmodels.organizations.Result> organizationsList = organizations.getResults();
+
+        long deleted = 0;
+        try {
+            if (organizationsList.size() > 1)
+                deleted = getContentResolver().delete(OrganizationtableColumns.CONTENT_URI, null, null);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        Timber.d("deleted data count %s", deleted);
+
+        for (com.unfpa.safepal.retrofitmodels.organizations.Result organization : organizationsList) {
+            OrganizationtableContentValues values = new OrganizationtableContentValues();
+            Timber.d("organization data %s", organization.getFacilityName());
+            values.putFacilityName(organization.getFacilityName());
+            values.putDistrict(organization.getDistrict().getName());
+            values.putAddress(organization.getAddress());
+            values.putCloseHour(organization.getCloseHour());
+            values.putOpenHour(organization.getOpenHour());
+            values.putServerid(organization.getId());
+            values.putCreatedAt(organization.getCreatedAt());
+            values.putLink(organization.getLink());
+            values.putLongitude(organization.getLongitude());
+            values.putLatitude(organization.getLatitude());
+            values.putPhoneNumber(organization.getPhoneNumber());
+            final Uri uri = values.insert(getContentResolver());
+            Timber.d("saved organization %s", uri);
+        }
+    }
 
     public static boolean isConnectedToInternet(Context context) {
         ConnectivityManager connectivity = (ConnectivityManager) context.getSystemService(Context.CONNECTIVITY_SERVICE);

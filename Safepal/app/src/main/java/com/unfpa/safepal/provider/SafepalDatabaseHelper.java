@@ -11,6 +11,7 @@ import android.util.Log;
 
 import com.unfpa.safepal.BuildConfig;
 import com.unfpa.safepal.provider.articletable.ArticletableColumns;
+import com.unfpa.safepal.provider.organizationtable.OrganizationtableColumns;
 import com.unfpa.safepal.provider.quiztable.QuiztableColumns;
 import com.unfpa.safepal.provider.videotable.VideotableColumns;
 
@@ -36,6 +37,22 @@ public class SafepalDatabaseHelper extends SQLiteOpenHelper {
             + ArticletableColumns.COMPLETION_RATE + " INTEGER DEFAULT 0, "
             + ArticletableColumns.CREATED_AT + " INTEGER, "
             + ArticletableColumns.RATING + " INTEGER DEFAULT 0 "
+            + " );";
+
+    public static final String SQL_CREATE_TABLE_ORGANIZATIONTABLE = "CREATE TABLE IF NOT EXISTS "
+            + OrganizationtableColumns.TABLE_NAME + " ( "
+            + OrganizationtableColumns._ID + " INTEGER PRIMARY KEY AUTOINCREMENT, "
+            + OrganizationtableColumns.SERVERID + " INTEGER, "
+            + OrganizationtableColumns.FACILITY_NAME + " TEXT, "
+            + OrganizationtableColumns.PHONE_NUMBER + " TEXT, "
+            + OrganizationtableColumns.DISTRICT + " TEXT, "
+            + OrganizationtableColumns.ADDRESS + " TEXT, "
+            + OrganizationtableColumns.OPEN_HOUR + " TEXT, "
+            + OrganizationtableColumns.CLOSE_HOUR + " TEXT, "
+            + OrganizationtableColumns.LINK + " TEXT, "
+            + OrganizationtableColumns.LATITUDE + " REAL, "
+            + OrganizationtableColumns.LONGITUDE + " REAL, "
+            + OrganizationtableColumns.CREATED_AT + " INTEGER "
             + " );";
 
     public static final String SQL_CREATE_TABLE_QUIZTABLE = "CREATE TABLE IF NOT EXISTS "
@@ -121,6 +138,7 @@ public class SafepalDatabaseHelper extends SQLiteOpenHelper {
         if (BuildConfig.DEBUG) Log.d(TAG, "onCreate");
         mOpenHelperCallbacks.onPreCreate(mContext, db);
         db.execSQL(SQL_CREATE_TABLE_ARTICLETABLE);
+        db.execSQL(SQL_CREATE_TABLE_ORGANIZATIONTABLE);
         db.execSQL(SQL_CREATE_TABLE_QUIZTABLE);
         db.execSQL(SQL_CREATE_TABLE_VIDEOTABLE);
         mOpenHelperCallbacks.onPostCreate(mContext, db);
