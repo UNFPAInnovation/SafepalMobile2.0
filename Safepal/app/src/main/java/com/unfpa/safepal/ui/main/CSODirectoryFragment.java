@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.GridLayoutManager;
+import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -16,9 +17,12 @@ import android.widget.Toast;
 
 import com.unfpa.safepal.R;
 import com.unfpa.safepal.adapters.ArticleAdapter;
+import com.unfpa.safepal.adapters.OrganizationAdapter;
 import com.unfpa.safepal.adapters.VideoAdapter;
 import com.unfpa.safepal.provider.articletable.ArticletableCursor;
 import com.unfpa.safepal.provider.articletable.ArticletableSelection;
+import com.unfpa.safepal.provider.organizationtable.OrganizationtableCursor;
+import com.unfpa.safepal.provider.organizationtable.OrganizationtableSelection;
 import com.unfpa.safepal.provider.videotable.VideotableCursor;
 import com.unfpa.safepal.provider.videotable.VideotableSelection;
 
@@ -30,7 +34,7 @@ import java.util.List;
  *
  * @author Phillip Kigenyi (codephillip@gmail.com)
  */
-public class CSODirectoryFragment extends Fragment  implements
+public class CSODirectoryFragment extends Fragment implements
         AdapterView.OnItemSelectedListener {
     private static final String ARG_SECTION_NUMBER = "section_number";
 
@@ -73,13 +77,17 @@ public class CSODirectoryFragment extends Fragment  implements
         districts.add("Jinja");
 
         districtSpinner.setOnItemSelectedListener(this);
-        ArrayAdapter arrayAdapter = new ArrayAdapter(getContext(), android.R.layout.simple_spinner_item,districts.toArray());
+        ArrayAdapter arrayAdapter = new ArrayAdapter(getContext(), android.R.layout.simple_spinner_item, districts.toArray());
         arrayAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         districtSpinner.setAdapter(arrayAdapter);
 
-        RecyclerView.LayoutManager mLayoutManager = new GridLayoutManager(getContext(), 2);
-        recyclerView.setLayoutManager(mLayoutManager);
+        recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
+        recyclerView.setAdapter(new OrganizationAdapter(getActivity(), getOrganizationTableData()));
         return rootView;
+    }
+
+    private OrganizationtableCursor getOrganizationTableData() {
+        return new OrganizationtableSelection().orderByCreatedAt(true).query(getContext().getContentResolver());
     }
 
     @Override
