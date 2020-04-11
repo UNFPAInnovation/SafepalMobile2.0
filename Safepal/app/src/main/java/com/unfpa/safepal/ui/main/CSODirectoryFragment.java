@@ -76,6 +76,8 @@ public class CSODirectoryFragment extends Fragment implements
         DistricttableCursor districttableCursor = getDistrictsTableData();
         districttableCursor.moveToFirst();
         do {
+            // clear to avoid duplicate districts
+            districts.clear();
             districts.add(districttableCursor.getName());
         } while(districttableCursor.moveToNext());
 
