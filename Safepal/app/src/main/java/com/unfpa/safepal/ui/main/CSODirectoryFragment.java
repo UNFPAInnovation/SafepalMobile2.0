@@ -21,6 +21,8 @@ import com.unfpa.safepal.adapters.OrganizationAdapter;
 import com.unfpa.safepal.adapters.VideoAdapter;
 import com.unfpa.safepal.provider.articletable.ArticletableCursor;
 import com.unfpa.safepal.provider.articletable.ArticletableSelection;
+import com.unfpa.safepal.provider.districttable.DistricttableCursor;
+import com.unfpa.safepal.provider.districttable.DistricttableSelection;
 import com.unfpa.safepal.provider.organizationtable.OrganizationtableCursor;
 import com.unfpa.safepal.provider.organizationtable.OrganizationtableSelection;
 import com.unfpa.safepal.provider.videotable.VideotableCursor;
@@ -71,10 +73,11 @@ public class CSODirectoryFragment extends Fragment implements
         recyclerView = rootView.findViewById(R.id.media_recycler_view);
         districtSpinner = rootView.findViewById(R.id.district_spinner);
 
-        districts.add("Kampala");
-        districts.add("Entebbe");
-        districts.add("Masaka");
-        districts.add("Jinja");
+        DistricttableCursor districttableCursor = getDistrictsTableData();
+        districttableCursor.moveToFirst();
+        do {
+            districts.add(districttableCursor.getName());
+        } while(districttableCursor.moveToNext());
 
         districtSpinner.setOnItemSelectedListener(this);
         ArrayAdapter arrayAdapter = new ArrayAdapter(getContext(), android.R.layout.simple_spinner_item, districts.toArray());
@@ -86,13 +89,20 @@ public class CSODirectoryFragment extends Fragment implements
         return rootView;
     }
 
+    private DistricttableCursor getDistrictsTableData() {
+        return new DistricttableSelection().orderByName().query(getContext().getContentResolver());
+    }
+
     private OrganizationtableCursor getOrganizationTableData() {
         return new OrganizationtableSelection().orderByCreatedAt(true).query(getContext().getContentResolver());
     }
 
     @Override
     public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-        Toast.makeText(getContext(), districts.get(position), Toast.LENGTH_LONG).show();
+        OrganizationtableSelection selection = new OrganizationtableSelection();
+        selection.districtContains(districts.get(position));
+        recyclerView.setAdapter(new OrganizationAdapter(getActivity(),
+                selection.orderByFacilityName().query(getContext().getContentResolver())));
     }
 
     @Override
