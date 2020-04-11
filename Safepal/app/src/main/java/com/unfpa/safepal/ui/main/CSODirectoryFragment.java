@@ -73,13 +73,13 @@ public class CSODirectoryFragment extends Fragment implements
         recyclerView = rootView.findViewById(R.id.media_recycler_view);
         districtSpinner = rootView.findViewById(R.id.district_spinner);
 
-        DistricttableCursor districttableCursor = getDistrictsTableData();
-        districttableCursor.moveToFirst();
-        do {
-            // clear to avoid duplicate districts
-            districts.clear();
-            districts.add(districttableCursor.getName());
-        } while(districttableCursor.moveToNext());
+        if (districts.size() <= 0) {
+            DistricttableCursor districttableCursor = getDistrictsTableData();
+            districttableCursor.moveToFirst();
+            do {
+                districts.add(districttableCursor.getName());
+            } while (districttableCursor.moveToNext());
+        }
 
         districtSpinner.setOnItemSelectedListener(this);
         ArrayAdapter arrayAdapter = new ArrayAdapter(getContext(), android.R.layout.simple_spinner_item, districts.toArray());
@@ -87,16 +87,11 @@ public class CSODirectoryFragment extends Fragment implements
         districtSpinner.setAdapter(arrayAdapter);
 
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
-        recyclerView.setAdapter(new OrganizationAdapter(getActivity(), getOrganizationTableData()));
         return rootView;
     }
 
     private DistricttableCursor getDistrictsTableData() {
         return new DistricttableSelection().orderByName().query(getContext().getContentResolver());
-    }
-
-    private OrganizationtableCursor getOrganizationTableData() {
-        return new OrganizationtableSelection().orderByCreatedAt(true).query(getContext().getContentResolver());
     }
 
     @Override
