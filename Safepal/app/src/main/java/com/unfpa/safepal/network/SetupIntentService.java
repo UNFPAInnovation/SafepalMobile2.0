@@ -11,6 +11,8 @@ import android.util.Log;
 
 import com.unfpa.safepal.provider.articletable.ArticletableColumns;
 import com.unfpa.safepal.provider.articletable.ArticletableContentValues;
+import com.unfpa.safepal.provider.districttable.DistricttableColumns;
+import com.unfpa.safepal.provider.districttable.DistricttableContentValues;
 import com.unfpa.safepal.provider.organizationtable.OrganizationtableColumns;
 import com.unfpa.safepal.provider.organizationtable.OrganizationtableContentValues;
 import com.unfpa.safepal.provider.videotable.VideotableColumns;
@@ -18,6 +20,7 @@ import com.unfpa.safepal.provider.videotable.VideotableContentValues;
 import com.unfpa.safepal.retrofit.APIClient;
 import com.unfpa.safepal.retrofit.APIInterface;
 import com.unfpa.safepal.retrofitmodels.articles.Articles;
+import com.unfpa.safepal.retrofitmodels.districts.Districts;
 import com.unfpa.safepal.retrofitmodels.organizations.Organizations;
 import com.unfpa.safepal.retrofitmodels.videos.Result;
 import com.unfpa.safepal.retrofitmodels.videos.Videos;
@@ -70,11 +73,17 @@ public class SetupIntentService extends IntentService {
                 e.printStackTrace();
             }
 
-//            try {
+            try {
                 loadOrganizations();
-//            } catch (Exception e) {
-//                e.printStackTrace();
-//            }
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+
+            try {
+                loadDistricts();
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
         }
     }
 
@@ -149,7 +158,7 @@ public class SetupIntentService extends IntentService {
                     if (response.code() == 200) {
                         saveArticles(response.body());
                     } else {
-                        Timber.e("Failed to get videos");
+                        Timber.e("Failed to get articles");
                     }
                 } catch (Exception e) {
                     e.printStackTrace();
@@ -208,7 +217,7 @@ public class SetupIntentService extends IntentService {
                     if (response.code() == 200) {
                         saveOrganizations(response.body());
                     } else {
-                        Timber.e("Failed to get videos");
+                        Timber.e("Failed to get organizations");
                     }
                 } catch (Exception e) {
                     e.printStackTrace();
@@ -253,6 +262,56 @@ public class SetupIntentService extends IntentService {
             values.putPhoneNumber(organization.getPhoneNumber());
             final Uri uri = values.insert(getContentResolver());
             Timber.d("saved organization %s", uri);
+        }
+    }
+
+    private void loadDistricts() {
+        Timber.d("get district list started");
+        Call<Districts> call = apiInterface.getDistricts();
+
+        call.enqueue(new Callback<Districts>() {
+            @Override
+            public void onResponse(Call<Districts> call, Response<Districts> response) {
+                try {
+                    if (response.code() == 200) {
+                        saveDistricts(response.body());
+                    } else {
+                        Timber.e("Failed to get districts");
+                    }
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+            }
+
+            @Override
+            public void onFailure(Call<Districts> call, Throwable t) {
+
+            }
+        });
+    }
+
+    private void saveDistricts(Districts districts) {
+        Timber.d("INSERT: districts starting");
+        if (districts == null)
+            throw new NullPointerException("Districts not found");
+        List<com.unfpa.safepal.retrofitmodels.districts.Result> districtsList = districts.getResults();
+
+        long deleted = 0;
+        try {
+            if (districtsList.size() > 1)
+                deleted = getContentResolver().delete(DistricttableColumns.CONTENT_URI, null, null);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        Timber.d("deleted data count %s", deleted);
+
+        for (com.unfpa.safepal.retrofitmodels.districts.Result district : districtsList) {
+            DistricttableContentValues values = new DistricttableContentValues();
+            Timber.d("district data %s", district.getName());
+            values.putName(district.getName());
+            values.putCreatedAtNull();
+            final Uri uri = values.insert(getContentResolver());
+            Timber.d("saved district %s", uri);
         }
     }
 

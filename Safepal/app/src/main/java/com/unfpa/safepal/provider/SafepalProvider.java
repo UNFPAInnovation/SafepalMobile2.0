@@ -13,6 +13,7 @@ import android.util.Log;
 import com.unfpa.safepal.BuildConfig;
 import com.unfpa.safepal.provider.base.BaseContentProvider;
 import com.unfpa.safepal.provider.articletable.ArticletableColumns;
+import com.unfpa.safepal.provider.districttable.DistricttableColumns;
 import com.unfpa.safepal.provider.organizationtable.OrganizationtableColumns;
 import com.unfpa.safepal.provider.quiztable.QuiztableColumns;
 import com.unfpa.safepal.provider.videotable.VideotableColumns;
@@ -31,14 +32,17 @@ public class SafepalProvider extends BaseContentProvider {
     private static final int URI_TYPE_ARTICLETABLE = 0;
     private static final int URI_TYPE_ARTICLETABLE_ID = 1;
 
-    private static final int URI_TYPE_ORGANIZATIONTABLE = 2;
-    private static final int URI_TYPE_ORGANIZATIONTABLE_ID = 3;
+    private static final int URI_TYPE_DISTRICTTABLE = 2;
+    private static final int URI_TYPE_DISTRICTTABLE_ID = 3;
 
-    private static final int URI_TYPE_QUIZTABLE = 4;
-    private static final int URI_TYPE_QUIZTABLE_ID = 5;
+    private static final int URI_TYPE_ORGANIZATIONTABLE = 4;
+    private static final int URI_TYPE_ORGANIZATIONTABLE_ID = 5;
 
-    private static final int URI_TYPE_VIDEOTABLE = 6;
-    private static final int URI_TYPE_VIDEOTABLE_ID = 7;
+    private static final int URI_TYPE_QUIZTABLE = 6;
+    private static final int URI_TYPE_QUIZTABLE_ID = 7;
+
+    private static final int URI_TYPE_VIDEOTABLE = 8;
+    private static final int URI_TYPE_VIDEOTABLE_ID = 9;
 
 
 
@@ -47,6 +51,8 @@ public class SafepalProvider extends BaseContentProvider {
     static {
         URI_MATCHER.addURI(AUTHORITY, ArticletableColumns.TABLE_NAME, URI_TYPE_ARTICLETABLE);
         URI_MATCHER.addURI(AUTHORITY, ArticletableColumns.TABLE_NAME + "/#", URI_TYPE_ARTICLETABLE_ID);
+        URI_MATCHER.addURI(AUTHORITY, DistricttableColumns.TABLE_NAME, URI_TYPE_DISTRICTTABLE);
+        URI_MATCHER.addURI(AUTHORITY, DistricttableColumns.TABLE_NAME + "/#", URI_TYPE_DISTRICTTABLE_ID);
         URI_MATCHER.addURI(AUTHORITY, OrganizationtableColumns.TABLE_NAME, URI_TYPE_ORGANIZATIONTABLE);
         URI_MATCHER.addURI(AUTHORITY, OrganizationtableColumns.TABLE_NAME + "/#", URI_TYPE_ORGANIZATIONTABLE_ID);
         URI_MATCHER.addURI(AUTHORITY, QuiztableColumns.TABLE_NAME, URI_TYPE_QUIZTABLE);
@@ -73,6 +79,11 @@ public class SafepalProvider extends BaseContentProvider {
                 return TYPE_CURSOR_DIR + ArticletableColumns.TABLE_NAME;
             case URI_TYPE_ARTICLETABLE_ID:
                 return TYPE_CURSOR_ITEM + ArticletableColumns.TABLE_NAME;
+
+            case URI_TYPE_DISTRICTTABLE:
+                return TYPE_CURSOR_DIR + DistricttableColumns.TABLE_NAME;
+            case URI_TYPE_DISTRICTTABLE_ID:
+                return TYPE_CURSOR_ITEM + DistricttableColumns.TABLE_NAME;
 
             case URI_TYPE_ORGANIZATIONTABLE:
                 return TYPE_CURSOR_DIR + OrganizationtableColumns.TABLE_NAME;
@@ -139,6 +150,14 @@ public class SafepalProvider extends BaseContentProvider {
                 res.orderBy = ArticletableColumns.DEFAULT_ORDER;
                 break;
 
+            case URI_TYPE_DISTRICTTABLE:
+            case URI_TYPE_DISTRICTTABLE_ID:
+                res.table = DistricttableColumns.TABLE_NAME;
+                res.idColumn = DistricttableColumns._ID;
+                res.tablesWithJoins = DistricttableColumns.TABLE_NAME;
+                res.orderBy = DistricttableColumns.DEFAULT_ORDER;
+                break;
+
             case URI_TYPE_ORGANIZATIONTABLE:
             case URI_TYPE_ORGANIZATIONTABLE_ID:
                 res.table = OrganizationtableColumns.TABLE_NAME;
@@ -169,6 +188,7 @@ public class SafepalProvider extends BaseContentProvider {
 
         switch (matchedId) {
             case URI_TYPE_ARTICLETABLE_ID:
+            case URI_TYPE_DISTRICTTABLE_ID:
             case URI_TYPE_ORGANIZATIONTABLE_ID:
             case URI_TYPE_QUIZTABLE_ID:
             case URI_TYPE_VIDEOTABLE_ID:
