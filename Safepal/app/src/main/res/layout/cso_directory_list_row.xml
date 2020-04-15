@@ -55,15 +55,24 @@
             cardview:layout_constraintTop_toBottomOf="@+id/address" />
 
         <TextView
+            android:id="@+id/phone_number"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="0756878460"
+            cardview:layout_constraintStart_toStartOf="@+id/working_hours"
+            cardview:layout_constraintTop_toBottomOf="@+id/working_hours" />
+
+        <TextView
             android:id="@+id/website"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="5dp"
             android:layout_marginBottom="8dp"
             android:text="www.reproductivehealth.ug"
+            android:autoLink="web"
             android:textStyle="bold"
             cardview:layout_constraintBottom_toBottomOf="parent"
-            cardview:layout_constraintStart_toStartOf="@+id/working_hours"
-            cardview:layout_constraintTop_toBottomOf="@+id/working_hours" />
+            cardview:layout_constraintStart_toStartOf="@+id/phone_number"
+            cardview:layout_constraintTop_toBottomOf="@+id/phone_number" />
     </android.support.constraint.ConstraintLayout>
 </android.support.v7.widget.CardView>
