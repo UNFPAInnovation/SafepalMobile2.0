@@ -3,6 +3,7 @@ package com.unfpa.safepal.retrofit;
 import com.unfpa.safepal.retrofitmodels.articles.Articles;
 import com.unfpa.safepal.retrofitmodels.districts.Districts;
 import com.unfpa.safepal.retrofitmodels.organizations.Organizations;
+import com.unfpa.safepal.retrofitmodels.questions.Questions;
 import com.unfpa.safepal.retrofitmodels.videos.Videos;
 
 import retrofit2.Call;
@@ -20,4 +21,7 @@ public interface APIInterface {
 
     @GET("api/v1/districts")
     Call<Districts> getDistricts();
+
+    @GET("api/v1/questions")
+    Call<Questions> getQuestions();
 }

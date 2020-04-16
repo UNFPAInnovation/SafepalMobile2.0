@@ -15,6 +15,8 @@ import com.unfpa.safepal.provider.districttable.DistricttableColumns;
 import com.unfpa.safepal.provider.districttable.DistricttableContentValues;
 import com.unfpa.safepal.provider.organizationtable.OrganizationtableColumns;
 import com.unfpa.safepal.provider.organizationtable.OrganizationtableContentValues;
+import com.unfpa.safepal.provider.questiontable.QuestiontableColumns;
+import com.unfpa.safepal.provider.questiontable.QuestiontableContentValues;
 import com.unfpa.safepal.provider.videotable.VideotableColumns;
 import com.unfpa.safepal.provider.videotable.VideotableContentValues;
 import com.unfpa.safepal.retrofit.APIClient;
@@ -22,6 +24,7 @@ import com.unfpa.safepal.retrofit.APIInterface;
 import com.unfpa.safepal.retrofitmodels.articles.Articles;
 import com.unfpa.safepal.retrofitmodels.districts.Districts;
 import com.unfpa.safepal.retrofitmodels.organizations.Organizations;
+import com.unfpa.safepal.retrofitmodels.questions.Questions;
 import com.unfpa.safepal.retrofitmodels.videos.Result;
 import com.unfpa.safepal.retrofitmodels.videos.Videos;
 
@@ -81,6 +84,12 @@ public class SetupIntentService extends IntentService {
 
             try {
                 loadDistricts();
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+
+            try {
+                loadQuestions();
             } catch (Exception e) {
                 e.printStackTrace();
             }
@@ -285,7 +294,7 @@ public class SetupIntentService extends IntentService {
 
             @Override
             public void onFailure(Call<Districts> call, Throwable t) {
-
+                Timber.e("onFailure() -> %s", t.getMessage());
             }
         });
     }
@@ -312,6 +321,59 @@ public class SetupIntentService extends IntentService {
             values.putCreatedAtNull();
             final Uri uri = values.insert(getContentResolver());
             Timber.d("saved district %s", uri);
+        }
+    }
+
+    private void loadQuestions() {
+        Timber.d("get questions list started");
+        Call<Questions> call = apiInterface.getQuestions();
+        call.enqueue(new Callback<Questions>() {
+            @Override
+            public void onResponse(Call<Questions> call, Response<Questions> response) {
+                try {
+                    if (response.code() == 200) {
+                        saveQuestions(response.body());
+                    } else {
+                        Timber.e("Failed to get districts");
+                    }
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+            }
+
+            @Override
+            public void onFailure(Call<Questions> call, Throwable t) {
+                Timber.e("onFailure() -> %s", t.getMessage());
+            }
+        });
+    }
+
+    private void saveQuestions(Questions questions) {
+        Timber.d("INSERT: questions starting");
+        if (questions == null)
+            throw new NullPointerException("Questions not found");
+        List<com.unfpa.safepal.retrofitmodels.questions.Result> questionsList = questions.getResults();
+
+        long deleted = 0;
+        try {
+            if (questionsList.size() > 1)
+                deleted = getContentResolver().delete(QuestiontableColumns.CONTENT_URI, null, null);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        Timber.d("deleted data count %s", deleted);
+
+        for (com.unfpa.safepal.retrofitmodels.questions.Result question : questionsList) {
+            QuestiontableContentValues values = new QuestiontableContentValues();
+            Timber.d("district data %s", question.getContent());
+            values.putContent(question.getContent());
+            values.putCorrectAnswer(question.getAnswer());
+            values.putDifficulty(question.getDifficulty());
+            values.putPositionNumber(question.getPosition());
+            values.putQuiz(question.getQuiz());
+            values.putCreatedAtNull();
+            final Uri uri = values.insert(getContentResolver());
+            Timber.d("saved question %s", uri);
         }
     }
 
