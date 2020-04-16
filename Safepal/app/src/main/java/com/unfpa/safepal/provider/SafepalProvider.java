@@ -15,6 +15,7 @@ import com.unfpa.safepal.provider.base.BaseContentProvider;
 import com.unfpa.safepal.provider.articletable.ArticletableColumns;
 import com.unfpa.safepal.provider.districttable.DistricttableColumns;
 import com.unfpa.safepal.provider.organizationtable.OrganizationtableColumns;
+import com.unfpa.safepal.provider.questiontable.QuestiontableColumns;
 import com.unfpa.safepal.provider.quiztable.QuiztableColumns;
 import com.unfpa.safepal.provider.videotable.VideotableColumns;
 
@@ -38,11 +39,14 @@ public class SafepalProvider extends BaseContentProvider {
     private static final int URI_TYPE_ORGANIZATIONTABLE = 4;
     private static final int URI_TYPE_ORGANIZATIONTABLE_ID = 5;
 
-    private static final int URI_TYPE_QUIZTABLE = 6;
-    private static final int URI_TYPE_QUIZTABLE_ID = 7;
+    private static final int URI_TYPE_QUESTIONTABLE = 6;
+    private static final int URI_TYPE_QUESTIONTABLE_ID = 7;
 
-    private static final int URI_TYPE_VIDEOTABLE = 8;
-    private static final int URI_TYPE_VIDEOTABLE_ID = 9;
+    private static final int URI_TYPE_QUIZTABLE = 8;
+    private static final int URI_TYPE_QUIZTABLE_ID = 9;
+
+    private static final int URI_TYPE_VIDEOTABLE = 10;
+    private static final int URI_TYPE_VIDEOTABLE_ID = 11;
 
 
 
@@ -55,6 +59,8 @@ public class SafepalProvider extends BaseContentProvider {
         URI_MATCHER.addURI(AUTHORITY, DistricttableColumns.TABLE_NAME + "/#", URI_TYPE_DISTRICTTABLE_ID);
         URI_MATCHER.addURI(AUTHORITY, OrganizationtableColumns.TABLE_NAME, URI_TYPE_ORGANIZATIONTABLE);
         URI_MATCHER.addURI(AUTHORITY, OrganizationtableColumns.TABLE_NAME + "/#", URI_TYPE_ORGANIZATIONTABLE_ID);
+        URI_MATCHER.addURI(AUTHORITY, QuestiontableColumns.TABLE_NAME, URI_TYPE_QUESTIONTABLE);
+        URI_MATCHER.addURI(AUTHORITY, QuestiontableColumns.TABLE_NAME + "/#", URI_TYPE_QUESTIONTABLE_ID);
         URI_MATCHER.addURI(AUTHORITY, QuiztableColumns.TABLE_NAME, URI_TYPE_QUIZTABLE);
         URI_MATCHER.addURI(AUTHORITY, QuiztableColumns.TABLE_NAME + "/#", URI_TYPE_QUIZTABLE_ID);
         URI_MATCHER.addURI(AUTHORITY, VideotableColumns.TABLE_NAME, URI_TYPE_VIDEOTABLE);
@@ -89,6 +95,11 @@ public class SafepalProvider extends BaseContentProvider {
                 return TYPE_CURSOR_DIR + OrganizationtableColumns.TABLE_NAME;
             case URI_TYPE_ORGANIZATIONTABLE_ID:
                 return TYPE_CURSOR_ITEM + OrganizationtableColumns.TABLE_NAME;
+
+            case URI_TYPE_QUESTIONTABLE:
+                return TYPE_CURSOR_DIR + QuestiontableColumns.TABLE_NAME;
+            case URI_TYPE_QUESTIONTABLE_ID:
+                return TYPE_CURSOR_ITEM + QuestiontableColumns.TABLE_NAME;
 
             case URI_TYPE_QUIZTABLE:
                 return TYPE_CURSOR_DIR + QuiztableColumns.TABLE_NAME;
@@ -166,6 +177,14 @@ public class SafepalProvider extends BaseContentProvider {
                 res.orderBy = OrganizationtableColumns.DEFAULT_ORDER;
                 break;
 
+            case URI_TYPE_QUESTIONTABLE:
+            case URI_TYPE_QUESTIONTABLE_ID:
+                res.table = QuestiontableColumns.TABLE_NAME;
+                res.idColumn = QuestiontableColumns._ID;
+                res.tablesWithJoins = QuestiontableColumns.TABLE_NAME;
+                res.orderBy = QuestiontableColumns.DEFAULT_ORDER;
+                break;
+
             case URI_TYPE_QUIZTABLE:
             case URI_TYPE_QUIZTABLE_ID:
                 res.table = QuiztableColumns.TABLE_NAME;
@@ -190,6 +209,7 @@ public class SafepalProvider extends BaseContentProvider {
             case URI_TYPE_ARTICLETABLE_ID:
             case URI_TYPE_DISTRICTTABLE_ID:
             case URI_TYPE_ORGANIZATIONTABLE_ID:
+            case URI_TYPE_QUESTIONTABLE_ID:
             case URI_TYPE_QUIZTABLE_ID:
             case URI_TYPE_VIDEOTABLE_ID:
                 id = uri.getLastPathSegment();

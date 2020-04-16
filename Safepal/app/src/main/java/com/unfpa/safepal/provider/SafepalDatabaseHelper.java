@@ -13,6 +13,7 @@ import com.unfpa.safepal.BuildConfig;
 import com.unfpa.safepal.provider.articletable.ArticletableColumns;
 import com.unfpa.safepal.provider.districttable.DistricttableColumns;
 import com.unfpa.safepal.provider.organizationtable.OrganizationtableColumns;
+import com.unfpa.safepal.provider.questiontable.QuestiontableColumns;
 import com.unfpa.safepal.provider.quiztable.QuiztableColumns;
 import com.unfpa.safepal.provider.videotable.VideotableColumns;
 
@@ -62,6 +63,18 @@ public class SafepalDatabaseHelper extends SQLiteOpenHelper {
             + OrganizationtableColumns.LATITUDE + " REAL, "
             + OrganizationtableColumns.LONGITUDE + " REAL, "
             + OrganizationtableColumns.CREATED_AT + " INTEGER "
+            + " );";
+
+    public static final String SQL_CREATE_TABLE_QUESTIONTABLE = "CREATE TABLE IF NOT EXISTS "
+            + QuestiontableColumns.TABLE_NAME + " ( "
+            + QuestiontableColumns._ID + " INTEGER PRIMARY KEY AUTOINCREMENT, "
+            + QuestiontableColumns.SERVERID + " INTEGER, "
+            + QuestiontableColumns.QUIZ + " INTEGER, "
+            + QuestiontableColumns.CONTENT + " TEXT, "
+            + QuestiontableColumns.DIFFICULTY + " INTEGER DEFAULT 1, "
+            + QuestiontableColumns.CORRECT_ANSWER + " TEXT DEFAULT 'YES', "
+            + QuestiontableColumns.POSITION_NUMBER + " INTEGER, "
+            + QuestiontableColumns.CREATED_AT + " INTEGER "
             + " );";
 
     public static final String SQL_CREATE_TABLE_QUIZTABLE = "CREATE TABLE IF NOT EXISTS "
@@ -149,6 +162,7 @@ public class SafepalDatabaseHelper extends SQLiteOpenHelper {
         db.execSQL(SQL_CREATE_TABLE_ARTICLETABLE);
         db.execSQL(SQL_CREATE_TABLE_DISTRICTTABLE);
         db.execSQL(SQL_CREATE_TABLE_ORGANIZATIONTABLE);
+        db.execSQL(SQL_CREATE_TABLE_QUESTIONTABLE);
         db.execSQL(SQL_CREATE_TABLE_QUIZTABLE);
         db.execSQL(SQL_CREATE_TABLE_VIDEOTABLE);
         mOpenHelperCallbacks.onPostCreate(mContext, db);
