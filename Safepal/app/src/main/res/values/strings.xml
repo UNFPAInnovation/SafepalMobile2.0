@@ -215,6 +215,12 @@
         "For example, position the FAB to one side of stream of a cards so the FAB won’t interfere "
         "when a user tries to pick up one of cards.\n\n"
     </string>
+    <string name="title_activity_quiz">QuizActivity</string>
+    <string name="first_fragment_label">First Fragment</string>
+    <string name="second_fragment_label">Second Fragment</string>
+    <string name="previous">Previous</string>
+    <string name="hello_first_fragment">Hello first fragment</string>
+    <string name="hello_second_fragment">Hello second fragment. Arg: %1$s</string>
     <string-array name="not_your_fault_messages">
 <item>Whatever happened was not your fault. No one has the right to sexually violate you.  The rapist is solely to blame.
            What a person wears, what a person says, or how a person acts cannot justify sexual violence.</item>
@@ -279,6 +285,7 @@
         <item>I was defiled</item>
         <item>other</item>
     </string-array>
+    <!-- Strings used for fragments for navigation -->
     <string-array name="sif_incident_type_above">
         <item>What happened to you?</item>
         <item>Bad touches </item>
@@ -301,6 +308,7 @@
         <item>He/She was raped</item>
         <item>other</item>
     </string-array>
+
     <string-array name="survivor_age_range">
         <item>How old is he/she?</item>
         <item>Below 10 years</item>
