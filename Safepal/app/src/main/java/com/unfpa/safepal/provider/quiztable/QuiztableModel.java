@@ -27,6 +27,13 @@ public interface QuiztableModel extends BaseModel {
     String getTitle();
 
     /**
+     * Get the {@code article} value.
+     * Can be {@code null}.
+     */
+    @Nullable
+    Integer getArticle();
+
+    /**
      * Get the {@code description} value.
      * Can be {@code null}.
      */

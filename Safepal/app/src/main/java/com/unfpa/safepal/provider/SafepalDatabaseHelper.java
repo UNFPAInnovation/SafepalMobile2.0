@@ -82,6 +82,7 @@ public class SafepalDatabaseHelper extends SQLiteOpenHelper {
             + QuiztableColumns._ID + " INTEGER PRIMARY KEY AUTOINCREMENT, "
             + QuiztableColumns.SERVERID + " INTEGER, "
             + QuiztableColumns.TITLE + " TEXT, "
+            + QuiztableColumns.ARTICLE + " INTEGER, "
             + QuiztableColumns.DESCRIPTION + " TEXT, "
             + QuiztableColumns.CATEGORY + " TEXT, "
             + QuiztableColumns.SCORE + " INTEGER DEFAULT 0, "

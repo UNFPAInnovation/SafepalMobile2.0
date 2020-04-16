@@ -59,6 +59,16 @@ public class QuiztableContentValues extends AbstractContentValues {
         return this;
     }
 
+    public QuiztableContentValues putArticle(@Nullable Integer value) {
+        mContentValues.put(QuiztableColumns.ARTICLE, value);
+        return this;
+    }
+
+    public QuiztableContentValues putArticleNull() {
+        mContentValues.putNull(QuiztableColumns.ARTICLE);
+        return this;
+    }
+
     public QuiztableContentValues putDescription(@Nullable String value) {
         mContentValues.put(QuiztableColumns.DESCRIPTION, value);
         return this;

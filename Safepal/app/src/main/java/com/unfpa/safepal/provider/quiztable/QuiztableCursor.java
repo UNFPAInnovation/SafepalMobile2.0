@@ -47,6 +47,16 @@ public class QuiztableCursor extends AbstractCursor implements QuiztableModel {
     }
 
     /**
+     * Get the {@code article} value.
+     * Can be {@code null}.
+     */
+    @Nullable
+    public Integer getArticle() {
+        Integer res = getIntegerOrNull(QuiztableColumns.ARTICLE);
+        return res;
+    }
+
+    /**
      * Get the {@code description} value.
      * Can be {@code null}.
      */

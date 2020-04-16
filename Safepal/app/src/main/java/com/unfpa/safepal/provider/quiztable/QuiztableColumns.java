@@ -7,6 +7,7 @@ import com.unfpa.safepal.provider.SafepalProvider;
 import com.unfpa.safepal.provider.articletable.ArticletableColumns;
 import com.unfpa.safepal.provider.districttable.DistricttableColumns;
 import com.unfpa.safepal.provider.organizationtable.OrganizationtableColumns;
+import com.unfpa.safepal.provider.questiontable.QuestiontableColumns;
 import com.unfpa.safepal.provider.quiztable.QuiztableColumns;
 import com.unfpa.safepal.provider.videotable.VideotableColumns;
 
@@ -25,6 +26,8 @@ public class QuiztableColumns implements BaseColumns {
     public static final String SERVERID = "serverId";
 
     public static final String TITLE = "title";
+
+    public static final String ARTICLE = "article";
 
     public static final String DESCRIPTION = "description";
 
@@ -46,6 +49,7 @@ public class QuiztableColumns implements BaseColumns {
             _ID,
             SERVERID,
             TITLE,
+            ARTICLE,
             DESCRIPTION,
             CATEGORY,
             SCORE,
@@ -60,6 +64,7 @@ public class QuiztableColumns implements BaseColumns {
         for (String c : projection) {
             if (c.equals(SERVERID) || c.contains("." + SERVERID)) return true;
             if (c.equals(TITLE) || c.contains("." + TITLE)) return true;
+            if (c.equals(ARTICLE) || c.contains("." + ARTICLE)) return true;
             if (c.equals(DESCRIPTION) || c.contains("." + DESCRIPTION)) return true;
             if (c.equals(CATEGORY) || c.contains("." + CATEGORY)) return true;
             if (c.equals(SCORE) || c.contains("." + SCORE)) return true;

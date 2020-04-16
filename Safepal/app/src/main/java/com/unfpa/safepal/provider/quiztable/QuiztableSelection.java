@@ -158,6 +158,46 @@ public class QuiztableSelection extends AbstractSelection<QuiztableSelection> {
         return this;
     }
 
+    public QuiztableSelection article(Integer... value) {
+        addEquals(QuiztableColumns.ARTICLE, value);
+        return this;
+    }
+
+    public QuiztableSelection articleNot(Integer... value) {
+        addNotEquals(QuiztableColumns.ARTICLE, value);
+        return this;
+    }
+
+    public QuiztableSelection articleGt(int value) {
+        addGreaterThan(QuiztableColumns.ARTICLE, value);
+        return this;
+    }
+
+    public QuiztableSelection articleGtEq(int value) {
+        addGreaterThanOrEquals(QuiztableColumns.ARTICLE, value);
+        return this;
+    }
+
+    public QuiztableSelection articleLt(int value) {
+        addLessThan(QuiztableColumns.ARTICLE, value);
+        return this;
+    }
+
+    public QuiztableSelection articleLtEq(int value) {
+        addLessThanOrEquals(QuiztableColumns.ARTICLE, value);
+        return this;
+    }
+
+    public QuiztableSelection orderByArticle(boolean desc) {
+        orderBy(QuiztableColumns.ARTICLE, desc);
+        return this;
+    }
+
+    public QuiztableSelection orderByArticle() {
+        orderBy(QuiztableColumns.ARTICLE, false);
+        return this;
+    }
+
     public QuiztableSelection description(String... value) {
         addEquals(QuiztableColumns.DESCRIPTION, value);
         return this;
