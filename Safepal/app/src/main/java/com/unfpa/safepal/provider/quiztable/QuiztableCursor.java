@@ -91,8 +91,8 @@ public class QuiztableCursor extends AbstractCursor implements QuiztableModel {
      * Can be {@code null}.
      */
     @Nullable
-    public Integer getThumbnail() {
-        Integer res = getIntegerOrNull(QuiztableColumns.THUMBNAIL);
+    public String getThumbnail() {
+        String res = getStringOrNull(QuiztableColumns.THUMBNAIL);
         return res;
     }
 

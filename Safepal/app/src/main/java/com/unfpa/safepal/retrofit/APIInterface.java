@@ -4,6 +4,7 @@ import com.unfpa.safepal.retrofitmodels.articles.Articles;
 import com.unfpa.safepal.retrofitmodels.districts.Districts;
 import com.unfpa.safepal.retrofitmodels.organizations.Organizations;
 import com.unfpa.safepal.retrofitmodels.questions.Questions;
+import com.unfpa.safepal.retrofitmodels.quizzes.Quizzes;
 import com.unfpa.safepal.retrofitmodels.videos.Videos;
 
 import retrofit2.Call;
@@ -24,4 +25,7 @@ public interface APIInterface {
 
     @GET("api/v1/questions")
     Call<Questions> getQuestions();
+
+    @GET("api/v1/quizzes")
+    Call<Quizzes> getQuizzes();
 }

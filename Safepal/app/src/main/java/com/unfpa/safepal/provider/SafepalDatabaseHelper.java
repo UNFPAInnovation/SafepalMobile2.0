@@ -86,7 +86,7 @@ public class SafepalDatabaseHelper extends SQLiteOpenHelper {
             + QuiztableColumns.DESCRIPTION + " TEXT, "
             + QuiztableColumns.CATEGORY + " TEXT, "
             + QuiztableColumns.SCORE + " INTEGER DEFAULT 0, "
-            + QuiztableColumns.THUMBNAIL + " INTEGER, "
+            + QuiztableColumns.THUMBNAIL + " TEXT, "
             + QuiztableColumns.COMPLETION_RATE + " INTEGER DEFAULT 0, "
             + QuiztableColumns.CREATED_AT + " INTEGER "
             + " );";

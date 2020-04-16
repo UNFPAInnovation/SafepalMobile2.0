@@ -99,7 +99,7 @@ public class QuiztableContentValues extends AbstractContentValues {
         return this;
     }
 
-    public QuiztableContentValues putThumbnail(@Nullable Integer value) {
+    public QuiztableContentValues putThumbnail(@Nullable String value) {
         mContentValues.put(QuiztableColumns.THUMBNAIL, value);
         return this;
     }

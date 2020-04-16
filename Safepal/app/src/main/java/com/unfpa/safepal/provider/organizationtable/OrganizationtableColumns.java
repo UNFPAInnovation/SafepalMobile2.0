@@ -4,11 +4,6 @@ import android.net.Uri;
 import android.provider.BaseColumns;
 
 import com.unfpa.safepal.provider.SafepalProvider;
-import com.unfpa.safepal.provider.articletable.ArticletableColumns;
-import com.unfpa.safepal.provider.districttable.DistricttableColumns;
-import com.unfpa.safepal.provider.organizationtable.OrganizationtableColumns;
-import com.unfpa.safepal.provider.quiztable.QuiztableColumns;
-import com.unfpa.safepal.provider.videotable.VideotableColumns;
 
 /**
  * Columns for the {@code organizationtable} table.

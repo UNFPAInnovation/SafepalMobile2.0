@@ -318,33 +318,33 @@ public class QuiztableSelection extends AbstractSelection<QuiztableSelection> {
         return this;
     }
 
-    public QuiztableSelection thumbnail(Integer... value) {
+    public QuiztableSelection thumbnail(String... value) {
         addEquals(QuiztableColumns.THUMBNAIL, value);
         return this;
     }
 
-    public QuiztableSelection thumbnailNot(Integer... value) {
+    public QuiztableSelection thumbnailNot(String... value) {
         addNotEquals(QuiztableColumns.THUMBNAIL, value);
         return this;
     }
 
-    public QuiztableSelection thumbnailGt(int value) {
-        addGreaterThan(QuiztableColumns.THUMBNAIL, value);
+    public QuiztableSelection thumbnailLike(String... value) {
+        addLike(QuiztableColumns.THUMBNAIL, value);
         return this;
     }
 
-    public QuiztableSelection thumbnailGtEq(int value) {
-        addGreaterThanOrEquals(QuiztableColumns.THUMBNAIL, value);
+    public QuiztableSelection thumbnailContains(String... value) {
+        addContains(QuiztableColumns.THUMBNAIL, value);
         return this;
     }
 
-    public QuiztableSelection thumbnailLt(int value) {
-        addLessThan(QuiztableColumns.THUMBNAIL, value);
+    public QuiztableSelection thumbnailStartsWith(String... value) {
+        addStartsWith(QuiztableColumns.THUMBNAIL, value);
         return this;
     }
 
-    public QuiztableSelection thumbnailLtEq(int value) {
-        addLessThanOrEquals(QuiztableColumns.THUMBNAIL, value);
+    public QuiztableSelection thumbnailEndsWith(String... value) {
+        addEndsWith(QuiztableColumns.THUMBNAIL, value);
         return this;
     }
 

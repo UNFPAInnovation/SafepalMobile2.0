@@ -17,6 +17,8 @@ import com.unfpa.safepal.provider.organizationtable.OrganizationtableColumns;
 import com.unfpa.safepal.provider.organizationtable.OrganizationtableContentValues;
 import com.unfpa.safepal.provider.questiontable.QuestiontableColumns;
 import com.unfpa.safepal.provider.questiontable.QuestiontableContentValues;
+import com.unfpa.safepal.provider.quiztable.QuiztableColumns;
+import com.unfpa.safepal.provider.quiztable.QuiztableContentValues;
 import com.unfpa.safepal.provider.videotable.VideotableColumns;
 import com.unfpa.safepal.provider.videotable.VideotableContentValues;
 import com.unfpa.safepal.retrofit.APIClient;
@@ -25,6 +27,7 @@ import com.unfpa.safepal.retrofitmodels.articles.Articles;
 import com.unfpa.safepal.retrofitmodels.districts.Districts;
 import com.unfpa.safepal.retrofitmodels.organizations.Organizations;
 import com.unfpa.safepal.retrofitmodels.questions.Questions;
+import com.unfpa.safepal.retrofitmodels.quizzes.Quizzes;
 import com.unfpa.safepal.retrofitmodels.videos.Result;
 import com.unfpa.safepal.retrofitmodels.videos.Videos;
 
@@ -39,7 +42,8 @@ import retrofit2.Response;
 import timber.log.Timber;
 
 /**
- * Downloads videos, articles and quiz data
+ * Fetches data from the server, deletes old data and saves it into the db for offline use and better user experience
+ * Service is called whenever the app starts in MainActivity
  * @author Phillip Kigenyi (codephillip@gmail.com)
  */
 public class SetupIntentService extends IntentService {
@@ -90,6 +94,12 @@ public class SetupIntentService extends IntentService {
 
             try {
                 loadQuestions();
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+
+            try {
+                loadQuizzes();
             } catch (Exception e) {
                 e.printStackTrace();
             }
@@ -334,7 +344,7 @@ public class SetupIntentService extends IntentService {
                     if (response.code() == 200) {
                         saveQuestions(response.body());
                     } else {
-                        Timber.e("Failed to get districts");
+                        Timber.e("Failed to get questions");
                     }
                 } catch (Exception e) {
                     e.printStackTrace();
@@ -365,7 +375,7 @@ public class SetupIntentService extends IntentService {
 
         for (com.unfpa.safepal.retrofitmodels.questions.Result question : questionsList) {
             QuestiontableContentValues values = new QuestiontableContentValues();
-            Timber.d("district data %s", question.getContent());
+            Timber.d("question data %s", question.getContent());
             values.putContent(question.getContent());
             values.putCorrectAnswer(question.getAnswer());
             values.putDifficulty(question.getDifficulty());
@@ -374,6 +384,58 @@ public class SetupIntentService extends IntentService {
             values.putCreatedAtNull();
             final Uri uri = values.insert(getContentResolver());
             Timber.d("saved question %s", uri);
+        }
+    }
+
+    private void loadQuizzes() {
+        Timber.d("get quizzes list started");
+        Call<Quizzes> call = apiInterface.getQuizzes();
+        call.enqueue(new Callback<Quizzes>() {
+            @Override
+            public void onResponse(Call<Quizzes> call, Response<Quizzes> response) {
+                try {
+                    if (response.code() == 200) {
+                        saveQuizzes(response.body());
+                    } else {
+                        Timber.e("Failed to get quizzes");
+                    }
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+            }
+
+            @Override
+            public void onFailure(Call<Quizzes> call, Throwable t) {
+                Timber.e("onFailure() -> %s", t.getMessage());
+            }
+        });
+    }
+
+    private void saveQuizzes(Quizzes quizzes) {
+        Timber.d("INSERT: quizzes starting");
+        if (quizzes == null)
+            throw new NullPointerException("Quizzes not found");
+        List<com.unfpa.safepal.retrofitmodels.quizzes.Result> quizzesList = quizzes.getResults();
+
+        long deleted = 0;
+        try {
+            if (quizzesList.size() > 1)
+                deleted = getContentResolver().delete(QuiztableColumns.CONTENT_URI, null, null);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        Timber.d("deleted data count %s", deleted);
+
+        for (com.unfpa.safepal.retrofitmodels.quizzes.Result quiz : quizzesList) {
+            QuiztableContentValues values = new QuiztableContentValues();
+            Timber.d("quiz data %s", quiz.getTitle());
+            values.putTitle(quiz.getTitle());
+            values.putThumbnail(quiz.getThumbnail());
+            values.putDescription(quiz.getDescription());
+            values.putArticle(quiz.getArticle());
+            values.putCreatedAtNull();
+            final Uri uri = values.insert(getContentResolver());
+            Timber.d("saved quiz %s", uri);
         }
     }
 

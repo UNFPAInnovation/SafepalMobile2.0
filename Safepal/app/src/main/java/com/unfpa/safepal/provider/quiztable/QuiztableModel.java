@@ -59,7 +59,7 @@ public interface QuiztableModel extends BaseModel {
      * Can be {@code null}.
      */
     @Nullable
-    Integer getThumbnail();
+    String getThumbnail();
 
     /**
      * Get the {@code completion_rate} value.
