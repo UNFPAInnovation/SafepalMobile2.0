@@ -124,4 +124,18 @@
 
     <dimen name="spinner_dropdown_vert_offset">40dp</dimen>
 
+    <style name="Widget.Safepal.Button.Quiz" parent="Widget.AppCompat.Button">
+        <item name="android:paddingLeft">@dimen/padding_extra_large</item>
+        <item name="android:paddingRight">@dimen/padding_extra_large</item>
+        <item name="android:paddingTop">@dimen/padding_medium</item>
+        <item name="android:paddingBottom">@dimen/padding_medium</item>
+        <item name="android:textColor">@color/colorWhite</item>
+        <item name="android:textSize">21sp</item>
+        <item name="android:textStyle">normal</item>
+        <item name="android:elevation">15dp</item>
+        <item name="android:layout_marginTop">@dimen/margin_medium</item>
+        <item name="android:layout_marginBottom">@dimen/margin_medium</item>
+        <item name="android:background">@drawable/round_button</item>
+    </style>
+
 </resources>

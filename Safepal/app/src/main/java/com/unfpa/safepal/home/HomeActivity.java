@@ -25,6 +25,7 @@ import com.crashlytics.android.Crashlytics;
 import com.github.amlcurran.showcaseview.ShowcaseView;
 import com.github.amlcurran.showcaseview.targets.ViewTarget;
 import com.unfpa.safepal.DiscoveryActivity;
+import com.unfpa.safepal.QuizActivity;
 import com.unfpa.safepal.R;
 import com.unfpa.safepal.network.SetupIntentService;
 import com.unfpa.safepal.report.ReportingActivity;
@@ -59,7 +60,8 @@ public class HomeActivity extends AppCompatActivity {
 
         startService(new Intent(this, SetupIntentService.class));
 
-        reportCaseButton.setOnClickListener(v -> startActivity(new Intent(getApplicationContext(), ReportingActivity.class)));
+//        reportCaseButton.setOnClickListener(v -> startActivity(new Intent(getApplicationContext(), ReportingActivity.class)));
+        reportCaseButton.setOnClickListener(v -> startActivity(new Intent(getApplicationContext(), QuizActivity.class)));
         discoverMoreCard.setOnClickListener(v -> startActivity(new Intent(getApplicationContext(), DiscoveryActivity.class)));
 
         showLocationSettingsDialog();
