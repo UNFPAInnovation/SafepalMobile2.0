@@ -64,6 +64,7 @@ dependencies {
     implementation "com.jakewharton.timber:timber:4.7.1"
     implementation "com.arcao:slf4j-timber:3.1@aar"
     implementation 'com.squareup.picasso:picasso:2.71828'
+    implementation 'com.mikhaellopez:circularprogressbar:3.0.3'
     implementation('com.crashlytics.sdk.android:crashlytics:2.6.8@aar') {
         transitive = true;
     }
