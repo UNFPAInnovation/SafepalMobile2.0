@@ -41,13 +41,11 @@ public class QuestionControllerFragment extends Fragment implements View.OnClick
 
         circularProgressBar = view.findViewById(R.id.progress_circular);
         circularProgressBar.setProgress(progressCount);
-        circularProgressBar.setProgressMax(100f);
+        circularProgressBar.setProgressMax(50f);
         circularProgressBar.setProgressBarColor(getResources().getColor(R.color.colorAccent));
         circularProgressBar.setBackgroundProgressBarColor(getResources().getColor(R.color.colorGrey));
         circularProgressBar.setProgressBarWidth(5f);
         circularProgressBar.setBackgroundProgressBarWidth(5f);
-        circularProgressBar.setStartAngle(45f);
-        circularProgressBar.setProgressDirection(CircularProgressBar.ProgressDirection.TO_LEFT);
 
         yesButton.setOnClickListener(QuestionControllerFragment.this);
         noButton.setOnClickListener(QuestionControllerFragment.this);
@@ -71,8 +69,8 @@ public class QuestionControllerFragment extends Fragment implements View.OnClick
                 break;
         }
 
-        progressCount += progressCount;
-        circularProgressBar.setProgress(progressCount);
+        progressCount += 10L;
+        circularProgressBar.setProgressWithAnimation(progressCount, 500L);
 
         Toast.makeText(view.getContext(), "clicked", Toast.LENGTH_SHORT).show();
 //        NavHostFragment.findNavController(QuestionControllerFragment.this)
