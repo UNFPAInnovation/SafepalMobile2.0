@@ -34,6 +34,8 @@ public class QuestionControllerFragment extends Fragment implements View.OnClick
     float progressCount = 10f;
     private CircularProgressBar circularProgressBar;
     private QuestiontableCursor questiontableCursor;
+    private String correctAnswer = "YES";
+    private int correctAnswerCount = 0;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -88,29 +90,43 @@ public class QuestionControllerFragment extends Fragment implements View.OnClick
 
     @Override
     public void onClick(View view) {
+        String userAnswer;
         switch (view.getId()) {
             case R.id.yes_button:
-                Timber.d("Clicked yes");
+                userAnswer = "YES";
                 break;
             case R.id.no_button:
-                Timber.d("Clicked no");
-                break;
-            case R.id.sometimes_button:
-                Timber.d("Clicked sometimes");
+                userAnswer = "NO";
                 break;
             default:
-                Timber.d("clicked nothing");
+                userAnswer = "SOMETIMES";
                 break;
         }
 
-        moveToNextQuestion();
+        if (userAnswer.equals(correctAnswer)) {
+            Toast.makeText(view.getContext(), "correct answer", Toast.LENGTH_SHORT).show();
+            correctAnswerCount++;
+        } else {
+            Toast.makeText(view.getContext(), "wrong answer", Toast.LENGTH_SHORT).show();
+        }
+
+        if (isLastQuestion()) {
+            navigateToResultScreen();
+        } else {
+            moveToNextQuestion();
+        }
 
         progressCount += 10L;
         circularProgressBar.setProgressWithAnimation(progressCount, 500L);
+    }
 
-        Toast.makeText(view.getContext(), "clicked", Toast.LENGTH_SHORT).show();
-//        NavHostFragment.findNavController(QuestionControllerFragment.this)
-//                .navigate(R.id.action_QuestionControllerFragment_to_QuizResultFragment);
+    private boolean isLastQuestion() {
+        return circularProgressBar.getProgress() == circularProgressBar.getProgressMax();
+    }
+
+    private void navigateToResultScreen() {
+        NavHostFragment.findNavController(QuestionControllerFragment.this)
+                .navigate(R.id.action_QuestionControllerFragment_to_QuizResultFragment);
     }
 
     private void moveToNextQuestion() {
@@ -118,6 +134,7 @@ public class QuestionControllerFragment extends Fragment implements View.OnClick
             questionNumber.setText(String.format(getString(R.string.question_number_string),
                     questiontableCursor.getPositionNumber()));
             questionText.setText(questiontableCursor.getContent());
+            correctAnswer = questiontableCursor.getCorrectAnswer();
             questiontableCursor.moveToNext();
         } catch (CursorIndexOutOfBoundsException e) {
             e.printStackTrace();
