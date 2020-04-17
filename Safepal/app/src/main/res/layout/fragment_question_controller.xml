@@ -19,7 +19,7 @@
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/question_number"
-        app:layout_constraintVertical_bias="0.315" />
+        app:layout_constraintVertical_bias="0.272" />
 
     <Button
         android:id="@+id/no_button"
@@ -87,9 +87,10 @@
         app:layout_constraintTop_toBottomOf="@+id/question_number" />
 
     <com.mikhaellopez.circularprogressbar.CircularProgressBar
-        android:id="@+id/circularProgressBar"
+        android:id="@+id/progress_circular"
         android:layout_width="90dp"
         android:layout_height="90dp"
+        android:layout_marginBottom="16dp"
         app:cpb_background_progressbar_color="#b6bbd8"
         app:cpb_background_progressbar_width="5dp"
         app:cpb_progress_direction="to_right"
@@ -98,7 +99,8 @@
         app:cpb_round_border="false"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.498"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/sometimes_button"
-        app:layout_constraintVertical_bias="0.537" />
+        app:layout_constraintVertical_bias="0.571" />
 </android.support.constraint.ConstraintLayout>
