@@ -60,8 +60,7 @@ public class HomeActivity extends AppCompatActivity {
 
         startService(new Intent(this, SetupIntentService.class));
 
-//        reportCaseButton.setOnClickListener(v -> startActivity(new Intent(getApplicationContext(), ReportingActivity.class)));
-        reportCaseButton.setOnClickListener(v -> startActivity(new Intent(getApplicationContext(), QuizActivity.class)));
+        reportCaseButton.setOnClickListener(v -> startActivity(new Intent(getApplicationContext(), ReportingActivity.class)));
         discoverMoreCard.setOnClickListener(v -> startActivity(new Intent(getApplicationContext(), DiscoveryActivity.class)));
 
         showLocationSettingsDialog();

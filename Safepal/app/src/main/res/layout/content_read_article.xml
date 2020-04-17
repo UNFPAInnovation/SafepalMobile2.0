@@ -17,7 +17,7 @@
             android:id="@+id/title"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="@dimen/text_margin"
+            android:layout_marginStart="@dimen/text_margin"
             android:layout_marginTop="@dimen/text_margin"
             android:text="Quisquam dolore"
             android:textAppearance="@style/TextAppearance.AppCompat.Title" />
@@ -46,6 +46,15 @@
             android:layout_margin="@dimen/text_margin"
             android:text="@string/large_text"
             android:textColor="@color/colorTextGray" />
+
+        <Button
+            android:id="@+id/start_quiz_button"
+            style="@style/Widget.Safepal.Button.Quiz"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/margin_large"
+            android:layout_marginEnd="@dimen/margin_large"
+            android:text="@string/start_quiz" />
     </LinearLayout>
 
 </android.support.v4.widget.NestedScrollView>

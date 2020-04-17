@@ -1,11 +1,13 @@
 package com.unfpa.safepal;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -20,6 +22,7 @@ import static com.unfpa.safepal.provider.videotable.VideotableColumns.TITLE;
 public class ReadArticleActivity extends AppCompatActivity {
     TextView title, category, questions, content;
     ImageView articleImage;
+    private Button startQuizButton;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -33,6 +36,7 @@ public class ReadArticleActivity extends AppCompatActivity {
         questions = findViewById(R.id.questions);
         content = findViewById(R.id.content);
         articleImage = findViewById(R.id.article_image);
+        startQuizButton = findViewById(R.id.start_quiz_button);
 
         // Get the title passed to use from the VideoAdapter and query for the video
         ArticletableCursor articletableCursor = new ArticletableSelection().orderByCreatedAt(true)
@@ -48,5 +52,12 @@ public class ReadArticleActivity extends AppCompatActivity {
                 .placeholder(R.mipmap.ic_launcher)
                 .error(R.mipmap.ic_launcher)
                 .into(articleImage);
+        articletableCursor.close();
+
+        startQuizButton.setOnClickListener(v -> {
+            Intent intent = new Intent(this, QuizActivity.class)
+                    .putExtra(TITLE, title.getText().toString());
+            startActivity(intent);
+        });
     }
 }

@@ -19,6 +19,7 @@ import com.unfpa.safepal.provider.questiontable.QuestiontableColumns;
 import com.unfpa.safepal.provider.questiontable.QuestiontableContentValues;
 import com.unfpa.safepal.provider.quiztable.QuiztableColumns;
 import com.unfpa.safepal.provider.quiztable.QuiztableContentValues;
+import com.unfpa.safepal.provider.quiztable.QuiztableSelection;
 import com.unfpa.safepal.provider.videotable.VideotableColumns;
 import com.unfpa.safepal.provider.videotable.VideotableContentValues;
 import com.unfpa.safepal.retrofit.APIClient;
@@ -431,6 +432,7 @@ public class SetupIntentService extends IntentService {
             Timber.d("quiz data %s", quiz.getTitle());
             values.putTitle(quiz.getTitle());
             values.putThumbnail(quiz.getThumbnail());
+            values.putServerid(quiz.getId());
             values.putDescription(quiz.getDescription());
             values.putArticle(quiz.getArticle());
             values.putCreatedAtNull();
