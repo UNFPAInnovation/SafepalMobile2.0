@@ -223,6 +223,7 @@
     <string name="hello_second_fragment">Hello second fragment. Arg: %1$s</string>
     <string name="question_number_string">QUESTION %d</string>
     <string name="start_quiz">Start quiz</string>
+    <string name="results">RESULTS</string>
     <string-array name="not_your_fault_messages">
 <item>Whatever happened was not your fault. No one has the right to sexually violate you.  The rapist is solely to blame.
            What a person wears, what a person says, or how a person acts cannot justify sexual violence.</item>

@@ -1,7 +1,10 @@
 package com.unfpa.safepal;
 
+import android.app.Dialog;
+import android.content.Context;
 import android.database.CursorIndexOutOfBoundsException;
 import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -9,7 +12,9 @@ import android.view.ViewGroup;
 
 import android.support.annotation.NonNull;
 import android.support.v4.app.Fragment;
+import android.view.Window;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -22,6 +27,8 @@ import com.unfpa.safepal.provider.questiontable.QuestiontableCursor;
 import com.unfpa.safepal.provider.questiontable.QuestiontableSelection;
 import com.unfpa.safepal.provider.quiztable.QuiztableCursor;
 import com.unfpa.safepal.provider.quiztable.QuiztableSelection;
+
+import org.jetbrains.annotations.NotNull;
 
 import timber.log.Timber;
 
@@ -36,6 +43,7 @@ public class QuestionControllerFragment extends Fragment implements View.OnClick
     private QuestiontableCursor questiontableCursor;
     private String correctAnswer = "YES";
     private int correctAnswerCount = 0;
+    private String dialogTitle = "CORRECT";
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -103,25 +111,16 @@ public class QuestionControllerFragment extends Fragment implements View.OnClick
                 break;
         }
 
-        if (userAnswer.equals(correctAnswer)) {
-            Toast.makeText(view.getContext(), "correct answer", Toast.LENGTH_SHORT).show();
+        if (userAnswer.equals(correctAnswer))
             correctAnswerCount++;
-        } else {
-            Toast.makeText(view.getContext(), "wrong answer", Toast.LENGTH_SHORT).show();
-        }
 
-        if (isLastQuestion()) {
-            navigateToResultScreen();
-        } else {
-            moveToNextQuestion();
-        }
-
-        progressCount += 10L;
-        circularProgressBar.setProgressWithAnimation(progressCount, 500L);
+        displayNextQuestionDialog(view.getContext(), userAnswer.equals(correctAnswer), generateRandomMessage());
     }
 
-    private boolean isLastQuestion() {
-        return circularProgressBar.getProgress() == circularProgressBar.getProgressMax();
+    @NotNull
+    private String generateRandomMessage() {
+        // todo generate encouragement messages
+        return "You should never be pressured!";
     }
 
     private void navigateToResultScreen() {
@@ -139,5 +138,50 @@ public class QuestionControllerFragment extends Fragment implements View.OnClick
         } catch (CursorIndexOutOfBoundsException e) {
             e.printStackTrace();
         }
+    }
+
+    private void displayNextQuestionDialog(Context context, boolean answerResult, String messageText) {
+        final Dialog dialog = new Dialog(context, R.style.CustomAlertDialog);
+        dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
+        dialog.setContentView(R.layout.next_question_dialog);
+
+        TextView title = dialog.findViewById(R.id.title);
+        TextView message = dialog.findViewById(R.id.message);
+        ImageView resultImage = dialog.findViewById(R.id.result_image);
+        Button ok = dialog.findViewById(R.id.next_question_button);
+
+        title.setText(answerResult ? "CORRECT" : "INCORRECT");
+        message.setText(messageText);
+        resultImage.setImageResource(answerResult ? R.drawable.ic_correct_48px : R.drawable.ic_wrong_48px);
+
+        try {
+            ok.setText(String.format(getString(R.string.question_number_string),
+                    questiontableCursor.getPositionNumber()));
+        } catch (Exception e) {
+            e.printStackTrace();
+            ok.setText(getString(R.string.results));
+        }
+
+        ok.setOnClickListener(v -> {
+            if (isLastQuestion()) {
+                navigateToResultScreen();
+            } else {
+                moveToNextQuestion();
+            }
+            moveProgressBar();
+
+            dialog.dismiss();
+        });
+
+        dialog.show();
+    }
+
+    private boolean isLastQuestion() {
+        return circularProgressBar.getProgress() == circularProgressBar.getProgressMax();
+    }
+
+    private void moveProgressBar() {
+        progressCount += 10L;
+        circularProgressBar.setProgressWithAnimation(progressCount, 500L);
     }
 }

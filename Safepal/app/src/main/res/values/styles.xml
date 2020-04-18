@@ -138,4 +138,8 @@
         <item name="android:background">@drawable/round_button</item>
     </style>
 
+    <style name="CustomAlertDialog" parent="Theme.AppCompat.Light.Dialog.Alert">
+        <item name="android:windowBackground">@drawable/dialog_edges</item>
+    </style>
+
 </resources>
