@@ -8,4 +8,5 @@ public class Constants {
     final public static String VIDEO_URL = "video_url";
     final public static String DJANGO_BACKEND_URL = "http://54.213.147.100/";
     final public static String SERVER_TOKEN = "servertoken";
+    final public static String PERCENTAGE = "percentage";
 }

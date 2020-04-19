@@ -21,6 +21,7 @@ import android.widget.Toast;
 import androidx.navigation.fragment.NavHostFragment;
 
 import com.mikhaellopez.circularprogressbar.CircularProgressBar;
+import com.pixplicity.easyprefs.library.Prefs;
 import com.unfpa.safepal.provider.articletable.ArticletableCursor;
 import com.unfpa.safepal.provider.articletable.ArticletableSelection;
 import com.unfpa.safepal.provider.questiontable.QuestiontableCursor;
@@ -32,6 +33,7 @@ import org.jetbrains.annotations.NotNull;
 
 import timber.log.Timber;
 
+import static com.unfpa.safepal.Utils.Constants.PERCENTAGE;
 import static com.unfpa.safepal.provider.videotable.VideotableColumns.TITLE;
 
 public class QuestionControllerFragment extends Fragment implements View.OnClickListener {
@@ -44,6 +46,7 @@ public class QuestionControllerFragment extends Fragment implements View.OnClick
     private String correctAnswer = "YES";
     private int correctAnswerCount = 0;
     private String dialogTitle = "CORRECT";
+    private int numberOfQuestions = 0;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -85,7 +88,7 @@ public class QuestionControllerFragment extends Fragment implements View.OnClick
                     .orderByPositionNumber().query(view.getContext());
 
             // set a limit for the progress bar
-            int numberOfQuestions = questiontableCursor.getCount();
+            numberOfQuestions = questiontableCursor.getCount();
             circularProgressBar.setProgressMax(numberOfQuestions * 10f);
 
             questiontableCursor.moveToFirst();
@@ -93,6 +96,7 @@ public class QuestionControllerFragment extends Fragment implements View.OnClick
         } catch (Exception e) {
             Timber.e(e);
             Toast.makeText(view.getContext(), "Sorry, there is no quiz for this article", Toast.LENGTH_SHORT).show();
+            getActivity().finish();
         }
     }
 
@@ -124,6 +128,9 @@ public class QuestionControllerFragment extends Fragment implements View.OnClick
     }
 
     private void navigateToResultScreen() {
+        int percentage = (int) (correctAnswerCount / (float) numberOfQuestions * 100);
+        Timber.d("percentage: %s", String.valueOf(percentage));
+        Prefs.putInt(PERCENTAGE, percentage);
         NavHostFragment.findNavController(QuestionControllerFragment.this)
                 .navigate(R.id.action_QuestionControllerFragment_to_QuizResultFragment);
     }
