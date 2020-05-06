@@ -1,5 +1,6 @@
 package com.unfpa.safepal;
 
+import android.media.MediaPlayer;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
@@ -23,6 +24,7 @@ public class WatchVideoActivity extends AppCompatActivity {
     private TextView description;
     private RecyclerView relatedVideosRecyclerView;
     private VideoAdapter videoAdapter;
+    private MediaController mediaController;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -50,7 +52,12 @@ public class WatchVideoActivity extends AppCompatActivity {
         video.setMediaController(new MediaController(this));
         video.setVideoURI(Uri.parse(videotableCursor.getUrl()));
         video.requestFocus();
-        video.setOnPreparedListener(mp -> video.start());
+        video.setOnPreparedListener(mp -> {
+            mediaController = new MediaController(WatchVideoActivity.this);
+            video.setMediaController(mediaController);
+            mediaController.setAnchorView(video);
+            video.start();
+        });
 
         videoAdapter = new VideoAdapter(this, new VideotableSelection()
                 .orderByCreatedAt(true).category(videotableCursor.getCategory())
