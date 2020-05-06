@@ -23,7 +23,7 @@ android {
         applicationId "com.unfpa.safepal"
         minSdkVersion 19
         targetSdkVersion 28
-        versionCode 34
+        versionCode 35
         versionName "1.21"
         vectorDrawables.useSupportLibrary = true
     }

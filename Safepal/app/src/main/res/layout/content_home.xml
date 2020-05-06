@@ -15,51 +15,60 @@
     tools:layout_editor_absoluteY="81dp"
     tools:showIn="@layout/activity_home">
 
+
     <Button
         android:id="@+id/report_incident_button"
         style="@style/materialButtonNormal"
-        android:layout_width="198dp"
-        android:layout_height="192dp"
-        android:layout_marginTop="24dp"
-        android:layout_marginBottom="24dp"
+        android:layout_width="178dp"
+        android:layout_height="172dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginBottom="50dp"
         android:background="@drawable/circular_view_purple"
         android:drawableStart="@drawable/ic_perm_phone_msg_48px"
+        android:elevation="30dp"
         android:padding="@dimen/padding_extra_large"
         android:text="@string/report"
         android:textAppearance="@style/TextAppearance.AppCompat.Large"
         android:textColor="@color/colorWhite"
         app:layout_constraintBottom_toTopOf="@+id/discover_more_card"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.497"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/home_instruct_tv" />
-
+        app:layout_constraintTop_toBottomOf="@+id/home_instruct_tv"
+        app:layout_constraintVertical_bias="0.72" />
 
     <ImageView
         android:id="@+id/imageView"
-        android:layout_width="120dp"
-        android:layout_height="120dp"
-        android:layout_marginTop="8dp"
+        android:layout_width="90dp"
+        android:layout_height="60dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="2dp"
+        android:layout_marginEnd="70dp"
         android:layout_marginBottom="24dp"
+        android:alpha="0.7"
         android:src="@drawable/ic_unfpa_logo"
         app:layout_constraintBottom_toTopOf="@+id/home_instruct_title"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.454"
         app:layout_constraintStart_toEndOf="@+id/imageView2"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.666" />
+        app:layout_constraintVertical_bias="0.571" />
 
     <ImageView
         android:id="@+id/imageView2"
-        android:layout_width="90dp"
-        android:layout_height="90dp"
-        android:layout_marginStart="64dp"
+        android:layout_width="70dp"
+        android:layout_height="70dp"
+        android:layout_marginStart="96dp"
         android:layout_marginTop="10dp"
-        android:layout_marginBottom="61dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginBottom="32dp"
+        android:alpha="0.7"
         android:src="@drawable/ic_coat_of_arms_of_uganda"
         app:layout_constraintBottom_toTopOf="@+id/home_instruct_title"
+        app:layout_constraintEnd_toStartOf="@+id/imageView"
+        app:layout_constraintHorizontal_bias="0.33"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.0" />
+        app:layout_constraintVertical_bias="0.812" />
 
     <TextView
         android:id="@+id/home_instruct_tv"
@@ -71,11 +80,12 @@
         android:maxLines="3"
         android:text="@string/reachout_message"
         app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.312" />
-
+        app:layout_constraintVertical_bias="0.265" />
 
     <TextView
         android:id="@+id/home_instruct_title"
@@ -87,20 +97,24 @@
         android:text="@string/reachout_title"
         android:textAppearance="@style/TextAppearance.AppCompat.Large"
         app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.247" />
+        app:layout_constraintVertical_bias="0.207" />
 
     <android.support.v7.widget.CardView
         android:id="@+id/discover_more_card"
         android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="8dp"
-        android:layout_marginEnd="8dp"
-        android:layout_marginBottom="2dp"
+        android:layout_height="111dp"
+        android:layout_marginStart="10dp"
+        android:layout_marginTop="16dp"
+        android:layout_marginEnd="10dp"
+        app:cardCornerRadius="@dimen/padding_large"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/report_incident_button">
 
@@ -112,26 +126,54 @@
             <ImageView
                 android:id="@+id/imageView3"
                 android:layout_width="100dp"
-                android:layout_height="100dp"
-                android:src="@drawable/obulamu_discovery" />
+                android:layout_height="95dp"
+                android:layout_marginStart="10dp"
+                android:layout_marginEnd="12dp"
+                android:paddingRight="@dimen/margin_medium"
+                android:src="@drawable/obulamu_discovery"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toStartOf="@+id/textView3"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <ImageView
+                android:id="@+id/imageView4"
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:layout_marginStart="50dp"
+                android:layout_marginTop="8dp"
+                android:layout_marginRight="16dp"
+                android:src="@drawable/ic_keyboard_arrow_right_48px"
+                app:layout_constraintBottom_toTopOf="@+id/textView4"
+                app:layout_constraintRight_toRightOf="parent"
+                app:layout_constraintStart_toEndOf="@+id/textView3"
+                app:layout_constraintTop_toTopOf="parent" />
 
             <TextView
                 android:id="@+id/textView3"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="16dp"
+                android:layout_width="131dp"
+                android:layout_height="27dp"
+                android:layout_marginTop="16dp"
                 android:text="Discover more"
                 android:textAppearance="@style/TextAppearance.AppCompat.Title"
+                app:layout_constraintBottom_toTopOf="@+id/textView4"
                 app:layout_constraintStart_toEndOf="@+id/imageView3"
-                tools:layout_editor_absoluteY="8dp" />
+                app:layout_constraintStart_toStartOf="@+id/textView4"
+                app:layout_constraintTop_toTopOf="parent" />
 
             <TextView
                 android:id="@+id/textView4"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="20dp"
+                android:layout_width="195dp"
+                android:layout_height="36dp"
+                android:layout_marginStart="16dp"
+                android:layout_marginTop="8dp"
+                android:layout_marginEnd="33dp"
+                android:layout_marginBottom="24dp"
                 android:text="Watch videos, learn about your \nhealth &amp; play fun quizzes"
-                app:layout_constraintStart_toStartOf="@+id/textView3"
+                android:textSize="14sp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toEndOf="@+id/imageView3"
                 app:layout_constraintTop_toBottomOf="@+id/textView3" />
         </android.support.constraint.ConstraintLayout>
     </android.support.v7.widget.CardView>
