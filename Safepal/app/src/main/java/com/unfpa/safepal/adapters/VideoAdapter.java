@@ -1,13 +1,16 @@
 package com.unfpa.safepal.adapters;
 
 import android.app.Activity;
+import android.content.Context;
 import android.content.Intent;
 import android.support.annotation.NonNull;
 import android.support.v4.app.FragmentActivity;
 import android.support.v7.widget.RecyclerView;
+import android.view.Display;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.WindowManager;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -53,28 +56,32 @@ public class VideoAdapter extends RecyclerView.Adapter<VideoAdapter.ViewHolder> 
 
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
-        cursor.moveToPosition(position);
-
-        holder.title.setText(cursor.getTitle());
-
-        Picasso.get()
-                .load(cursor.getThumbnail())
-                .placeholder(R.mipmap.ic_launcher)
-                .error(R.mipmap.ic_launcher)
-                .into(holder.thumbnail);
-
         try {
-            holder.duration.setText(String.valueOf(cursor.getDuration()) + " mins");
+            cursor.moveToPosition(position);
+
+            holder.title.setText(cursor.getTitle());
+
+            Picasso.get()
+                    .load(cursor.getThumbnail())
+                    .placeholder(R.mipmap.ic_launcher)
+                    .error(R.mipmap.ic_launcher)
+                    .into(holder.thumbnail);
+
+            try {
+                holder.duration.setText(String.valueOf(cursor.getDuration()) + " mins");
+            } catch (Exception e) {
+                e.printStackTrace();
+                holder.duration.setText("1 mins");
+            }
+
+            holder.itemView.setOnClickListener(v -> {
+                Intent intent = new Intent(activity, WatchVideoActivity.class)
+                        .putExtra(TITLE, holder.title.getText().toString());
+                activity.startActivity(intent);
+            });
         } catch (Exception e) {
             e.printStackTrace();
-            holder.duration.setText("1 mins");
         }
-
-        holder.itemView.setOnClickListener(v -> {
-            Intent intent = new Intent(activity, WatchVideoActivity.class)
-                    .putExtra(TITLE, holder.title.getText().toString());
-            activity.startActivity(intent);
-        });
     }
 
     @Override
