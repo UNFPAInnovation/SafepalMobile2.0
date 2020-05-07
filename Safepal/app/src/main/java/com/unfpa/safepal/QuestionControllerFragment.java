@@ -3,8 +3,6 @@ package com.unfpa.safepal;
 import android.app.Dialog;
 import android.content.Context;
 import android.database.CursorIndexOutOfBoundsException;
-import android.graphics.Color;
-import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -18,7 +16,6 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import androidx.navigation.Navigator;
 import androidx.navigation.fragment.NavHostFragment;
 
 import com.mikhaellopez.circularprogressbar.CircularProgressBar;
@@ -40,7 +37,7 @@ import static com.unfpa.safepal.provider.videotable.VideotableColumns.TITLE;
 public class QuestionControllerFragment extends Fragment implements View.OnClickListener {
 
     Button yesButton, noButton, sometimesButton;
-    TextView questionNumber, questionText, quizTitle;
+    TextView questionNumber, questionText, quizTitle, questionCountText;
     float progressCount = 10f;
     private CircularProgressBar circularProgressBar;
     private QuestiontableCursor questiontableCursor;
@@ -63,6 +60,7 @@ public class QuestionControllerFragment extends Fragment implements View.OnClick
         questionNumber = view.findViewById(R.id.question_number);
         questionText = view.findViewById(R.id.question_text);
         quizTitle = view.findViewById(R.id.quiz_title);
+        questionCountText = view.findViewById(R.id.question_count_text);
 
         circularProgressBar = view.findViewById(R.id.progress_circular);
         circularProgressBar.setProgress(progressCount);
@@ -97,7 +95,7 @@ public class QuestionControllerFragment extends Fragment implements View.OnClick
             quizTitle.setText(quizCursor.getTitle());
 
             questiontableCursor.moveToFirst();
-            moveToNextQuestion();
+            moveToNextQuestion(false);
         } catch (Exception e) {
             Timber.e(e);
             Toast.makeText(view.getContext(), "Sorry, there is no quiz for this article", Toast.LENGTH_SHORT).show();
@@ -141,13 +139,15 @@ public class QuestionControllerFragment extends Fragment implements View.OnClick
 //        getActivity().getSupportFragmentManager().beginTransaction().remove(this).commitAllowingStateLoss();
     }
 
-    private void moveToNextQuestion() {
+    private void moveToNextQuestion(boolean makeTransition) {
         try {
-            questionNumber.setText(String.format(getString(R.string.question_number_string),
-                    questiontableCursor.getPositionNumber()));
+            if (makeTransition)
+                questiontableCursor.moveToNext();
             questionText.setText(questiontableCursor.getContent());
             correctAnswer = questiontableCursor.getCorrectAnswer();
-            questiontableCursor.moveToNext();
+            questionNumber.setText(String.format(getString(R.string.question_number_string),
+                    questiontableCursor.getPositionNumber()));
+            questionCountText.setText(String.format(getString(R.string.question_count_string), questiontableCursor.getPositionNumber(), numberOfQuestions));
         } catch (CursorIndexOutOfBoundsException e) {
             e.printStackTrace();
         }
@@ -168,19 +168,21 @@ public class QuestionControllerFragment extends Fragment implements View.OnClick
         resultImage.setImageResource(answerResult ? R.drawable.ic_correct_48px : R.drawable.ic_wrong_48px);
 
         try {
-            ok.setText(String.format(getString(R.string.question_number_string),
-                    questiontableCursor.getPositionNumber()));
+            if (questiontableCursor.getPositionNumber() < numberOfQuestions)
+                ok.setText(String.format(getString(R.string.question_number_string),
+                        questiontableCursor.getPositionNumber() + 1));
+            else
+                ok.setText(getString(R.string.results));
         } catch (Exception e) {
             e.printStackTrace();
             ok.setText(getString(R.string.results));
         }
 
         ok.setOnClickListener(v -> {
-            if (isLastQuestion()) {
+            if (isLastQuestion())
                 navigateToResultScreen();
-            } else {
-                moveToNextQuestion();
-            }
+            else
+                moveToNextQuestion(true);
             moveProgressBar();
 
             dialog.dismiss();
@@ -210,6 +212,7 @@ public class QuestionControllerFragment extends Fragment implements View.OnClick
             circularProgressBar.setProgressMax(numberOfQuestions * 10f);
             progressCount = 10f;
             circularProgressBar.setProgressWithAnimation(progressCount, 500L);
+            questionCountText.setText(String.format(getString(R.string.question_count_string), questiontableCursor.getPositionNumber(), numberOfQuestions));
         } catch (Exception e) {
             e.printStackTrace();
         }
