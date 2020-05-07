@@ -10,7 +10,10 @@ import android.support.v4.app.Fragment;
 import android.widget.Button;
 import android.widget.TextView;
 
+import androidx.navigation.NavController;
+import androidx.navigation.NavOptions;
 import androidx.navigation.fragment.NavHostFragment;
+import androidx.navigation.ui.AppBarConfiguration;
 
 import com.pixplicity.easyprefs.library.Prefs;
 
@@ -39,10 +42,15 @@ public class QuizResultFragment extends Fragment {
 
         button.setOnClickListener(view1 -> {
             if (Prefs.getInt(PERCENTAGE, 10) < 80)
-                NavHostFragment.findNavController(QuizResultFragment.this)
-                        .navigate(R.id.action_SecondFragment_to_FirstFragment);
+                NavHostFragment.findNavController(QuizResultFragment.this).popBackStack(R.id.QuestionControllerFragment, false);
+//                        .navigate(R.id.action_SecondFragment_to_FirstFragment);
             else
                 getActivity().finish();
         });
+    }
+
+    @Override
+    public void onPause() {
+        super.onPause();
     }
 }

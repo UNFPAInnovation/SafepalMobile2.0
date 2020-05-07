@@ -18,6 +18,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.navigation.Navigator;
 import androidx.navigation.fragment.NavHostFragment;
 
 import com.mikhaellopez.circularprogressbar.CircularProgressBar;
@@ -133,6 +134,7 @@ public class QuestionControllerFragment extends Fragment implements View.OnClick
         Prefs.putInt(PERCENTAGE, percentage);
         NavHostFragment.findNavController(QuestionControllerFragment.this)
                 .navigate(R.id.action_QuestionControllerFragment_to_QuizResultFragment);
+//        getActivity().getSupportFragmentManager().beginTransaction().remove(this).commitAllowingStateLoss();
     }
 
     private void moveToNextQuestion() {
@@ -190,5 +192,22 @@ public class QuestionControllerFragment extends Fragment implements View.OnClick
     private void moveProgressBar() {
         progressCount += 10L;
         circularProgressBar.setProgressWithAnimation(progressCount, 500L);
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        // reset state when user repeats the quiz
+        try {
+            questiontableCursor.moveToFirst();
+            correctAnswer = questiontableCursor.getCorrectAnswer();
+            correctAnswerCount = 0;
+            numberOfQuestions = questiontableCursor.getCount();
+            circularProgressBar.setProgressMax(numberOfQuestions * 10f);
+            progressCount = 10f;
+            circularProgressBar.setProgressWithAnimation(progressCount, 500L);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 }
