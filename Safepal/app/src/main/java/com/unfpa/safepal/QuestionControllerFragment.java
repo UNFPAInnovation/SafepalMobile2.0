@@ -40,7 +40,7 @@ import static com.unfpa.safepal.provider.videotable.VideotableColumns.TITLE;
 public class QuestionControllerFragment extends Fragment implements View.OnClickListener {
 
     Button yesButton, noButton, sometimesButton;
-    TextView questionNumber, questionText;
+    TextView questionNumber, questionText, quizTitle;
     float progressCount = 10f;
     private CircularProgressBar circularProgressBar;
     private QuestiontableCursor questiontableCursor;
@@ -62,6 +62,7 @@ public class QuestionControllerFragment extends Fragment implements View.OnClick
         sometimesButton = view.findViewById(R.id.sometimes_button);
         questionNumber = view.findViewById(R.id.question_number);
         questionText = view.findViewById(R.id.question_text);
+        quizTitle = view.findViewById(R.id.quiz_title);
 
         circularProgressBar = view.findViewById(R.id.progress_circular);
         circularProgressBar.setProgress(progressCount);
@@ -91,6 +92,9 @@ public class QuestionControllerFragment extends Fragment implements View.OnClick
             // set a limit for the progress bar
             numberOfQuestions = questiontableCursor.getCount();
             circularProgressBar.setProgressMax(numberOfQuestions * 10f);
+
+            //todo trim title when its very long
+            quizTitle.setText(quizCursor.getTitle());
 
             questiontableCursor.moveToFirst();
             moveToNextQuestion();
