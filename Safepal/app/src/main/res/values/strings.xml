@@ -124,7 +124,7 @@
     <string name="videos_tab">Videos</string>
     <string name="topics_tab">Topics</string>
     <string name="directory_tab">Directory</string>
-    <string name="title_activity_watch_video">WatchVideoActivity</string>
+    <string name="title_activity_watch_video">Video</string>
     <string name="title_activity_read_article">Article</string>
     <string name="large_text">
         "Material is the metaphor.\n\n"
@@ -226,6 +226,11 @@
     <string name="start_quiz">Start quiz</string>
     <string name="results">RESULTS</string>
     <string name="retry_quiz">RETRY QUIZ</string>
+    <string name="related_videos">RELATED VIDEOS</string>
+    <string name="dummy_description">My friends talk about sex a lot.. But that doesnt mean I should have it. To avoid catching HIV, abstain from sex.</string>
+    <string name="dummy_category">Prevention of HIV</string>
+    <string name="dummy_title">My Plan</string>
+    <string name="related_articles">RELATED TOPICS</string>
     <string-array name="not_your_fault_messages">
 <item>Whatever happened was not your fault. No one has the right to sexually violate you.  The rapist is solely to blame.
            What a person wears, what a person says, or how a person acts cannot justify sexual violence.</item>

@@ -55,6 +55,21 @@
             android:layout_marginStart="@dimen/margin_large"
             android:layout_marginEnd="@dimen/margin_large"
             android:text="@string/start_quiz" />
+
+        <TextView
+            android:id="@+id/related_articles"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/text_margin"
+            android:layout_marginTop="@dimen/margin_large"
+            android:layout_marginBottom="@dimen/margin_medium"
+            android:text="@string/related_articles"/>
+
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/related_articles_recycler"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp" />
     </LinearLayout>
 
 </android.support.v4.widget.NestedScrollView>

@@ -13,6 +13,7 @@
     app:layout_behavior="@string/appbar_scrolling_view_behavior"
     tools:context=".WatchVideoActivity"
     tools:showIn="@layout/activity_watch_video">
+    <!-- Add padding to scroll view to prevent video from leaving space at the top-->
 
     <android.support.constraint.ConstraintLayout
         android:layout_width="match_parent"
@@ -38,7 +39,7 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="16dp"
             android:layout_marginTop="16dp"
-            android:text="My Plan"
+            android:text="@string/dummy_title"
             android:textAppearance="@style/TextAppearance.AppCompat.Large"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/video" />
@@ -48,7 +49,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginBottom="18dp"
-            android:text="Prevention of HIV"
+            android:text="@string/dummy_category"
             android:textAppearance="@style/TextAppearance.AppCompat.Small"
             app:layout_constraintBottom_toTopOf="@+id/description"
             app:layout_constraintStart_toStartOf="@+id/title"
@@ -59,7 +60,7 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginBottom="26dp"
-            android:text="My friends talk about sex a lot.. But that doesnt mean I should have it. To avoid catching HIV, abstain from sex."
+            android:text="@string/dummy_description"
             android:textAppearance="@style/TextAppearance.AppCompat.Medium"
             app:layout_constraintBottom_toTopOf="@+id/related_videos"
             app:layout_constraintEnd_toEndOf="parent"
@@ -71,7 +72,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginBottom="132dp"
-            android:text="RELATED VIDEOS"
+            android:text="@string/related_videos"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toStartOf="@+id/description"
             app:layout_constraintTop_toBottomOf="@+id/description" />
