@@ -24,14 +24,24 @@ import android.widget.TextView;
 import com.crashlytics.android.Crashlytics;
 import com.github.amlcurran.showcaseview.ShowcaseView;
 import com.github.amlcurran.showcaseview.targets.ViewTarget;
+import com.pixplicity.easyprefs.library.Prefs;
 import com.unfpa.safepal.DiscoveryActivity;
 import com.unfpa.safepal.FAQActivity;
 import com.unfpa.safepal.QuizActivity;
 import com.unfpa.safepal.R;
+import com.unfpa.safepal.chatmodule.ChatActivity;
 import com.unfpa.safepal.network.SetupIntentService;
 import com.unfpa.safepal.report.ReportingActivity;
 
+import java.util.UUID;
+
 import io.fabric.sdk.android.Fabric;
+
+import static com.unfpa.safepal.Utils.Constants.ANONYMOUS_USER_NAME;
+import static com.unfpa.safepal.Utils.Constants.FIRST_LAUNCH;
+import static com.unfpa.safepal.Utils.Constants.MAC_ADDRESS;
+import static com.unfpa.safepal.Utils.Utilities.getMacAddress;
+import static com.unfpa.safepal.Utils.Utilities.getRandomString;
 
 public class HomeActivity extends AppCompatActivity {
     Button reportCaseButton;
@@ -59,12 +69,18 @@ public class HomeActivity extends AppCompatActivity {
         reportCaseButton = findViewById(R.id.report_incident_button);
         discoverMoreCard = findViewById(R.id.discover_more_card);
 
-        startService(new Intent(this, SetupIntentService.class));
+//        startService(new Intent(this, SetupIntentService.class));
+        startActivity(new Intent(getApplicationContext(), ChatActivity.class));
 
         reportCaseButton.setOnClickListener(v -> startActivity(new Intent(getApplicationContext(), ReportingActivity.class)));
         discoverMoreCard.setOnClickListener(v -> startActivity(new Intent(getApplicationContext(), DiscoveryActivity.class)));
 
         showLocationSettingsDialog();
+
+        if (Prefs.getBoolean(FIRST_LAUNCH, true)) {
+            Prefs.putString(MAC_ADDRESS, getMacAddress(this));
+            Prefs.putString(ANONYMOUS_USER_NAME, "User" + getRandomString());
+        }
     }
 
     @Override

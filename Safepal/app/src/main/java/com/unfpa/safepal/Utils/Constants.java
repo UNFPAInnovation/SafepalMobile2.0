@@ -9,4 +9,7 @@ public class Constants {
     final public static String DJANGO_BACKEND_URL = "http://54.213.147.100/";
     final public static String SERVER_TOKEN = "servertoken";
     final public static String PERCENTAGE = "percentage";
+    final public static String FIRST_LAUNCH = "first_launch";
+    final public static String MAC_ADDRESS = "mac_address";
+    final public static String ANONYMOUS_USER_NAME = "anonymous_user_name";
 }

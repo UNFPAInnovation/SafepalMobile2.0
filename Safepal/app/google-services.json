@@ -1,0 +1,48 @@
+{
+  "project_info": {
+    "project_number": "991858471604",
+    "firebase_url": "https://safepal-85032.firebaseio.com",
+    "project_id": "safepal-85032",
+    "storage_bucket": "safepal-85032.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:991858471604:android:f114762d2cec781b711de1",
+        "android_client_info": {
+          "package_name": "com.unfpa.safepal"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "991858471604-vn3jtbuqij4gpf1qbvunpmn6s9pclui7.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.unfpa.safepal",
+            "certificate_hash": "f35f9d6de6edd310e53d2a356ce7c4f9fdca4a8a"
+          }
+        },
+        {
+          "client_id": "991858471604-cksc5kjvanf0kdjesguosaj89q3o6hvc.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyA9JoOl_G6nMzudFYFNFdkKDuB7dbZ4uPE"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "991858471604-cksc5kjvanf0kdjesguosaj89q3o6hvc.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
