@@ -9,7 +9,12 @@ import android.text.format.Formatter;
 
 import com.unfpa.safepal.R;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.Random;
+import java.util.TimeZone;
 import java.util.UUID;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -65,5 +70,12 @@ public class Utilities {
 
     public static String getRandomString() {
         return UUID.randomUUID().toString().split("-")[0];
+    }
+
+    public static String formatDateTime(Date createdAt) throws ParseException {
+        SimpleDateFormat dateFormat = new SimpleDateFormat("hh:mm a");
+        dateFormat.setTimeZone(TimeZone.getTimeZone("UTC"));
+        Date today = Calendar.getInstance().getTime();
+        return dateFormat.parse(createdAt.toString()).toString();
     }
 }

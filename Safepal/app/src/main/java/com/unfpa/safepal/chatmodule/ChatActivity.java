@@ -3,10 +3,11 @@ package com.unfpa.safepal.chatmodule;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.widget.ArrayAdapter;
 import android.widget.EditText;
 import android.widget.ImageButton;
-import android.widget.ListView;
 
 import com.google.firebase.FirebaseApp;
 import com.google.firebase.firestore.DocumentReference;
@@ -15,6 +16,7 @@ import com.google.firebase.firestore.Query;
 import com.google.firebase.firestore.QuerySnapshot;
 import com.pixplicity.easyprefs.library.Prefs;
 import com.unfpa.safepal.R;
+import com.unfpa.safepal.adapters.ChatAdapter;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -34,8 +36,8 @@ public class ChatActivity extends AppCompatActivity {
     private static final String CHAT = "chat";
     private EditText inputMessageEditView;
     private ImageButton sendButton;
-    private ListView listView;
-    private ArrayAdapter<String> adapter;
+    private RecyclerView recyclerView;
+    private ChatAdapter adapter;
     private DocumentReference userDocument;
     private ChatUser chatUser;
 
@@ -51,7 +53,7 @@ public class ChatActivity extends AppCompatActivity {
 
         inputMessageEditView = findViewById(R.id.input_messsage);
         sendButton = findViewById(R.id.send);
-        listView = findViewById(R.id.chats_list);
+        recyclerView = findViewById(R.id.chats_list);
 
         sendButton.setOnClickListener(v -> {
             String message = inputMessageEditView.getText().toString();
@@ -91,8 +93,9 @@ public class ChatActivity extends AppCompatActivity {
             Timber.d("displayMessagesFromServer: %s", chat.getMessage());
             messages.add(chat.getName() + " : " + chat.getMessage());
         }
-        adapter = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, messages);
-        listView.setAdapter(adapter);
+        adapter = new ChatAdapter(this, chats);
+        recyclerView.setAdapter(adapter);
+        recyclerView.setLayoutManager(new LinearLayoutManager(this));
         adapter.notifyDataSetChanged();
     }
 

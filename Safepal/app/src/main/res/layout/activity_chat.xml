@@ -38,7 +38,7 @@
             android:hint="Message" />
     </android.support.design.widget.TextInputLayout>
 
-    <ListView
+    <android.support.v7.widget.RecyclerView
         android:id="@+id/chats_list"
         android:layout_width="0dp"
         android:layout_height="0dp"
