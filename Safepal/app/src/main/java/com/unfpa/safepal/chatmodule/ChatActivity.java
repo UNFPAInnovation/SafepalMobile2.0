@@ -11,6 +11,7 @@ import android.widget.ListView;
 import com.google.firebase.FirebaseApp;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.Query;
 import com.google.firebase.firestore.QuerySnapshot;
 import com.pixplicity.easyprefs.library.Prefs;
 import com.unfpa.safepal.R;
@@ -70,7 +71,7 @@ public class ChatActivity extends AppCompatActivity {
 
     private void triggerNewMessageListener() {
         try {
-            userDocument.collection(CHAT).addSnapshotListener((queryDocumentSnapshots, e) -> {
+            userDocument.collection(CHAT).orderBy("createdAt", Query.Direction.ASCENDING).addSnapshotListener((queryDocumentSnapshots, e) -> {
                 if (e != null) {
                     Timber.e(e, "listen:error");
                     return;
