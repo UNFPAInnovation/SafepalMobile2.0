@@ -22,17 +22,4 @@ public class QuizActivity extends AppCompatActivity {
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
     }
-
-    @Override
-    public void onBackPressed() {
-        List<Fragment> fragments = getSupportFragmentManager().getFragments();
-        if (fragments != null) {
-            for (Fragment fragment : fragments) {
-                if (!fragment.isVisible()) continue;
-                fragment.onDestroy();
-            }
-        }
-
-        super.onBackPressed();
-    }
 }
