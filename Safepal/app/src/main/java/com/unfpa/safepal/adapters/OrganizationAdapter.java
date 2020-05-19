@@ -42,12 +42,12 @@ public class OrganizationAdapter extends RecyclerView.Adapter<OrganizationAdapte
     }
 
     public static class ViewHolder extends RecyclerView.ViewHolder {
-        public TextView name;
-        public TextView address;
-        public TextView workingHours;
-        public TextView website;
-        public ImageView callButton;
-        public TextView phoneNumber;
+        TextView name;
+        TextView address;
+        TextView workingHours;
+        TextView website;
+        ImageView callButton;
+        TextView phoneNumber;
 
         public ViewHolder(View v) {
             super(v);
@@ -74,7 +74,9 @@ public class OrganizationAdapter extends RecyclerView.Adapter<OrganizationAdapte
         holder.name.setText(cursor.getFacilityName());
         holder.phoneNumber.setText(cursor.getPhoneNumber());
         holder.address.setText(cursor.getAddress());
-        holder.workingHours.setText(cursor.getOpenHour());
+        holder.workingHours.setText(String.format(activity.getString(R.string.working_hours),
+                cursor.getOpenHour(),
+                cursor.getCloseHour()));
         holder.name.setText(cursor.getFacilityName());
         holder.website.setText(cursor.getLink());
 

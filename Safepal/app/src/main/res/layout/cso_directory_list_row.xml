@@ -3,8 +3,9 @@
     xmlns:cardview="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:layout_marginBottom="5dp"
-    cardview:cardCornerRadius="2dp"
+    android:layout_marginRight="7dp"
+    android:layout_marginLeft="13dp"
+    cardview:cardCornerRadius="10dp"
     cardview:cardElevation="3dp"
     cardview:cardUseCompatPadding="true">
 
@@ -16,7 +17,7 @@
             android:id="@+id/call"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="21dp"
+            android:layout_marginTop="18dp"
             android:layout_marginEnd="26dp"
             cardview:layout_constraintEnd_toEndOf="parent"
             cardview:layout_constraintTop_toTopOf="parent"
@@ -26,12 +27,12 @@
             android:id="@+id/cso_name"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="15dp"
-            android:layout_marginTop="6dp"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="12dp"
             android:maxLines="2"
             android:text="Action Aid"
             android:textAppearance="@style/TextAppearance.AppCompat.Headline"
-            android:textColor="@color/colorPrimaryDark"
+            android:textColor="@color/colorAccent"
             android:textSize="18sp"
             android:textStyle="bold"
             cardview:layout_constraintStart_toStartOf="parent"
@@ -43,6 +44,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Bukoto"
+            android:textColor="@android:color/black"
             cardview:layout_constraintStart_toStartOf="@+id/cso_name"
             cardview:layout_constraintTop_toBottomOf="@+id/cso_name" />
 
@@ -51,6 +53,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="9am - 9pm"
+            android:textColor="@android:color/black"
             cardview:layout_constraintStart_toStartOf="@+id/address"
             cardview:layout_constraintTop_toBottomOf="@+id/address" />
 
@@ -59,6 +62,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="0756878460"
+            android:textColor="@android:color/black"
             cardview:layout_constraintStart_toStartOf="@+id/working_hours"
             cardview:layout_constraintTop_toBottomOf="@+id/working_hours" />
 
@@ -67,9 +71,10 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="5dp"
-            android:layout_marginBottom="8dp"
-            android:text="www.reproductivehealth.ug"
+            android:layout_marginBottom="16dp"
             android:autoLink="web"
+            android:text="www.reproductivehealth.ug"
+            android:textColorLink="@android:color/black"
             android:textStyle="bold"
             cardview:layout_constraintBottom_toBottomOf="parent"
             cardview:layout_constraintStart_toStartOf="@+id/phone_number"
