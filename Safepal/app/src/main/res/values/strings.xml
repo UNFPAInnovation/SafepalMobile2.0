@@ -63,6 +63,7 @@
     <string name="em_not_fault">It\'s not your fault</string>
 
     <string name="title_activity_contact">Nearest Help</string>
+    <string name="title_activity_chat">Chat</string>
 
     <string name="contact_u_or_not">Would you like to contact you?</string>
 

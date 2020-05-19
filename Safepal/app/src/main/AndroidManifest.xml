@@ -16,7 +16,14 @@
             android:name=".QuizActivity"
             android:label="@string/title_activity_quiz"
             android:theme="@style/AppTheme.NoActionBar" />
-        <activity android:name=".chatmodule.ChatActivity" />
+        <activity
+            android:name=".chatmodule.ChatActivity"
+            android:label="@string/title_activity_chat"
+            android:parentActivityName=".home.HomeActivity">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.unfpa.safepal.home.HomeActivity" />
+        </activity>
         <activity
             android:name=".ReadArticleActivity"
             android:label="@string/title_activity_read_article"

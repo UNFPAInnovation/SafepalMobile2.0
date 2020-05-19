@@ -5,6 +5,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.Toolbar;
 import android.widget.ArrayAdapter;
 import android.widget.EditText;
 import android.widget.ImageButton;
@@ -29,8 +30,6 @@ import static com.unfpa.safepal.Utils.Utilities.getMacAddress;
 import static com.unfpa.safepal.Utils.Utilities.getRandomString;
 
 public class ChatActivity extends AppCompatActivity {
-
-    private static final String TAG = ChatActivity.class.getSimpleName();
     private FirebaseFirestore db;
     private static final String USER = "user";
     private static final String CHAT = "chat";
@@ -45,6 +44,11 @@ public class ChatActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_chat);
+
+        Toolbar toolbar = findViewById(R.id.home_toolbar);
+        setSupportActionBar(toolbar);
+        getSupportActionBar().setDisplayShowHomeEnabled(true);
+        getSupportActionBar().setDisplayUseLogoEnabled(true);
 
         FirebaseApp.initializeApp(this);
         chatUser = new ChatUser(
