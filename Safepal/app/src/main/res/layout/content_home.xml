@@ -46,7 +46,7 @@
         android:layout_marginEnd="70dp"
         android:layout_marginBottom="24dp"
         android:alpha="0.7"
-        android:src="@drawable/ic_unfpa_logo"
+        app:srcCompat="@drawable/ic_unfpa_logo"
         app:layout_constraintBottom_toTopOf="@+id/home_instruct_title"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@+id/imageView2"
@@ -62,7 +62,7 @@
         android:layout_marginEnd="8dp"
         android:layout_marginBottom="32dp"
         android:alpha="0.7"
-        android:src="@drawable/ic_coat_of_arms_of_uganda"
+        app:srcCompat="@drawable/ic_coat_of_arms_of_uganda"
         app:layout_constraintBottom_toTopOf="@+id/home_instruct_title"
         app:layout_constraintEnd_toStartOf="@+id/imageView"
         app:layout_constraintHorizontal_bias="0.33"
@@ -108,9 +108,9 @@
         android:id="@+id/discover_more_card"
         android:layout_width="0dp"
         android:layout_height="111dp"
-        android:layout_marginStart="10dp"
+        android:layout_marginStart="@dimen/margin_small"
         android:layout_marginTop="16dp"
-        android:layout_marginEnd="10dp"
+        android:layout_marginEnd="@dimen/margin_small"
         app:cardCornerRadius="@dimen/padding_large"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
@@ -121,16 +121,16 @@
         <android.support.constraint.ConstraintLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:padding="@dimen/margin_medium">
+            android:paddingTop="@dimen/padding_medium"
+            android:paddingBottom="@dimen/padding_medium">
 
             <ImageView
                 android:id="@+id/imageView3"
                 android:layout_width="100dp"
-                android:layout_height="95dp"
-                android:layout_marginStart="10dp"
-                android:layout_marginEnd="12dp"
-                android:paddingRight="@dimen/margin_medium"
-                android:src="@drawable/obulamu_discovery"
+                android:layout_height="match_parent"
+                android:layout_marginStart="@dimen/margin_small"
+                android:paddingRight="@dimen/margin_large"
+                android:src="@drawable/girl_demo"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toStartOf="@+id/textView3"
                 app:layout_constraintStart_toStartOf="parent"
@@ -138,16 +138,14 @@
 
             <ImageView
                 android:id="@+id/imageView4"
-                android:layout_width="30dp"
+                android:layout_width="0dp"
                 android:layout_height="30dp"
-                android:layout_marginStart="50dp"
                 android:layout_marginTop="8dp"
-                android:layout_marginRight="16dp"
-                android:src="@drawable/ic_keyboard_arrow_right_48px"
                 app:layout_constraintBottom_toTopOf="@+id/textView4"
-                app:layout_constraintRight_toRightOf="parent"
-                app:layout_constraintStart_toEndOf="@+id/textView3"
-                app:layout_constraintTop_toTopOf="parent" />
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintVertical_bias="1.0"
+                app:srcCompat="@drawable/ic_keyboard_arrow_right_48px" />
 
             <TextView
                 android:id="@+id/textView3"
@@ -163,14 +161,13 @@
 
             <TextView
                 android:id="@+id/textView4"
-                android:layout_width="195dp"
+                android:layout_width="0dp"
                 android:layout_height="36dp"
-                android:layout_marginStart="16dp"
                 android:layout_marginTop="8dp"
-                android:layout_marginEnd="33dp"
+                android:layout_marginEnd="24dp"
                 android:layout_marginBottom="24dp"
                 android:text="Watch videos, learn about your \nhealth &amp; play fun quizzes"
-                android:textSize="14sp"
+                android:textSize="15sp"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toEndOf="@+id/imageView3"

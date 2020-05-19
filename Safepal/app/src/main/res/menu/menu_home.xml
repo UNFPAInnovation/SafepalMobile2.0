@@ -4,8 +4,15 @@
     tools:context=".report.WhoSGettingHelpActivity">
     <item
         android:id="@+id/menu_guide"
-        android:orderInCategory="100"
+        android:orderInCategory="2"
         android:title="@string/action_home_guide"
         app:showAsAction="never" />
+
+    <item
+        android:id="@+id/chat"
+        android:icon="@drawable/ic_message_24px"
+        android:orderInCategory="1"
+        android:title="@string/chat_with_us"
+        app:showAsAction="always" />
 
 </menu>

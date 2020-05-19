@@ -234,6 +234,7 @@
     <string name="related_articles">RELATED TOPICS</string>
     <string name="question_count_string">%d/%d</string>
     <string name="send">Send</string>
+    <string name="chat_with_us">Chat with us</string>
     <string-array name="not_your_fault_messages">
 <item>Whatever happened was not your fault. No one has the right to sexually violate you.  The rapist is solely to blame.
            What a person wears, what a person says, or how a person acts cannot justify sexual violence.</item>

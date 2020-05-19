@@ -69,8 +69,7 @@ public class HomeActivity extends AppCompatActivity {
         reportCaseButton = findViewById(R.id.report_incident_button);
         discoverMoreCard = findViewById(R.id.discover_more_card);
 
-//        startService(new Intent(this, SetupIntentService.class));
-        startActivity(new Intent(getApplicationContext(), ChatActivity.class));
+        startService(new Intent(this, SetupIntentService.class));
 
         reportCaseButton.setOnClickListener(v -> startActivity(new Intent(getApplicationContext(), ReportingActivity.class)));
         discoverMoreCard.setOnClickListener(v -> startActivity(new Intent(getApplicationContext(), DiscoveryActivity.class)));
@@ -95,6 +94,9 @@ public class HomeActivity extends AppCompatActivity {
         switch (item.getItemId()) {
             case R.id.menu_guide:
                 reportTutorialGuide();
+                return true;
+            case R.id.chat:
+                startActivity(new Intent(getApplicationContext(), ChatActivity.class));
                 return true;
             default:
                 return super.onOptionsItemSelected(item);
