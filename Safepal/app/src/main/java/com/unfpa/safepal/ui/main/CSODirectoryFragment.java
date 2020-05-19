@@ -82,7 +82,7 @@ public class CSODirectoryFragment extends Fragment implements
         }
 
         districtSpinner.setOnItemSelectedListener(this);
-        ArrayAdapter arrayAdapter = new ArrayAdapter(getContext(), android.R.layout.simple_spinner_item, districts.toArray());
+        ArrayAdapter arrayAdapter = new ArrayAdapter(getContext(), R.layout.spinner_item, districts.toArray());
         arrayAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         districtSpinner.setAdapter(arrayAdapter);
 

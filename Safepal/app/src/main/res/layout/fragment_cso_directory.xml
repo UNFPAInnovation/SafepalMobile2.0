@@ -6,17 +6,39 @@
     android:layout_height="match_parent"
     android:layout_margin="@dimen/activity_horizontal_margin">
 
-    <Spinner
-        android:id="@+id/district_spinner"
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="64dp"
-        android:layout_alignParentTop="true" />
+        android:layout_margin="@dimen/activity_horizontal_margin"
+        android:layout_alignParentTop="true"
+        android:orientation="horizontal"
+        android:weightSum="8"
+        android:id="@+id/linear_layout"
+        android:background="@drawable/round_button_white">
+
+        <ImageView
+            android:layout_width="0dp"
+            android:layout_weight="2"
+            android:padding="10dp"
+            app:srcCompat="@drawable/ic_location_on_24px"
+            android:layout_height="match_parent"/>
+        <Spinner
+            android:id="@+id/district_spinner"
+            android:layout_width="0dp"
+            style="@style/SpinnerTheme"
+            android:layout_weight="6"
+            android:layout_height="64dp" />
+
+    </LinearLayout>
+
 
     <android.support.v7.widget.RecyclerView
         android:id="@+id/media_recycler_view"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_below="@+id/district_spinner"
+        android:layout_below="@+id/linear_layout"
+        android:layout_marginRight="@dimen/activity_horizontal_margin"
+        android:layout_marginLeft="@dimen/activity_horizontal_margin"
         android:layout_alignParentStart="true"
         android:layout_alignParentEnd="true"
         android:layout_marginStart="-2dp"
