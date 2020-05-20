@@ -8,7 +8,7 @@
     <color name="colorOrange">#FCB040 </color>
     <color name="colorGrey">#d7d7d7</color>
     <color name="colorWhite">#FFFFFF</color>
-    <color name="colorGreyBackground">#DADADA</color>
+    <color name="colorGreyBackground">#FAFAFA</color>
     <color name="colorGreyText">#C6C6C6</color>
     <!--FAB colors-->
     <color name="colorGreyDarker">#808080</color>
