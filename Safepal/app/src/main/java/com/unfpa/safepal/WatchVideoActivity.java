@@ -115,7 +115,8 @@ public class WatchVideoActivity extends AppCompatActivity {
         description.setText(videotableCursor.getDescription());
 
         video.setMediaController(new MediaController(this));
-        video.setVideoURI(Uri.parse(videotableCursor.getUrl()));
+        String lowResVideoUrl = videotableCursor.getUrl().replace(".mp4", "_480p.m3u8");
+        video.setVideoURI(Uri.parse(lowResVideoUrl));
         video.requestFocus();
         video.setOnPreparedListener(mp -> {
             mediaController = new MediaController(WatchVideoActivity.this);
