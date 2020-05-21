@@ -31,6 +31,9 @@ public class Result {
     @SerializedName("created_at")
     @Expose
     private Date createdAt;
+    @SerializedName("duration")
+    @Expose
+    private Integer duration;
 
     public Integer getId() {
         return id;
@@ -96,4 +99,11 @@ public class Result {
         this.createdAt = createdAt;
     }
 
+    public Integer getDuration() {
+        return duration;
+    }
+
+    public void setDuration(Integer duration) {
+        this.duration = duration;
+    }
 }

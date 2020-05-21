@@ -48,6 +48,7 @@ public class ReadArticleActivity extends AppCompatActivity {
 
         articletableCursor.moveToFirst();
         title.setText(articletableCursor.getTitle());
+        questions.setText(articletableCursor.getQuestions());
         category.setText(articletableCursor.getCategory());
         content.setText(articletableCursor.getContent());
 
