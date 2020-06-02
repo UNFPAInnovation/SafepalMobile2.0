@@ -35,6 +35,7 @@ public class QuizResultFragment extends Fragment {
         super.onViewCreated(view, savedInstanceState);
 
         TextView percentage = view.findViewById(R.id.percentage_text_view);
+        TextView title = view.findViewById(R.id.title);
         Button button = view.findViewById(R.id.finish_retry_button);
         RecyclerView resultRecyclerView = view.findViewById(R.id.results_recycler);
 
@@ -43,6 +44,9 @@ public class QuizResultFragment extends Fragment {
 
         button.setText(Prefs.getInt(PERCENTAGE, 10) < 80 ? getString(R.string.retry_quiz)
                 : getString(R.string.finish));
+
+        title.setText(Prefs.getInt(PERCENTAGE, 10) < 80 ? getString(R.string.failure_title)
+                : getString(R.string.success_title));
 
         button.setOnClickListener(view1 -> {
             deletePreviousAnswers();

@@ -239,6 +239,8 @@
     <string name="number_question_string">%d. %s</string>
     <string name="your_answer">Your Answer: %s</string>
     <string name="correct_answer">Correct Answer: %s</string>
+    <string name="success_title">Congratulations</string>
+    <string name="failure_title">Try again</string>
     <string-array name="not_your_fault_messages">
 <item>Whatever happened was not your fault. No one has the right to sexually violate you.  The rapist is solely to blame.
            What a person wears, what a person says, or how a person acts cannot justify sexual violence.</item>

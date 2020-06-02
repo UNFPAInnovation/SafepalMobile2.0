@@ -3,8 +3,8 @@
     xmlns:cardview="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:layout_marginRight="7dp"
-    android:layout_marginLeft="13dp"
+    android:layout_marginRight="@dimen/margin_medium"
+    android:layout_marginLeft="@dimen/margin_medium"
     cardview:cardCornerRadius="10dp"
     cardview:cardElevation="3dp"
     cardview:cardUseCompatPadding="true">
