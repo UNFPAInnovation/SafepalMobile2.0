@@ -10,6 +10,7 @@ import android.os.Build;
 import android.util.Log;
 
 import com.unfpa.safepal.BuildConfig;
+import com.unfpa.safepal.provider.answertable.AnswertableColumns;
 import com.unfpa.safepal.provider.articletable.ArticletableColumns;
 import com.unfpa.safepal.provider.districttable.DistricttableColumns;
 import com.unfpa.safepal.provider.organizationtable.OrganizationtableColumns;
@@ -27,6 +28,17 @@ public class SafepalDatabaseHelper extends SQLiteOpenHelper {
     private final SafepalDatabaseHelperCallbacks mOpenHelperCallbacks;
 
     // @formatter:off
+    public static final String SQL_CREATE_TABLE_ANSWERTABLE = "CREATE TABLE IF NOT EXISTS "
+            + AnswertableColumns.TABLE_NAME + " ( "
+            + AnswertableColumns._ID + " INTEGER PRIMARY KEY AUTOINCREMENT, "
+            + AnswertableColumns.QUIZ + " INTEGER, "
+            + AnswertableColumns.CONTENT + " TEXT, "
+            + AnswertableColumns.CORRECT_ANSWER + " TEXT DEFAULT 'YES', "
+            + AnswertableColumns.YOUR_ANSWER + " TEXT DEFAULT 'YES', "
+            + AnswertableColumns.POSITION_NUMBER + " INTEGER, "
+            + AnswertableColumns.CREATED_AT + " INTEGER "
+            + " );";
+
     public static final String SQL_CREATE_TABLE_ARTICLETABLE = "CREATE TABLE IF NOT EXISTS "
             + ArticletableColumns.TABLE_NAME + " ( "
             + ArticletableColumns._ID + " INTEGER PRIMARY KEY AUTOINCREMENT, "
@@ -160,6 +172,7 @@ public class SafepalDatabaseHelper extends SQLiteOpenHelper {
     public void onCreate(SQLiteDatabase db) {
         if (BuildConfig.DEBUG) Log.d(TAG, "onCreate");
         mOpenHelperCallbacks.onPreCreate(mContext, db);
+        db.execSQL(SQL_CREATE_TABLE_ANSWERTABLE);
         db.execSQL(SQL_CREATE_TABLE_ARTICLETABLE);
         db.execSQL(SQL_CREATE_TABLE_DISTRICTTABLE);
         db.execSQL(SQL_CREATE_TABLE_ORGANIZATIONTABLE);

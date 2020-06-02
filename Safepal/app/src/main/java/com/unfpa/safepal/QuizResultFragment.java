@@ -1,6 +1,8 @@
 package com.unfpa.safepal;
 
 import android.os.Bundle;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -10,12 +12,13 @@ import android.support.v4.app.Fragment;
 import android.widget.Button;
 import android.widget.TextView;
 
-import androidx.navigation.NavController;
-import androidx.navigation.NavOptions;
 import androidx.navigation.fragment.NavHostFragment;
-import androidx.navigation.ui.AppBarConfiguration;
 
 import com.pixplicity.easyprefs.library.Prefs;
+import com.unfpa.safepal.adapters.AnswerAdapter;
+import com.unfpa.safepal.provider.answertable.AnswertableColumns;
+import com.unfpa.safepal.provider.answertable.AnswertableCursor;
+import com.unfpa.safepal.provider.answertable.AnswertableSelection;
 
 import timber.log.Timber;
 
@@ -33,20 +36,34 @@ public class QuizResultFragment extends Fragment {
 
         TextView percentage = view.findViewById(R.id.percentage_text_view);
         Button button = view.findViewById(R.id.finish_retry_button);
+        RecyclerView resultRecyclerView = view.findViewById(R.id.results_recycler);
 
         percentage.setText(String.format(getString(R.string.percentage_number_string),
                 String.valueOf(Prefs.getInt(PERCENTAGE, 10))));
 
-        button.setText(Prefs.getInt(PERCENTAGE, 10) > 60 ? getString(R.string.finish)
-                : getString(R.string.retry_quiz));
+        button.setText(Prefs.getInt(PERCENTAGE, 10) < 80 ? getString(R.string.retry_quiz)
+                : getString(R.string.finish));
 
         button.setOnClickListener(view1 -> {
+            deletePreviousAnswers();
             if (Prefs.getInt(PERCENTAGE, 10) < 80)
                 NavHostFragment.findNavController(QuizResultFragment.this).popBackStack(R.id.QuestionControllerFragment, false);
-//                        .navigate(R.id.action_SecondFragment_to_FirstFragment);
             else
                 getActivity().finish();
         });
+
+        AnswertableSelection selection = new AnswertableSelection();
+        AnswertableCursor cursor = selection.orderByPositionNumber().query(getContext().getContentResolver());
+        resultRecyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
+        resultRecyclerView.setAdapter(new AnswerAdapter(this.getActivity(), cursor));
+    }
+
+    private void deletePreviousAnswers() {
+        try {
+            getActivity().getContentResolver().delete(AnswertableColumns.CONTENT_URI, null, null);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 
     @Override

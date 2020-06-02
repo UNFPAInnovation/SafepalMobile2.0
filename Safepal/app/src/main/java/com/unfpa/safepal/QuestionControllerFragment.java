@@ -3,6 +3,7 @@ package com.unfpa.safepal;
 import android.app.Dialog;
 import android.content.Context;
 import android.database.CursorIndexOutOfBoundsException;
+import android.net.Uri;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -20,6 +21,7 @@ import androidx.navigation.fragment.NavHostFragment;
 
 import com.mikhaellopez.circularprogressbar.CircularProgressBar;
 import com.pixplicity.easyprefs.library.Prefs;
+import com.unfpa.safepal.provider.answertable.AnswertableContentValues;
 import com.unfpa.safepal.provider.articletable.ArticletableCursor;
 import com.unfpa.safepal.provider.articletable.ArticletableSelection;
 import com.unfpa.safepal.provider.questiontable.QuestiontableCursor;
@@ -43,7 +45,6 @@ public class QuestionControllerFragment extends Fragment implements View.OnClick
     private QuestiontableCursor questiontableCursor;
     private String correctAnswer = "YES";
     private int correctAnswerCount = 0;
-    private String dialogTitle = "CORRECT";
     private int numberOfQuestions = 0;
 
     @Override
@@ -87,7 +88,6 @@ public class QuestionControllerFragment extends Fragment implements View.OnClick
             questiontableCursor = new QuestiontableSelection().quiz(quizCursor.getServerid())
                     .orderByPositionNumber().query(view.getContext());
 
-            // set a limit for the progress bar
             numberOfQuestions = questiontableCursor.getCount();
             circularProgressBar.setProgressMax(numberOfQuestions * 10f);
 
@@ -121,13 +121,19 @@ public class QuestionControllerFragment extends Fragment implements View.OnClick
         if (userAnswer.equals(correctAnswer))
             correctAnswerCount++;
 
-        displayNextQuestionDialog(view.getContext(), userAnswer.equals(correctAnswer), generateRandomMessage());
+        saveAnswer(userAnswer);
+        displayNextQuestionDialog(view.getContext(), userAnswer.equals(correctAnswer));
     }
 
-    @NotNull
-    private String generateRandomMessage() {
-        // todo generate encouragement messages
-        return "You should never be pressured!";
+    private void saveAnswer(String userAnswer) {
+        AnswertableContentValues values = new AnswertableContentValues();
+        values.putQuiz(questiontableCursor.getQuiz());
+        values.putPositionNumber(questiontableCursor.getPositionNumber());
+        values.putContent(questiontableCursor.getContent());
+        values.putCorrectAnswer(questiontableCursor.getCorrectAnswer());
+        values.putYourAnswer(userAnswer);
+        final Uri uri = values.insert(this.getActivity().getContentResolver());
+        Timber.d("saved answer %s", uri);
     }
 
     private void navigateToResultScreen() {
@@ -136,7 +142,6 @@ public class QuestionControllerFragment extends Fragment implements View.OnClick
         Prefs.putInt(PERCENTAGE, percentage);
         NavHostFragment.findNavController(QuestionControllerFragment.this)
                 .navigate(R.id.action_QuestionControllerFragment_to_QuizResultFragment);
-//        getActivity().getSupportFragmentManager().beginTransaction().remove(this).commitAllowingStateLoss();
     }
 
     private void moveToNextQuestion(boolean makeTransition) {
@@ -153,18 +158,16 @@ public class QuestionControllerFragment extends Fragment implements View.OnClick
         }
     }
 
-    private void displayNextQuestionDialog(Context context, boolean answerResult, String messageText) {
+    private void displayNextQuestionDialog(Context context, boolean answerResult) {
         final Dialog dialog = new Dialog(context, R.style.CustomAlertDialog);
         dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
         dialog.setContentView(R.layout.next_question_dialog);
 
         TextView title = dialog.findViewById(R.id.title);
-        TextView message = dialog.findViewById(R.id.message);
         ImageView resultImage = dialog.findViewById(R.id.result_image);
         Button ok = dialog.findViewById(R.id.next_question_button);
 
         title.setText(answerResult ? "CORRECT" : "INCORRECT");
-        message.setText(messageText);
         resultImage.setImageResource(answerResult ? R.drawable.ic_correct_48px : R.drawable.ic_wrong_48px);
 
         try {

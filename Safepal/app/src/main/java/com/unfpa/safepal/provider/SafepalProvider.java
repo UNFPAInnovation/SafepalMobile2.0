@@ -12,6 +12,7 @@ import android.util.Log;
 
 import com.unfpa.safepal.BuildConfig;
 import com.unfpa.safepal.provider.base.BaseContentProvider;
+import com.unfpa.safepal.provider.answertable.AnswertableColumns;
 import com.unfpa.safepal.provider.articletable.ArticletableColumns;
 import com.unfpa.safepal.provider.districttable.DistricttableColumns;
 import com.unfpa.safepal.provider.organizationtable.OrganizationtableColumns;
@@ -30,29 +31,34 @@ public class SafepalProvider extends BaseContentProvider {
     public static final String AUTHORITY = "com.unfpa.safepal.authority";
     public static final String CONTENT_URI_BASE = "content://" + AUTHORITY;
 
-    private static final int URI_TYPE_ARTICLETABLE = 0;
-    private static final int URI_TYPE_ARTICLETABLE_ID = 1;
+    private static final int URI_TYPE_ANSWERTABLE = 0;
+    private static final int URI_TYPE_ANSWERTABLE_ID = 1;
 
-    private static final int URI_TYPE_DISTRICTTABLE = 2;
-    private static final int URI_TYPE_DISTRICTTABLE_ID = 3;
+    private static final int URI_TYPE_ARTICLETABLE = 2;
+    private static final int URI_TYPE_ARTICLETABLE_ID = 3;
 
-    private static final int URI_TYPE_ORGANIZATIONTABLE = 4;
-    private static final int URI_TYPE_ORGANIZATIONTABLE_ID = 5;
+    private static final int URI_TYPE_DISTRICTTABLE = 4;
+    private static final int URI_TYPE_DISTRICTTABLE_ID = 5;
 
-    private static final int URI_TYPE_QUESTIONTABLE = 6;
-    private static final int URI_TYPE_QUESTIONTABLE_ID = 7;
+    private static final int URI_TYPE_ORGANIZATIONTABLE = 6;
+    private static final int URI_TYPE_ORGANIZATIONTABLE_ID = 7;
 
-    private static final int URI_TYPE_QUIZTABLE = 8;
-    private static final int URI_TYPE_QUIZTABLE_ID = 9;
+    private static final int URI_TYPE_QUESTIONTABLE = 8;
+    private static final int URI_TYPE_QUESTIONTABLE_ID = 9;
 
-    private static final int URI_TYPE_VIDEOTABLE = 10;
-    private static final int URI_TYPE_VIDEOTABLE_ID = 11;
+    private static final int URI_TYPE_QUIZTABLE = 10;
+    private static final int URI_TYPE_QUIZTABLE_ID = 11;
+
+    private static final int URI_TYPE_VIDEOTABLE = 12;
+    private static final int URI_TYPE_VIDEOTABLE_ID = 13;
 
 
 
     private static final UriMatcher URI_MATCHER = new UriMatcher(UriMatcher.NO_MATCH);
 
     static {
+        URI_MATCHER.addURI(AUTHORITY, AnswertableColumns.TABLE_NAME, URI_TYPE_ANSWERTABLE);
+        URI_MATCHER.addURI(AUTHORITY, AnswertableColumns.TABLE_NAME + "/#", URI_TYPE_ANSWERTABLE_ID);
         URI_MATCHER.addURI(AUTHORITY, ArticletableColumns.TABLE_NAME, URI_TYPE_ARTICLETABLE);
         URI_MATCHER.addURI(AUTHORITY, ArticletableColumns.TABLE_NAME + "/#", URI_TYPE_ARTICLETABLE_ID);
         URI_MATCHER.addURI(AUTHORITY, DistricttableColumns.TABLE_NAME, URI_TYPE_DISTRICTTABLE);
@@ -81,6 +87,11 @@ public class SafepalProvider extends BaseContentProvider {
     public String getType(Uri uri) {
         int match = URI_MATCHER.match(uri);
         switch (match) {
+            case URI_TYPE_ANSWERTABLE:
+                return TYPE_CURSOR_DIR + AnswertableColumns.TABLE_NAME;
+            case URI_TYPE_ANSWERTABLE_ID:
+                return TYPE_CURSOR_ITEM + AnswertableColumns.TABLE_NAME;
+
             case URI_TYPE_ARTICLETABLE:
                 return TYPE_CURSOR_DIR + ArticletableColumns.TABLE_NAME;
             case URI_TYPE_ARTICLETABLE_ID:
@@ -153,6 +164,14 @@ public class SafepalProvider extends BaseContentProvider {
         String id = null;
         int matchedId = URI_MATCHER.match(uri);
         switch (matchedId) {
+            case URI_TYPE_ANSWERTABLE:
+            case URI_TYPE_ANSWERTABLE_ID:
+                res.table = AnswertableColumns.TABLE_NAME;
+                res.idColumn = AnswertableColumns._ID;
+                res.tablesWithJoins = AnswertableColumns.TABLE_NAME;
+                res.orderBy = AnswertableColumns.DEFAULT_ORDER;
+                break;
+
             case URI_TYPE_ARTICLETABLE:
             case URI_TYPE_ARTICLETABLE_ID:
                 res.table = ArticletableColumns.TABLE_NAME;
@@ -206,6 +225,7 @@ public class SafepalProvider extends BaseContentProvider {
         }
 
         switch (matchedId) {
+            case URI_TYPE_ANSWERTABLE_ID:
             case URI_TYPE_ARTICLETABLE_ID:
             case URI_TYPE_DISTRICTTABLE_ID:
             case URI_TYPE_ORGANIZATIONTABLE_ID:
