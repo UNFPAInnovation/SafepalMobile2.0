@@ -2,6 +2,7 @@ package com.unfpa.safepal.retrofit;
 
 import com.unfpa.safepal.retrofitmodels.articles.Articles;
 import com.unfpa.safepal.retrofitmodels.districts.Districts;
+import com.unfpa.safepal.retrofitmodels.faqs.Faq;
 import com.unfpa.safepal.retrofitmodels.organizations.Organizations;
 import com.unfpa.safepal.retrofitmodels.questions.Questions;
 import com.unfpa.safepal.retrofitmodels.quizzes.Quizzes;
@@ -28,4 +29,7 @@ public interface APIInterface {
 
     @GET("api/v1/quizzes")
     Call<Quizzes> getQuizzes();
+
+    @GET("api/v1/faqs")
+    Call<Faq> getFaqs();
 }

@@ -13,6 +13,7 @@ import com.unfpa.safepal.provider.articletable.ArticletableColumns;
 import com.unfpa.safepal.provider.articletable.ArticletableContentValues;
 import com.unfpa.safepal.provider.districttable.DistricttableColumns;
 import com.unfpa.safepal.provider.districttable.DistricttableContentValues;
+import com.unfpa.safepal.provider.faqtable.FaqtableContentValues;
 import com.unfpa.safepal.provider.organizationtable.OrganizationtableColumns;
 import com.unfpa.safepal.provider.organizationtable.OrganizationtableContentValues;
 import com.unfpa.safepal.provider.questiontable.QuestiontableColumns;
@@ -26,6 +27,7 @@ import com.unfpa.safepal.retrofit.APIClient;
 import com.unfpa.safepal.retrofit.APIInterface;
 import com.unfpa.safepal.retrofitmodels.articles.Articles;
 import com.unfpa.safepal.retrofitmodels.districts.Districts;
+import com.unfpa.safepal.retrofitmodels.faqs.Faq;
 import com.unfpa.safepal.retrofitmodels.organizations.Organizations;
 import com.unfpa.safepal.retrofitmodels.questions.Questions;
 import com.unfpa.safepal.retrofitmodels.quizzes.Quizzes;
@@ -101,6 +103,12 @@ public class SetupIntentService extends IntentService {
 
             try {
                 loadQuizzes();
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+
+            try {
+                loadFaqs();
             } catch (Exception e) {
                 e.printStackTrace();
             }
@@ -439,6 +447,59 @@ public class SetupIntentService extends IntentService {
             values.putCreatedAtNull();
             final Uri uri = values.insert(getContentResolver());
             Timber.d("saved quiz %s", uri);
+        }
+    }
+
+
+    private void loadFaqs() {
+        Timber.d("get faqs list started");
+        Call<Faq> call = apiInterface.getFaqs();
+
+        call.enqueue(new Callback<Faq>() {
+            @Override
+            public void onResponse(Call<Faq> call, Response<Faq> response) {
+                try {
+                    if (response.code() == 200) {
+                        saveFaqs(response.body());
+                    } else {
+                        Timber.e("Failed to get faqs");
+                    }
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+            }
+
+            @Override
+            public void onFailure(Call<Faq> call, Throwable t) {
+                Timber.e("onFailure() -> %s", t.getMessage());
+            }
+        });
+    }
+
+    private void saveFaqs(Faq faq) {
+        Timber.d("INSERT: faqs starting");
+        if (faq == null)
+            throw new NullPointerException("Faqs not found");
+        List<com.unfpa.safepal.retrofitmodels.faqs.Result> faqsList = faq.getResults();
+
+        long deleted = 0;
+        try {
+            if (faqsList.size() > 1)
+                deleted = getContentResolver().delete(QuiztableColumns.CONTENT_URI, null, null);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        Timber.d("deleted data count %s", deleted);
+
+        for (com.unfpa.safepal.retrofitmodels.faqs.Result faqObject : faqsList) {
+            FaqtableContentValues values = new FaqtableContentValues();
+            Timber.d("quiz data %s", faqObject.getQuestion());
+            values.putQuestion(faqObject.getQuestion());
+            values.putAnswer(faqObject.getAnswer());
+            values.putCategory(faqObject.getCategory());
+            values.putServerid(faqObject.getId());
+            final Uri uri = values.insert(getContentResolver());
+            Timber.d("saved faq %s", uri);
         }
     }
 

@@ -15,6 +15,7 @@ import com.unfpa.safepal.provider.base.BaseContentProvider;
 import com.unfpa.safepal.provider.answertable.AnswertableColumns;
 import com.unfpa.safepal.provider.articletable.ArticletableColumns;
 import com.unfpa.safepal.provider.districttable.DistricttableColumns;
+import com.unfpa.safepal.provider.faqtable.FaqtableColumns;
 import com.unfpa.safepal.provider.organizationtable.OrganizationtableColumns;
 import com.unfpa.safepal.provider.questiontable.QuestiontableColumns;
 import com.unfpa.safepal.provider.quiztable.QuiztableColumns;
@@ -40,17 +41,20 @@ public class SafepalProvider extends BaseContentProvider {
     private static final int URI_TYPE_DISTRICTTABLE = 4;
     private static final int URI_TYPE_DISTRICTTABLE_ID = 5;
 
-    private static final int URI_TYPE_ORGANIZATIONTABLE = 6;
-    private static final int URI_TYPE_ORGANIZATIONTABLE_ID = 7;
+    private static final int URI_TYPE_FAQTABLE = 6;
+    private static final int URI_TYPE_FAQTABLE_ID = 7;
 
-    private static final int URI_TYPE_QUESTIONTABLE = 8;
-    private static final int URI_TYPE_QUESTIONTABLE_ID = 9;
+    private static final int URI_TYPE_ORGANIZATIONTABLE = 8;
+    private static final int URI_TYPE_ORGANIZATIONTABLE_ID = 9;
 
-    private static final int URI_TYPE_QUIZTABLE = 10;
-    private static final int URI_TYPE_QUIZTABLE_ID = 11;
+    private static final int URI_TYPE_QUESTIONTABLE = 10;
+    private static final int URI_TYPE_QUESTIONTABLE_ID = 11;
 
-    private static final int URI_TYPE_VIDEOTABLE = 12;
-    private static final int URI_TYPE_VIDEOTABLE_ID = 13;
+    private static final int URI_TYPE_QUIZTABLE = 12;
+    private static final int URI_TYPE_QUIZTABLE_ID = 13;
+
+    private static final int URI_TYPE_VIDEOTABLE = 14;
+    private static final int URI_TYPE_VIDEOTABLE_ID = 15;
 
 
 
@@ -63,6 +67,8 @@ public class SafepalProvider extends BaseContentProvider {
         URI_MATCHER.addURI(AUTHORITY, ArticletableColumns.TABLE_NAME + "/#", URI_TYPE_ARTICLETABLE_ID);
         URI_MATCHER.addURI(AUTHORITY, DistricttableColumns.TABLE_NAME, URI_TYPE_DISTRICTTABLE);
         URI_MATCHER.addURI(AUTHORITY, DistricttableColumns.TABLE_NAME + "/#", URI_TYPE_DISTRICTTABLE_ID);
+        URI_MATCHER.addURI(AUTHORITY, FaqtableColumns.TABLE_NAME, URI_TYPE_FAQTABLE);
+        URI_MATCHER.addURI(AUTHORITY, FaqtableColumns.TABLE_NAME + "/#", URI_TYPE_FAQTABLE_ID);
         URI_MATCHER.addURI(AUTHORITY, OrganizationtableColumns.TABLE_NAME, URI_TYPE_ORGANIZATIONTABLE);
         URI_MATCHER.addURI(AUTHORITY, OrganizationtableColumns.TABLE_NAME + "/#", URI_TYPE_ORGANIZATIONTABLE_ID);
         URI_MATCHER.addURI(AUTHORITY, QuestiontableColumns.TABLE_NAME, URI_TYPE_QUESTIONTABLE);
@@ -101,6 +107,11 @@ public class SafepalProvider extends BaseContentProvider {
                 return TYPE_CURSOR_DIR + DistricttableColumns.TABLE_NAME;
             case URI_TYPE_DISTRICTTABLE_ID:
                 return TYPE_CURSOR_ITEM + DistricttableColumns.TABLE_NAME;
+
+            case URI_TYPE_FAQTABLE:
+                return TYPE_CURSOR_DIR + FaqtableColumns.TABLE_NAME;
+            case URI_TYPE_FAQTABLE_ID:
+                return TYPE_CURSOR_ITEM + FaqtableColumns.TABLE_NAME;
 
             case URI_TYPE_ORGANIZATIONTABLE:
                 return TYPE_CURSOR_DIR + OrganizationtableColumns.TABLE_NAME;
@@ -188,6 +199,14 @@ public class SafepalProvider extends BaseContentProvider {
                 res.orderBy = DistricttableColumns.DEFAULT_ORDER;
                 break;
 
+            case URI_TYPE_FAQTABLE:
+            case URI_TYPE_FAQTABLE_ID:
+                res.table = FaqtableColumns.TABLE_NAME;
+                res.idColumn = FaqtableColumns._ID;
+                res.tablesWithJoins = FaqtableColumns.TABLE_NAME;
+                res.orderBy = FaqtableColumns.DEFAULT_ORDER;
+                break;
+
             case URI_TYPE_ORGANIZATIONTABLE:
             case URI_TYPE_ORGANIZATIONTABLE_ID:
                 res.table = OrganizationtableColumns.TABLE_NAME;
@@ -228,6 +247,7 @@ public class SafepalProvider extends BaseContentProvider {
             case URI_TYPE_ANSWERTABLE_ID:
             case URI_TYPE_ARTICLETABLE_ID:
             case URI_TYPE_DISTRICTTABLE_ID:
+            case URI_TYPE_FAQTABLE_ID:
             case URI_TYPE_ORGANIZATIONTABLE_ID:
             case URI_TYPE_QUESTIONTABLE_ID:
             case URI_TYPE_QUIZTABLE_ID:
