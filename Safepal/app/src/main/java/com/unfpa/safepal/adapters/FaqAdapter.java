@@ -20,6 +20,8 @@ public class FaqAdapter extends RecyclerView.Adapter<FaqAdapter.ViewHolder> {
 
     private FaqtableCursor cursor;
     Activity activity;
+    private ItemClickListener mClickListener;
+    private int count = 0;
 
     public FaqAdapter(Activity activity) {
         this.activity = activity;
@@ -28,6 +30,7 @@ public class FaqAdapter extends RecyclerView.Adapter<FaqAdapter.ViewHolder> {
     public FaqAdapter(FragmentActivity activity, FaqtableCursor cursor) {
         this.activity = activity;
         this.cursor = cursor;
+        this.count = cursor.getCount();
     }
 
     public static class ViewHolder extends RecyclerView.ViewHolder {
@@ -97,10 +100,23 @@ public class FaqAdapter extends RecyclerView.Adapter<FaqAdapter.ViewHolder> {
             holder.constraintLayout.setBackgroundResource(R.color.colorAccentLight);
             holder.expanderButton.setBackground(activity.getResources().getDrawable(R.drawable.ic_keyboard_arrow_up_48px));
         }
+
+        if (mClickListener != null)
+            mClickListener.onItemClick(holder.questionTextView, holder.getAdapterPosition(), count);
+    }
+
+    // allows clicks events to be caught. activity registers here as the listener
+    public void setClickListener(ItemClickListener itemClickListener) {
+        this.mClickListener = itemClickListener;
+    }
+
+    // parent activity will implement this method to respond to click events
+    public interface ItemClickListener {
+        void onItemClick(View view, int position, int count);
     }
 
     @Override
     public int getItemCount() {
-        return (cursor == null) ? 0 : cursor.getCount();
+        return (cursor == null) ? 0 : count;
     }
 }
