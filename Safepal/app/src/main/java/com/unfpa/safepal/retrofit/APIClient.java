@@ -21,12 +21,6 @@ public class APIClient {
         OkHttpClient client = new OkHttpClient.Builder()
                 .readTimeout(120, TimeUnit.SECONDS)
                 .connectTimeout(120, TimeUnit.SECONDS).build();
-//                .addInterceptor(chain -> {
-//                    String token = Prefs.getString(SERVER_TOKEN, "");
-//                    Timber.d("token: " + token);
-//                    Request request = chain.request().newBuilder().addHeader("Authorization", "Token " + token).build();
-//                    return chain.proceed(request);
-//                }).build();
 
         return new Retrofit.Builder()
                 .baseUrl(DJANGO_BACKEND_URL)

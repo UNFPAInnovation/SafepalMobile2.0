@@ -2,6 +2,7 @@ package com.unfpa.safepal.retrofit;
 
 import com.unfpa.safepal.retrofitmodels.articles.Articles;
 import com.unfpa.safepal.retrofitmodels.districts.Districts;
+import com.unfpa.safepal.retrofitmodels.faqratings.FaqRating;
 import com.unfpa.safepal.retrofitmodels.faqs.Faq;
 import com.unfpa.safepal.retrofitmodels.organizations.Organizations;
 import com.unfpa.safepal.retrofitmodels.questions.Questions;
@@ -9,7 +10,9 @@ import com.unfpa.safepal.retrofitmodels.quizzes.Quizzes;
 import com.unfpa.safepal.retrofitmodels.videos.Videos;
 
 import retrofit2.Call;
+import retrofit2.http.Body;
 import retrofit2.http.GET;
+import retrofit2.http.POST;
 
 public interface APIInterface {
     @GET("api/v1/videos")
@@ -32,4 +35,7 @@ public interface APIInterface {
 
     @GET("api/v1/faqs")
     Call<Faq> getFaqs();
+
+    @POST("api/v1/faqratings")
+    Call<FaqRating> postFaqRatings(@Body FaqRating faqRating);
 }
