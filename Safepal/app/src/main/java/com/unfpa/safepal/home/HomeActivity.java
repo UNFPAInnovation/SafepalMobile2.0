@@ -95,8 +95,11 @@ public class HomeActivity extends AppCompatActivity {
             case R.id.menu_guide:
                 reportTutorialGuide();
                 return true;
-            case R.id.chat:
+            case R.id.menu_chat:
                 startActivity(new Intent(getApplicationContext(), ChatActivity.class));
+                return true;
+            case R.id.menu_faq:
+                startActivity(new Intent(getApplicationContext(), FAQActivity.class));
                 return true;
             default:
                 return super.onOptionsItemSelected(item);

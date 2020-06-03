@@ -66,7 +66,6 @@ dependencies {
     implementation "com.arcao:slf4j-timber:3.1@aar"
     implementation 'com.squareup.picasso:picasso:2.71828'
     implementation 'com.mikhaellopez:circularprogressbar:3.0.3'
-    implementation 'com.ms-square:expandableTextView:0.1.4'
     implementation 'com.google.firebase:firebase-firestore:17.1.2'
     implementation 'com.android.support:multidex:1.0.3'
     implementation('com.crashlytics.sdk.android:crashlytics:2.6.8@aar') {

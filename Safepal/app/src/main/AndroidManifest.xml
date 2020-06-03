@@ -11,7 +11,12 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         tools:ignore="UnusedAttribute">
-        <activity android:name=".FAQActivity"></activity>
+        <activity android:name=".FAQActivity"
+            android:label="@string/faq_title">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.unfpa.safepal.home.HomeActivity" />
+        </activity>
         <activity
             android:name=".QuizActivity"
             android:label="@string/title_activity_quiz"
