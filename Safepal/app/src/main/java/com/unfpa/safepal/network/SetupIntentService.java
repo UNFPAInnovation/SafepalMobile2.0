@@ -13,6 +13,7 @@ import com.unfpa.safepal.provider.articletable.ArticletableColumns;
 import com.unfpa.safepal.provider.articletable.ArticletableContentValues;
 import com.unfpa.safepal.provider.districttable.DistricttableColumns;
 import com.unfpa.safepal.provider.districttable.DistricttableContentValues;
+import com.unfpa.safepal.provider.faqtable.FaqtableColumns;
 import com.unfpa.safepal.provider.faqtable.FaqtableContentValues;
 import com.unfpa.safepal.provider.organizationtable.OrganizationtableColumns;
 import com.unfpa.safepal.provider.organizationtable.OrganizationtableContentValues;
@@ -485,7 +486,7 @@ public class SetupIntentService extends IntentService {
         long deleted = 0;
         try {
             if (faqsList.size() > 1)
-                deleted = getContentResolver().delete(QuiztableColumns.CONTENT_URI, null, null);
+                deleted = getContentResolver().delete(FaqtableColumns.CONTENT_URI, null, null);
         } catch (Exception e) {
             e.printStackTrace();
         }

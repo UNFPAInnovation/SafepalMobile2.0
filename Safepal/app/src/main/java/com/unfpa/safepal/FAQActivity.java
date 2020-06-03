@@ -22,7 +22,7 @@ public class FAQActivity extends AppCompatActivity implements FaqAdapter.ItemCli
         Toolbar toolbar = findViewById(R.id.home_toolbar);
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayShowHomeEnabled(true);
-        getSupportActionBar().setDisplayUseLogoEnabled(true);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
         RecyclerView faqRecycler = findViewById(R.id.faq_recycler);
         faqRecycler.setLayoutManager(new LinearLayoutManager(this));
