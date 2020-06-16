@@ -9,6 +9,7 @@ import android.support.v7.widget.Toolbar;
 import android.widget.ArrayAdapter;
 import android.widget.EditText;
 import android.widget.ImageButton;
+import android.widget.Toast;
 
 import com.google.firebase.FirebaseApp;
 import com.google.firebase.firestore.DocumentReference;
@@ -50,11 +51,11 @@ public class ChatActivity extends AppCompatActivity {
         getSupportActionBar().setDisplayShowHomeEnabled(true);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
-        FirebaseApp.initializeApp(this);
         chatUser = new ChatUser(
                 Prefs.getString(ANONYMOUS_USER_NAME, "User" + getRandomString()),
                 Prefs.getString(MAC_ADDRESS, getMacAddress(this)));
 
+        FirebaseApp.initializeApp(this);
         inputMessageEditView = findViewById(R.id.input_messsage);
         sendButton = findViewById(R.id.send);
         recyclerView = findViewById(R.id.chats_list);
@@ -73,6 +74,11 @@ public class ChatActivity extends AppCompatActivity {
     @Override
     protected void onStart() {
         super.onStart();
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
         triggerNewMessageListener();
     }
 
@@ -101,6 +107,7 @@ public class ChatActivity extends AppCompatActivity {
         adapter = new ChatAdapter(this, chats);
         recyclerView.setAdapter(adapter);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
+        recyclerView.smoothScrollToPosition(adapter.getItemCount());
         adapter.notifyDataSetChanged();
     }
 
@@ -108,14 +115,20 @@ public class ChatActivity extends AppCompatActivity {
         Timber.d("saveChatDocumentData: started");
         Chat chat = new Chat(chatUser.getUsername(), message);
 
-        userDocument.collection(CHAT)
-                .add(chat)
-                .addOnSuccessListener(documentReference -> Timber.d("DocumentSnapshot added with ID: %s", documentReference.getId()))
-                .addOnFailureListener(e -> Timber.e(e, "Error adding document"));
+        try {
+            userDocument.collection(CHAT)
+                    .add(chat)
+                    .addOnSuccessListener(documentReference -> Timber.d("DocumentSnapshot added with ID: %s", documentReference.getId()))
+                    .addOnFailureListener(e -> Timber.e(e, "Error adding document"));
+        } catch (Exception e) {
+            e.printStackTrace();
+            Toast.makeText(this, "Failed to send message. Please check your Internet connection", Toast.LENGTH_SHORT).show();
+        }
     }
 
     private void saveUserDocumentData() {
         Timber.d("saveUserDocumentData: started");
+        db = FirebaseFirestore.getInstance();
         db.collection(USER)
                 .add(chatUser)
                 .addOnSuccessListener(documentReference -> {

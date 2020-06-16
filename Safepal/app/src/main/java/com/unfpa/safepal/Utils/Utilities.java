@@ -73,9 +73,7 @@ public class Utilities {
     }
 
     public static String formatDateTime(Date createdAt) throws ParseException {
-        SimpleDateFormat dateFormat = new SimpleDateFormat("hh:mm a");
-        dateFormat.setTimeZone(TimeZone.getTimeZone("UTC"));
-        Date today = Calendar.getInstance().getTime();
-        return dateFormat.parse(createdAt.toString()).toString();
+        SimpleDateFormat localDateFormat = new SimpleDateFormat("HH:mm");
+        return localDateFormat.format(createdAt);
     }
 }
