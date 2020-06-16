@@ -8,6 +8,7 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.squareup.picasso.Picasso;
 import com.unfpa.safepal.R;
 import com.unfpa.safepal.Utils.Utilities;
 import com.unfpa.safepal.chatmodule.Chat;
@@ -125,8 +126,12 @@ public class ChatAdapter extends RecyclerView.Adapter {
 
             nameText.setText(message.getName());
 
-            // Insert the profile image from the URL into the ImageView.
-//            Utils.displayRoundImageFromUrl(mContext, message.getSender().getProfileUrl(), profileImage);
+            Picasso.get()
+                    .load(R.drawable.woman_color)
+                    .placeholder(R.mipmap.ic_launcher)
+                    .error(R.mipmap.ic_launcher)
+                    .transform(new CircleTransform())
+                    .into(profileImage);
         }
     }
 }
