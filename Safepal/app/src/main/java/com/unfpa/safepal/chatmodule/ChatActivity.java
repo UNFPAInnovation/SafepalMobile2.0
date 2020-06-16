@@ -63,6 +63,7 @@ public class ChatActivity extends AppCompatActivity {
             String message = inputMessageEditView.getText().toString();
             Timber.d("onClick: %s", message);
             saveChatDocumentData(message);
+            inputMessageEditView.setText("");
         });
 
         db = FirebaseFirestore.getInstance();

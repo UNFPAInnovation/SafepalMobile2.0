@@ -95,9 +95,6 @@ public class WatchVideoActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_watch_video);
-        Toolbar toolbar = findViewById(R.id.toolbar);
-        setSupportActionBar(toolbar);
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
         video = findViewById(R.id.video);
         title = findViewById(R.id.title);
@@ -105,7 +102,7 @@ public class WatchVideoActivity extends AppCompatActivity {
         description = findViewById(R.id.description);
         relatedVideosRecyclerView = findViewById(R.id.related_videos_recycler);
 
-        // Get the title passed to use from the VideoAdapter and query for the video
+        // Get the title passed to this view from the VideoAdapter and query for the video
         VideotableCursor videotableCursor = new VideotableSelection().orderByCreatedAt(true)
                 .title(getIntent().getStringExtra(TITLE)).query(getContentResolver());
 
