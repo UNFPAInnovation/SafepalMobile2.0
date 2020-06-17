@@ -72,7 +72,6 @@ public class ReportingActivity extends AppCompatActivity implements SurvivorInci
         buttonPrev = (Button) findViewById(R.id.exit_app);
         buttonNext = (Button) findViewById(R.id.finish);
 
-        //set listerns
         buttonNext.setOnClickListener(view -> {
             Log.d(TAG, "button next clicked");
             if (isFragmentVisible(getFragmentManager().findFragmentByTag(
@@ -102,10 +101,7 @@ public class ReportingActivity extends AppCompatActivity implements SurvivorInci
 
             } else if (isFragmentVisible(getFragmentManager().findFragmentByTag(
                     AnotherPersonIncidentFormFragment.class.getSimpleName()))) {
-                Log.d(TAG, "submitting another-person form");
-
                 int status = AnotherPersonIncidentFormFragment.submitForm(getBaseContext());
-                Log.d(TAG, "onClick: status bar showing");
 
                 if ((status == ReportingActivity.STATUS_SUBMIT_REPORT_SUBMITED) || (status == ReportingActivity.STATUS_SUBMIT_REPORT_ALREADY_AVAILABLE)) {
                     Log.d(TAG, "AnotherPersonIncidentFormFragment.submitForm successfull. Loading contact frag");

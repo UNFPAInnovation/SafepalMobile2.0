@@ -105,11 +105,38 @@
                     android:text="@string/cso_no_internet_retry"
                     android:textSize="22sp" />
             </LinearLayout>
+
+            <ImageView
+                android:id="@+id/imageView"
+                android:layout_width="90dp"
+                android:layout_height="80dp"
+                android:layout_marginStart="16dp"
+                android:layout_marginTop="5dp"
+                android:layout_marginEnd="70dp"
+                android:layout_marginBottom="24dp"
+                android:alpha="0.7"
+                android:layout_toRightOf="@+id/imageView2"
+                android:layout_below="@id/cso_recycler_view"
+                app:srcCompat="@drawable/ic_unfpa_logo" />
+
+            <ImageView
+                android:id="@+id/imageView2"
+                android:layout_width="70dp"
+                android:layout_height="70dp"
+                android:layout_marginStart="96dp"
+                android:layout_marginTop="5dp"
+                android:layout_marginEnd="8dp"
+                android:layout_marginBottom="32dp"
+                android:alpha="0.7"
+                android:layout_below="@id/cso_recycler_view"
+                app:srcCompat="@drawable/ic_coat_of_arms_of_uganda" />
+
         </RelativeLayout>
 
         <Button
             android:id="@+id/cso_childhelpline_btn"
             style="@style/NiceButton"
+            android:drawableLeft="@drawable/sauti_logo_small"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_below="@+id/cso_horizotal_line_two"
