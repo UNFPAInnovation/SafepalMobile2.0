@@ -8,6 +8,7 @@ import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 
 import com.unfpa.safepal.R;
+import com.unfpa.safepal.adapters.ArticleAdapter;
 
 /**
  * A [FragmentPagerAdapter] that returns a fragment corresponding to
@@ -30,7 +31,7 @@ public class SectionsPagerAdapter extends FragmentPagerAdapter {
     @Override
     public Fragment getItem(int position) {
         // getItem is called to instantiate the fragment for the given page.
-        // Return a VideoFragment (defined as a static inner class below).
+        // Return a Video or Article Fragment (defined as a static inner class below).
         if (position == 0 || position == 1) {
             return DiscoveryFragment.newInstance(position + 1);
         } else {

@@ -15,7 +15,9 @@ import com.squareup.picasso.Picasso;
 import com.unfpa.safepal.R;
 import com.unfpa.safepal.ReadArticleActivity;
 import com.unfpa.safepal.provider.articletable.ArticletableCursor;
-import static com.unfpa.safepal.provider.videotable.VideotableColumns.TITLE;
+import com.unfpa.safepal.provider.articletable.ArticletableSelection;
+
+import static com.unfpa.safepal.provider.articletable.ArticletableColumns.TITLE;
 
 public class ArticleAdapter extends RecyclerView.Adapter<ArticleAdapter.ViewHolder> {
 
@@ -81,6 +83,31 @@ public class ArticleAdapter extends RecyclerView.Adapter<ArticleAdapter.ViewHold
                     .putExtra(TITLE, holder.title.getText().toString());
             activity.startActivity(intent);
         });
+    }
+
+    public void filter(String text) {
+        if (!text.isEmpty()) {
+            text = text.toLowerCase();
+            swapCursor(queryMappedGirlsTable(text));
+        }
+    }
+
+    public ArticletableCursor swapCursor(ArticletableCursor cursor) {
+        if (this.cursor == cursor) {
+            return null;
+        }
+        ArticletableCursor oldCursor = this.cursor;
+        this.cursor = cursor;
+        if (cursor != null) {
+            this.notifyDataSetChanged();
+        }
+        return oldCursor;
+    }
+
+    private ArticletableCursor queryMappedGirlsTable(String text) {
+        ArticletableSelection selection = new ArticletableSelection();
+        selection.titleContains(text);
+        return selection.query(activity.getContentResolver());
     }
 
     @Override

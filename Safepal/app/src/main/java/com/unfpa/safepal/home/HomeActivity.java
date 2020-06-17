@@ -69,7 +69,7 @@ public class HomeActivity extends AppCompatActivity {
         reportCaseButton = findViewById(R.id.report_incident_button);
         discoverMoreCard = findViewById(R.id.discover_more_card);
 
-        startService(new Intent(this, SetupIntentService.class));
+//        startService(new Intent(this, SetupIntentService.class));
 
         reportCaseButton.setOnClickListener(v -> startActivity(new Intent(getApplicationContext(), ReportingActivity.class)));
         discoverMoreCard.setOnClickListener(v -> startActivity(new Intent(getApplicationContext(), DiscoveryActivity.class)));

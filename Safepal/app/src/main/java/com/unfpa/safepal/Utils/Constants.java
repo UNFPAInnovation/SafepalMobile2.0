@@ -13,4 +13,5 @@ public class Constants {
     final public static String FIRST_LAUNCH = "first_launch";
     final public static String MAC_ADDRESS = "mac_address";
     final public static String ANONYMOUS_USER_NAME = "anonymous_user_name";
+    final public static String CURRENT_FRAGMENT = "current_fragment";
 }

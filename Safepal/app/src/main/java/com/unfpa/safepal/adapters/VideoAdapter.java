@@ -1,16 +1,13 @@
 package com.unfpa.safepal.adapters;
 
 import android.app.Activity;
-import android.content.Context;
 import android.content.Intent;
 import android.support.annotation.NonNull;
 import android.support.v4.app.FragmentActivity;
 import android.support.v7.widget.RecyclerView;
-import android.view.Display;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.WindowManager;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -18,6 +15,10 @@ import com.squareup.picasso.Picasso;
 import com.unfpa.safepal.R;
 import com.unfpa.safepal.WatchVideoActivity;
 import com.unfpa.safepal.provider.videotable.VideotableCursor;
+import com.unfpa.safepal.provider.videotable.VideotableSelection;
+
+import java.util.Locale;
+
 import static com.unfpa.safepal.provider.videotable.VideotableColumns.TITLE;
 
 public class VideoAdapter extends RecyclerView.Adapter<VideoAdapter.ViewHolder> {
@@ -68,7 +69,7 @@ public class VideoAdapter extends RecyclerView.Adapter<VideoAdapter.ViewHolder> 
                     .into(holder.thumbnail);
 
             try {
-                holder.duration.setText(String.valueOf(cursor.getDuration()) + " mins");
+                holder.duration.setText(String.format(Locale.ENGLISH,"%d mins", cursor.getDuration()));
             } catch (Exception e) {
                 e.printStackTrace();
                 holder.duration.setText("1 mins");
@@ -82,6 +83,31 @@ public class VideoAdapter extends RecyclerView.Adapter<VideoAdapter.ViewHolder> 
         } catch (Exception e) {
             e.printStackTrace();
         }
+    }
+
+    public void filter(String text) {
+        if (!text.isEmpty()) {
+            text = text.toLowerCase();
+            swapCursor(queryVideoTable(text));
+        }
+    }
+
+    public VideotableCursor swapCursor(VideotableCursor cursor) {
+        if (this.cursor == cursor) {
+            return null;
+        }
+        VideotableCursor oldCursor = this.cursor;
+        this.cursor = cursor;
+        if (cursor != null) {
+            this.notifyDataSetChanged();
+        }
+        return oldCursor;
+    }
+
+    private VideotableCursor queryVideoTable(String text) {
+        VideotableSelection selection = new VideotableSelection();
+        selection.titleContains(text);
+        return selection.query(activity.getContentResolver());
     }
 
     @Override
