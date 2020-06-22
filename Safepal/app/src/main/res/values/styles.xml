@@ -91,7 +91,7 @@
         <item name="sv_showcaseColor">#002d30</item>
         <item name="sv_buttonText">Next</item>
         <item name="sv_titleTextAppearance">@style/ReportTitle</item>
-        <item name="sv_detailTextAppearance">@style/GuideText</item>
+        <item name="sv_detailTextAppearance">@style/GuideText2</item>
     </style>
 
     <style name="ExitShowcaseTheme" parent="ShowcaseView">
@@ -99,7 +99,7 @@
         <item name="sv_showcaseColor">#663d00</item>
         <item name="sv_buttonText">Next</item>
         <item name="sv_titleTextAppearance">@style/ReportTitle</item>
-        <item name="sv_detailTextAppearance">@style/GuideText</item>
+        <item name="sv_detailTextAppearance">@style/GuideText2</item>
     </style>
 
 

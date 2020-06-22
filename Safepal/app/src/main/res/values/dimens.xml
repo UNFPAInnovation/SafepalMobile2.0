@@ -88,7 +88,7 @@
     <dimen name="backdrop_title">30dp</dimen>
     <dimen name="backdrop_subtitle">18dp</dimen>
     <dimen name="card_margin">5dp</dimen>
-    <dimen name="card_media_radius">0dp</dimen>
+    <dimen name="card_media_radius">10dp</dimen>
     <dimen name="media_cover_height">160dp</dimen>
     <dimen name="media_title_padding">10dp</dimen>
     <dimen name="media_title">15dp</dimen>

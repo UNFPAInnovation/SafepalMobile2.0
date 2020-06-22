@@ -2,8 +2,8 @@ package com.unfpa.safepal.home;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
-import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.location.LocationManager;
 import android.os.Bundle;
 import android.provider.Settings;
@@ -19,7 +19,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.RelativeLayout;
-import android.widget.TextView;
 
 import com.crashlytics.android.Crashlytics;
 import com.github.amlcurran.showcaseview.ShowcaseView;
@@ -27,13 +26,10 @@ import com.github.amlcurran.showcaseview.targets.ViewTarget;
 import com.pixplicity.easyprefs.library.Prefs;
 import com.unfpa.safepal.DiscoveryActivity;
 import com.unfpa.safepal.FAQActivity;
-import com.unfpa.safepal.QuizActivity;
 import com.unfpa.safepal.R;
 import com.unfpa.safepal.chatmodule.ChatActivity;
 import com.unfpa.safepal.network.SetupIntentService;
 import com.unfpa.safepal.report.ReportingActivity;
-
-import java.util.UUID;
 
 import io.fabric.sdk.android.Fabric;
 
@@ -45,12 +41,11 @@ import static com.unfpa.safepal.Utils.Utilities.getRandomString;
 
 public class HomeActivity extends AppCompatActivity {
     Button reportCaseButton;
-    RelativeLayout infoPanel;
     CardView discoverMoreCard;
 
     //guide for safepal
-    ShowcaseView homeReportGuideSv, homeNextSv;
-    RelativeLayout.LayoutParams lps, nextLps;
+    ShowcaseView homeReportGuideSv, cardShowcaseView, chatShowcaseView, faqShowcaseView;
+    RelativeLayout.LayoutParams lps, nextLps, chatLps, faqLps;
     private final String TAG = HomeActivity.class.getSimpleName();
 
     @SuppressLint("ClickableViewAccessibility")
@@ -74,7 +69,16 @@ public class HomeActivity extends AppCompatActivity {
         reportCaseButton.setOnClickListener(v -> startActivity(new Intent(getApplicationContext(), ReportingActivity.class)));
         discoverMoreCard.setOnClickListener(v -> startActivity(new Intent(getApplicationContext(), DiscoveryActivity.class)));
 
-        showLocationSettingsDialog();
+        SharedPreferences prefs = getSharedPreferences(getString(R.string.shared_pref_name), MODE_PRIVATE);
+        boolean isFirstTime = prefs.getBoolean(getString(R.string.first_time), true);
+        if (isFirstTime) {
+            reportTutorialGuide();
+            SharedPreferences.Editor editor = prefs.edit();
+            editor.putBoolean(getString(R.string.first_time), false);
+            editor.apply();
+        } else {
+            showLocationSettingsDialog();
+        }
 
         if (Prefs.getBoolean(FIRST_LAUNCH, true)) {
             Prefs.putString(MAC_ADDRESS, getMacAddress(this));
@@ -120,12 +124,9 @@ public class HomeActivity extends AppCompatActivity {
                 .setContentTitle(R.string.home_guide_fab_report_title)
                 .setContentText(R.string.home_guide_fab_report_text)
                 .setStyle(R.style.ReportShowcaseTheme)
-                .setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        homeReportGuideSv.hide();
-//                        cardMessagesTutorialGuide();
-                    }
+                .setOnClickListener(v -> {
+                    homeReportGuideSv.hide();
+                    cardMessagesTutorialGuide();
                 })
                 .build();
         homeReportGuideSv.setButtonPosition(lps);
@@ -137,23 +138,67 @@ public class HomeActivity extends AppCompatActivity {
         int margin = ((Number) (getResources().getDisplayMetrics().density * 12)).intValue();
         nextLps.setMargins(margin, margin + 30, margin, margin);
 
-        ViewTarget nTarget = new ViewTarget(R.id.home_info_panel, HomeActivity.this);
+        ViewTarget nTarget = new ViewTarget(R.id.discover_more_card, HomeActivity.this);
 
-        homeNextSv = new ShowcaseView.Builder(HomeActivity.this)
+        cardShowcaseView = new ShowcaseView.Builder(HomeActivity.this)
                 .withHoloShowcase()
                 .setTarget(nTarget)
-                .setContentTitle(R.string.home_guide_fab_next_title)
-                .setContentText(R.string.home_guide_fab_next_text)
-                .setStyle(R.style.NextShowcaseTheme)
+                .setContentTitle("Discover more")
+                .setContentText("Get daily information about Gender Based Violence, Malaria, HIV prevention through videos, articles and quizzes")
+                .setStyle(R.style.ExitShowcaseTheme)
+                .setOnClickListener(v -> {
+                    cardShowcaseView.hide();
+                    chatTutorialGuide();
+                })
                 .build();
+        cardShowcaseView.setButtonPosition(nextLps);
+    }
 
-        homeNextSv.setButtonPosition(nextLps);
-        homeNextSv.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                homeNextSv.hide();
-            }
-        });
+    public void chatTutorialGuide() {
+        chatLps = new RelativeLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
+        chatLps.addRule(RelativeLayout.ALIGN_PARENT_BOTTOM);
+        chatLps.addRule(RelativeLayout.ALIGN_PARENT_LEFT);
+        int margin = ((Number) (getResources().getDisplayMetrics().density * 5)).intValue();
+        chatLps.setMargins(margin, margin, margin, margin);
+
+        ViewTarget nTarget = new ViewTarget(R.id.menu_chat, HomeActivity.this);
+
+        chatShowcaseView = new ShowcaseView.Builder(HomeActivity.this)
+                .withHoloShowcase()
+                .setTarget(nTarget)
+                .setContentTitle("Chat discussion")
+                .setContentText("Directly reach out to people who can help you when in need")
+                .setStyle(R.style.ReportShowcaseTheme)
+                .setOnClickListener(v -> {
+                    chatShowcaseView.hide();
+                    FAQTutorialGuide();
+                })
+                .build();
+        chatShowcaseView.setButtonPosition(chatLps);
+    }
+
+    public void FAQTutorialGuide() {
+        faqLps = new RelativeLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
+        faqLps.addRule(RelativeLayout.ALIGN_PARENT_BOTTOM);
+        faqLps.addRule(RelativeLayout.ALIGN_PARENT_LEFT);
+        int margin = ((Number) (getResources().getDisplayMetrics().density * 5)).intValue();
+        faqLps.setMargins(margin, margin, margin, margin);
+
+        ViewTarget nTarget = new ViewTarget(R.id.menu_faq, HomeActivity.this);
+
+        faqShowcaseView = new ShowcaseView.Builder(HomeActivity.this)
+                .withHoloShowcase()
+                .setTarget(nTarget)
+                .setContentTitle("Frequently Asked Questions")
+                .setContentText("Find answers to the questions that you seek")
+                .setStyle(R.style.NextShowcaseTheme)
+                .setOnClickListener((View.OnClickListener) v ->  {
+                    faqShowcaseView.hide();
+                    // finally show the location request dialog for first time launch user
+                    showLocationSettingsDialog();
+                })
+                .build();
+        faqShowcaseView.setButtonPosition(faqLps);
     }
 
     private void showLocationSettingsDialog() {
@@ -167,20 +212,12 @@ public class HomeActivity extends AppCompatActivity {
             builder.setTitle("Needs Location");
             builder.setMessage("Please turn on your GPS to properly report the case");
 
-            builder.setPositiveButton("TURN ON GPS", new DialogInterface.OnClickListener() {
-                @Override
-                public void onClick(DialogInterface dialog, int which) {
-                    dialog.cancel();
-                    openLocationSettings();
-                }
+            builder.setPositiveButton("TURN ON GPS", (dialog, which) -> {
+                dialog.cancel();
+                openLocationSettings();
             });
 
-            builder.setNegativeButton("CANCEL", new DialogInterface.OnClickListener() {
-                @Override
-                public void onClick(DialogInterface dialog, int which) {
-                    dialog.cancel();
-                }
-            });
+            builder.setNegativeButton("CANCEL", (dialog, which) -> dialog.cancel());
             builder.show();
         }
     }
