@@ -2,16 +2,19 @@ package com.unfpa.safepal;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.TabLayout;
-import android.support.v4.view.ViewPager;
-import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.SearchView;
 
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.fragment.app.Fragment;
+import androidx.viewpager.widget.ViewPager;
+
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
+import com.google.android.material.tabs.TabLayout;
 import com.unfpa.safepal.report.ReportingActivity;
+import com.unfpa.safepal.ui.main.DiscoveryFragment;
 import com.unfpa.safepal.ui.main.SectionsPagerAdapter;
 
-import timber.log.Timber;
+import java.util.Timer;
+import java.util.TimerTask;
 
 public class DiscoveryActivity extends AppCompatActivity {
 
@@ -21,14 +24,13 @@ public class DiscoveryActivity extends AppCompatActivity {
             R.drawable.ic_bookmark_48px,
             R.drawable.ic_folder_open_48px
     };
-    private ItemClickListener mClickListener;
-    private SearchView searchView;
+    private SectionsPagerAdapter sectionsPagerAdapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_discover_more);
-        SectionsPagerAdapter sectionsPagerAdapter = new SectionsPagerAdapter(this, getSupportFragmentManager());
+        sectionsPagerAdapter = new SectionsPagerAdapter(this, getSupportFragmentManager());
 
         ViewPager viewPager = findViewById(R.id.view_pager);
         viewPager.setAdapter(sectionsPagerAdapter);
@@ -41,31 +43,17 @@ public class DiscoveryActivity extends AppCompatActivity {
         fab.setOnClickListener(view -> startActivity(new Intent(getApplicationContext(),
                 ReportingActivity.class)));
 
-        searchView = findViewById(R.id.search);
-        searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
-
-            int selectedTabPosition = tabLayout.getSelectedTabPosition();
-            @Override
-            public boolean onQueryTextSubmit(String query) {
-                Timber.d("searching");
-                if (mClickListener != null)
-                    mClickListener.onItemClick(query, selectedTabPosition);
-                return false;
-            }
-
-            @Override
-            public boolean onQueryTextChange(String query) {
-                if (mClickListener != null)
-                    mClickListener.onItemClick(query, selectedTabPosition);
-                return false;
-            }
-        });
-
-        searchView.setOnCloseListener(() -> {
-            if (mClickListener != null)
-                mClickListener.onItemClick("", 1);
-            return false;
-        });
+        // reset the search view every two seconds
+        try {
+            new Timer().scheduleAtFixedRate(new TimerTask() {
+                @Override
+                public void run() {
+                    resetSearch();
+                }
+            }, 0, 2000);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 
     private void setupTabIcons() {
@@ -74,13 +62,9 @@ public class DiscoveryActivity extends AppCompatActivity {
         tabLayout.getTabAt(2).setIcon(tabIcons[2]);
     }
 
-    // allows clicks events to be caught. activity registers here as the listener
-    public void setClickListener(DiscoveryActivity.ItemClickListener itemClickListener) {
-        this.mClickListener = itemClickListener;
-    }
-
-    // parent activity will implement this method to respond to click events
-    public interface ItemClickListener {
-        void onItemClick(String query, int position);
+    private void resetSearch() {
+        Fragment currentFragment = sectionsPagerAdapter.getCurrentFragment();
+        if (currentFragment instanceof DiscoveryFragment)
+            ((Searchable) currentFragment).initializeSearch();
     }
 }

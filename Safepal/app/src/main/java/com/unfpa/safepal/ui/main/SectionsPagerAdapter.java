@@ -1,14 +1,15 @@
 package com.unfpa.safepal.ui.main;
 
 import android.content.Context;
-import android.support.annotation.Nullable;
-import android.support.annotation.StringRes;
-import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentManager;
-import android.support.v4.app.FragmentPagerAdapter;
+import android.view.ViewGroup;
+
+import androidx.annotation.Nullable;
+import androidx.annotation.StringRes;
+import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentPagerAdapter;
 
 import com.unfpa.safepal.R;
-import com.unfpa.safepal.adapters.ArticleAdapter;
 
 /**
  * A [FragmentPagerAdapter] that returns a fragment corresponding to
@@ -39,6 +40,14 @@ public class SectionsPagerAdapter extends FragmentPagerAdapter {
         }
     }
 
+    @Override
+    public void setPrimaryItem(ViewGroup container, int position, Object object) {
+        if (getCurrentFragment() != object) {
+            mCurrentFragment = ((Fragment) object);
+        }
+        super.setPrimaryItem(container, position, object);
+    }
+
     @Nullable
     @Override
     public CharSequence getPageTitle(int position) {
@@ -48,5 +57,11 @@ public class SectionsPagerAdapter extends FragmentPagerAdapter {
     @Override
     public int getCount() {
         return 3;
+    }
+
+    private Fragment mCurrentFragment;
+
+    public Fragment getCurrentFragment() {
+        return mCurrentFragment;
     }
 }

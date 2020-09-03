@@ -101,7 +101,7 @@ public class csoDialogFragment extends DialogFragment {
     }
 
     private void showSettingsDialog() {
-        android.support.v7.app.AlertDialog.Builder builder = new android.support.v7.app.AlertDialog.Builder(getActivity());
+        androidx.appcompat.app.AlertDialog.Builder builder = new androidx.appcompat.app.AlertDialog.Builder(getActivity());
         builder.setTitle(R.string.needs_permission);
         builder.setMessage(R.string.settings_permission_message);
         builder.setPositiveButton("GOTO SETTINGS", (dialog, which) -> {

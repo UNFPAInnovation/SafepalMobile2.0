@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 
-<android.support.v4.widget.NestedScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.core.widget.NestedScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
@@ -92,7 +92,7 @@
                     android:layout_marginRight="10dp"
                     android:src="@mipmap/ic_action_place" />
 
-                <android.support.design.widget.TextInputLayout
+                <com.google.android.material.textfield.TextInputLayout
                     android:id="@+id/inpu_latout_where"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -107,7 +107,7 @@
                         android:layout_height="wrap_content"
                         android:hint="@string/incident_location"
                         android:maxLines="1" />
-                </android.support.design.widget.TextInputLayout>
+                </com.google.android.material.textfield.TextInputLayout>
             </RelativeLayout>
 
 
@@ -125,7 +125,7 @@
                     android:layout_marginRight="10dp"
                     android:src="@mipmap/ic_action_view_as_list" />
 
-                <android.support.design.widget.TextInputLayout
+                <com.google.android.material.textfield.TextInputLayout
                     android:id="@+id/input_latout_story"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -139,7 +139,7 @@
                         android:layout_height="wrap_content"
                         android:hint="@string/incident_details"
                         android:inputType="text|textMultiLine" />
-                </android.support.design.widget.TextInputLayout>
+                </com.google.android.material.textfield.TextInputLayout>
             </RelativeLayout>
 
         </LinearLayout>
@@ -303,4 +303,4 @@
         <!--end of The footer that conststs of two buttons-->
 
     </LinearLayout>
-</android.support.v4.widget.NestedScrollView>
+</androidx.core.widget.NestedScrollView>

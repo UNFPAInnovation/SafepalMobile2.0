@@ -1,10 +1,10 @@
 package com.unfpa.safepal.adapters;
 
 import android.app.Activity;
-import android.support.annotation.NonNull;
-import android.support.constraint.ConstraintLayout;
-import android.support.v4.app.FragmentActivity;
-import android.support.v7.widget.RecyclerView;
+import androidx.annotation.NonNull;
+import androidx.constraintlayout.widget.ConstraintLayout;
+import androidx.fragment.app.FragmentActivity;
+import androidx.recyclerview.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -18,7 +18,6 @@ import com.unfpa.safepal.provider.faqtable.FaqtableCursor;
 import com.unfpa.safepal.retrofit.APIClient;
 import com.unfpa.safepal.retrofit.APIInterface;
 import com.unfpa.safepal.retrofitmodels.faqratings.FaqRating;
-import com.unfpa.safepal.retrofitmodels.faqs.Faq;
 
 import retrofit2.Call;
 import retrofit2.Callback;

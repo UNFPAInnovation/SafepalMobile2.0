@@ -2,10 +2,7 @@ package com.unfpa.safepal.provider.faqtable;
 
 import com.unfpa.safepal.provider.base.BaseModel;
 
-import java.util.Date;
-
-import android.support.annotation.NonNull;
-import android.support.annotation.Nullable;
+import androidx.annotation.Nullable;
 
 /**
  * Data model for the {@code faqtable} table.

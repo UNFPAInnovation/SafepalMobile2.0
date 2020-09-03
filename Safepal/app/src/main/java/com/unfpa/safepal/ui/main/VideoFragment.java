@@ -1,23 +1,19 @@
 package com.unfpa.safepal.ui.main;
 
-import android.arch.lifecycle.ViewModelProviders;
+import androidx.lifecycle.ViewModelProviders;
 import android.os.Bundle;
-import android.support.annotation.NonNull;
-import android.support.v4.app.Fragment;
-import android.support.v7.widget.GridLayoutManager;
-import android.support.v7.widget.RecyclerView;
-import android.support.v7.widget.SearchView;
-import android.support.v7.widget.Toolbar;
+import androidx.annotation.NonNull;
+import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.GridLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
+import androidx.appcompat.widget.SearchView;
+import androidx.appcompat.widget.Toolbar;
 import android.view.LayoutInflater;
-import android.view.Menu;
-import android.view.MenuInflater;
-import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 
 import com.unfpa.safepal.DiscoveryActivity;
 import com.unfpa.safepal.R;
-import com.unfpa.safepal.adapters.ArticleAdapter;
 import com.unfpa.safepal.adapters.VideoAdapter;
 import com.unfpa.safepal.provider.articletable.ArticletableCursor;
 import com.unfpa.safepal.provider.articletable.ArticletableSelection;

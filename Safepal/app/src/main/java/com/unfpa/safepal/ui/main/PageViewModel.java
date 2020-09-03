@@ -1,7 +1,7 @@
 package com.unfpa.safepal.ui.main;
 
-import android.arch.lifecycle.MutableLiveData;
-import android.arch.lifecycle.ViewModel;
+import androidx.lifecycle.MutableLiveData;
+import androidx.lifecycle.ViewModel;
 
 public class PageViewModel extends ViewModel {
 

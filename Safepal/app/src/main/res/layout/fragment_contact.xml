@@ -84,7 +84,7 @@ android:layout_marginBottom="20dp"
                 android:paddingBottom="10dp"
                 android:text="+256"
                 />
-            <android.support.design.widget.TextInputLayout
+            <com.google.android.material.textfield.TextInputLayout
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="10">
@@ -101,7 +101,7 @@ android:layout_marginBottom="20dp"
                     android:inputType="phone"
                     android:maxLength="12"
                     android:padding="@dimen/overall_et_padding_top" />
-            </android.support.design.widget.TextInputLayout>
+            </com.google.android.material.textfield.TextInputLayout>
 
 
         </LinearLayout>
