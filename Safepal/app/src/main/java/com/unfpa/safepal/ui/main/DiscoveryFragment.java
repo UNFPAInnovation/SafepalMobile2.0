@@ -77,7 +77,6 @@ public class DiscoveryFragment extends Fragment implements Searchable {
 
         searchView = activity.findViewById(R.id.search);
         index = getArguments().getInt(ARG_SECTION_NUMBER);
-        TabLayout tabLayout = activity.findViewById(R.id.tabs);
         Toast.makeText(activity, "index " + index, Toast.LENGTH_SHORT).show();
         if (index == 1) {
             videoAdapter = new VideoAdapter(getActivity(), getVideosFromTable());
@@ -140,6 +139,7 @@ public class DiscoveryFragment extends Fragment implements Searchable {
                 articleAdapter = new ArticleAdapter(getActivity(), getArticlesFromTable());
                 recyclerView.setAdapter(articleAdapter);
             }
+            searchView.onActionViewCollapsed();
             return false;
         });
     }
