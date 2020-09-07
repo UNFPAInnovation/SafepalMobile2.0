@@ -1,13 +1,11 @@
 package com.unfpa.safepal.report;
 
 import android.app.Fragment;
-import android.app.FragmentManager;
-import android.app.FragmentTransaction;
 import android.content.SharedPreferences;
 import android.os.Bundle;
-import android.support.design.widget.Snackbar;
-import android.support.v7.widget.Toolbar;
-import android.util.Log;
+import com.google.android.material.snackbar.Snackbar;
+import androidx.appcompat.widget.Toolbar;
+
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -25,7 +23,6 @@ import com.unfpa.safepal.messages.EMessageDialogFragment;
 import java.util.Random;
 
 import static android.content.Context.MODE_PRIVATE;
-import static com.unfpa.safepal.report.SurvivorIncidentFormFragment.TAG;
 
 public class WhoSGettingHelpFragment extends Fragment {
 

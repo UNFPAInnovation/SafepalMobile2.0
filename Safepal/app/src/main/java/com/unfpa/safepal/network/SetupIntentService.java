@@ -67,10 +67,10 @@ public class SetupIntentService extends IntentService {
         Timber.d("onHandleIntent: started service");
         apiInterface = APIClient.getClient().create(APIInterface.class);
 
-        boolean isConnectedToInternet = isConnectedToInternet(this);
-        Timber.d("is connected %s", isConnectedToInternet);
+//        boolean isConnectedToInternet = isConnectedToInternet(this);
+//        Timber.d("is connected %s", isConnectedToInternet);
 
-        if (isConnectedToInternet) {
+        if (true) {
             try {
                 loadVideos();
             } catch (Exception e) {

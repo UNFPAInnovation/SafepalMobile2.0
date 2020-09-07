@@ -1,4 +1,4 @@
-    <android.support.v4.widget.NestedScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    <androidx.core.widget.NestedScrollView xmlns:android="http://schemas.android.com/apk/res/android"
         xmlns:app="http://schemas.android.com/apk/res-auto"
         xmlns:tools="http://schemas.android.com/tools"
         android:layout_width="match_parent"
@@ -181,7 +181,7 @@
                     android:layout_toRightOf="@id/disability2"
                     android:orientation="vertical">
 
-                    <android.support.design.widget.TextInputLayout
+                    <com.google.android.material.textfield.TextInputLayout
                         android:id="@+id/disability_text_input_layout"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
@@ -192,7 +192,7 @@
                             android:layout_height="wrap_content"
                             android:hint="@string/enter_disability"
                             android:id="@+id/sif_disability_input" />
-                    </android.support.design.widget.TextInputLayout>
+                    </com.google.android.material.textfield.TextInputLayout>
                 </LinearLayout>
             </RelativeLayout>
 
@@ -318,7 +318,7 @@
                         android:layout_marginRight="10dp"
                         android:src="@mipmap/ic_action_place" />
 
-                    <android.support.design.widget.TextInputLayout
+                    <com.google.android.material.textfield.TextInputLayout
                         android:id="@+id/inpu_latout_where"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
@@ -337,7 +337,7 @@
                             android:inputType="textCapSentences"
                             android:imeOptions="actionNext"
                             android:nextFocusDown="@id/sif_incident_details_et"/>
-                    </android.support.design.widget.TextInputLayout>
+                    </com.google.android.material.textfield.TextInputLayout>
                 </RelativeLayout>
 
 
@@ -355,7 +355,7 @@
                         android:layout_marginRight="10dp"
                         android:src="@mipmap/ic_action_view_as_list" />
 
-                    <android.support.design.widget.TextInputLayout
+                    <com.google.android.material.textfield.TextInputLayout
                         android:id="@+id/input_latout_story"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
@@ -372,7 +372,7 @@
                             android:maxLines="3"
                             android:imeOptions="actionDone"
                             />
-                    </android.support.design.widget.TextInputLayout>
+                    </com.google.android.material.textfield.TextInputLayout>
                 </RelativeLayout>
 
                 <RelativeLayout
@@ -388,7 +388,7 @@
                         android:layout_alignTop="@+id/input_latout_phone_number"
                         android:src="@drawable/baseline_call_black_24" />
 
-                    <android.support.design.widget.TextInputLayout
+                    <com.google.android.material.textfield.TextInputLayout
                         android:id="@+id/input_latout_phone_number"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
@@ -405,7 +405,7 @@
                             android:hint="Enter Phone Number"
                             android:inputType="phone"
                             android:maxLength="12" />
-                    </android.support.design.widget.TextInputLayout>
+                    </com.google.android.material.textfield.TextInputLayout>
                 </RelativeLayout>
 
             </LinearLayout>
@@ -415,4 +415,4 @@
 
 
         </LinearLayout>
-    </android.support.v4.widget.NestedScrollView>
+    </androidx.core.widget.NestedScrollView>
