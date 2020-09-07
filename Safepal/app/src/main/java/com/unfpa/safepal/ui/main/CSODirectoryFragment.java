@@ -1,10 +1,10 @@
 package com.unfpa.safepal.ui.main;
 
 import android.arch.lifecycle.ViewModelProviders;
+import android.database.CursorIndexOutOfBoundsException;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v4.app.Fragment;
-import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -13,23 +13,14 @@ import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Spinner;
-import android.widget.Toast;
 
 import com.unfpa.safepal.R;
-import com.unfpa.safepal.adapters.ArticleAdapter;
 import com.unfpa.safepal.adapters.OrganizationAdapter;
-import com.unfpa.safepal.adapters.VideoAdapter;
-import com.unfpa.safepal.provider.articletable.ArticletableCursor;
-import com.unfpa.safepal.provider.articletable.ArticletableSelection;
 import com.unfpa.safepal.provider.districttable.DistricttableCursor;
 import com.unfpa.safepal.provider.districttable.DistricttableSelection;
-import com.unfpa.safepal.provider.organizationtable.OrganizationtableCursor;
 import com.unfpa.safepal.provider.organizationtable.OrganizationtableSelection;
-import com.unfpa.safepal.provider.videotable.VideotableCursor;
-import com.unfpa.safepal.provider.videotable.VideotableSelection;
 
 import java.util.ArrayList;
-import java.util.List;
 
 /**
  * Displays list CSO(Civil Society Organization) that a user can quickly contact
@@ -72,13 +63,16 @@ public class CSODirectoryFragment extends Fragment implements
         View rootView = inflater.inflate(R.layout.fragment_cso_directory, container, false);
         recyclerView = rootView.findViewById(R.id.media_recycler_view);
         districtSpinner = rootView.findViewById(R.id.district_spinner);
-
-        if (districts.size() <= 0) {
-            DistricttableCursor districttableCursor = getDistrictsTableData();
-            districttableCursor.moveToFirst();
-            do {
-                districts.add(districttableCursor.getName());
-            } while (districttableCursor.moveToNext());
+        try {
+            if (districts.size() <= 0) {
+                DistricttableCursor districttableCursor = getDistrictsTableData();
+                districttableCursor.moveToFirst();
+                do {
+                    districts.add(districttableCursor.getName());
+                } while (districttableCursor.moveToNext());
+            }
+        } catch (CursorIndexOutOfBoundsException e) {
+            e.printStackTrace();
         }
 
         districtSpinner.setOnItemSelectedListener(this);
