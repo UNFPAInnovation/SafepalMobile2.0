@@ -47,6 +47,7 @@ import timber.log.Timber;
 /**
  * Fetches data from the server, deletes old data and saves it into the db for offline use and better user experience
  * Service is called whenever the app starts in MainActivity
+ *
  * @author Phillip Kigenyi (codephillip@gmail.com)
  */
 public class SetupIntentService extends IntentService {
@@ -67,51 +68,46 @@ public class SetupIntentService extends IntentService {
         Timber.d("onHandleIntent: started service");
         apiInterface = APIClient.getClient().create(APIInterface.class);
 
-//        boolean isConnectedToInternet = isConnectedToInternet(this);
-//        Timber.d("is connected %s", isConnectedToInternet);
+        try {
+            loadVideos();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
 
-        if (true) {
-            try {
-                loadVideos();
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
+        try {
+            loadArticles();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
 
-            try {
-                loadArticles();
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
+        try {
+            loadOrganizations();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
 
-            try {
-                loadOrganizations();
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
+        try {
+            loadDistricts();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
 
-            try {
-                loadDistricts();
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
+        try {
+            loadQuestions();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
 
-            try {
-                loadQuestions();
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
+        try {
+            loadQuizzes();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
 
-            try {
-                loadQuizzes();
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
-
-            try {
-                loadFaqs();
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
+        try {
+            loadFaqs();
+        } catch (Exception e) {
+            e.printStackTrace();
         }
     }
 

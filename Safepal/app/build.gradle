@@ -25,12 +25,24 @@ android {
         minSdkVersion 18
         targetSdkVersion 29
         multiDexEnabled true
-        versionCode 41
-        versionName "1.25"
+        versionCode 42
+        versionName "1.3.1"
         vectorDrawables.useSupportLibrary = true
     }
     buildTypes {
+        localhost {
+            buildConfigField "String", "DJANGO_BACKEND_URL", '"http://10.0.2.2/api/v1"'
+            buildConfigField "String", "BASE_API_URL", '"http://ec2-54-184-113-209.us-west-2.compute.amazonaws.com/api/v1"'
+        }
+
+        debug {
+            buildConfigField "String", "DJANGO_BACKEND_URL", '"https://testwebdashboard.safepal.co/"'
+            buildConfigField "String", "BASE_API_URL", '"http://ec2-54-184-113-209.us-west-2.compute.amazonaws.com/api/v1"'
+        }
+
         release {
+            buildConfigField "String", "DJANGO_BACKEND_URL", '"https://testwebdashboard.safepal.co/"'
+            buildConfigField "String", "BASE_API_URL", '"https://api.safepal.co/api/v1"'
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }

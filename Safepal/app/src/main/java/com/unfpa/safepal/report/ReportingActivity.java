@@ -6,17 +6,19 @@ import android.app.FragmentTransaction;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
-import com.google.android.material.snackbar.Snackbar;
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.appcompat.widget.Toolbar;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.Toast;
 
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
+
 import com.android.volley.AuthFailureError;
 import com.android.volley.Request;
 import com.android.volley.toolbox.StringRequest;
+import com.google.android.material.snackbar.Snackbar;
+import com.unfpa.safepal.BuildConfig;
 import com.unfpa.safepal.ProvideHelp.ContactFragment;
 import com.unfpa.safepal.ProvideHelp.CsoActivity;
 import com.unfpa.safepal.R;
@@ -28,8 +30,6 @@ import org.json.JSONObject;
 
 import java.util.HashMap;
 import java.util.Map;
-
-import static com.unfpa.safepal.Utils.Constants.BASE_API_URL;
 
 public class ReportingActivity extends AppCompatActivity implements SurvivorIncidentFormFragment.OnFragmentInteractionListener,
         ContactFragment.OnFragmentInteractionListener, AnotherPersonIncidentFormFragment.OnFragmentInteractionListener {
@@ -311,7 +311,7 @@ public class ReportingActivity extends AppCompatActivity implements SurvivorInci
 
     //gets a new token from server
     public void getUpdateTokenFromServer(final VolleyCallback tokenCallback) {
-        final String tokenUrl = BASE_API_URL + "/auth/newtoken";
+        final String tokenUrl = BuildConfig.BASE_API_URL + "/auth/newtoken";
 
         // This volley request gets a token from the server
         StringRequest tokenRequest = new StringRequest(Request.Method.GET, tokenUrl,

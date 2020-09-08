@@ -11,11 +11,11 @@ import android.content.Intent;
 import android.net.Uri;
 import android.widget.Toast;
 
-import static com.unfpa.safepal.Utils.Constants.BASE_API_URL;
+import com.unfpa.safepal.BuildConfig;
 
 public class NetworkChangeReceiver extends BroadcastReceiver {
 
-    final String URL_SAFEPAL_API = BASE_API_URL + "/reports/addreport";
+    final String URL_SAFEPAL_API = BuildConfig.BASE_API_URL + "/reports/addreport";
     // Intent for starting the IntentService for submitting a survivor case
     private Intent mServiceIntent;
 

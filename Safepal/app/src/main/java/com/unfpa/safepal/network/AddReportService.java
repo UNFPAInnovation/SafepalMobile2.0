@@ -13,6 +13,7 @@ import com.android.volley.Request;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
+import com.unfpa.safepal.BuildConfig;
 import com.unfpa.safepal.store.ReportIncidentContentProvider;
 import com.unfpa.safepal.store.ReportIncidentTable;
 
@@ -25,7 +26,6 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 
-import static com.unfpa.safepal.Utils.Constants.BASE_API_URL;
 import static com.unfpa.safepal.Utils.Constants.SOCKET_TIMEOUT;
 
 /**
@@ -209,7 +209,7 @@ public class AddReportService extends IntentService {
 
 
         try {
-            String tokenUrl = BASE_API_URL + "/auth/newtoken";
+            String tokenUrl = BuildConfig.BASE_API_URL + "/auth/newtoken";
 
             // This volley request gets a token from the server
             StringRequest tokenRequest = new StringRequest(Request.Method.GET, tokenUrl,

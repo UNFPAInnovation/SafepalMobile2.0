@@ -11,11 +11,6 @@ import android.location.Location;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.Settings;
-import com.google.android.material.snackbar.Snackbar;
-import com.google.android.material.textfield.TextInputLayout;
-import androidx.core.app.ActivityCompat;
-import androidx.appcompat.app.AlertDialog;
-import androidx.appcompat.widget.Toolbar;
 import android.text.Editable;
 import android.text.TextUtils;
 import android.text.TextWatcher;
@@ -33,14 +28,21 @@ import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.appcompat.app.AlertDialog;
+import androidx.appcompat.widget.Toolbar;
+import androidx.core.app.ActivityCompat;
+
 import com.google.android.gms.location.FusedLocationProviderClient;
 import com.google.android.gms.location.LocationServices;
 import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.android.material.snackbar.Snackbar;
+import com.google.android.material.textfield.TextInputLayout;
 import com.karumi.dexter.Dexter;
 import com.karumi.dexter.MultiplePermissionsReport;
 import com.karumi.dexter.PermissionToken;
 import com.karumi.dexter.listener.PermissionRequest;
 import com.karumi.dexter.listener.multi.MultiplePermissionsListener;
+import com.unfpa.safepal.BuildConfig;
 import com.unfpa.safepal.Location.UserLocation;
 import com.unfpa.safepal.R;
 import com.unfpa.safepal.Utils.Constants;
@@ -55,7 +57,6 @@ import com.unfpa.safepal.store.ReportIncidentTable;
 import java.util.List;
 import java.util.Random;
 
-import static com.unfpa.safepal.Utils.Constants.BASE_API_URL;
 import static com.unfpa.safepal.report.WhoSGettingHelpFragment.randMessageIndex;
 
 public class SurvivorIncidentFormFragment extends Fragment {
@@ -460,7 +461,7 @@ public class SurvivorIncidentFormFragment extends Fragment {
                 sifReportIncidentUri = context.getContentResolver().insert(ReportIncidentContentProvider.CONTENT_URI, values);
 
                 //Broadcast receiver that checks for the network status
-                final String URL_SAFEPAL_API = BASE_API_URL + "/reports/addreport";
+                final String URL_SAFEPAL_API = BuildConfig.BASE_API_URL + "/reports/addreport";
                 Intent mServiceIntent = new Intent(context, AddReportService.class).setData(Uri.parse(URL_SAFEPAL_API));
                 context.startService(mServiceIntent);
                 return ReportingActivity.STATUS_SUBMIT_REPORT_SUBMITED;
