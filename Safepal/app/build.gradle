@@ -41,7 +41,7 @@ android {
         }
 
         release {
-            buildConfigField "String", "DJANGO_BACKEND_URL", '"https://testwebdashboard.safepal.co/"'
+            buildConfigField "String", "DJANGO_BACKEND_URL", '"https://webdashboard.safepal.co/"'
             buildConfigField "String", "BASE_API_URL", '"https://api.safepal.co/api/v1"'
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'

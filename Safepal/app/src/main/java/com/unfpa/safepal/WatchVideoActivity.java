@@ -3,15 +3,15 @@ package com.unfpa.safepal;
 import android.content.Context;
 import android.net.Uri;
 import android.os.Bundle;
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.recyclerview.widget.GridLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
-import androidx.appcompat.widget.Toolbar;
 import android.util.AttributeSet;
 import android.view.ViewGroup;
 import android.widget.MediaController;
 import android.widget.TextView;
 import android.widget.VideoView;
+
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.GridLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import com.unfpa.safepal.adapters.VideoAdapter;
 import com.unfpa.safepal.provider.videotable.VideotableCursor;
@@ -112,7 +112,13 @@ public class WatchVideoActivity extends AppCompatActivity {
         description.setText(videotableCursor.getDescription());
 
         video.setMediaController(new MediaController(this));
-        String lowResVideoUrl = videotableCursor.getUrl().replace(".mp4", "_480p.m3u8");
+        String lowResVideoUrl = "https://testwebdashboard.safepal.co/content/videos/PREVENTION_5_ENGLISH.mp4";
+        try {
+            String videoUrl = videotableCursor.getUrl().replace("http:", "https:");
+            lowResVideoUrl = videoUrl.replace(".mp4", "_480p.m3u8");
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
         video.setVideoURI(Uri.parse(lowResVideoUrl));
         video.requestFocus();
         video.setOnPreparedListener(mp -> {
