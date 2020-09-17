@@ -63,6 +63,9 @@
             android:layout_marginStart="@dimen/text_margin"
             android:layout_marginTop="@dimen/margin_large"
             android:layout_marginBottom="@dimen/margin_medium"
+            android:textSize="15sp"
+            android:textAppearance="@style/TextAppearance.AppCompat.Medium"
+            android:fontFamily="sans-serif-light"
             android:text="@string/related_articles"/>
 
         <androidx.recyclerview.widget.RecyclerView
