@@ -1,11 +1,12 @@
 package com.unfpa.safepal.ProvideHelp.RVCsoModel;
 
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.recyclerview.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
+
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.RecyclerView;
 
 import com.unfpa.safepal.R;
 import com.unfpa.safepal.messages.csoDialogFragment;
@@ -63,7 +64,10 @@ public class CsoRvAdapter extends RecyclerView.Adapter<CsoRvAdapter.CustomViewHo
     public void onBindViewHolder(CustomViewHolder holder, int position) {
         TheCSO cso = csosList.get(position);
         holder.csoName.setText(cso.getCso_name());
-        holder.csoDistance.setText(cso.getCso_distance());
+        if (cso.getCso_distance().contains("failed"))
+            holder.csoDistance.setVisibility(View.GONE);
+        else
+            holder.csoDistance.setText(cso.getCso_distance());
         holder.csoPhonenumber.setText(cso.getCso_phonenumber());
     }
 
