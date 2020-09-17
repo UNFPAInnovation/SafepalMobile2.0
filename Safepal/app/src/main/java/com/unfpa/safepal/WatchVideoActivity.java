@@ -129,7 +129,7 @@ public class WatchVideoActivity extends AppCompatActivity {
         });
 
         videoAdapter = new VideoAdapter(this, new VideotableSelection()
-                .orderByCreatedAt(true).category(videotableCursor.getCategory())
+                .orderByCreatedAt(true).category(videotableCursor.getCategory()).and().titleNot(videotableCursor.getTitle())
                 .query(getContentResolver()));
         AbsolutefitLayourManager gridLayoutManager = new AbsolutefitLayourManager(this, 1, GridLayoutManager.HORIZONTAL, false);
         relatedVideosRecyclerView.setLayoutManager(gridLayoutManager);

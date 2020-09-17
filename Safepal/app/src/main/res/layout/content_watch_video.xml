@@ -20,13 +20,11 @@
 
         <VideoView
             android:id="@+id/video"
-            android:layout_width="411dp"
+            android:layout_width="0dp"
             android:layout_height="230dp"
-            android:layout_marginBottom="65dp"
             app:layout_constraintEnd_toEndOf="@+id/constraintLayout"
             app:layout_constraintStart_toStartOf="@+id/constraintLayout"
-            app:layout_constraintTop_toTopOf="@+id/constraintLayout"
-            app:layout_constraintVertical_bias="0.0" />
+            app:layout_constraintTop_toTopOf="@+id/constraintLayout" />
 
         <TextView
             android:id="@+id/title"
@@ -43,16 +41,13 @@
             android:id="@+id/category"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="170dp"
-            android:layout_marginEnd="285dp"
-            android:layout_marginBottom="16dp"
             android:text="@string/dummy_category"
+            android:textColor="@color/colorPrimary"
             android:textAppearance="@style/TextAppearance.AppCompat.Small"
-            app:layout_constraintBottom_toTopOf="@+id/description"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.0"
             app:layout_constraintStart_toStartOf="@+id/title"
-            app:layout_constraintTop_toTopOf="parent" />
+            app:layout_constraintTop_toBottomOf="@+id/title" />
 
         <TextView
             android:id="@+id/description"
@@ -60,11 +55,10 @@
             android:layout_height="wrap_content"
             android:layout_marginEnd="16dp"
             android:layout_marginBottom="8dp"
+            android:layout_marginTop="@dimen/margin_large"
             android:text="@string/dummy_description"
             android:textAppearance="@style/TextAppearance.AppCompat.Medium"
-            app:layout_constraintBottom_toTopOf="@+id/related_videos"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.0"
             app:layout_constraintStart_toStartOf="@+id/category"
             app:layout_constraintTop_toBottomOf="@+id/category" />
 
@@ -72,12 +66,13 @@
             android:id="@+id/related_videos"
             android:layout_width="wrap_content"
             android:layout_height="19dp"
-            android:layout_marginStart="16dp"
-            android:layout_marginTop="12dp"
-            android:layout_marginBottom="132dp"
+            android:layout_marginTop="@dimen/margin_extra_extra_large"
             android:text="@string/related_videos"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintStart_toStartOf="@+id/constraintLayout"
+            android:textSize="15sp"
+            android:textAppearance="@style/TextAppearance.AppCompat.Medium"
+            android:fontFamily="sans-serif-light"
+            app:layout_constraintBottom_toTopOf="@+id/related_videos_recycler"
+            app:layout_constraintStart_toStartOf="@+id/description"
             app:layout_constraintTop_toBottomOf="@+id/description" />
 
         <androidx.recyclerview.widget.RecyclerView
