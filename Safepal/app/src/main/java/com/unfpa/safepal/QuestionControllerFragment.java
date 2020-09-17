@@ -20,6 +20,7 @@ import androidx.navigation.fragment.NavHostFragment;
 
 import com.mikhaellopez.circularprogressbar.CircularProgressBar;
 import com.pixplicity.easyprefs.library.Prefs;
+import com.unfpa.safepal.provider.answertable.AnswertableColumns;
 import com.unfpa.safepal.provider.answertable.AnswertableContentValues;
 import com.unfpa.safepal.provider.articletable.ArticletableCursor;
 import com.unfpa.safepal.provider.articletable.ArticletableSelection;
@@ -98,6 +99,7 @@ public class QuestionControllerFragment extends Fragment implements View.OnClick
             Toast.makeText(view.getContext(), "Sorry, there is no quiz for this article", Toast.LENGTH_SHORT).show();
             getActivity().finish();
         }
+        deletePreviousAnswers();
     }
 
     @Override
@@ -214,6 +216,15 @@ public class QuestionControllerFragment extends Fragment implements View.OnClick
             progressCount = 10f;
             circularProgressBar.setProgressWithAnimation(progressCount, 500L);
             questionCountText.setText(String.format(getString(R.string.question_count_string), questiontableCursor.getPositionNumber(), numberOfQuestions));
+            deletePreviousAnswers();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    private void deletePreviousAnswers() {
+        try {
+            getActivity().getContentResolver().delete(AnswertableColumns.CONTENT_URI, null, null);
         } catch (Exception e) {
             e.printStackTrace();
         }
