@@ -3,15 +3,16 @@ package com.unfpa.safepal;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.recyclerview.widget.GridLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
-import androidx.appcompat.widget.Toolbar;
 import android.util.AttributeSet;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
+
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
+import androidx.recyclerview.widget.GridLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import com.squareup.picasso.Picasso;
 import com.unfpa.safepal.adapters.ArticleAdapter;
@@ -66,6 +67,7 @@ public class ReadArticleActivity extends AppCompatActivity {
 
         articleAdapter = new ArticleAdapter(this, new ArticletableSelection()
                 .orderByCreatedAt(true).category(articletableCursor.getCategory())
+                .and().titleNot(articletableCursor.getTitle())
                 .query(getContentResolver()));
         AbsolutefitLayourManager gridLayoutManager = new AbsolutefitLayourManager(this, 1, GridLayoutManager.HORIZONTAL, false);
         relatedArticlesRecyclerView.setLayoutManager(gridLayoutManager);
