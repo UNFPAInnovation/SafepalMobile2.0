@@ -8,15 +8,14 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-
-import androidx.annotation.NonNull;
-import androidx.fragment.app.Fragment;
 import android.view.Window;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.annotation.NonNull;
+import androidx.fragment.app.Fragment;
 import androidx.navigation.fragment.NavHostFragment;
 
 import com.mikhaellopez.circularprogressbar.CircularProgressBar;
@@ -160,6 +159,7 @@ public class QuestionControllerFragment extends Fragment implements View.OnClick
         final Dialog dialog = new Dialog(context, R.style.CustomAlertDialog);
         dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
         dialog.setContentView(R.layout.next_question_dialog);
+        dialog.setCancelable(false);
 
         TextView title = dialog.findViewById(R.id.title);
         ImageView resultImage = dialog.findViewById(R.id.result_image);
