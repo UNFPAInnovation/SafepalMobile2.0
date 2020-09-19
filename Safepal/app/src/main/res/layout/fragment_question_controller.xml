@@ -14,7 +14,7 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
         android:layout_marginEnd="16dp"
-        android:text="YES"
+        android:text="@string/yes"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
@@ -31,8 +31,7 @@
         android:layout_marginTop="24dp"
         android:layout_marginEnd="16dp"
         android:layout_marginBottom="8dp"
-        android:text="NO"
-        app:layout_constraintBottom_toBottomOf="parent"
+        android:text="@string/no"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
@@ -45,7 +44,7 @@
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="24dp"
-        android:text="SOMETIMES"
+        android:text="@string/sometimes"
         app:layout_constraintEnd_toEndOf="@+id/no_button"
         app:layout_constraintStart_toStartOf="@+id/no_button"
         app:layout_constraintTop_toBottomOf="@+id/no_button" />
@@ -53,12 +52,10 @@
     <ImageView
         android:id="@+id/background_header"
         android:layout_width="wrap_content"
+        android:scaleType="centerCrop"
         android:layout_height="116dp"
-        android:layout_marginBottom="8dp"
         android:src="@drawable/quiz_background_header"
-        app:layout_constraintBottom_toTopOf="@+id/question_number"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
@@ -78,10 +75,9 @@
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginEnd="16dp"
-        android:layout_marginBottom="24dp"
+        android:layout_marginTop="@dimen/margin_medium"
         android:text="Is it normal to be attracted to people of the opposite sex and want to have sex with them. Is it normal to be attracted to people of the opposite sex and want to have sex with them?"
         android:textAppearance="@style/TextAppearance.AppCompat.Medium"
-        app:layout_constraintBottom_toTopOf="@+id/yes_button"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="@+id/question_number"
         app:layout_constraintTop_toBottomOf="@+id/question_number" />

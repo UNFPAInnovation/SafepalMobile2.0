@@ -244,6 +244,7 @@
     <string name="failure_title">Try again</string>
     <string name="faq_title">FAQ</string>
     <string name="tap_to_call">Tap To Call</string>
+    <string name="sometimes">SOMETIMES</string>
     <string-array name="not_your_fault_messages">
 <item>Whatever happened was not your fault. No one has the right to sexually violate you.  The rapist is solely to blame.
            What a person wears, what a person says, or how a person acts cannot justify sexual violence.</item>
