@@ -21,8 +21,7 @@
         style="@style/materialButtonNormal"
         android:layout_width="178dp"
         android:layout_height="172dp"
-        android:layout_marginTop="8dp"
-        android:layout_marginBottom="50dp"
+        android:layout_marginTop="@dimen/margin_large"
         android:background="@drawable/circular_view_purple"
         android:drawableStart="@drawable/ic_perm_phone_msg_48px"
         android:elevation="30dp"
@@ -30,7 +29,6 @@
         android:text="@string/report"
         android:textAppearance="@style/TextAppearance.AppCompat.Large"
         android:textColor="@color/colorWhite"
-        app:layout_constraintBottom_toTopOf="@+id/discover_more_card"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.497"
         app:layout_constraintStart_toStartOf="parent"
@@ -79,12 +77,11 @@
         android:gravity="center"
         android:maxLines="3"
         android:text="@string/reachout_message"
-        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/home_instruct_title"
         app:layout_constraintVertical_bias="0.265" />
 
     <TextView
@@ -111,12 +108,12 @@
         android:layout_marginStart="@dimen/margin_small"
         android:layout_marginTop="16dp"
         android:layout_marginEnd="@dimen/margin_small"
+        android:layout_marginBottom="@dimen/margin_medium"
         app:cardCornerRadius="@dimen/padding_large"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/report_incident_button">
+        app:layout_constraintStart_toStartOf="parent">
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
