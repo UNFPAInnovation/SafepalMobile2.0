@@ -4,8 +4,10 @@ import android.content.Context;
 import android.net.Uri;
 import android.os.Bundle;
 import android.util.AttributeSet;
+import android.view.View;
 import android.view.ViewGroup;
 import android.widget.MediaController;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.VideoView;
 
@@ -90,6 +92,7 @@ public class WatchVideoActivity extends AppCompatActivity {
     private RecyclerView relatedVideosRecyclerView;
     private VideoAdapter videoAdapter;
     private MediaController mediaController;
+    private ProgressBar loadingProgressBar;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -101,6 +104,7 @@ public class WatchVideoActivity extends AppCompatActivity {
         category = findViewById(R.id.category);
         description = findViewById(R.id.description);
         relatedVideosRecyclerView = findViewById(R.id.related_videos_recycler);
+        loadingProgressBar = findViewById(R.id.progressbar);
 
         // Get the title passed to this view from the VideoAdapter and query for the video
         VideotableCursor videotableCursor = new VideotableSelection().orderByCreatedAt(true)
@@ -126,6 +130,7 @@ public class WatchVideoActivity extends AppCompatActivity {
             video.setMediaController(mediaController);
             mediaController.setAnchorView(video);
             video.start();
+            loadingProgressBar.setVisibility(View.GONE);
         });
 
         videoAdapter = new VideoAdapter(this, new VideotableSelection()
@@ -135,5 +140,15 @@ public class WatchVideoActivity extends AppCompatActivity {
         AbsolutefitLayourManager gridLayoutManager = new AbsolutefitLayourManager(this, 1, GridLayoutManager.HORIZONTAL, false);
         relatedVideosRecyclerView.setLayoutManager(gridLayoutManager);
         relatedVideosRecyclerView.setAdapter(videoAdapter);
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        try {
+            loadingProgressBar.setVisibility(View.VISIBLE);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 }
