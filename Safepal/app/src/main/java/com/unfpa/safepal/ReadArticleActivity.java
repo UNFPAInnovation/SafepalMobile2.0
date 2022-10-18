@@ -1,9 +1,12 @@
 package com.unfpa.safepal;
 
+import static com.unfpa.safepal.provider.videotable.VideotableColumns.TITLE;
+
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.AttributeSet;
+import android.util.Log;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageView;
@@ -18,8 +21,6 @@ import com.squareup.picasso.Picasso;
 import com.unfpa.safepal.adapters.ArticleAdapter;
 import com.unfpa.safepal.provider.articletable.ArticletableCursor;
 import com.unfpa.safepal.provider.articletable.ArticletableSelection;
-
-import static com.unfpa.safepal.provider.videotable.VideotableColumns.TITLE;
 
 public class ReadArticleActivity extends AppCompatActivity {
     private TextView title, category, questions, content;
@@ -53,8 +54,10 @@ public class ReadArticleActivity extends AppCompatActivity {
         category.setText(articletableCursor.getCategory());
         content.setText(articletableCursor.getContent());
 
+        Log.d("URLX", "onCreate: URLX articles " + articletableCursor.getThumbnail());
+
         Picasso.get()
-                .load(articletableCursor.getThumbnail())
+                .load("https://thumbs.dreamstime.com/z/man-holds-his-hand-sample-stone-gravel-pebbles-one-size-marble-white-gray-brown-straight-th-quarry-221791915.jpg")
                 .placeholder(R.mipmap.ic_launcher)
                 .error(R.mipmap.ic_launcher)
                 .into(articleImage);

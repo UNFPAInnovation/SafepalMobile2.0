@@ -161,7 +161,7 @@ public class SetupIntentService extends IntentService {
             values.putDuration(video.getDuration());
             values.putDescription(video.getDescription());
             values.putUrl(video.getUrl());
-            values.putThumbnail(video.getThumbnail());
+            values.putThumbnail(video.getThumbnail().replace("webdashboard.safepal.co", "safepalcms.mglsd.go.ug"));
             values.putCreatedAt(video.getCreatedAt());
             values.putRating(video.getRating());
             // insert 0 completion since user has not yet watched video
@@ -220,7 +220,7 @@ public class SetupIntentService extends IntentService {
             values.putContent(article.getContent());
             values.putQuestions(article.getQuestions());
             values.putServerid(article.getId());
-            values.putThumbnail(article.getThumbnail());
+            values.putThumbnail(article.getThumbnail().replace("webdashboard.safepal.co", "safepalcms.mglsd.go.ug"));
             values.putCreatedAt(article.getCreatedAt());
             values.putRating(article.getRating());
             // insert 0 completion since user has not yet read the article

@@ -1,7 +1,10 @@
 package com.unfpa.safepal.adapters;
 
+import static com.unfpa.safepal.provider.videotable.VideotableColumns.TITLE;
+
 import android.app.Activity;
 import android.content.Intent;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -16,8 +19,6 @@ import com.squareup.picasso.Picasso;
 import com.unfpa.safepal.R;
 import com.unfpa.safepal.WatchVideoActivity;
 import com.unfpa.safepal.provider.videotable.VideotableCursor;
-
-import static com.unfpa.safepal.provider.videotable.VideotableColumns.TITLE;
 
 public class VideoAdapter extends RecyclerView.Adapter<VideoAdapter.ViewHolder> {
 
@@ -59,6 +60,7 @@ public class VideoAdapter extends RecyclerView.Adapter<VideoAdapter.ViewHolder> 
             cursor.moveToPosition(position);
 
             holder.title.setText(cursor.getTitle());
+            Log.d("URLX", "onCreate: URLX " + cursor.getThumbnail());
 
             Picasso.get()
                     .load(cursor.getThumbnail())
