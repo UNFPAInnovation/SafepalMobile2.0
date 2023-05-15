@@ -22,4 +22,12 @@ public class SafepalApplication extends Application {
                 .setUseDefaultSharedPreference(true)
                 .build();
     }
+
+//    final OkHttpClient client = new OkHttpClient.Builder()
+//            .protocols(Collections.singletonList(Protocol.HTTP_1_1))
+//            .build();
+//
+//    final Picasso picasso = new Picasso.Builder(getApplicationContext())
+//            .downloader(new OkHttp3Downloader(client))
+//            .build();
 }

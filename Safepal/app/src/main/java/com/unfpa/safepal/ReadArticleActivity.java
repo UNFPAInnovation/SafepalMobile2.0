@@ -56,8 +56,10 @@ public class ReadArticleActivity extends AppCompatActivity {
 
         Log.d("URLX", "onCreate: URLX articles " + articletableCursor.getThumbnail());
 
+
+//        PicassoTrustAll.getInstance(this).load("https://10.0.2.2/path/to/picture").into(mainPictureView);
         Picasso.get()
-                .load("https://thumbs.dreamstime.com/z/man-holds-his-hand-sample-stone-gravel-pebbles-one-size-marble-white-gray-brown-straight-th-quarry-221791915.jpg")
+                .load(articletableCursor.getThumbnail())
                 .placeholder(R.mipmap.ic_launcher)
                 .error(R.mipmap.ic_launcher)
                 .into(articleImage);

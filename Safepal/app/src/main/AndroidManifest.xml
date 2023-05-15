@@ -78,9 +78,9 @@
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="com.unfpa.safepal.home.HomeActivity" />
         </activity> <!-- Google places meta data -->
-        <meta-data
-            android:name="com.google.android.geo.API_KEY"
-            android:value="AIzaSyCLxxb7QcBWzeSr8KaUhHTjZmoCxJ35SXc" />
+<!--        <meta-data-->
+<!--            android:name="com.google.android.geo.API_KEY"-->
+<!--            android:value="${MAPS_API_KEY}" />-->
         <meta-data
             android:name="android.max_aspect"
             android:value="2.1" />
